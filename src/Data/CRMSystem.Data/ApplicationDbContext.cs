@@ -40,7 +40,11 @@
 
         public DbSet<UserTask> UserTasks { get; set; }
 
+        public DbSet<Organization> Organizations { get; set; }
 
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<Sale> Sales { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 

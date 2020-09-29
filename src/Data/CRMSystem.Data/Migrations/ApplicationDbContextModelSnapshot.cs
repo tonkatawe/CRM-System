@@ -196,11 +196,6 @@ namespace CRMSystem.Data.Migrations
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Company")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -236,6 +231,9 @@ namespace CRMSystem.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Title")
                         .HasColumnType("int");
 
@@ -248,6 +246,8 @@ namespace CRMSystem.Data.Migrations
                     b.HasIndex("AddressId");
 
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("OrganizationId");
 
                     b.HasIndex("UserId");
 
@@ -333,6 +333,52 @@ namespace CRMSystem.Data.Migrations
                     b.ToTable("Notes");
                 });
 
+            modelBuilder.Entity("CRMSystem.Data.Models.Organization", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Organizations");
+                });
+
             modelBuilder.Entity("CRMSystem.Data.Models.PhoneNumber", b =>
                 {
                     b.Property<int>("Id")
@@ -369,6 +415,81 @@ namespace CRMSystem.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("PhoneNumbers");
+                });
+
+            modelBuilder.Entity("CRMSystem.Data.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("SaleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.HasIndex("SaleId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("CRMSystem.Data.Models.Sale", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ContactId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContactId");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("Sales");
                 });
 
             modelBuilder.Entity("CRMSystem.Data.Models.Setting", b =>
@@ -597,6 +718,12 @@ namespace CRMSystem.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CRMSystem.Data.Models.Organization", "Organization")
+                        .WithMany()
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("CRMSystem.Data.Models.ApplicationUser", "User")
                         .WithMany("Contacts")
                         .HasForeignKey("UserId")
@@ -622,10 +749,41 @@ namespace CRMSystem.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("CRMSystem.Data.Models.Organization", b =>
+                {
+                    b.HasOne("CRMSystem.Data.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CRMSystem.Data.Models.ApplicationUser", "User")
+                        .WithMany("Organizations")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CRMSystem.Data.Models.PhoneNumber", b =>
                 {
                     b.HasOne("CRMSystem.Data.Models.Contact", "Contact")
                         .WithMany("PhoneNumbers")
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CRMSystem.Data.Models.Product", b =>
+                {
+                    b.HasOne("CRMSystem.Data.Models.Sale", null)
+                        .WithMany("Products")
+                        .HasForeignKey("SaleId");
+                });
+
+            modelBuilder.Entity("CRMSystem.Data.Models.Sale", b =>
+                {
+                    b.HasOne("CRMSystem.Data.Models.Contact", "Contact")
+                        .WithMany("Sales")
                         .HasForeignKey("ContactId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
