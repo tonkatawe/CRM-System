@@ -1,6 +1,5 @@
 ﻿namespace CRMSystem.Data.Models
 {
-#nullable enable
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -25,7 +24,7 @@
         public string FirstName { get; set; }
 
         [MaxLength(20)]
-        public string? MiddleName { get; set; }
+        public string MiddleName { get; set; }
 
         [Required]
         [MaxLength(20)]
@@ -40,10 +39,10 @@
         public string Company { get; set; }
 
         [MaxLength(20)]
-        public string? Industry { get; set; }
+        public string Industry { get; set; }
 
         [MaxLength(1000)]
-        public string? AdditionalInfo { get; set; }
+        public string AdditionalInfo { get; set; }
 
         public int AddressId { get; set; }
 
