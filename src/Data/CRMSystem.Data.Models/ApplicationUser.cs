@@ -18,6 +18,7 @@ namespace CRMSystem.Data.Models
             this.Logins = new HashSet<IdentityUserLogin<string>>();
             this.Contacts = new HashSet<Contact>();
             this.Tasks = new HashSet<UserTask>();
+            this.Organizations = new HashSet<Organization>();
         }
 
         // Audit info
@@ -39,5 +40,7 @@ namespace CRMSystem.Data.Models
         public virtual ICollection<Contact> Contacts { get; set; }
 
         public virtual ICollection<UserTask> Tasks { get; set; }
+
+        public virtual ICollection<Organization> Organizations { get; set; }
     }
 }

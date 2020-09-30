@@ -1,4 +1,6 @@
-﻿namespace CRMSystem.Web
+﻿using CRMSystem.Services.Data.Contracts;
+
+namespace CRMSystem.Web
 {
     using System.Reflection;
 
@@ -64,6 +66,7 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IContactsService, ContactsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

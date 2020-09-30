@@ -1,4 +1,6 @@
-﻿namespace CRMSystem.Data.Models
+﻿using CRMSystem.Data.Models.Enums;
+
+namespace CRMSystem.Data.Models
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -13,6 +15,7 @@
             this.PhoneNumbers = new HashSet<PhoneNumber>();
             this.EmailAddresses = new HashSet<EmailAddress>();
             this.SocialNetworks = new HashSet<SocialNetwork>();
+            this.Sales = new HashSet<Sale>();
         }
 
         [Required]
@@ -34,12 +37,11 @@
         [MaxLength(30)]
         public string JobTitle { get; set; }
 
-        [Required]
-        [MaxLength(30)]
-        public string Company { get; set; }
+        public int OrganizationId { get; set; }
 
-        [MaxLength(20)]
-        public string Industry { get; set; }
+        public Organization Organization { get; set; }
+
+        public IndustryType Industry { get; set; }
 
         [MaxLength(1000)]
         public string AdditionalInfo { get; set; }
@@ -61,5 +63,7 @@
         public IEnumerable<EmailAddress> EmailAddresses { get; set; }
 
         public IEnumerable<SocialNetwork> SocialNetworks { get; set; }
+
+        public IEnumerable<Sale> Sales { get; set; }
     }
 }

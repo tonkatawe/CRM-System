@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\CRMSystem.Data.Common\CRMSystem.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\CRMSystem.Data.Models\CRMSystem.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\CRMSystem.Web.ViewModels\CRMSystem.Web.ViewModels.csproj" />
     <ProjectReference Include="..\CRMSystem.Services.Mapping\CRMSystem.Services.Mapping.csproj" />
   </ItemGroup>
 

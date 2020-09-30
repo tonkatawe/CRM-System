@@ -1,0 +1,101 @@
+﻿@using CRMSystem.Data.Models
+@using CRMSystem.Data.Models.Enums
+@model CRMSystem.Web.ViewModels.Contacts.ContactCreateInputModel
+@{
+    this.ViewData["Title"] = "Add new contact";
+
+}
+
+<h3>@this.ViewData["Title"]</h3>
+
+<form method="post" asp-action="Create">
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label asp-for="Title"></label>
+            <select asp-for="Title" asp-items="Html.GetEnumSelectList<Title>()" class="form-control"></select>
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="FirstName">First Name</label>
+            <input asp-for="FirstName" class="form-control" placeholder="First Name">
+            <span asp-validation-for="FirstName"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="MiddleName">Middle Name</label>
+            <input asp-for="MiddleName" class="form-control" placeholder="Middle Name">
+            <span asp-validation-for="FirstName"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="LastName">Last Name</label>
+            <input asp-for="LastName" class="form-control" placeholder="Last Name">
+            <span asp-validation-for="LastName"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label asp-for="Address.Country">Country</label>
+            <input asp-for="Address.Country" class="form-control" placeholder="Country">
+            <span asp-validation-for="Address.Country"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="Address.City">City</label>
+            <input asp-for="Address.City" class="form-control" placeholder="City">
+            <span asp-validation-for="Address.City"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="Address.Street">Street</label>
+            <input asp-for="Address.Street" class="form-control" placeholder="Street">
+            <span asp-validation-for="Address.Street"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="Address.ZipCode">Zip Code</label>
+            <input asp-for="Address.ZipCode" class="form-control" placeholder="Zip Code">
+            <span asp-validation-for="Address.ZipCode"></span>
+        </div>
+        <div class="form-group col-md-12">
+            <hr />
+            <label asp-for="Industry"></label>
+            <select asp-for="Industry" asp-items="Html.GetEnumSelectList<IndustryType>()" class="form-control"></select>
+            <span asp-validation-for="Industry" class="text-danger"></span>
+            <hr />
+        </div>
+
+        <div class="form-group col-md-12">
+            <label asp-for="AdditionalInfo">Additional information</label>
+            <textarea asp-for="AdditionalInfo" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="AdditionalInfo"></span>
+        </div>
+    </div>
+    <hr />
+    <h3>Organization</h3>
+
+    <!----TODO: Make choose if organization had already in DB and make choose and make choose what kind is phone, email, social networks and so on, validate zip code cannot be above 0(check range in www)-->
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label asp-for="Organization.Name">Name</label>
+            <input asp-for="Organization.Name" class="form-control" placeholder="Name">
+            <span asp-validation-for="Organization.Name"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="Organization.Address.Country">Organization Country</label>
+            <input asp-for="Organization.Address.Country" class="form-control" placeholder="Organization Country">
+            <span asp-validation-for="Organization.Address.Country"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="Organization.Address.City">Organization City</label>
+            <input asp-for="Organization.Address.City" class="form-control" placeholder="Organization City">
+            <span asp-validation-for="Organization.Address.City"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="Organization.Address.Street">Organization Street</label>
+            <input asp-for="Organization.Address.Street" class="form-control" placeholder="Organization Street">
+            <span asp-validation-for="Organization.Address.Street"></span>
+        </div>
+        <div class="form-group col-md-12">
+            <label asp-for="Organization.Description">Description</label>
+            <textarea asp-for="Organization.Description" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Organization.Description"></span>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Contact</button>
+</form>
