@@ -1,0 +1,43 @@
+﻿@using CRMSystem.Data.Models
+@using CRMSystem.Data.Models.Enums
+@using Microsoft.AspNetCore.Identity
+@model CRMSystem.Web.ViewModels.Organizations.OrganizationInputModel
+@{
+    this.ViewData["Title"] = "Add new organization";
+
+}
+
+<h3>@this.ViewData["Title"]</h3>
+
+<form method="post" asp-action="Create">
+
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label asp-for="Name">Name</label>
+            <input asp-for="Name" class="form-control" placeholder="Name">
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="Address.Country">Organization Country</label>
+            <input asp-for="Address.Country" class="form-control" placeholder="Organization Country">
+            <span asp-validation-for="Address.Country"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="Address.City">Organization City</label>
+            <input asp-for="Address.City" class="form-control" placeholder="Organization City">
+            <span asp-validation-for="Address.City"></span>
+        </div>
+        <div class="form-group col-md-3">
+            <label asp-for="Address.Street">Organization Street</label>
+            <input asp-for="Address.Street" class="form-control" placeholder="Organization Street">
+            <span asp-validation-for="Address.Street"></span>
+        </div>
+        <div class="form-group col-md-12">
+            <label asp-for="Description">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Description"></span>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Organization</button>
+</form>

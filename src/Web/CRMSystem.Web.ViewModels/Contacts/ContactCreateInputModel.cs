@@ -5,8 +5,9 @@
     using CRMSystem.Data.Models;
     using CRMSystem.Data.Models.Enums;
     using CRMSystem.Services.Mapping;
+    using CRMSystem.Web.ViewModels.Organizations;
 
-    public class ContactCreateInputModel : IMapFrom<Contact>
+    public class ContactCreateInputModel : IMapFrom<Contact>, IMapFrom<OrganizationInputModel>
     {
         [Required]
         public Title Title { get; set; }
@@ -27,9 +28,9 @@
         [MaxLength(30)]
         public string JobTitle { get; set; }
 
-        public Organization Organization { get; set; }
-
         public IndustryType Industry { get; set; }
+
+        public OrganizationInputModel Organization { get; set; }
 
         [MaxLength(1000)]
         public string AdditionalInfo { get; set; }

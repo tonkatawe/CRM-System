@@ -8,7 +8,6 @@
     {
         [Required]
         [MaxLength(30)]
-
         public string Country { get; set; }
 
         [Required]

@@ -1,4 +1,5 @@
-﻿using CRMSystem.Services.Data.Contracts;
+﻿using System;
+using CRMSystem.Services.Data.Contracts;
 
 namespace CRMSystem.Web
 {
@@ -56,6 +57,13 @@ namespace CRMSystem.Web
                     }).AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(2);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddSingleton(this.configuration);
 
             // Data repositories
@@ -67,6 +75,7 @@ namespace CRMSystem.Web
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IContactsService, ContactsService>();
+            services.AddTransient<IOrganizationsService, OrganizationsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
