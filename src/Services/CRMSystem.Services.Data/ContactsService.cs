@@ -32,6 +32,31 @@
             return query.To<T>().ToList();
         }
 
+        public IEnumerable<T> GetByOrganization<T>(int organizationId, int skip = 0)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<T> GetByCreatedOn<T>(int skip = 0)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int AllContactCount()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int AllContactInOrganizationCount()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public Task<int> DeleteContactAsync(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task<int> CreateContactAsync(ContactCreateInputModel input, string userId)
         {
 

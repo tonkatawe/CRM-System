@@ -1,0 +1,8 @@
+﻿@model CRMSystem.Web.ViewModels.Contacts.GetAllContactsViewModel
+
+<h1>Here all contacts with paging and you have manage it</h1>
+@foreach (var contact in this.Model.Contacts)
+{
+    <h4>@contact.FirstName</h4>
+    <h4>@contact.LastName</h4>
+}
