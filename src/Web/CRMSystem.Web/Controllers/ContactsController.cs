@@ -74,5 +74,12 @@
             };
             return this.View(viewModel);
         }
+
+        //[HttpPost]
+        //[Authorize]
+        //public async Task<IActionResult> Remove(int contactId)
+        //{
+
+        //}
     }
 }

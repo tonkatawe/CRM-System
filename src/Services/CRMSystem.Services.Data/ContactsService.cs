@@ -1,4 +1,6 @@
-﻿namespace CRMSystem.Services.Data
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace CRMSystem.Services.Data
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -19,7 +21,6 @@
 
         public ContactsService(
             IDeletableEntityRepository<Contact> contactsRepository,
-            IDeletableEntityRepository<ApplicationUser> userRepository,
             IDeletableEntityRepository<PhoneNumber> phonesRepository,
             IDeletableEntityRepository<EmailAddress> emailRepository,
             IDeletableEntityRepository<SocialNetwork> socialNetworkRepository)
@@ -59,9 +60,22 @@
             throw new System.NotImplementedException();
         }
 
-        public Task<int> DeleteContactAsync(int id)
+        public async Task<int> DeleteContactAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var contact = await this.contactsRepository
+                .GetByIdWithDeletedAsync(id);
+            this.contactsRepository.Delete(contact);
+            var emails = this.emailRepository.All()
+                .Where(x => x.ContactId == contact.Id);
+
+            foreach (var email in emails)
+            {
+                this.emailRepository.Delete(email);
+            }
+
+            await this.emailRepository.SaveChangesAsync();
+
+            return await this.contactsRepository.SaveChangesAsync();
         }
 
         public async Task<int> CreateContactAsync(ContactCreateInputModel input, string userId)
