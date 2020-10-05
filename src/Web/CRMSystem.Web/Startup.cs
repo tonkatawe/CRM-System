@@ -76,6 +76,7 @@ namespace CRMSystem.Web
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IContactsService, ContactsService>();
             services.AddTransient<IOrganizationsService, OrganizationsService>();
+            services.AddTransient<IEmailsService, EmailsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

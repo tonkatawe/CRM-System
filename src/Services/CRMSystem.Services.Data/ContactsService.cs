@@ -13,7 +13,6 @@
     public class ContactsService : IContactsService
     {
         private readonly IDeletableEntityRepository<Contact> contactsRepository;
-        private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
         private readonly IDeletableEntityRepository<PhoneNumber> phonesRepository;
         private readonly IDeletableEntityRepository<EmailAddress> emailRepository;
         private readonly IDeletableEntityRepository<SocialNetwork> socialNetworkRepository;
@@ -26,7 +25,6 @@
             IDeletableEntityRepository<SocialNetwork> socialNetworkRepository)
         {
             this.contactsRepository = contactsRepository;
-            this.userRepository = userRepository;
             this.phonesRepository = phonesRepository;
             this.emailRepository = emailRepository;
             this.socialNetworkRepository = socialNetworkRepository;

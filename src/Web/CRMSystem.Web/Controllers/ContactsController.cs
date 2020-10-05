@@ -1,32 +1,34 @@
-﻿using CRMSystem.Data.Common;
-
-namespace CRMSystem.Web.Controllers
+﻿namespace CRMSystem.Web.Controllers
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Data.Contracts;
     using CRMSystem.Web.ViewModels.Contacts;
+    using CRMSystem.Web.ViewModels.Emails;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Logging;
 
     public class ContactsController : Controller
     {
         private readonly IContactsService contactsService;
+        private readonly IEmailsService emailsService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public ContactsController(IContactsService contactsService, UserManager<ApplicationUser> userManager)
+        public ContactsController(
+            IContactsService contactsService,
+            IEmailsService emailsService,
+            UserManager<ApplicationUser> userManager)
         {
             this.contactsService = contactsService;
+            this.emailsService = emailsService;
             this.userManager = userManager;
         }
 
         [Authorize]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return this.View();
         }
@@ -57,6 +59,14 @@ namespace CRMSystem.Web.Controllers
                 return this.RedirectToAction("Create");
             }
 
+            foreach (var contact in contacts)
+            {
+                var emails = this.emailsService.GetAllContactEmails<EmailViewModel>(contact.Id);
+                foreach (var email in emails)
+                {
+                    contact.Emails.Add(email);
+                }
+            }
 
             var viewModel = new GetAllContactsViewModel
             {
