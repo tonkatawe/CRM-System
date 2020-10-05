@@ -1,12 +1,25 @@
 ﻿@using CRMSystem.Data.Models
 @using CRMSystem.Data.Models.Enums
 @using Microsoft.AspNetCore.Identity
+@using System.Linq
+@using System.Security.Cryptography.X509Certificates
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.CodeAnalysis.CSharp
 @inject UserManager<ApplicationUser> UserManager
 @model CRMSystem.Web.ViewModels.Contacts.ContactCreateInputModel
 @{
     this.ViewData["Title"] = "Add new contact";
 
 }
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+
+
+
+
 
 <h3>@this.ViewData["Title"]</h3>
 
@@ -54,7 +67,52 @@
             <input asp-for="Address.ZipCode" class="form-control" placeholder="Zip Code">
             <span asp-validation-for="Address.ZipCode"></span>
         </div>
-        <hr />
+
+        <!--MAKING PHONE,SOCIAL NETWORK AND MAIL FIELDS - TODO: Add dynamic in db-->
+
+        <label asp-for="PhoneNumber.Phone">Phone number</label>
+        <div class="controls form-group input-group">
+            <div class="form">
+                <div class="entry input-group-append mb-3">
+                    <input class="form-control" asp-for="PhoneNumber.Phone" placeholder="Phone number">
+                    <span asp-validation-for="PhoneNumber.Phone"></span>
+                    <select asp-for="PhoneNumber.PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()"> class="form-control"></select>
+                    <span class="input-group-btn">
+                        <button class="btn btn-circle  btn-success btn-add form-row" type="button">
+                            <span class="glyphicon glyphicon-plus" asp-validation-for="PhoneNumber.PhoneType"></span>+
+                        </button>
+                    </span>
+                </div>
+                <label asp-for="EmailAddress.Email">Email address</label>
+                <div class="entry input-group-append mb-3">
+                    <input class="form-control" asp-for="EmailAddress.Email" placeholder="Email address">
+                    <span asp-validation-for="EmailAddress.Email"></span>
+                    <select asp-for="EmailAddress.EmailType" asp-items="Html.GetEnumSelectList<EmailType>()"> class="form-control"></select>
+                    <span class="input-group-btn">
+                        <button class="btn btn-circle  btn-success btn-add form-row" type="button">
+                            <span class="glyphicon glyphicon-plus" asp-validation-for="EmailAddress.EmailType"></span>+
+                        </button>
+                    </span>
+                </div>
+                <label asp-for="networkTitle.networkTitle">Social networkTitle</label>
+                <div class="entry input-group-append mb-3">
+                    <input class="form-control" asp-for="networkTitle.networkTitle" placeholder="Social Network">
+                    <span asp-validation-for="networkTitle.networkTitle"></span>
+                    <select asp-for="networkTitle.SocialNetworkType" asp-items="Html.GetEnumSelectList<SocialNetworkType>()"> class="form-control"></select>
+                    <span class="input-group-btn">
+                        <button class="btn btn-circle  btn-success btn-add form-row" type="button">
+                            <span class="glyphicon glyphicon-plus" asp-validation-for="networkTitle.SocialNetworkType"></span>+
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!--END OF MAKING :)-->
+
+
         <div class="form-group col-md-12">
             <label asp-for="Industry"></label>
             <select asp-for="Industry" asp-items="Html.GetEnumSelectList<IndustryType>()" class="form-control"></select>
@@ -65,48 +123,73 @@
             <input asp-for="JobTitle" class="form-control" placeholder="Job Title">
             <span asp-validation-for="JobTitle"></span>
         </div>
-        <hr />
+
 
         <div class="form-group col-md-12">
             <label asp-for="AdditionalInfo">Additional information</label>
             <textarea asp-for="AdditionalInfo" class="form-control" rows="3"></textarea>
             <span asp-validation-for="AdditionalInfo"></span>
         </div>
-    </div>
-    <hr />
-    <h3>Organization</h3>
 
-    <!----TODO: Make choose if organization had already in DB and make choose and make choose what kind is phone, email, social networks and so on, validate zip code cannot be above 0(check range in www)-->
- 
- 
-    
+        <hr />
+        <h3>Organization</h3>
 
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <label asp-for="Organization.Name">Name</label>
-            <input asp-for="Organization.Name" class="form-control" placeholder="Name">
-            <span asp-validation-for="Organization.Name"></span>
+        <!----TODO: Make choose if organization had already in DB and make choose and make choose what kind is phone, email, social networks and so on, validate zip code cannot be above 0(check range in www)-->
+
+
+
+
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label asp-for="Organization.Name">Name</label>
+                <input asp-for="Organization.Name" class="form-control" placeholder="Name">
+                <span asp-validation-for="Organization.Name"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Organization.Address.Country">Organization Country</label>
+                <input asp-for="Organization.Address.Country" class="form-control" placeholder="Organization Country">
+                <span asp-validation-for="Organization.Address.Country"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Organization.Address.City">Organization City</label>
+                <input asp-for="Organization.Address.City" class="form-control" placeholder="Organization City">
+                <span asp-validation-for="Organization.Address.City"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Organization.Address.Street">Organization Street</label>
+                <input asp-for="Organization.Address.Street" class="form-control" placeholder="Organization Street">
+                <span asp-validation-for="Organization.Address.Street"></span>
+            </div>
+            <div class="form-group col-md-12">
+                <label asp-for="Organization.Description">Description</label>
+                <textarea asp-for="Organization.Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Organization.Description"></span>
+            </div>
         </div>
-        <div class="form-group col-md-3">
-            <label asp-for="Organization.Address.Country">Organization Country</label>
-            <input asp-for="Organization.Address.Country" class="form-control" placeholder="Organization Country">
-            <span asp-validation-for="Organization.Address.Country"></span>
-        </div>
-        <div class="form-group col-md-3">
-            <label asp-for="Organization.Address.City">Organization City</label>
-            <input asp-for="Organization.Address.City" class="form-control" placeholder="Organization City">
-            <span asp-validation-for="Organization.Address.City"></span>
-        </div>
-        <div class="form-group col-md-3">
-            <label asp-for="Organization.Address.Street">Organization Street</label>
-            <input asp-for="Organization.Address.Street" class="form-control" placeholder="Organization Street">
-            <span asp-validation-for="Organization.Address.Street"></span>
-        </div>
-        <div class="form-group col-md-12">
-            <label asp-for="Organization.Description">Description</label>
-            <textarea asp-for="Organization.Description" class="form-control" rows="3"></textarea>
-            <span asp-validation-for="Organization.Description"></span>
-        </div>
+        <button type="submit" class="btn btn-primary">Add Contact</button>
     </div>
-    <button type="submit" class="btn btn-primary">Add Contact</button>
 </form>
+
+
+<script type="text/javascript">
+    //$(function () {
+    //    $(document).on('click', '.btn-add', function (e) {
+    //        e.preventDefault();
+
+    //        var controlForm = $('.controls .form:first'),
+    //            currentEntry = $(this).parents('.entry:first'),
+    //            newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+    //        newEntry.find('input').val('');
+    //        controlForm.find('.entry:not(:last) .btn-add')
+    //            .removeClass('btn-add').addClass('btn-remove')
+    //            .removeClass('btn-success').addClass('btn-danger')
+    //            .html('<span class="glyphicon glyphicon-minus">-</span>');
+    //    }).on('click', '.btn-remove', function (e) {
+    //        $(this).parents('.entry:first').remove();
+
+    //        e.preventDefault();
+    //        return false;
+    //    });
+    //});
+</script>

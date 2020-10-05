@@ -14,13 +14,22 @@
     {
         private readonly IDeletableEntityRepository<Contact> contactsRepository;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
+        private readonly IDeletableEntityRepository<PhoneNumber> phonesRepository;
+        private readonly IDeletableEntityRepository<EmailAddress> emailRepository;
+        private readonly IDeletableEntityRepository<SocialNetwork> socialNetworkRepository;
 
         public ContactsService(
             IDeletableEntityRepository<Contact> contactsRepository,
-            IDeletableEntityRepository<ApplicationUser> userRepository)
+            IDeletableEntityRepository<ApplicationUser> userRepository,
+            IDeletableEntityRepository<PhoneNumber> phonesRepository,
+            IDeletableEntityRepository<EmailAddress> emailRepository,
+            IDeletableEntityRepository<SocialNetwork> socialNetworkRepository)
         {
             this.contactsRepository = contactsRepository;
             this.userRepository = userRepository;
+            this.phonesRepository = phonesRepository;
+            this.emailRepository = emailRepository;
+            this.socialNetworkRepository = socialNetworkRepository;
         }
 
         public IEnumerable<T> GetAllUserContacts<T>(string userId)
@@ -59,7 +68,6 @@
 
         public async Task<int> CreateContactAsync(ContactCreateInputModel input, string userId)
         {
-
             var contact = new Contact
             {
                 UserId = userId,
@@ -78,8 +86,40 @@
                 AdditionalInfo = input.AdditionalInfo,
                 Address = input.Address,
             };
+
             await this.contactsRepository.AddAsync(contact);
             await this.contactsRepository.SaveChangesAsync();
+
+            var phoneNumber = new PhoneNumber
+            {
+                ContactId = contact.Id,
+                Phone = input.PhoneNumber.Phone,
+                PhoneType = input.PhoneNumber.PhoneType,
+            };
+
+            await this.phonesRepository.AddAsync(phoneNumber);
+            await this.phonesRepository.SaveChangesAsync();
+
+            var emailAddress = new EmailAddress
+            {
+                ContactId = contact.Id,
+                Email = input.EmailAddress.Email,
+                EmailType = input.EmailAddress.EmailType,
+            };
+
+            await this.emailRepository.AddAsync(emailAddress);
+            await this.emailRepository.SaveChangesAsync();
+
+            var socialNetwork = new SocialNetwork
+            {
+                ContactId = contact.Id,
+                networkTitle = input.networkTitle.networkTitle,
+                SocialNetworkType = input.networkTitle.SocialNetworkType,
+            };
+
+            await this.socialNetworkRepository.AddAsync(socialNetwork);
+            await this.socialNetworkRepository.SaveChangesAsync();
+
             return contact.Id;
         }
     }

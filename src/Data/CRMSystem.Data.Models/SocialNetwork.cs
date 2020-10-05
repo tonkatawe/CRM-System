@@ -9,6 +9,8 @@
 
         public Contact Contact { get; set; }
 
+        public string networkTitle { get; set; }
+
         public SocialNetworkType SocialNetworkType { get; set; }
 
     }
