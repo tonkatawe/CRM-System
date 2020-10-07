@@ -10,9 +10,9 @@
                     <table class="table user-list">
                         <thead>
                             <tr>
-                                <th><span>Name</span></th>
-                                <th><span>Organization</span></th>
-                                <th class="text-center"><span>Industry</span></th>
+                                <th><span>Name<i class="fas fa-sort"></i></span></th>
+                                <th><span>Organization<i class="fas fa-sort"></i></span></th>
+                                <th class="text-center"><span>Industry<i class="fas fa-sort"></i></span></th>
                                 <th><span>Email</span></th>
                                 <th>&nbsp;</th>
                             </tr>
@@ -37,16 +37,20 @@
                                         }
                                     </td>
 
+
+
+
                                     <td style="width: 20%;">
-                                        <a href="#" class="table-link">
+                                        <a asp-controller="Contacts" asp-action="GetDetails" asp-route-contactId="@contact.Id" class="table-link">
                                             <span class="fa-stack">
-                                                <i class="fas fa-info-circle"></i>
+                                                <i class="fas fa-info-circle" title="Info"></i>
                                             </span>
                                         </a>
+                                   
                                         <a href="#" class="table-link">
 
                                             <span class="fa-stack">
-                                                <i class="fas fa-user-edit"></i>
+                                                <i class="fas fa-user-edit" title="Edit"></i>
                                             </span>
                                         </a>
 
@@ -54,7 +58,7 @@
 
                                         <a asp-controller="Contacts" asp-action="Remove" asp-route-contactId="@contact.Id" class="table-link danger">
                                             <span class="fa-stack">
-                                                <i class="fas fa-user-times"></i>
+                                                <i class="fas fa-user-times" title="Remove Contact" data-placement="top"></i>
                                             </span>
                                         </a>
 

@@ -78,9 +78,19 @@
         [Authorize]
         public async Task<IActionResult> Remove(int contactId)
         {
+
+            // todo: make security and deletable entities;
+
             await this.contactsService.DeleteContactAsync(contactId);
 
             return this.RedirectToAction("GetByUser");
+        }
+
+        [Authorize]
+        public IActionResult GetDetails(int contactId)
+        {
+            var viewModel = this.contactsService.GetContactDetails<GetDetailsViewModel>(contactId);
+            return this.View(viewModel);
         }
     }
 }

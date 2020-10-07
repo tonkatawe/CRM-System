@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
-
-namespace CRMSystem.Services.Data
+﻿namespace CRMSystem.Services.Data
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -41,6 +39,17 @@ namespace CRMSystem.Services.Data
                 .Where(x => x.UserId == userId);
 
             return query.To<T>().ToList();
+        }
+
+        public T GetContactDetails<T>(int contactId)
+        {
+            var query = this.contactsRepository
+                .All()
+                .Where(x => x.Id == contactId)
+                .To<T>()
+                .FirstOrDefault();
+
+            return query;
         }
 
         public IEnumerable<T> GetByOrganization<T>(int organizationId, int skip = 0)
@@ -156,14 +165,6 @@ namespace CRMSystem.Services.Data
 
             await this.socialNetworkRepository.AddAsync(socialNetwork);
             await this.socialNetworkRepository.SaveChangesAsync();
-
-            this.applicationUserRepository
-                .All()
-                .FirstOrDefault(x => x.Id == userId)
-                .Contacts
-               .Add(contact);
-
-            await this.applicationUserRepository.SaveChangesAsync();
 
             return contact.Id;
         }

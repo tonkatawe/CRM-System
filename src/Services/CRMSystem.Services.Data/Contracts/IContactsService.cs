@@ -9,6 +9,8 @@
     {
         IEnumerable<T> GetAllUserContacts<T>(string userId);
 
+        T GetContactDetails<T>(int contactId);
+
         IEnumerable<T> GetByOrganization<T>(int organizationId, int skip = 0);
 
         IEnumerable<T> GetByCreatedOn<T>(int skip = 0);

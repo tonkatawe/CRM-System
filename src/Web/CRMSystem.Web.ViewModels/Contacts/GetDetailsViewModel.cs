@@ -5,16 +5,10 @@
     using CRMSystem.Data.Models;
     using CRMSystem.Data.Models.Enums;
     using CRMSystem.Services.Mapping;
-    using CRMSystem.Web.ViewModels.Emails;
     using CRMSystem.Web.ViewModels.Organizations;
 
-    public class ContactViewModel : IMapFrom<Contact>
+    public class GetDetailsViewModel : IMapFrom<Contact>
     {
-        public ContactViewModel()
-        {
-            this.Emails = new HashSet<EmailViewModel>();
-        }
-
         public int Id { get; set; }
 
         public Title Title { get; set; }
@@ -33,8 +27,24 @@
 
         public string AdditionalInfo { get; set; }
 
-        public ICollection<EmailViewModel> Emails { get; set; }
-
         public Address Address { get; set; }
+
+        public PhoneType PhoneType { get; set; }
+
+        public PhoneNumber PhoneNumber { get; set; }
+
+    //    public ICollection<PhoneNumber> PhoneNumbers { get; set; }
+
+        public EmailType EmailType { get; set; }
+
+        public EmailAddress EmailAddress { get; set; }
+
+        public ICollection<EmailAddress> EmailAddresses { get; set; }
+
+        public SocialNetwork networkTitle { get; set; }
+
+        public SocialNetworkType SocialNetworkType { get; set; }
+
+     //   public IEnumerable<SocialNetwork> SocialNetworks { get; set; }
     }
 }
