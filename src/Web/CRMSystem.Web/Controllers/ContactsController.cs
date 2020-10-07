@@ -75,11 +75,12 @@
             return this.View(viewModel);
         }
 
-        //[HttpPost]
-        //[Authorize]
-        //public async Task<IActionResult> Remove(int contactId)
-        //{
+        [Authorize]
+        public async Task<IActionResult> Remove(int contactId)
+        {
+            await this.contactsService.DeleteContactAsync(contactId);
 
-        //}
+            return this.RedirectToAction("GetByUser");
+        }
     }
 }

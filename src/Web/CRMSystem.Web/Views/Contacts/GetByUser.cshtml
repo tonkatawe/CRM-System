@@ -36,23 +36,28 @@
                                             <a href="#">@email.Email</a>
                                         }
                                     </td>
+
                                     <td style="width: 20%;">
                                         <a href="#" class="table-link">
                                             <span class="fa-stack">
                                                 <i class="fas fa-info-circle"></i>
-                                       </span>
+                                            </span>
                                         </a>
                                         <a href="#" class="table-link">
-                                            
+
                                             <span class="fa-stack">
                                                 <i class="fas fa-user-edit"></i>
                                             </span>
                                         </a>
-                                        <a href="#" class="table-link danger">
+
+
+
+                                        <a asp-controller="Contacts" asp-action="Remove" asp-route-contactId="@contact.Id" class="table-link danger">
                                             <span class="fa-stack">
                                                 <i class="fas fa-user-times"></i>
                                             </span>
                                         </a>
+
                                     </td>
                                 </tr>
                             }

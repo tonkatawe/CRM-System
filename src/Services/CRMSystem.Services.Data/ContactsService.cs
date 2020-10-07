@@ -18,17 +18,20 @@ namespace CRMSystem.Services.Data
         private readonly IDeletableEntityRepository<PhoneNumber> phonesRepository;
         private readonly IDeletableEntityRepository<EmailAddress> emailRepository;
         private readonly IDeletableEntityRepository<SocialNetwork> socialNetworkRepository;
+        private readonly IDeletableEntityRepository<ApplicationUser> applicationUserRepository;
 
         public ContactsService(
             IDeletableEntityRepository<Contact> contactsRepository,
             IDeletableEntityRepository<PhoneNumber> phonesRepository,
             IDeletableEntityRepository<EmailAddress> emailRepository,
-            IDeletableEntityRepository<SocialNetwork> socialNetworkRepository)
+            IDeletableEntityRepository<SocialNetwork> socialNetworkRepository,
+            IDeletableEntityRepository<ApplicationUser> applicationUserRepository)
         {
             this.contactsRepository = contactsRepository;
             this.phonesRepository = phonesRepository;
             this.emailRepository = emailRepository;
             this.socialNetworkRepository = socialNetworkRepository;
+            this.applicationUserRepository = applicationUserRepository;
         }
 
         public IEnumerable<T> GetAllUserContacts<T>(string userId)
@@ -64,7 +67,9 @@ namespace CRMSystem.Services.Data
         {
             var contact = await this.contactsRepository
                 .GetByIdWithDeletedAsync(id);
+
             this.contactsRepository.Delete(contact);
+
             var emails = this.emailRepository.All()
                 .Where(x => x.ContactId == contact.Id);
 
@@ -74,6 +79,26 @@ namespace CRMSystem.Services.Data
             }
 
             await this.emailRepository.SaveChangesAsync();
+
+            var socialNetworks = this.socialNetworkRepository.All()
+                .Where(x => x.ContactId == contact.Id);
+
+            foreach (var socialNetwork in socialNetworks)
+            {
+                this.socialNetworkRepository.Delete(socialNetwork);
+            }
+
+            await this.socialNetworkRepository.SaveChangesAsync();
+
+            var phones = this.phonesRepository.All()
+                .Where(x => x.ContactId == contact.Id);
+
+            foreach (var phone in phones)
+            {
+                this.phonesRepository.Delete(phone);
+            }
+
+            await this.phonesRepository.SaveChangesAsync();
 
             return await this.contactsRepository.SaveChangesAsync();
         }
@@ -131,6 +156,14 @@ namespace CRMSystem.Services.Data
 
             await this.socialNetworkRepository.AddAsync(socialNetwork);
             await this.socialNetworkRepository.SaveChangesAsync();
+
+            this.applicationUserRepository
+                .All()
+                .FirstOrDefault(x => x.Id == userId)
+                .Contacts
+               .Add(contact);
+
+            await this.applicationUserRepository.SaveChangesAsync();
 
             return contact.Id;
         }
