@@ -1,11 +1,10 @@
-﻿using CRMSystem.Data.Models.Enums;
-
-namespace CRMSystem.Data.Models
+﻿namespace CRMSystem.Data.Models
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using CRMSystem.Data.Common.Models;
+    using CRMSystem.Data.Models.Enums;
 
     public class Contact : BaseDeletableModel<int>
     {
@@ -58,7 +57,7 @@ namespace CRMSystem.Data.Models
 
         public IEnumerable<Note> Notes { get; set; }
 
-        public IEnumerable<PhoneNumber> PhoneNumbers { get; set; }
+        public ICollection<PhoneNumber> PhoneNumbers { get; set; }
 
         public IEnumerable<EmailAddress> EmailAddresses { get; set; }
 

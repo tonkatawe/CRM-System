@@ -10,12 +10,7 @@
 
     public class ContactCreateInputModel : IMapFrom<Contact>, IMapFrom<OrganizationInputModel>
     {
-        public ContactCreateInputModel()
-        {
-            this.PhoneNumbers = new HashSet<PhoneNumber>(2);
-            this.EmailAddresses = new HashSet<EmailAddress>();
-            this.SocialNetworks = new HashSet<SocialNetwork>();
-        }
+        public int Id { get; set; }
 
         [Required]
         public Title Title { get; set; }
@@ -50,18 +45,12 @@
 
         public PhoneNumber PhoneNumber { get; set; }
 
-        public ICollection<PhoneNumber> PhoneNumbers { get; set; }
-
         public EmailType EmailType { get; set; }
 
         public EmailAddress EmailAddress { get; set; }
 
-        public ICollection<EmailAddress> EmailAddresses { get; set; }
-
         public SocialNetwork networkTitle { get; set; }
 
         public SocialNetworkType SocialNetworkType { get; set; }
-
-        public IEnumerable<SocialNetwork> SocialNetworks { get; set; }
     }
 }
