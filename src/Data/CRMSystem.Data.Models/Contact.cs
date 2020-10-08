@@ -36,7 +36,7 @@
         [MaxLength(30)]
         public string JobTitle { get; set; }
 
-        public int OrganizationId { get; set; }
+        public int? OrganizationId { get; set; }
 
         public Organization Organization { get; set; }
 
@@ -55,14 +55,14 @@
 
         public ApplicationUser User { get; set; }
 
-        public IEnumerable<Note> Notes { get; set; }
+        public ICollection<Note> Notes { get; set; }
 
         public ICollection<PhoneNumber> PhoneNumbers { get; set; }
 
-        public IEnumerable<EmailAddress> EmailAddresses { get; set; }
+        public ICollection<EmailAddress> EmailAddresses { get; set; }
 
-        public IEnumerable<SocialNetwork> SocialNetworks { get; set; }
+        public ICollection<SocialNetwork> SocialNetworks { get; set; }
 
-        public IEnumerable<Sale> Sales { get; set; }
+        public ICollection<Sale> Sales { get; set; }
     }
 }

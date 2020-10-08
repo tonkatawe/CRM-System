@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace CRMSystem.Web.Controllers
+﻿namespace CRMSystem.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using CRMSystem.Data.Models;
@@ -52,6 +51,5 @@ namespace CRMSystem.Web.Controllers
 
             return this.Redirect("/");
         }
-
     }
 }

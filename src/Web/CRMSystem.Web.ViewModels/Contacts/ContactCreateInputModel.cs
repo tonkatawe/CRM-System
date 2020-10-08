@@ -10,6 +10,8 @@
 
     public class ContactCreateInputModel : IMapFrom<Contact>, IMapFrom<OrganizationInputModel>
     {
+        public string UserId { get; set; }
+
         public int Id { get; set; }
 
         [Required]
@@ -33,7 +35,10 @@
 
         public IndustryType Industry { get; set; }
 
-        public OrganizationInputModel Organization { get; set; }
+        [Display(Name = "Choose your exist organization:")]
+        public int? OrganizationId { get; set; }
+
+        public IEnumerable<OrganizationDropDownViewModel> Organizations { get; set; }
 
         [MaxLength(1000)]
         public string AdditionalInfo { get; set; }

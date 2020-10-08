@@ -120,21 +120,13 @@
                 Title = input.Title,
                 FirstName = input.FirstName,
                 MiddleName = input.MiddleName,
+                OrganizationId = input.OrganizationId,
                 LastName = input.LastName,
                 JobTitle = input.JobTitle,
-                Organization = new Organization
-                {
-                    UserId = userId,
-                    Name = input.Organization.Name,
-                    Address = input.Organization.Address,
-                },
                 Industry = input.Industry,
                 AdditionalInfo = input.AdditionalInfo,
                 Address = input.Address,
             };
-
-            await this.contactsRepository.AddAsync(contact);
-            await this.contactsRepository.SaveChangesAsync();
 
             var phoneNumber = new PhoneNumber
             {
@@ -143,18 +135,12 @@
                 PhoneType = input.PhoneNumber.PhoneType,
             };
 
-            await this.phonesRepository.AddAsync(phoneNumber);
-            await this.phonesRepository.SaveChangesAsync();
-
             var emailAddress = new EmailAddress
             {
                 ContactId = contact.Id,
                 Email = input.EmailAddress.Email,
                 EmailType = input.EmailAddress.EmailType,
             };
-
-            await this.emailRepository.AddAsync(emailAddress);
-            await this.emailRepository.SaveChangesAsync();
 
             var socialNetwork = new SocialNetwork
             {
@@ -163,9 +149,12 @@
                 SocialNetworkType = input.networkTitle.SocialNetworkType,
             };
 
-            await this.socialNetworkRepository.AddAsync(socialNetwork);
-            await this.socialNetworkRepository.SaveChangesAsync();
+            contact.PhoneNumbers.Add(phoneNumber);
+            contact.EmailAddresses.Add(emailAddress);
+            contact.SocialNetworks.Add(socialNetwork);
 
+            await this.contactsRepository.AddAsync(contact);
+            await this.contactsRepository.SaveChangesAsync();
             return contact.Id;
         }
     }

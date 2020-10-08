@@ -1,11 +1,17 @@
 ﻿namespace CRMSystem.Data.Models
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using CRMSystem.Data.Common.Models;
 
     public class Organization : BaseDeletableModel<int>
     {
+        public Organization()
+        {
+            this.Contacts = new HashSet<Contact>();
+        }
+
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
@@ -21,5 +27,7 @@
         public string UserId { get; set; }
 
         public ApplicationUser User { get; set; }
+
+        public ICollection<Contact> Contacts { get; set; }
     }
 }

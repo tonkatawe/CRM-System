@@ -15,22 +15,31 @@
     {
         private readonly IContactsService contactsService;
         private readonly IEmailsService emailsService;
+        private readonly IOrganizationsService organizationsService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public ContactsController(
             IContactsService contactsService,
             IEmailsService emailsService,
+            IOrganizationsService organizationsService,
             UserManager<ApplicationUser> userManager)
         {
             this.contactsService = contactsService;
             this.emailsService = emailsService;
+            this.organizationsService = organizationsService;
             this.userManager = userManager;
         }
 
         [Authorize]
         public IActionResult Create()
         {
-            return this.View();
+            var organizations = this.organizationsService.GetAll<OrganizationDropDownViewModel>();
+            var viewModel = new ContactCreateInputModel
+            {
+                Organizations = organizations,
+            };
+
+            return this.View(viewModel);
         }
 
         [HttpPost]

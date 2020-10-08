@@ -25,7 +25,15 @@
                                         @(contact.FirstName +" "+ contact.LastName)
                                     </td>
                                     <td>
+                                        @if (contact.Organization != null)
+                                        {
                                         @contact.Organization.Name
+
+                                        }
+                                        else
+                                        {
+                                            <p>Add to organization</p>
+                                        }
                                     </td>
                                     <td class="text-center">
                                         <span class="label label-default">@contact.Industry.ToString()</span>

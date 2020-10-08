@@ -22,7 +22,6 @@
         Task<int> DeleteContactAsync(int id);
 
         // TODO: Make change info at contact
-
         Task<int> CreateContactAsync(ContactCreateInputModel input, string userId);
     }
 }

@@ -23,28 +23,16 @@
 
         public IndustryType Industry { get; set; }
 
-        public OrganizationInputModel Organization { get; set; }
+        public OrganizationViewModel Organization { get; set; }
 
         public string AdditionalInfo { get; set; }
 
         public Address Address { get; set; }
 
-        public PhoneType PhoneType { get; set; }
-
-        public PhoneNumber PhoneNumber { get; set; }
-
-    //    public ICollection<PhoneNumber> PhoneNumbers { get; set; }
-
-        public EmailType EmailType { get; set; }
-
-        public EmailAddress EmailAddress { get; set; }
+        public ICollection<PhoneNumber> PhoneNumbers { get; set; }
 
         public ICollection<EmailAddress> EmailAddresses { get; set; }
 
-        public SocialNetwork networkTitle { get; set; }
-
-        public SocialNetworkType SocialNetworkType { get; set; }
-
-     //   public IEnumerable<SocialNetwork> SocialNetworks { get; set; }
+        public ICollection<SocialNetwork> SocialNetworks { get; set; }
     }
 }
