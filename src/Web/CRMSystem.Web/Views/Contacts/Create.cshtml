@@ -89,13 +89,13 @@
             <span asp-validation-for="Title"></span>
         </div>
         <div class="form-group col-md-2">
-            <label asp-for="networkTitle.networkTitle">Social networkTitle</label>
-            <input class="form-control" asp-for="networkTitle.networkTitle" placeholder="Social Network">
-            <span asp-validation-for="networkTitle.networkTitle"></span>
+            <label asp-for="Network.Name">Social Name</label>
+            <input class="form-control" asp-for="Network.Name" placeholder="Social Network">
+            <span asp-validation-for="Network.Name"></span>
         </div>
         <div class="form-group col-md-2">
             <label asp-for="SocialNetworkType"></label>
-            <select asp-for="networkTitle" asp-items="Html.GetEnumSelectList<SocialNetworkType>()" class="form-control"></select>
+            <select asp-for="Network" asp-items="Html.GetEnumSelectList<SocialNetworkType>()" class="form-control"></select>
             <span asp-validation-for="SocialNetworkType"></span>
         </div>
     </div>
@@ -123,7 +123,7 @@
     <hr />
 
 
-    @if (this.Model.Organizations.Any())
+    @*@if (this.Model.Organizations.Any())
     {
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -132,12 +132,62 @@
                 <span asp-validation-for="OrganizationId" class="text-danger"></span>
             </div>
         </div>
+        <div class="form-row">
+            <h2>OR</h2>
+        </div>
+
+        <div>*@
+            <!--add organization underconstruction-->
+            @*<form asp-controller="Organizations" method="get" asp-action="Create" id="AddOrganizationForm" style="display: none">
+
+                <div>
+                    <input type="submit" class="btn btn-primary" value="Add comment" />
+                </div>
+            </form>*@
+         
+            <!-- Button trigger modal -->
+            <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Launch demo modal
+            </button>
+
+            <!-- Modal -->
+            <!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">-->
+                    @*<div class="modal-content">
+        <div class="modal-header">*@
+                    @*<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>*@
+                    <div id="exampleModalLabel" method="" data-url="@Url.Action("Create", "Organizations")"></div>-->
+                  
+                    @*<a asp-controller="Organizations" method="get" asp-action="Create"  id="exampleModalLabel" />*@
+                    @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        @*</div>*@
+                <!--</div>-->
+            
+                <!--END of adding organization-->
+            <!--</div>
+        </div>-->
+
+
+
+
+      
         <!--make dynamic add new organization-->
-    }
+    <!--}
     else
     {
         @this.Model.FirstName
-    }
+    }-->
 
     <!----TODO: Make choose if organization had already in DB and make choose and make choose what kind is phone, email, social networks and so on, validate zip code cannot be above 0(check range in www)-->
     @*<div class="form-row">
@@ -167,8 +217,26 @@
                 <span asp-validation-for="Organization.Description"></span>
             </div>
         </div>*@
-    <button type="submit" class="btn btn-primary">Add Contact</button>
+                <button type="submit" class="btn btn-primary">Add Contact</button>
+
 </form>
+
+
+@section Scripts {
+    <script>
+        //function showAddOrganizationForm(parentId) {
+        //    $("#AddCommentForm input[name='ParentId']").val(parentId);
+        //    $("#AddCommentForm").show();
+        //    $([document.documentElement, document.body]).animate({
+        //        scrollTop: $("#AddCommentForm").offset().top
+        //    }, 1000);
+        //}
+  
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus');
+        })
+    </script>
+}
 
 
 

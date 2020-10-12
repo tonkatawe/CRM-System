@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRMSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201005120847_AddSocialNetworkNetworkTitle")]
-    partial class AddSocialNetworkNetworkTitle
+    [Migration("20201012084845_AddSocialNetworkName")]
+    partial class AddSocialNetworkName
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -232,7 +232,7 @@ namespace CRMSystem.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrganizationId")
+                    b.Property<int?>("OrganizationId")
                         .HasColumnType("int");
 
                     b.Property<int>("Title")
@@ -723,10 +723,8 @@ namespace CRMSystem.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("CRMSystem.Data.Models.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .WithMany("Contacts")
+                        .HasForeignKey("OrganizationId");
 
                     b.HasOne("CRMSystem.Data.Models.ApplicationUser", "User")
                         .WithMany("Contacts")

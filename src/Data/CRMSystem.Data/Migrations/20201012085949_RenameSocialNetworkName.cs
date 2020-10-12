@@ -2,12 +2,16 @@
 
 namespace CRMSystem.Data.Migrations
 {
-    public partial class AddSocialNetworkNetworkTitle : Migration
+    public partial class RenameSocialNetworkName : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
+            migrationBuilder.DropColumn(
                 name: "networkTitle",
+                table: "SocialNetworks");
+
+            migrationBuilder.AddColumn<string>(
+                name: "Name",
                 table: "SocialNetworks",
                 nullable: true);
         }
@@ -15,8 +19,14 @@ namespace CRMSystem.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "networkTitle",
+                name: "Name",
                 table: "SocialNetworks");
+
+            migrationBuilder.AddColumn<string>(
+                name: "networkTitle",
+                table: "SocialNetworks",
+                type: "nvarchar(max)",
+                nullable: true);
         }
     }
 }

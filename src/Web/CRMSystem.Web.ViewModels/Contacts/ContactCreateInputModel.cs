@@ -54,7 +54,7 @@
 
         public EmailAddress EmailAddress { get; set; }
 
-        public SocialNetwork networkTitle { get; set; }
+        public SocialNetwork Network { get; set; }
 
         public SocialNetworkType SocialNetworkType { get; set; }
     }

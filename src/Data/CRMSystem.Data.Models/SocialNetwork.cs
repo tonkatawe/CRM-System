@@ -9,7 +9,7 @@
 
         public Contact Contact { get; set; }
 
-        public string networkTitle { get; set; }
+        public string Name { get; set; }
 
         public SocialNetworkType SocialNetworkType { get; set; }
 

@@ -1,4 +1,7 @@
-﻿namespace CRMSystem.Data
+﻿using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+namespace CRMSystem.Data
 {
     using System;
     using System.Linq;

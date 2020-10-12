@@ -13,23 +13,21 @@
     public class ContactsService : IContactsService
     {
         private readonly IDeletableEntityRepository<Contact> contactsRepository;
-        private readonly IDeletableEntityRepository<PhoneNumber> phonesRepository;
-        private readonly IDeletableEntityRepository<EmailAddress> emailRepository;
-        private readonly IDeletableEntityRepository<SocialNetwork> socialNetworkRepository;
-        private readonly IDeletableEntityRepository<ApplicationUser> applicationUserRepository;
+        private readonly IPhonesServices phonesServices;
+        private readonly IEmailsService emailsService;
+        private readonly ISocialNetworksServices socialNetworkService;
+
 
         public ContactsService(
             IDeletableEntityRepository<Contact> contactsRepository,
-            IDeletableEntityRepository<PhoneNumber> phonesRepository,
-            IDeletableEntityRepository<EmailAddress> emailRepository,
-            IDeletableEntityRepository<SocialNetwork> socialNetworkRepository,
-            IDeletableEntityRepository<ApplicationUser> applicationUserRepository)
+            IPhonesServices phonesServices,
+            IEmailsService emailsService,
+            ISocialNetworksServices socialNetworkService)
         {
             this.contactsRepository = contactsRepository;
-            this.phonesRepository = phonesRepository;
-            this.emailRepository = emailRepository;
-            this.socialNetworkRepository = socialNetworkRepository;
-            this.applicationUserRepository = applicationUserRepository;
+            this.phonesServices = phonesServices;
+            this.emailsService = emailsService;
+            this.socialNetworkService = socialNetworkService;
         }
 
         public IEnumerable<T> GetAllUserContacts<T>(string userId)
@@ -79,36 +77,6 @@
 
             this.contactsRepository.Delete(contact);
 
-            var emails = this.emailRepository.All()
-                .Where(x => x.ContactId == contact.Id);
-
-            foreach (var email in emails)
-            {
-                this.emailRepository.Delete(email);
-            }
-
-            await this.emailRepository.SaveChangesAsync();
-
-            var socialNetworks = this.socialNetworkRepository.All()
-                .Where(x => x.ContactId == contact.Id);
-
-            foreach (var socialNetwork in socialNetworks)
-            {
-                this.socialNetworkRepository.Delete(socialNetwork);
-            }
-
-            await this.socialNetworkRepository.SaveChangesAsync();
-
-            var phones = this.phonesRepository.All()
-                .Where(x => x.ContactId == contact.Id);
-
-            foreach (var phone in phones)
-            {
-                this.phonesRepository.Delete(phone);
-            }
-
-            await this.phonesRepository.SaveChangesAsync();
-
             return await this.contactsRepository.SaveChangesAsync();
         }
 
@@ -128,33 +96,22 @@
                 Address = input.Address,
             };
 
-            var phoneNumber = new PhoneNumber
-            {
-                ContactId = contact.Id,
-                Phone = input.PhoneNumber.Phone,
-                PhoneType = input.PhoneNumber.PhoneType,
-            };
+            await this.contactsRepository.AddAsync(contact);
+            await this.contactsRepository.SaveChangesAsync();
 
-            var emailAddress = new EmailAddress
-            {
-                ContactId = contact.Id,
-                Email = input.EmailAddress.Email,
-                EmailType = input.EmailAddress.EmailType,
-            };
+            var emailAddress = await this.emailsService.CreateEmailAsync(input.EmailAddress.Email, input.EmailAddress.EmailType, contact.Id);
 
-            var socialNetwork = new SocialNetwork
-            {
-                ContactId = contact.Id,
-                networkTitle = input.networkTitle.networkTitle,
-                SocialNetworkType = input.networkTitle.SocialNetworkType,
-            };
+            var phoneNumber = await this.phonesServices.CreatePhoneAsync(input.PhoneNumber.Phone, input.PhoneNumber.PhoneType,
+                    contact.Id);
+
+            var socialNetwork =
+                await this.socialNetworkService.CreateSocialNetworkAsync(input.Network.Name, input.SocialNetworkType,
+                    contact.Id);
 
             contact.PhoneNumbers.Add(phoneNumber);
             contact.EmailAddresses.Add(emailAddress);
             contact.SocialNetworks.Add(socialNetwork);
 
-            await this.contactsRepository.AddAsync(contact);
-            await this.contactsRepository.SaveChangesAsync();
             return contact.Id;
         }
     }

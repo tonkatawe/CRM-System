@@ -26,7 +26,14 @@
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Organization</a>
+                            @if (this.Model.Organization != null)
+                            {
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Organization</a>
+                            }
+                            else
+                            {
+                                <h1>Add to organization</h1>
+                            }
                         </li>
                     </ul>
                 </div>
@@ -107,7 +114,7 @@
                                     <i class="fas fa-edit fa-2x"></i>
                                     @*</a>*@
                                     @*<a asp-controller="Organizations" asp-action="Remove" asp-route-organizationId="@this.Model.Organization.Id" class="table-link">*@
-                                        <i class="fa fa-trash fa-2x"></i>
+                                    <i class="fa fa-trash fa-2x"></i>
                                     @*</a>*@
                                 </p>
 
