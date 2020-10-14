@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using CRMSystem.Web.ViewModels.Contacts;
 
@@ -31,21 +32,20 @@ namespace CRMSystem.Web.Controllers
         [Authorize]
         public IActionResult Create()
         {
-            return PartialView("_CreateOrgn");
-            //  return this.View();
+            return this.View();
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create(OrganizationCreateInputModel input, string userId)
+        public async Task<IActionResult> Create(ConnectViewModel input, string userId)
         {
             var user = await this.userManager.GetUserAsync(this.User);
             if (!this.ModelState.IsValid)
             {
-                return this.View(input);
+             return this.View(input);
             }
 
-            await this.organizationsService.CreateOrganizationAsync(input, user.Id);
+            await this.organizationsService.CreateOrganizationAsync(input.CreateOrganization, user.Id);
 
             return this.RedirectToAction("Create", "Contacts");
         }
@@ -79,8 +79,7 @@ namespace CRMSystem.Web.Controllers
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-
-            var contact = this.contactsService.AddToOrganizationAsync(contactId, organizationId);
+            await this.contactsService.AddToOrganizationAsync(contactId, organizationId);
 
             //todo: make security part for contact with not null organizationID
 
