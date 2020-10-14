@@ -29,7 +29,7 @@
 
         public IndustryType Industry { get; set; }
 
-        public OrganizationInputModel Organization { get; set; }
+        public OrganizationCreateInputModel Organization { get; set; }
 
         public string AdditionalInfo { get; set; }
 

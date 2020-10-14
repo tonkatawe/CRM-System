@@ -13,6 +13,7 @@
     public class ContactsService : IContactsService
     {
         private readonly IDeletableEntityRepository<Contact> contactsRepository;
+        private readonly IAddressesService addressesService;
         private readonly IPhonesServices phonesServices;
         private readonly IEmailsService emailsService;
         private readonly ISocialNetworksServices socialNetworkService;
@@ -20,11 +21,13 @@
 
         public ContactsService(
             IDeletableEntityRepository<Contact> contactsRepository,
+            IAddressesService addressesService,
             IPhonesServices phonesServices,
             IEmailsService emailsService,
             ISocialNetworksServices socialNetworkService)
         {
             this.contactsRepository = contactsRepository;
+            this.addressesService = addressesService;
             this.phonesServices = phonesServices;
             this.emailsService = emailsService;
             this.socialNetworkService = socialNetworkService;
@@ -82,24 +85,27 @@
 
         public async Task<int> CreateContactAsync(ContactCreateInputModel input, string userId)
         {
+            var address = this.addressesService.CreateAddressAsync(input.Address.Country, input.Address.City,
+                input.Address.Street, input.Address.ZipCode);
+
             var contact = new Contact
             {
+                Address = await address,
                 UserId = userId,
+                OrganizationId = null,
                 Title = input.Title,
                 FirstName = input.FirstName,
                 MiddleName = input.MiddleName,
-                OrganizationId = input.OrganizationId,
                 LastName = input.LastName,
                 JobTitle = input.JobTitle,
                 Industry = input.Industry,
                 AdditionalInfo = input.AdditionalInfo,
-                Address = input.Address,
             };
 
             await this.contactsRepository.AddAsync(contact);
             await this.contactsRepository.SaveChangesAsync();
 
-            var emailAddress = await this.emailsService.CreateEmailAsync(input.EmailAddress.Email, input.EmailAddress.EmailType, contact.Id);
+            var emailAddress = await this.emailsService.CreateEmailAsync(input.Email.Email, input.Email.EmailType, contact.Id);
 
             var phoneNumber = await this.phonesServices.CreatePhoneAsync(input.PhoneNumber.Phone, input.PhoneNumber.PhoneType,
                     contact.Id);

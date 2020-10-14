@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CRMSystem.Services.Mapping;
-
-namespace CRMSystem.Services.Data
+﻿namespace CRMSystem.Services.Data
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using CRMSystem.Data.Common.Repositories;
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Data.Contracts;
+    using CRMSystem.Services.Mapping;
     using CRMSystem.Web.ViewModels.Organizations;
 
     public class OrganizationsService : IOrganizationsService
@@ -27,7 +26,7 @@ namespace CRMSystem.Services.Data
             this.contactRepository = contactRepository;
         }
 
-        public async Task<int> CreateOrganizationAsync(OrganizationInputModel input, string userId)
+        public async Task<int> CreateOrganizationAsync(OrganizationCreateInputModel input, string userId)
         {
             var organization = new Organization
             {
@@ -42,10 +41,12 @@ namespace CRMSystem.Services.Data
             return organization.Id;
         }
 
-        public IEnumerable<T> GetAll<T>(int? count = null)
+        public IEnumerable<T> GetAll<T>(string userId, int? count = null)
         {
             IQueryable<Organization> query =
-                this.organizationRepository.All().OrderBy(x => x.Name);
+                this.organizationRepository.All()
+                    .Where(x => x.UserId == userId)
+                    .OrderBy(x => x.Name);
 
             return query.To<T>().ToList();
         }

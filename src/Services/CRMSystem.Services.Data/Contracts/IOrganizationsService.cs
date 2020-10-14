@@ -7,9 +7,9 @@
 
     public interface IOrganizationsService
     {
-        Task<int> CreateOrganizationAsync(OrganizationInputModel input, string userId);
+        Task<int> CreateOrganizationAsync(OrganizationCreateInputModel input, string userId);
 
-        IEnumerable<T> GetAll<T>(int? count = null);
+        IEnumerable<T> GetAll<T>(string userId, int? count = null);
 
     }
 }

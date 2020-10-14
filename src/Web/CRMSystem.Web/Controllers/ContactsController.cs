@@ -33,13 +33,7 @@
         [Authorize]
         public IActionResult Create()
         {
-            var organizations = this.organizationsService.GetAll<OrganizationDropDownViewModel>();
-            var viewModel = new ContactCreateInputModel
-            {
-                Organizations = organizations,
-            };
-
-            return this.View(viewModel);
+            return this.View();
         }
 
         [HttpPost]
@@ -54,7 +48,7 @@
 
             await this.contactsService.CreateContactAsync(input, user.Id);
 
-            return this.Redirect("/");
+            return this.RedirectToAction("ConnectToOrganization","Organizations");
         }
 
         [Authorize]

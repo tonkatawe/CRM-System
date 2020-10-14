@@ -5,8 +5,10 @@
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Mapping;
 
-    public class OrganizationInputModel : IMapFrom<Organization>
+    public class OrganizationCreateInputModel : IMapFrom<Organization>
     {
+        public string UserId { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
@@ -17,6 +19,5 @@
         public int AddressId { get; set; }
 
         public Address Address { get; set; }
-
     }
 }

@@ -32,7 +32,6 @@
         [MaxLength(20)]
         public string LastName { get; set; }
 
-        [Required]
         [MaxLength(30)]
         public string JobTitle { get; set; }
 

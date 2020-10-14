@@ -32,7 +32,7 @@
                             }
                             else
                             {
-                                <h1>Add to organization</h1>
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">add to org</a>
                             }
                         </li>
                     </ul>
@@ -103,49 +103,54 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h3><b>@this.Model.Organization.Name</b></h3>
-                            </div>
-                            <div class="col-md-6">
-                                <p>
-                                    @*<a asp-controller="Organizations" asp-action="Remove" asp-route-contactId="@this.Model.Id" class="table-link">*@
-                                    <i class="fas fa-edit fa-2x"></i>
-                                    @*</a>*@
-                                    @*<a asp-controller="Organizations" asp-action="Remove" asp-route-organizationId="@this.Model.Organization.Id" class="table-link">*@
-                                    <i class="fa fa-trash fa-2x"></i>
-                                    @*</a>*@
-                                </p>
+                    @if (this.Model.Organization != null)
+                    {
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h3><b>@this.Model.Organization.Name</b></h3>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>
+                                        @*<a asp-controller="Organizations" asp-action="Remove" asp-route-contactId="@this.Model.Id" class="table-link">*@
+                                        <i class="fas fa-edit fa-2x"></i>
+                                        @*</a>*@
+                                        @*<a asp-controller="Organizations" asp-action="Remove" asp-route-organizationId="@this.Model.Organization.Id" class="table-link">*@
+                                        <i class="fa fa-trash fa-2x"></i>
+                                        @*</a>*@
+                                    </p>
 
+                                </div>
                             </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label><b>Country</b></label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@this.Model.Organization.Address.Country</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label><b>City</b></label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@this.Model.Organization.Address.City</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label><b>Street</b></label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>@this.Model.Organization.Address.Street</p>
+                                </div>
+                            </div>
+                            <!--TODO SHOW ORGANIZATION to MAP-->
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label><b>Country</b></label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>@this.Model.Organization.Address.Country</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label><b>City</b></label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>@this.Model.Organization.Address.City</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label><b>Street</b></label>
-                            </div>
-                            <div class="col-md-6">
-                                <p>@this.Model.Organization.Address.Street</p>
-                            </div>
-                        </div>
-                        <!--TODO SHOW ORGANIZATION OT MAP-->
-                    </div>
+                    }
                 </div>
             </div>
         </div>

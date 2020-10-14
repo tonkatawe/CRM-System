@@ -1,6 +1,5 @@
 ﻿namespace CRMSystem.Web.Controllers
 {
-    using System;
     using System.Threading.Tasks;
 
     using CRMSystem.Data.Models;
@@ -24,32 +23,30 @@
         [Authorize]
         public IActionResult Create()
         {
-            return this.View();
+            return PartialView("_CreateOrgn");
+            //  return this.View();
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create(OrganizationInputModel input, string userId)
+        public async Task<IActionResult> Create(OrganizationCreateInputModel input, string userId)
         {
             var user = await this.userManager.GetUserAsync(this.User);
             if (!this.ModelState.IsValid)
             {
-                Console.WriteLine(this.ModelState.ErrorCount);
-                foreach (var value in this.ModelState.Values)
-                {
-                    foreach (var error in value.Errors)
-                    {
-                        Console.WriteLine(error.Exception);
-                        Console.WriteLine(error.ErrorMessage);
-                    }
-                }
-
                 return this.View(input);
             }
 
             await this.organizationsService.CreateOrganizationAsync(input, user.Id);
 
-            return this.Redirect("/");
+            return this.RedirectToAction("Create", "Contacts");
+        }
+
+        [Authorize]
+        public IActionResult ConnectToOrganization()
+        {
+            return this.View();
+            //  return this.View();
         }
     }
 }

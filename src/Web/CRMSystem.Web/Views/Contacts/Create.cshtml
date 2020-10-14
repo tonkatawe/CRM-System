@@ -4,19 +4,17 @@
 @using System.Linq
 @using System.Security.Cryptography.X509Certificates
 @using CRMSystem.Web.ViewModels.Contacts
+@using CRMSystem.Web.ViewModels.Organizations
 @using Microsoft.AspNetCore.Mvc.Rendering
 @using Microsoft.CodeAnalysis.CSharp
 @inject UserManager<ApplicationUser> UserManager
 @model CRMSystem.Web.ViewModels.Contacts.ContactCreateInputModel
+
 @{
     this.ViewData["Title"] = "Add new contact";
 
-    var organizations = Model.Organizations.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
-    var userId = this.UserManager.GetUserId(User);
 }
-<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
-<script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-<script src="~/lib/jquery/dist/jquery.js"></script>
+
 
 
 
@@ -79,9 +77,9 @@
             <span asp-validation-for="Title"></span>
         </div>
         <div class="form-group col-md-2">
-            <label asp-for="EmailAddress.Email">Email address</label>
-            <input class="form-control" asp-for="EmailAddress.Email" placeholder="Email address">
-            <span asp-validation-for="EmailAddress.Email"></span>
+            <label asp-for="Email.Email">Email address</label>
+            <input class="form-control" asp-for="Email.Email" placeholder="Email address">
+            <span asp-validation-for="Email.Email"></span>
         </div>
         <div class="form-group col-md-2">
             <label asp-for="EmailType"></label>
@@ -111,7 +109,6 @@
             <span asp-validation-for="Industry" class="text-danger"></span>
         </div>
     </div>
-
     <div class="form-row">
         <div class="form-group col-md-12">
             <label asp-for="AdditionalInfo">Additional information</label>
@@ -119,124 +116,10 @@
             <span asp-validation-for="AdditionalInfo"></span>
         </div>
     </div>
-
-    <hr />
-
-
-    @*@if (this.Model.Organizations.Any())
-    {
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label asp-for="OrganizationId"></label>
-                <select asp-for="OrganizationId" asp-items="organizations" class="form-control"></select>
-                <span asp-validation-for="OrganizationId" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-row">
-            <h2>OR</h2>
-        </div>
-
-        <div>*@
-            <!--add organization underconstruction-->
-            @*<form asp-controller="Organizations" method="get" asp-action="Create" id="AddOrganizationForm" style="display: none">
-
-                <div>
-                    <input type="submit" class="btn btn-primary" value="Add comment" />
-                </div>
-            </form>*@
-         
-            <!-- Button trigger modal -->
-            <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                Launch demo modal
-            </button>
-
-            <!-- Modal -->
-            <!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">-->
-                    @*<div class="modal-content">
-        <div class="modal-header">*@
-                    @*<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>*@
-                    <div id="exampleModalLabel" method="" data-url="@Url.Action("Create", "Organizations")"></div>-->
-                  
-                    @*<a asp-controller="Organizations" method="get" asp-action="Create"  id="exampleModalLabel" />*@
-                    @*<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        @*</div>*@
-                <!--</div>-->
-            
-                <!--END of adding organization-->
-            <!--</div>
-        </div>-->
-
-
-
-
-      
-        <!--make dynamic add new organization-->
-    <!--}
-    else
-    {
-        @this.Model.FirstName
-    }-->
-
-    <!----TODO: Make choose if organization had already in DB and make choose and make choose what kind is phone, email, social networks and so on, validate zip code cannot be above 0(check range in www)-->
-    @*<div class="form-row">
-            <div class="form-group col-md-3">
-                <label asp-for="Organization.Name">Name</label>
-                <input asp-for="Organization.Name" class="form-control" placeholder="Name">
-                <span asp-validation-for="Organization.Name"></span>
-            </div>
-            <div class="form-group col-md-3">
-                <label asp-for="Organization.Address.Country">Organization Country</label>
-                <input asp-for="Organization.Address.Country" class="form-control" placeholder="Organization Country">
-                <span asp-validation-for="Organization.Address.Country"></span>
-            </div>
-            <div class="form-group col-md-3">
-                <label asp-for="Organization.Address.City">Organization City</label>
-                <input asp-for="Organization.Address.City" class="form-control" placeholder="Organization City">
-                <span asp-validation-for="Organization.Address.City"></span>
-            </div>
-            <div class="form-group col-md-3">
-                <label asp-for="Organization.Address.Street">Organization Street</label>
-                <input asp-for="Organization.Address.Street" class="form-control" placeholder="Organization Street">
-                <span asp-validation-for="Organization.Address.Street"></span>
-            </div>
-            <div class="form-group col-md-12">
-                <label asp-for="Organization.Description">Description</label>
-                <textarea asp-for="Organization.Description" class="form-control" rows="3"></textarea>
-                <span asp-validation-for="Organization.Description"></span>
-            </div>
-        </div>*@
-                <button type="submit" class="btn btn-primary">Add Contact</button>
-
+    <button type="submit" class="btn btn-primary">Add Contact</button>
 </form>
 
 
-@section Scripts {
-    <script>
-        //function showAddOrganizationForm(parentId) {
-        //    $("#AddCommentForm input[name='ParentId']").val(parentId);
-        //    $("#AddCommentForm").show();
-        //    $([document.documentElement, document.body]).animate({
-        //        scrollTop: $("#AddCommentForm").offset().top
-        //    }, 1000);
-        //}
-  
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus');
-        })
-    </script>
-}
 
 
 
