@@ -42,7 +42,7 @@
             return query.To<T>().ToList();
         }
 
-        public T GetContactDetails<T>(int contactId)
+        public T GetContactById<T>(int contactId)
         {
             var query = this.contactsRepository
                 .All()
@@ -119,6 +119,19 @@
             contact.SocialNetworks.Add(socialNetwork);
 
             return contact.Id;
+        }
+
+        public async Task<int> AddToOrganizationAsync(int contactId, int organizationId)
+        {
+            var contact = this.contactsRepository.All()
+                .FirstOrDefault(x => x.Id == contactId);
+
+            contact.OrganizationId = organizationId;
+
+            await this.contactsRepository.SaveChangesAsync();
+
+            return contact.Id;
+
         }
     }
 }

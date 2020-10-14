@@ -1,33 +1,23 @@
-﻿
+﻿@using System.Linq
+@using CRMSystem.Web.ViewModels.Contacts
+@model CRMSystem.Web.ViewModels.Organizations.ConnectViewModel
 @{
-    ViewData["Title"] = "ConnectToOrganization";
+    var organizations = Model.Organizations.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
 }
 
-<h1>ConnectToOrganization</h1>
+<h1>You are success add your contact no you have a choice to add this <b>@(Model.Contact.FirstName+" "+ @Model.Contact.LastName)</b> to organization or not</h1>
 
-
+<form method="post" asp-action="ConnectToOrganization" asp-route-contactId="@Model.Contact.Id">
     <div class="form-row">
-        @*<div class="form-group col-md-4">
+        <div class="form-group col-md-4">
             <label asp-for="OrganizationId"></label>
             <select asp-for="OrganizationId" asp-items="organizations" class="form-control"></select>
             <span asp-validation-for="OrganizationId" class="text-danger"></span>
-        </div>*@
-        <div class="form-group col-md-4">
-            <h2>OR</h2>
         </div>
-        <div class="form-group col-md-4">
-            <!-- Button trigger modal -->
-            @*<form asp-controller="Organizations" method="get" asp-action="Create" id="AddOrganizationForm" style="display: none">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" asp-controller="Organizations" asp-action="Create">
-                            Launch demo modal
-                        </button>
-                   </form>*@
-                
-        </div>
+        <button type="submit" class="btn btn-primary">Add to this organization</button>
     </div>
-    <div class="form-row">
-    </div>
+</form>
 
-   
+
 
 

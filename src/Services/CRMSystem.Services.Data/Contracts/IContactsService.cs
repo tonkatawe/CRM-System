@@ -9,7 +9,7 @@
     {
         IEnumerable<T> GetAllUserContacts<T>(string userId);
 
-        T GetContactDetails<T>(int contactId);
+        T GetContactById<T>(int contactId);
 
         IEnumerable<T> GetByOrganization<T>(int organizationId, int skip = 0);
 
@@ -23,5 +23,7 @@
 
         // TODO: Make change info at contact
         Task<int> CreateContactAsync(ContactCreateInputModel input, string userId);
+
+        Task<int> AddToOrganizationAsync(int contactId, int organizationId);
     }
 }

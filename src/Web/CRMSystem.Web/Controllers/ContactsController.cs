@@ -46,9 +46,9 @@
                 return this.View(input);
             }
 
-            await this.contactsService.CreateContactAsync(input, user.Id);
+            var contactId = await this.contactsService.CreateContactAsync(input, user.Id);
 
-            return this.RedirectToAction("ConnectToOrganization","Organizations");
+            return this.RedirectToAction("ConnectToOrganization", "Organizations", new { contactId = contactId });
         }
 
         [Authorize]
@@ -92,7 +92,7 @@
         [Authorize]
         public IActionResult GetDetails(int contactId)
         {
-            var viewModel = this.contactsService.GetContactDetails<GetDetailsViewModel>(contactId);
+            var viewModel = this.contactsService.GetContactById<GetDetailsViewModel>(contactId);
             return this.View(viewModel);
         }
     }
