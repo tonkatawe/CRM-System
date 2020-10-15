@@ -37,17 +37,22 @@ namespace CRMSystem.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create(ConnectViewModel input, string userId)
+        public async Task<IActionResult> Create(ConnectViewModel input, string userId, int? contactId = null)
         {
             var user = await this.userManager.GetUserAsync(this.User);
             if (!this.ModelState.IsValid)
             {
-             return this.View(input);
+                return this.View(input.CreateOrganization);
             }
 
-            await this.organizationsService.CreateOrganizationAsync(input.CreateOrganization, user.Id);
+            var organizationId = await this.organizationsService.CreateOrganizationAsync(input.CreateOrganization, user.Id);
 
-            return this.RedirectToAction("Create", "Contacts");
+            if (contactId != null)
+            {
+                await this.contactsService.AddToOrganizationAsync(contactId, organizationId);
+            }
+
+            return this.Redirect("/Contacts/GetByUser");
         }
 
         [Authorize]
@@ -58,6 +63,7 @@ namespace CRMSystem.Web.Controllers
 
             //todo: make security part for contact with not null organizationID
 
+
             if (contact == null)
             {
                 return this.NotFound();
@@ -66,6 +72,7 @@ namespace CRMSystem.Web.Controllers
             var userOrganizations = this.organizationsService.GetAll<OrganizationDropDownViewModel>(user.Id);
             var viewModel = new ConnectViewModel
             {
+                ContactId = contactId,
                 Organizations = userOrganizations,
                 Contact = contact,
             };

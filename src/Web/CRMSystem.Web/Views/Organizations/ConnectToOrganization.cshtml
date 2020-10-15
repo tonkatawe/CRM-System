@@ -1,11 +1,12 @@
 ﻿@using System.Linq
 @using CRMSystem.Web.ViewModels.Contacts
+@using CRMSystem.Web.ViewModels.Organizations
 @model CRMSystem.Web.ViewModels.Organizations.ConnectViewModel
 @{
     var organizations = Model.Organizations.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
 }
 
-<h1>You are success add your contact no you have a choice to add this <b>@(Model.Contact.FirstName+" "+ @Model.Contact.LastName)</b> to organization or not</h1>
+<h1>You are success add your contact no you have a choice to add this <b>@(Model.Contact.FirstName + " " + @Model.Contact.LastName)</b> to organization or not</h1>
 
 <form method="post" asp-action="ConnectToOrganization" asp-route-contactId="@Model.Contact.Id">
     <div class="form-row">
@@ -17,38 +18,24 @@
         <button type="submit" class="btn btn-primary">Add to this organization</button>
     </div>
 </form>
-<hr/>
-<form method="post" asp-action="Create">
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <label asp-for="CreateOrganization.Name">Name</label>
-            <input asp-for="CreateOrganization.Name" class="form-control" placeholder="Name">
-            <span asp-validation-for="CreateOrganization.Name"></span>
-        </div>
-        <div class="form-group col-md-3">
-            <label asp-for="CreateOrganization.Address.Country">Organization Country</label>
-            <input asp-for="CreateOrganization.Address.Country" class="form-control" placeholder="Organization Country">
-            <span asp-validation-for="CreateOrganization.Address.Country"></span>
-        </div>
-        <div class="form-group col-md-3">
-            <label asp-for="CreateOrganization.Address.City">Organization City</label>
-            <input asp-for="CreateOrganization.Address.City" class="form-control" placeholder="Organization City">
-            <span asp-validation-for="CreateOrganization.Address.City"></span>
-        </div>
-        <div class="form-group col-md-3">
-            <label asp-for="CreateOrganization.Address.Street">Organization Street</label>
-            <input asp-for="CreateOrganization.Address.Street" class="form-control" placeholder="Organization Street">
-            <span asp-validation-for="CreateOrganization.Address.Street"></span>
-        </div>
-        <div class="form-group col-md-12">
-            <label asp-for="CreateOrganization.Description">Description</label>
-            <textarea asp-for="CreateOrganization.Description" class="form-control" rows="3"></textarea>
-            <span asp-validation-for="CreateOrganization.Description"></span>
-        </div>
-    </div>
-        <button type="submit" class="btn btn-primary">Add to this organization</button>
-</form>
+<hr />
+
+<div class="px-4 pt-3"> <button type="button" class="btn btn-primary float-right" onclick="showAddOrganizationForm()"><i class="fa fa-plus"></i>&nbsp; Comment</button> </div>
+<div class="clearfix"></div>
+<div id="AddOrganizationForm" style="display: none">
+    <partial name="_CreateOrganization" />
+</div>
 
 
 
+@section Scripts {
+    <script>
+        function showAddOrganizationForm() {
+            $("#AddOrganizationForm").show();
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#AddOrganizationForm").offset().top
+            }, 2500);
+        }
+    </script>
+}
 

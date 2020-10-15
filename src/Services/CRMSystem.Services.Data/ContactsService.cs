@@ -121,7 +121,7 @@
             return contact.Id;
         }
 
-        public async Task<int> AddToOrganizationAsync(int contactId, int organizationId)
+        public async Task<int> AddToOrganizationAsync(int? contactId, int organizationId)
         {
             var contact = this.contactsRepository.All()
                 .FirstOrDefault(x => x.Id == contactId);

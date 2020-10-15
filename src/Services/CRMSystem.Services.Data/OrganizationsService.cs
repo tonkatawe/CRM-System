@@ -33,7 +33,6 @@
                 UserId = userId,
                 Name = input.Name,
                 Description = input.Description,
-
                 Address = input.Address,
             };
             await this.organizationRepository.AddAsync(organization);
