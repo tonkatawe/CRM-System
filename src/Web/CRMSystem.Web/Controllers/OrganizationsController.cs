@@ -1,14 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using CRMSystem.Web.ViewModels.Contacts;
-
-namespace CRMSystem.Web.Controllers
+﻿namespace CRMSystem.Web.Controllers
 {
     using System.Threading.Tasks;
 
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Data.Contracts;
+    using CRMSystem.Web.ViewModels.Contacts;
     using CRMSystem.Web.ViewModels.Organizations;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -20,7 +16,8 @@ namespace CRMSystem.Web.Controllers
         private readonly IContactsService contactsService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public OrganizationsController(IOrganizationsService organizationsService,
+        public OrganizationsController(
+            IOrganizationsService organizationsService,
             IContactsService contactsService,
             UserManager<ApplicationUser> userManager)
         {
@@ -37,12 +34,12 @@ namespace CRMSystem.Web.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create(ConnectViewModel input, string userId, int? contactId = null)
+        public async Task<IActionResult> Create(AddContactToOrganizationViewModel input, string userId, int? contactId = null)
         {
             var user = await this.userManager.GetUserAsync(this.User);
             if (!this.ModelState.IsValid)
             {
-                return this.View(input.CreateOrganization);
+                return this.View(input);
             }
 
             var organizationId = await this.organizationsService.CreateOrganizationAsync(input.CreateOrganization, user.Id);
@@ -61,20 +58,16 @@ namespace CRMSystem.Web.Controllers
             var user = await this.userManager.GetUserAsync(this.User);
             var contact = this.contactsService.GetContactById<ContactViewModel>(contactId);
 
-            //todo: make security part for contact with not null organizationID
-
-
             if (contact == null)
             {
                 return this.NotFound();
             }
 
             var userOrganizations = this.organizationsService.GetAll<OrganizationDropDownViewModel>(user.Id);
-            var viewModel = new ConnectViewModel
+            var viewModel = new AddContactToOrganizationViewModel
             {
                 ContactId = contactId,
                 Organizations = userOrganizations,
-                Contact = contact,
             };
 
             return this.View(viewModel);
@@ -86,10 +79,12 @@ namespace CRMSystem.Web.Controllers
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
+            if (!this.ModelState.IsValid)
+            {
+                return this.NotFound();
+            }
+
             await this.contactsService.AddToOrganizationAsync(contactId, organizationId);
-
-            //todo: make security part for contact with not null organizationID
-
             return this.Redirect("/Contacts/GetByUser");
         }
     }

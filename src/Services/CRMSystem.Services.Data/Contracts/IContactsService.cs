@@ -13,7 +13,7 @@
 
         IEnumerable<T> GetByOrganization<T>(int organizationId, int skip = 0);
 
-        IEnumerable<T> GetByCreatedOn<T>(int skip = 0);
+        IEnumerable<T> GetByName<T>(string userId, int skip = 0);
 
         int AllContactCount();
 

@@ -4,6 +4,7 @@
 
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Mapping;
+    using CRMSystem.Web.ViewModels.Addresses;
 
     public class OrganizationCreateInputModel : IMapFrom<Organization>
     {
@@ -16,8 +17,6 @@
         [MaxLength(1000)]
         public string Description { get; set; }
 
-        public int AddressId { get; set; }
-
-        public Address Address { get; set; }
+        public AddressCreateInputModel Address { get; set; }
     }
 }

@@ -1,14 +1,14 @@
 ﻿@using System.Linq
 @using CRMSystem.Web.ViewModels.Contacts
 @using CRMSystem.Web.ViewModels.Organizations
-@model CRMSystem.Web.ViewModels.Organizations.ConnectViewModel
+@model CRMSystem.Web.ViewModels.Organizations.AddContactToOrganizationViewModel
 @{
     var organizations = Model.Organizations.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
 }
 
-<h1>You are success add your contact no you have a choice to add this <b>@(Model.Contact.FirstName + " " + @Model.Contact.LastName)</b> to organization or not</h1>
+<h1>You are success add your contact no you have a choice to add this to organization or not</h1>
 
-<form method="post" asp-action="ConnectToOrganization" asp-route-contactId="@Model.Contact.Id">
+<form method="post" asp-action="ConnectToOrganization" asp-route-contactId="@Model.ContactId">
     <div class="form-row">
         <div class="form-group col-md-4">
             <label asp-for="OrganizationId"></label>
