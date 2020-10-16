@@ -3,6 +3,7 @@
 @using CRMSystem.Web.ViewModels.Organizations
 @model CRMSystem.Web.ViewModels.Organizations.AddContactToOrganizationViewModel
 @{
+    this.ViewData["Title"] = "Match to organization";
     var organizations = Model.Organizations.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
 }
 
