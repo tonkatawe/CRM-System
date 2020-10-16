@@ -7,27 +7,27 @@
         <div class="form-group col-md-3">
             <label asp-for="CreateOrganization.Name">Name</label>
             <input asp-for="CreateOrganization.Name" class="form-control" placeholder="Name">
-            <span asp-validation-for="CreateOrganization.Name"></span>
+            <span asp-validation-for="CreateOrganization.Name" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
             <label asp-for="CreateOrganization.Address.Country">Organization Country</label>
             <input asp-for="CreateOrganization.Address.Country" class="form-control" placeholder="Organization Country">
-            <span asp-validation-for="CreateOrganization.Address.Country"></span>
+            <span asp-validation-for="CreateOrganization.Address.Country" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
             <label asp-for="CreateOrganization.Address.City">Organization City</label>
             <input asp-for="CreateOrganization.Address.City" class="form-control" placeholder="Organization City">
-            <span asp-validation-for="CreateOrganization.Address.City"></span>
+            <span asp-validation-for="CreateOrganization.Address.City" class="text-danger"></span>
         </div>
         <div class="form-group col-md-3">
             <label asp-for="CreateOrganization.Address.Street">Organization Street</label>
             <input asp-for="CreateOrganization.Address.Street" class="form-control" placeholder="Organization Street">
-            <span asp-validation-for="CreateOrganization.Address.Street"></span>
+            <span asp-validation-for="CreateOrganization.Address.Street" class="text-danger"></span>
         </div>
         <div class="form-group col-md-12">
             <label asp-for="CreateOrganization.Description">Description</label>
             <textarea asp-for="CreateOrganization.Description" class="form-control" rows="3"></textarea>
-            <span asp-validation-for="CreateOrganization.Description"></span>
+            <span asp-validation-for="CreateOrganization.Description" class="text-danger"></span>
         </div>
     </div>
         <input asp-for="ContactId" type="hidden" />

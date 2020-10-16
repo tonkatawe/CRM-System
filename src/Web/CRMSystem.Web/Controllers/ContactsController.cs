@@ -38,7 +38,7 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create(ContactCreateInputModel input, string userId)
+        public async Task<IActionResult> Create(ContactCreateInputModel input)
         {
             var user = await this.userManager.GetUserAsync(this.User);
             if (!this.ModelState.IsValid)

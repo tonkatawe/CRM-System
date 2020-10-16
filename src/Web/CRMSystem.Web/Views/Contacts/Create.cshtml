@@ -25,83 +25,83 @@
             <div class="form-group col-md-3">
                 <label asp-for="Title"></label>
                 <select asp-for="Title" asp-items="Html.GetEnumSelectList<Title>()" class="form-control"></select>
-                <span asp-validation-for="Title"></span>
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="FirstName">First Name</label>
                 <input asp-for="FirstName" class="form-control" placeholder="First Name">
-                <span asp-validation-for="FirstName"></span>
+                <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="MiddleName">Middle Name</label>
                 <input asp-for="MiddleName" class="form-control" placeholder="Middle Name">
-                <span asp-validation-for="FirstName"></span>
+                <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="LastName">Last Name</label>
                 <input asp-for="LastName" class="form-control" placeholder="Last Name">
-                <span asp-validation-for="LastName"></span>
+                <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label asp-for="Address.Country">Country</label>
                 <input asp-for="Address.Country" class="form-control" placeholder="Country">
-                <span asp-validation-for="Address.Country"></span>
+                <span asp-validation-for="Address.Country" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Address.City">City</label>
                 <input asp-for="Address.City" class="form-control" placeholder="City">
-                <span asp-validation-for="Address.City"></span>
+                <span asp-validation-for="Address.City" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Address.Street">Street</label>
                 <input asp-for="Address.Street" class="form-control" placeholder="Street">
-                <span asp-validation-for="Address.Street"></span>
+                <span asp-validation-for="Address.Street" class="text-danger"></span>
             </div>
             <div class="form-group col-md-3">
                 <label asp-for="Address.ZipCode">Zip Code</label>
                 <input asp-for="Address.ZipCode" class="form-control" placeholder="Zip Code">
-                <span asp-validation-for="Address.ZipCode"></span>
+                <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-2">
                 <label asp-for="PhoneNumber.Phone">Phone number</label>
                 <input class="form-control" asp-for="PhoneNumber.Phone" placeholder="Phone number">
-                <span asp-validation-for="PhoneNumber.Phone"></span>
+                <span asp-validation-for="PhoneNumber.Phone" class="text-danger"></span>
             </div>
             <div class="form-group col-md-2">
                 <label asp-for="PhoneType"></label>
                 <select asp-for="PhoneNumber.PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control"></select>
-                <span asp-validation-for="Title"></span>
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group col-md-2">
                 <label asp-for="Email.Email">Email address</label>
                 <input class="form-control" asp-for="Email.Email" placeholder="Email address">
-                <span asp-validation-for="Email.Email"></span>
+                <span asp-validation-for="Email.Email" class="text-danger"></span>
             </div>
             <div class="form-group col-md-2">
                 <label asp-for="EmailType"></label>
                 <select asp-for="EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
-                <span asp-validation-for="Title"></span>
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group col-md-2">
                 <label asp-for="Network.Name">Social Name</label>
                 <input class="form-control" asp-for="Network.Name" placeholder="Social Network">
-                <span asp-validation-for="Network.Name"></span>
+                <span asp-validation-for="Network.Name" class="text-danger"></span>
             </div>
             <div class="form-group col-md-2">
                 <label asp-for="SocialNetworkType"></label>
                 <select asp-for="Network" asp-items="Html.GetEnumSelectList<SocialNetworkType>()" class="form-control"></select>
-                <span asp-validation-for="SocialNetworkType"></span>
+                <span asp-validation-for="SocialNetworkType" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label asp-for="JobTitle">Job Title</label>
                 <input asp-for="JobTitle" class="form-control" placeholder="Job Title">
-                <span asp-validation-for="JobTitle"></span>
+                <span asp-validation-for="JobTitle" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="Industry"></label>
@@ -113,7 +113,7 @@
             <div class="form-group col-md-12">
                 <label asp-for="AdditionalInfo">Additional information</label>
                 <textarea asp-for="AdditionalInfo" class="form-control" rows="3"></textarea>
-                <span asp-validation-for="AdditionalInfo"></span>
+                <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Add Contact</button>

@@ -34,7 +34,7 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create(AddContactToOrganizationViewModel input, string userId, int? contactId = null)
+        public async Task<IActionResult> Create(AddContactToOrganizationViewModel input, int? contactId = null)
         {
             var user = await this.userManager.GetUserAsync(this.User);
             if (!this.ModelState.IsValid)
@@ -84,6 +84,7 @@
                 return this.NotFound();
             }
 
+            //todo include userId
             await this.contactsService.AddToOrganizationAsync(contactId, organizationId);
             return this.Redirect("/Contacts/GetByUser");
         }
