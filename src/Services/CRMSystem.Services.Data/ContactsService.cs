@@ -37,9 +37,11 @@
         {
             var query = this.contactsRepository.All()
                 .OrderByDescending(x => x.CreatedOn)
-                .Where(x => x.UserId == userId);
+                .Where(x => x.UserId == userId)
+                .To<T>()
+                .ToList();
 
-            return query.To<T>().ToList();
+            return query;
         }
 
         public T GetContactById<T>(int contactId)
@@ -53,24 +55,39 @@
             return query;
         }
 
-        public IEnumerable<T> GetByOrganization<T>(int organizationId, int skip = 0)
+        public IEnumerable<T> GetByOrganization<T>(string userId, int organizationId, int skip = 0)
         {
-            throw new System.NotImplementedException();
+            var query = this.contactsRepository.All()
+                .Where(x => x.UserId == userId && x.OrganizationId == organizationId)
+                .To<T>()
+                .ToList();
+
+            return query;
         }
 
-        public IEnumerable<T> GetByCreatedOn<T>(int skip = 0)
+        public IEnumerable<T> GetByName<T>(string userId, int skip = 0)
         {
-            throw new System.NotImplementedException();
+            var query = this.contactsRepository.All()
+                .OrderBy(x => x.FirstName)
+                .ThenBy(x => x.LastName)
+                .Where(x => x.UserId == userId)
+                .To<T>()
+                .ToList();
+
+            return query;
         }
 
-        public int AllContactCount()
+        public int AllContactCount(string userId)
         {
-            throw new System.NotImplementedException();
+            return this.contactsRepository
+                .All()
+                .Count(x => x.UserId == userId);
         }
 
-        public int AllContactInOrganizationCount()
+        public int AllContactInOrganizationCount(int organizationId)
         {
-            throw new System.NotImplementedException();
+            return this.contactsRepository.All()
+                .Count(x => x.OrganizationId == organizationId);
         }
 
         public async Task<int> DeleteContactAsync(int id)
@@ -85,12 +102,12 @@
 
         public async Task<int> CreateContactAsync(ContactCreateInputModel input, string userId)
         {
-            var address = this.addressesService.CreateAddressAsync(input.Address.Country, input.Address.City,
+            var address = await this.addressesService.CreateAddressAsync(input.Address.Country, input.Address.City,
                 input.Address.Street, input.Address.ZipCode);
 
             var contact = new Contact
             {
-                Address = await address,
+                Address = address,
                 UserId = userId,
                 OrganizationId = null,
                 Title = input.Title,

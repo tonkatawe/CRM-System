@@ -52,7 +52,7 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> GetByUser()
+        public async Task<IActionResult> GetByUser(int page = 1)
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
@@ -70,6 +70,9 @@
                     contact.Emails.Add(email);
                 }
             }
+
+            var count = contacts.Count();
+            
 
             var viewModel = new GetAllContactsViewModel
             {

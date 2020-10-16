@@ -11,5 +11,7 @@
 
         IEnumerable<T> GetAll<T>(string userId, int? count = null);
 
+        int AllOrganizationCount(int organizationId);
+
     }
 }

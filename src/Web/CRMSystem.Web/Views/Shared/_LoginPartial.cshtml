@@ -15,15 +15,15 @@
                 <a class="nav-link text-dark" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
             </li>
         }
-     <div class="dropdown form-control-plaintext">
+        <div class="dropdown form-control-plaintext">
             <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 +Add
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" method="get" asp-controller="Contacts" asp-action="Create">Contact</a>
-                <a class="dropdown-item" method="get"  asp-controller="Organizations" asp-action="Create">Organization</a>
-               </div>
-      </div>
+                <a class="dropdown-item" method="get" asp-controller="Organizations" asp-action="Create">Organization</a>
+            </div>
+        </div>
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">@(this.User.Identity.Name)</span>
@@ -49,9 +49,9 @@
                     Logout
                 </a>
 
-          </div>
+            </div>
         </li>
-     
+
 
 
     }
@@ -82,7 +82,7 @@
                 <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
                     <button type="submit" class="nav-link btn btn-primary">Logout</button>
                 </form>
-             
+
             </div>
         </div>
     </div>
@@ -93,5 +93,15 @@
 
 <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.min.js"></script>
+
+<!-- Page level plugins -->
+<script src="vendor/chart.js/Chart.min.js"></script>

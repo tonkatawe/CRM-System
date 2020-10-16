@@ -11,13 +11,13 @@
 
         T GetContactById<T>(int contactId);
 
-        IEnumerable<T> GetByOrganization<T>(int organizationId, int skip = 0);
+        IEnumerable<T> GetByOrganization<T>(string userId, int organizationId, int skip = 0);
 
         IEnumerable<T> GetByName<T>(string userId, int skip = 0);
 
-        int AllContactCount();
+        int AllContactCount(string userId);
 
-        int AllContactInOrganizationCount();
+        int AllContactInOrganizationCount(int organizationId);
 
         Task<int> DeleteContactAsync(int id);
 

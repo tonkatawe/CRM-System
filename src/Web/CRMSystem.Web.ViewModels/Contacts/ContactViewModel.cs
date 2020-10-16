@@ -36,5 +36,9 @@
         public ICollection<EmailViewModel> Emails { get; set; }
 
         public Address Address { get; set; }
+
+        public int CurrentPage { get; set; }
+
+        public int PagesCount { get; set; }
     }
 }
