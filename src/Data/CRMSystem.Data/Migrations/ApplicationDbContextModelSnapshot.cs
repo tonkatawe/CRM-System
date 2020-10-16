@@ -577,8 +577,11 @@ namespace CRMSystem.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasColumnType("nvarchar(1500)")
+                        .HasMaxLength(1500);
+
+                    b.Property<bool>("InProgress")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsComplete")
                         .HasColumnType("bit");
@@ -591,8 +594,8 @@ namespace CRMSystem.Data.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasColumnType("nvarchar(80)")
+                        .HasMaxLength(80);
 
                     b.Property<string>("UserId")
                         .IsRequired()
