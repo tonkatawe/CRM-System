@@ -20,19 +20,17 @@
         </a>
     </li>
     <hr class="sidebar-divider">
-    <div class="sidebar-heading">
-        Interface
-    </div>
-    <li class="nav-item">
+  <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Components</span>
+            <i class="fas fa-server"></i>
+            <span>Your data</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Components:</h6>
-                <a class="collapse-item" href="buttons.html">Buttons</a>
-                <a class="collapse-item" href="cards.html">Cards</a>
+               <a class="collapse-item" method="get" asp-controller="Contacts" asp-action="GetByUser">Contacts</a>
+               <a class="collapse-item" asp-controller="Organizations" asp-action="Create">Organization</a>
+               <a class="collapse-item" href="cards.html">Earnings</a>
+               <a class="collapse-item" asp-controller="UserTasks" asp-action="Create">Tasks</a>
             </div>
         </div>
     </li>

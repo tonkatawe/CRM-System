@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using CRMSystem.Data.Common.Repositories;
 using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
@@ -29,6 +30,12 @@ namespace CRMSystem.Services.Data
             await this.userTasksRepository.SaveChangesAsync();
 
             return task.Id;
+        }
+
+        public int GetUserTasksCount(string userId)
+        {
+            return this.userTasksRepository.All()
+                .Count(x => x.UserId == userId);
         }
     }
 }

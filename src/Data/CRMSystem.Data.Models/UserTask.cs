@@ -8,12 +8,12 @@
     public class UserTask : BaseDeletableModel<int>
     {
         [Required]
-        [MaxLength(20)]
+        [MaxLength(80)]
 
         public string Title { get; set; }
 
         [Required]
-        [MaxLength(1000)]
+        [MaxLength(1500)]
 
         public string Description { get; set; }
 

@@ -7,11 +7,11 @@
     public class UserTaskCreateInputModel : IMapFrom<UserTask>
     {
         [Required]
-        [MaxLength(20)]
+        [MaxLength(80)]
         public string Title { get; set; }
 
         [Required(ErrorMessage = "You should write any task's description...")]
-        [MaxLength(1000)]
+        [MaxLength(1500)]
         public string Description { get; set; }
 
         [Required]
