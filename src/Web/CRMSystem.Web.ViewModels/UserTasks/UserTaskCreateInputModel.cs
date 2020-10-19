@@ -17,7 +17,6 @@
         [Required]
         public DateTime DeadLine { get; set; }
 
-        public bool IsComplete { get; set; }
     }
 }
 

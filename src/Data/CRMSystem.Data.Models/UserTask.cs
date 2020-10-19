@@ -22,6 +22,8 @@
 
         public bool IsComplete { get; set; }
 
+        public bool InProgress { get; set; }
+
         [Required]
         public string UserId { get; set; }
 

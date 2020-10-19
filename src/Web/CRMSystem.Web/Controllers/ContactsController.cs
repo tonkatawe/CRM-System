@@ -86,6 +86,8 @@
         {
 
             // todo: make security and deletable entities;
+            //var user = await this.userManager.GetUserAsync(this.User);
+           
 
             await this.contactsService.DeleteContactAsync(contactId);
 

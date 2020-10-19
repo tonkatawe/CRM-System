@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
@@ -37,7 +38,27 @@ namespace CRMSystem.Web.Controllers
 
             var viewModel = await this.userTasksService.CreateUserTaskAsync(input, user.Id);
 
-            return this.Redirect("/Contacts/GetByUser");
+            return this.Redirect("/UserTasks/GetByUser");
+        }
+
+        public async Task<IActionResult> GetByUser()
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            var userTasks = this.userTasksService.GetAllUserTasks<UserTaskViewModel>(user.Id);
+
+            var viewModel = new GetAllUserTasksViewModel
+            {
+                UserTasks = userTasks,
+            };
+
+            return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> Remove(int userTaskId)
+        {
+            await this.userTasksService.DeleteUserTaskAsync(userTaskId);
+
+            return this.RedirectToAction("GetByUser");
         }
     }
 }
