@@ -1,4 +1,6 @@
-﻿namespace CRMSystem.Data.Models
+﻿using CRMSystem.Data.Models.Enums;
+
+namespace CRMSystem.Data.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -23,6 +25,8 @@
         public bool IsComplete { get; set; }
 
         public bool InProgress { get; set; }
+
+        public UserTaskStatus UserTaskStatus { get; set; }
 
         [Required]
         public string UserId { get; set; }

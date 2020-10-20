@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CRMSystem.Data.Common.Repositories;
 using CRMSystem.Data.Models;
+using CRMSystem.Data.Models.Enums;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Services.Mapping;
 using CRMSystem.Web.ViewModels.UserTasks;
@@ -22,6 +23,7 @@ namespace CRMSystem.Services.Data
         {
             var task = new UserTask
             {
+                UserTaskStatus = UserTaskStatus.UpComing,
                 UserId = userId,
                 Title = input.Title,
                 DeadLine = input.DeadLine,
@@ -55,6 +57,15 @@ namespace CRMSystem.Services.Data
         {
             var userTask = await this.userTasksRepository.GetByIdWithDeletedAsync(userTaskId);
             this.userTasksRepository.Delete(userTask);
+
+            return await this.userTasksRepository.SaveChangesAsync();
+        }
+
+        public async Task<int> ChangeUserTaskStatusAsync(int userTaskId, UserTaskStatus taskStatus)
+        {
+            var userTask = await this.userTasksRepository.GetByIdWithDeletedAsync(userTaskId);
+            userTask.UserTaskStatus = taskStatus;
+            this.userTasksRepository.Update(userTask);
 
             return await this.userTasksRepository.SaveChangesAsync();
         }

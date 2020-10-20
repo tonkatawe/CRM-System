@@ -57,6 +57,15 @@ namespace CRMSystem.Web
                     }).AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
+            services.AddMvc();
+            services.AddMvc().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.ContractResolver =
+                    new Newtonsoft.Json.Serialization.DefaultContractResolver();
+            });
+
+
+
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromDays(2);
@@ -107,6 +116,7 @@ namespace CRMSystem.Web
                 app.UseHsts();
             }
 
+            app.UseResponseCaching();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CRMSystem.Data.Models;
+using CRMSystem.Data.Models.Enums;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Web.ViewModels.UserTasks;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CRMSystem.Web.Controllers
 {
-    [Authorize]
+   
+   [Route("UserTasks")]
     public class UserTasksController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -22,12 +22,36 @@ namespace CRMSystem.Web.Controllers
             this.userTasksService = userTasksService;
         }
 
+        public async Task<IActionResult> Index()
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            var userTasks = this.userTasksService.GetAllUserTasks<UserTaskViewModel>(user.Id);
+
+            var viewModel = new GetAllUserTasksViewModel
+            {
+                UserTasks = userTasks,
+            };
+
+            return this.View(viewModel);
+        }
+
+
+        [Route("GetBy")]
+        public IActionResult GetAllTask()
+        {
+            var user = this.userManager.GetUserId(this.User);
+            var products = this.userTasksService.GetAllUserTasks<UserTaskViewModel>(user);
+            return new JsonResult(products);
+        }
+
+        [Route("Create")]
         public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
+       
         public async Task<IActionResult> Create(UserTaskCreateInputModel input)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -41,6 +65,7 @@ namespace CRMSystem.Web.Controllers
             return this.Redirect("/UserTasks/GetByUser");
         }
 
+        [Route("GetByUser")]
         public async Task<IActionResult> GetByUser()
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -54,11 +79,27 @@ namespace CRMSystem.Web.Controllers
             return this.View(viewModel);
         }
 
+        [Route("Remove")]
         public async Task<IActionResult> Remove(int userTaskId)
         {
             await this.userTasksService.DeleteUserTaskAsync(userTaskId);
 
             return this.RedirectToAction("GetByUser");
         }
+
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ChangeStatus(int taskId, UserTaskStatus type)
+        {
+            await this.userTasksService.ChangeUserTaskStatusAsync(taskId, type);
+
+            return this.RedirectToAction("GetByUser");
+        }
+
+
+
+
+
     }
 }

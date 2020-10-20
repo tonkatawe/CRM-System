@@ -1,0 +1,69 @@
+﻿@model CRMSystem.Web.ViewModels.UserTasks.GetAllUserTasksViewModel;
+
+@{
+    ViewData["Title"] = "View";
+
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <div class="container">
+        <div class="row my-2">
+            <div class="col-lg-8 order-lg-2">
+                <p>
+                    You have @Model.UserTasks.Count() tasks.  Upcoming: @Model.UserTasks.Count(x => x.UserTaskStatus == CRMSystem.Data.Models.Enums.UserTaskStatus.UpComing), Inprogress: @Model.UserTasks.Count(x => x.UserTaskStatus == CRMSystem.Data.Models.Enums.UserTaskStatus.InProgress), Done: @Model.UserTasks.Count(x => x.UserTaskStatus == CRMSystem.Data.Models.Enums.UserTaskStatus.Done)
+                </p>
+
+                <div class="tab-content py-4" id="callAllUserTasks">
+                    <div class="tab-pane active">
+                     <span id="showAllUserTasks"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</head>
+<body>
+    
+
+
+   
+
+
+</body>
+</html>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#callAllUserTasks').show(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '/usertasks/GetBy',
+                    success: function (result) {
+                        var s = '';
+                        for (var i = 0; i < result.length; i++) {
+                            s += '<h5 class="mb-3">' + result[i].Title + '</h5>';
+                            s += '<h6>' + result[i].CreatedOn+ '</h6>';
+                            s += '<p>' + result[i].Description+ '</p>';
+                            s += '<h6>' + result[i].DeadLine+ '</h6>';
+                            s += '<p>' + result[i].UserTaskStatus+ '</p>';
+                            s += '<p>' + result[i].UserTaskStatus+ '</p>';
+                            s += '<p>' + result[i].UserTaskStatus+ '</p>';
+                            s += '<a href=# class="btn btn-warning" onclick=EditStudentRecord(" + StudentList[i].StudentId + ") >Change Status</a> <a href=# class="btn btn-danger" onclick=DeleteStudentRecord(" + StudentList[i].StudentId + ") >Remove</a>';
+                           
+                         
+                        }
+                        $('#showAllUserTasks').html(s);
+                    }
+                });
+            });
+
+        });
+    </script>
+}
