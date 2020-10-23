@@ -80,7 +80,7 @@ namespace CRMSystem.Web.Controllers
                     break;
                 case "industry_desc":
                     contacts = contacts
-                        .OrderByDescending(c => c.Industry.ToString());
+                        .OrderByDescending(c => c.Industry);
                     break;
                 case "Date":
                     contacts = contacts.OrderBy(c => c.CreatedOn);
@@ -172,6 +172,7 @@ namespace CRMSystem.Web.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
+            //todo make method async
 
             var contact = this.contactsService.GetContactById<ContactViewModel>(id);
             if (contact == null)
@@ -196,7 +197,7 @@ namespace CRMSystem.Web.Controllers
             return this.RedirectToAction("Index");
         }
 
-  
+
         [Authorize]
         public IActionResult GetDetails(int contactId)
         {
