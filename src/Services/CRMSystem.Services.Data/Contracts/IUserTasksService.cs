@@ -15,5 +15,7 @@ namespace CRMSystem.Services.Data.Contracts
         Task<int> DeleteUserTaskAsync(int userTaskId);
 
         Task<int> ChangeUserTaskStatusAsync(int userTaskId, UserTaskStatus taskStatus);
+
+        T GetTaskById<T>(int userTaskId);
     }
 }

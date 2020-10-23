@@ -1,4 +1,10 @@
-﻿namespace CRMSystem.Web.Controllers
+﻿using System;
+using System.Collections.Generic;
+using CRMSystem.Web.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+
+namespace CRMSystem.Web.Controllers
 {
     using System.Linq;
     using System.Threading.Tasks;
@@ -31,6 +37,68 @@
         }
 
         [Authorize]
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            var allContacts = this.contactsService.GetAllUserContacts<ContactViewModel>(user.Id);
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["SortByName"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["SortByOrganization"] = String.IsNullOrEmpty(sortOrder) ? "organ_desc" : "";
+            ViewData["SortByIndustry"] = String.IsNullOrEmpty(sortOrder) ? "industry_desc" : "";
+            ViewData["SortByDate"] = sortOrder == "Date" ? "date_desc" : "Date";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            var contacts = from c in allContacts
+                           select c;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                contacts = contacts.Where(s => s.LastName.Contains(searchString)
+                                               || s.FirstName.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "organ_desc":
+                    contacts = contacts
+                        .OrderByDescending(c => c.Organization.Name);
+                    break;
+                case "name_desc":
+                    contacts = contacts
+                        .OrderByDescending(c => c.FirstName)
+                        .ThenByDescending(c => c.LastName)
+                        .ThenByDescending(c => c.MiddleName);
+                    break;
+                case "industry_desc":
+                    contacts = contacts
+                        .OrderByDescending(c => c.Industry.ToString());
+                    break;
+                case "Date":
+                    contacts = contacts.OrderBy(c => c.CreatedOn);
+                    break;
+                case "date_desc":
+                    contacts = contacts.OrderByDescending(c => c.CreatedOn);
+                    break;
+                default:
+                    contacts = contacts.OrderBy(c => c.LastName);
+                    break;
+            }
+
+            int pageSize = 10;
+            return View(await PaginatedList<ContactViewModel>.CreateAsync(contacts.AsNoTracking(), pageNumber ?? 1, pageSize));
+        }
+
+
+        [Authorize]
         public IActionResult Create()
         {
             return this.View();
@@ -51,49 +119,84 @@
             return this.RedirectToAction("ConnectToOrganization", "Organizations", new { contactId = contactId });
         }
 
-        [Authorize]
-        public async Task<IActionResult> GetByUser(int page = 1)
+        //public async Task<IActionResult> Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var course = await _context.Courses
+        //        .AsNoTracking()
+        //        .FirstOrDefaultAsync(m => m.CourseID == id);
+        //    if (course == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    PopulateDepartmentsDropDownList(course.DepartmentID);
+        //    return View(course);
+        //}
+
+        //[HttpPost, ActionName("Edit")]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> EditPost(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var courseToUpdate = await _context.Courses
+        //        .FirstOrDefaultAsync(c => c.CourseID == id);
+
+        //    if (await TryUpdateModelAsync<Course>(courseToUpdate,
+        //        "",
+        //        c => c.Credits, c => c.DepartmentID, c => c.Title))
+        //    {
+        //        try
+        //        {
+        //            await _context.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateException /* ex */)
+        //        {
+        //            //Log the error (uncomment ex variable name and write a log.)
+        //            ModelState.AddModelError("", "Unable to save changes. " +
+        //                                         "Try again, and if the problem persists, " +
+        //                                         "see your system administrator.");
+        //        }
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    PopulateDepartmentsDropDownList(courseToUpdate.DepartmentID);
+        //    return View(courseToUpdate);
+        //}
+
+        public async Task<IActionResult> Details(int id)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
 
-            var contacts = this.contactsService.GetAllUserContacts<ContactViewModel>(user.Id);
-            if (!contacts.Any())
+            var contact = this.contactsService.GetContactById<ContactViewModel>(id);
+            if (contact == null)
             {
-                return this.RedirectToAction("Create");
+                return NotFound();
             }
 
-            foreach (var contact in contacts)
-            {
-                var emails = this.emailsService.GetAllContactEmails<EmailViewModel>(contact.Id);
-                foreach (var email in emails)
-                {
-                    contact.Emails.Add(email);
-                }
-            }
-
-            var count = contacts.Count();
-            
-
-            var viewModel = new GetAllContactsViewModel
-            {
-                Contacts = contacts,
-            };
-            return this.View(viewModel);
+            return View(contact);
         }
 
         [Authorize]
-        public async Task<IActionResult> Remove(int contactId)
+        public async Task<IActionResult> Delete(int id)
         {
+            var contact = await this.contactsService.DeleteContactAsync(id);
 
-            // todo: make security and deletable entities;
-            //var user = await this.userManager.GetUserAsync(this.User);
-           
+            //todo for this user check..
+            if (contact == null)
+            {
+                return NotFound();
+            }
 
-            await this.contactsService.DeleteContactAsync(contactId);
-
-            return this.RedirectToAction("GetByUser");
+            return this.RedirectToAction("Index");
         }
 
+  
         [Authorize]
         public IActionResult GetDetails(int contactId)
         {

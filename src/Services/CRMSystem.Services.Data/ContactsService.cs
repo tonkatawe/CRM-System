@@ -33,13 +33,13 @@
             this.socialNetworkService = socialNetworkService;
         }
 
-        public IEnumerable<T> GetAllUserContacts<T>(string userId)
+        public IQueryable<T> GetAllUserContacts<T>(string userId)
         {
             var query = this.contactsRepository.All()
                 .OrderByDescending(x => x.CreatedOn)
                 .Where(x => x.UserId == userId)
                 .To<T>()
-                .ToList();
+                .AsQueryable();
 
             return query;
         }

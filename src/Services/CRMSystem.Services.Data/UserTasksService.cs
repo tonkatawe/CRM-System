@@ -69,5 +69,15 @@ namespace CRMSystem.Services.Data
 
             return await this.userTasksRepository.SaveChangesAsync();
         }
+
+        public T GetTaskById<T>(int userTaskId)
+        {
+            var query = this.userTasksRepository.All()
+                .Where(x => x.Id == userTaskId)
+                .To<T>()
+                .FirstOrDefault();
+
+            return query;
+        }
     }
 }

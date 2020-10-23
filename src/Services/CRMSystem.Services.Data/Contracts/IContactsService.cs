@@ -1,4 +1,6 @@
-﻿namespace CRMSystem.Services.Data.Contracts
+﻿using System.Linq;
+
+namespace CRMSystem.Services.Data.Contracts
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -7,7 +9,7 @@
 
     public interface IContactsService
     {
-        IEnumerable<T> GetAllUserContacts<T>(string userId);
+        IQueryable<T> GetAllUserContacts<T>(string userId);
 
         T GetContactById<T>(int contactId);
 

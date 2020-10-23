@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CRMSystem.Web.Controllers
 {
-   
-   [Route("UserTasks")]
+
+    [Route("UserTasks")]
     public class UserTasksController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -48,10 +48,11 @@ namespace CRMSystem.Web.Controllers
         public IActionResult Create()
         {
             return this.View();
+
         }
 
         [HttpPost]
-       
+
         public async Task<IActionResult> Create(UserTaskCreateInputModel input)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -80,11 +81,12 @@ namespace CRMSystem.Web.Controllers
         }
 
         [Route("Remove")]
+        [HttpPost]
         public async Task<IActionResult> Remove(int userTaskId)
         {
             await this.userTasksService.DeleteUserTaskAsync(userTaskId);
 
-            return this.RedirectToAction("GetByUser");
+            return RedirectToAction("Index");
         }
 
 

@@ -1,4 +1,6 @@
-﻿@model CRMSystem.Web.ViewModels.UserTasks.GetAllUserTasksViewModel;
+﻿@using CRMSystem.Data.Models
+@using CRMSystem.Data.Models.Enums
+@model CRMSystem.Web.ViewModels.UserTasks.GetAllUserTasksViewModel;
 
 @{
     ViewData["Title"] = "View";
@@ -15,11 +17,61 @@
             <div class="col-lg-8 order-lg-2">
                 <p>
                     You have @Model.UserTasks.Count() tasks.  Upcoming: @Model.UserTasks.Count(x => x.UserTaskStatus == CRMSystem.Data.Models.Enums.UserTaskStatus.UpComing), Inprogress: @Model.UserTasks.Count(x => x.UserTaskStatus == CRMSystem.Data.Models.Enums.UserTaskStatus.InProgress), Done: @Model.UserTasks.Count(x => x.UserTaskStatus == CRMSystem.Data.Models.Enums.UserTaskStatus.Done)
-                </p>
+                </p> <a href="#" class="btn btn-info" onclick="AddNewStudent(0)">Add New Task</a> <br /><br />
 
                 <div class="tab-content py-4" id="callAllUserTasks">
                     <div class="tab-pane active">
-                     <span id="showAllUserTasks"></span>
+                        <span id="showAllUserTasks"></span>
+                    </div>
+
+
+
+                    <!--Modal: modalConfirmDelete-->
+                    <div class="modal fade" id="modalChangeStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+                            <!--Content-->
+                            <div class="modal-content text-center">
+
+
+                                <!--Body-->
+                                <div class="modal-body">
+
+                                    <select asp-items="Html.GetEnumSelectList<UserTaskStatus>()" class="form-control"></select>
+                                    <span asp-validation-for="@Model.Status" class="text-danger"></span>
+
+                                </div>
+
+                                <!--Footer-->
+                                <div class="modal-footer flex-center">
+                                    <a href="" class="btn  btn-outline-primary">Change Status</a>
+                                </div>
+                            </div>
+                            <!--/.Content-->
+                        </div>
+                    </div>
+
+
+
+
+                    @*Create A PopUp Modal For DeleteConfirmation*@
+
+                    <div class="modal fade" id="DeleteConfirmation">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                                    <h4>Delete Student Record</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <h4>Are You Sure? You Want To Delete This Record.</h4>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn btn-primary" data-dismiss="modal" id="r">Cancle</a>
+                                    <a href="#" class="btn btn-danger" onclick="DeleteTask()">Confirm</a>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -27,10 +79,10 @@
     </div>
 </head>
 <body>
-    
 
 
-   
+
+
 
 
 </body>
@@ -39,7 +91,7 @@
 @section Scripts
 {
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(document).ready(function LoadData() {
 
             $('#callAllUserTasks').show(function () {
                 $.ajax({
@@ -49,19 +101,19 @@
                         var s = '';
                         for (var i = 0; i < result.length; i++) {
                             s += '<h5 class="mb-3">' + result[i].Title + '</h5>';
-                            s += '<h6>' + result[i].CreatedOn+ '</h6>';
-                            s += '<p>' + result[i].Description+ '</p>';
-                            s += '<h6>' + result[i].DeadLine+ '</h6>';
-                            s += '<p>' + result[i].UserTaskStatus+ '</p>';
-                            s += '<p>' + result[i].UserTaskStatus+ '</p>';
-                            s += '<p>' + result[i].UserTaskStatus+ '</p>';
-                            s += '<a href=# class="btn btn-warning" onclick=EditStudentRecord(" + StudentList[i].StudentId + ") >Change Status</a> <a href=# class="btn btn-danger" onclick=DeleteStudentRecord(" + StudentList[i].StudentId + ") >Remove</a>';
-                           
-                         
+                            s += '<h6>' + result[i].CreatedOn + '</h6>';
+                            s += '<p>' + result[i].Description + '</p>';
+                            s += '<h6>' + result[i].DeadLine + '</h6>';
+                            s += '<p>' + result[i].UserTaskStatus + '</p>';
+                            s += '<p>' + result[i].UserTaskStatus + '</p>';
+                            s += '<p>' + result[i].UserTaskStatus + '</p>';
+                            s += '<button class="btn btn-warning" data-toggle="modal" data-target="#modalChangeStatus" onclick=EditStudentRecord(' + result[i].Id + ') >Change Status</button> <button class="btn btn-danger" id="deleteTask" onclick="Delete(' + result[i].Id + ')") >Remove</button>';
+
                         }
                         $('#showAllUserTasks').html(s);
                     }
                 });
+
             });
 
         });

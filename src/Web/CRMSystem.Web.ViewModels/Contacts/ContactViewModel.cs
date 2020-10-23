@@ -1,4 +1,6 @@
-﻿namespace CRMSystem.Web.ViewModels.Contacts
+﻿using System;
+
+namespace CRMSystem.Web.ViewModels.Contacts
 {
     using System.Collections.Generic;
 
@@ -10,35 +12,21 @@
 
     public class ContactViewModel : IMapFrom<Contact>
     {
-        public ContactViewModel()
-        {
-            this.Emails = new HashSet<EmailViewModel>();
-        }
-
+      
         public int Id { get; set; }
 
-        public Title Title { get; set; }
-
-        public string FirstName { get; set; }
+       public string FirstName { get; set; }
 
         public string MiddleName { get; set; }
 
         public string LastName { get; set; }
 
-        public string JobTitle { get; set; }
-
+      
         public IndustryType Industry { get; set; }
 
         public OrganizationCreateInputModel Organization { get; set; }
 
-        public string AdditionalInfo { get; set; }
-
-        public ICollection<EmailViewModel> Emails { get; set; }
-
-        public Address Address { get; set; }
-
-        public int CurrentPage { get; set; }
-
-        public int PagesCount { get; set; }
+        public DateTime CreatedOn { get; set; }
+        
     }
 }
