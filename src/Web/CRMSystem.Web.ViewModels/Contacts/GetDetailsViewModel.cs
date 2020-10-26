@@ -7,24 +7,16 @@
     using CRMSystem.Services.Mapping;
     using CRMSystem.Web.ViewModels.Organizations;
 
-    public class GetDetailsViewModel : IMapFrom<Contact>
+    public class GetDetailsViewModel : ContactViewModel
     {
         public int Id { get; set; }
 
         public Title Title { get; set; }
 
-        public string FirstName { get; set; }
-
-        public string MiddleName { get; set; }
-
-        public string LastName { get; set; }
+        public string TitleAsString => this.Title.ToString();
 
         public string JobTitle { get; set; }
-
-        public IndustryType Industry { get; set; }
-
-        public OrganizationViewModel Organization { get; set; }
-
+        
         public string AdditionalInfo { get; set; }
 
         public Address Address { get; set; }

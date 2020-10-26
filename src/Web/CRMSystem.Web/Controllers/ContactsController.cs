@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using CRMSystem.Web.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using Newtonsoft.Json;
 
 namespace CRMSystem.Web.Controllers
@@ -69,8 +70,8 @@ namespace CRMSystem.Web.Controllers
             switch (sortOrder)
             {
                 case "organ_desc":
-                    contacts = contacts
-                        .OrderByDescending(c => c.Organization.Name);
+                    //todo: make it work correctly
+                  //  contacts = contacts.OrderBy(x=>x.Organization.Name);
                     break;
                 case "name_desc":
                     contacts = contacts
@@ -94,7 +95,7 @@ namespace CRMSystem.Web.Controllers
             }
 
             int pageSize = 10;
-            return View(await PaginatedList<ContactViewModel>.CreateAsync(contacts.AsNoTracking(), pageNumber ?? 1, pageSize));
+            return View(await PaginatedList<ContactViewModel>.CreateAsync(contacts, pageNumber ?? 1, pageSize));
         }
 
 
@@ -119,68 +120,60 @@ namespace CRMSystem.Web.Controllers
             return this.RedirectToAction("ConnectToOrganization", "Organizations", new { contactId = contactId });
         }
 
-        //public async Task<IActionResult> Edit(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var course = await _context.Courses
-        //        .AsNoTracking()
-        //        .FirstOrDefaultAsync(m => m.CourseID == id);
-        //    if (course == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    PopulateDepartmentsDropDownList(course.DepartmentID);
-        //    return View(course);
-        //}
-
-        //[HttpPost, ActionName("Edit")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> EditPost(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var courseToUpdate = await _context.Courses
-        //        .FirstOrDefaultAsync(c => c.CourseID == id);
-
-        //    if (await TryUpdateModelAsync<Course>(courseToUpdate,
-        //        "",
-        //        c => c.Credits, c => c.DepartmentID, c => c.Title))
-        //    {
-        //        try
-        //        {
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateException /* ex */)
-        //        {
-        //            //Log the error (uncomment ex variable name and write a log.)
-        //            ModelState.AddModelError("", "Unable to save changes. " +
-        //                                         "Try again, and if the problem persists, " +
-        //                                         "see your system administrator.");
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    PopulateDepartmentsDropDownList(courseToUpdate.DepartmentID);
-        //    return View(courseToUpdate);
-        //}
-
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            //todo make method async
-
-            var contact = this.contactsService.GetContactById<ContactViewModel>(id);
+            var contact =  this.contactsService.GetContactById<GetDetailsViewModel>(id);
             if (contact == null)
             {
                 return NotFound();
             }
 
-            return View(contact);
+            return this.View(contact);
+        }
+
+        [HttpPost, ActionName("Edit")]
+        public async Task<IActionResult> EditPost(int id)
+        {
+            var contact = this.contactsService.GetContactById<GetDetailsViewModel>(id);
+            if (contact == null)
+            {
+                return NotFound();
+            }
+
+            //if (await TryUpdateModelAsync<Course>(courseToUpdate,
+            //    "",
+            //    c => c.Credits, c => c.DepartmentID, c => c.Title))
+            //{
+            //    try
+            //    {
+            //        await _context.SaveChangesAsync();
+            //    }
+            //    catch (DbUpdateException /* ex */)
+            //    {
+            //        //Log the error (uncomment ex variable name and write a log.)
+            //        ModelState.AddModelError("", "Unable to save changes. " +
+            //                                     "Try again, and if the problem persists, " +
+            //                                     "see your system administrator.");
+            //    }
+            //    return RedirectToAction(nameof(Index));
+            //}
+
+            return this.RedirectToAction("Details", new {id = contact.Id});
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            //todo make method async
+
+            var viewModel = this.contactsService.GetContactById<GetDetailsViewModel>(id);
+
+
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+
+            return View("Get", viewModel);
         }
 
         [Authorize]

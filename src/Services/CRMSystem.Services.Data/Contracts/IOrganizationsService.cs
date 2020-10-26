@@ -13,5 +13,7 @@
 
         int AllOrganizationCount(int organizationId);
 
+        T GetOrganizationById<T>(int contactId);
+
     }
 }

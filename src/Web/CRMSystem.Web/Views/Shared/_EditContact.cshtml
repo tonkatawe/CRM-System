@@ -1,0 +1,91 @@
+﻿@using CRMSystem.Data.Models
+@using CRMSystem.Web.ViewModels.Organizations
+@model CRMSystem.Web.ViewModels.Contacts.GetDetailsViewModel
+
+
+<h5>
+    <b>@Html.DisplayFor(m => m.TitleAsString).</b> <i>@Html.DisplayFor(m => m.FullName)</i>
+</h5>
+
+
+<div class="col-md-8">
+    <div class="tab-content profile-tab" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>First Name:</b></label>
+                </div>
+                <div class="col-md-6">
+                    <p> @Html.DisplayFor(m => m.FirstName)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Middle Name:</b></label>
+                </div>
+                <div class="col-md-6">
+                    <p> @Html.DisplayFor(m => m.MiddleName)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Last Name:</b></label>
+                </div>
+                <div class="col-md-6">
+                    <p> @Html.DisplayFor(m => m.LastName)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Work in:</b></label>
+                </div>
+                <div class="col-md-6">
+                    <p> @Html.DisplayFor(m => m.IndustryAsString) Industry.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Email</b></label>
+                </div>
+                <div class="col-md-6">
+                    @foreach (var email in this.Model.EmailAddresses)
+                    {
+                    <p>
+                        @email.Email
+                    </p>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Phone</b></label>
+                </div>
+                <div class="col-md-6">
+                    @foreach (var phone in this.Model.PhoneNumbers)
+                    {
+                    <p>
+                        @phone.Phone
+                    </p>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Profession</b></label>
+                </div>
+                <div class="col-md-6">
+                    <p>@Html.DisplayFor(m => m.JobTitle)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Address:</b></label>
+                </div>
+                <div class="col-md-6">
+                    <p>@Html.DisplayFor(m => m.Address.Country), @Html.DisplayFor(m => m.Address.City), @Html.DisplayFor(m => m.Address.Street), @Html.DisplayFor(m => m.Address.ZipCode)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

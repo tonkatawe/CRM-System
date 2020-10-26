@@ -1,0 +1,32 @@
+﻿@model CRMSystem.Web.ViewModels.Organizations.OrganizationViewModel
+<div class="col-md-8">
+    <div class="tab-content profile-tab" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Organization:</b></label>
+                </div>
+                <div class="col-md-6">
+                    <p> @Html.DisplayFor(m => m.Name)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Address:</b></label>
+                </div>
+                <div class="col-md-6">
+                    <p> @Html.DisplayFor(m => m.Address.Country), @Html.DisplayFor(m => m.Address.City), @Html.DisplayFor(m => m.Address.Street), @Html.DisplayFor(m => m.Address.ZipCode) </p>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-6">
+                    <label><b>Work in:</b></label>
+                </div>
+                <div class="col-md-6">
+                    <p> @Html.DisplayFor(m => m.Address.Street) Industry.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

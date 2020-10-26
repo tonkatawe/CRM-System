@@ -31,10 +31,9 @@
 
         public string IndustryAsString => this.Industry.ToString();
 
-        public Organization Organization { get; set; }
+        public OrganizationViewModel Organization { get; set; }
 
         public DateTime CreatedOn { get; set; }
-
 
         public string CreatedOnAsString => this.CreatedOn.ToString("d", CultureInfo.InvariantCulture);
 

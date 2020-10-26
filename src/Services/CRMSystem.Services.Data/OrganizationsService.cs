@@ -58,5 +58,16 @@
             return this.organizationRepository.All()
                 .Count(x => x.Id == organizationId);
         }
+
+        public T GetOrganizationById<T>(int contactId)
+        {
+            var query = this.organizationRepository
+                .All()
+                .Where(x => x.Id == contactId)
+                .To<T>()
+                .FirstOrDefault();
+
+            return query;
+        }
     }
 }
