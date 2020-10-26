@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace CRMSystem.Web.ViewModels.Contacts
+﻿namespace CRMSystem.Web.ViewModels.Contacts
 {
+    using System;
+    using System.Globalization;
     using System.Collections.Generic;
 
     using CRMSystem.Data.Models;
@@ -29,9 +29,14 @@ namespace CRMSystem.Web.ViewModels.Contacts
 
         public IndustryType Industry { get; set; }
 
+        public string IndustryAsString => this.Industry.ToString();
+
         public Organization Organization { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+
+        public string CreatedOnAsString => this.CreatedOn.ToString("d", CultureInfo.InvariantCulture);
 
     }
 }
