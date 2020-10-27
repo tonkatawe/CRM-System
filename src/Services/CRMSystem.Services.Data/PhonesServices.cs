@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using CRMSystem.Data.Common.Repositories;
 using CRMSystem.Data.Models;
 using CRMSystem.Data.Models.Enums;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Services.Mapping;
+using Microsoft.EntityFrameworkCore;
 
 namespace CRMSystem.Services.Data
 {
@@ -39,6 +41,12 @@ namespace CRMSystem.Services.Data
            await this.phonesRepository.SaveChangesAsync();
 
            return phoneNumber;
+        }
+
+        public bool IsAvailablePhoneNumber(string phoneNumber)
+        {
+            var phone =  this.phonesRepository.All().FirstOrDefault(x=>x.Phone == phoneNumber);
+            return phone == null;
         }
     }
 }

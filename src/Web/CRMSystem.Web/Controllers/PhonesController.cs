@@ -14,9 +14,27 @@ namespace CRMSystem.Web.Controllers
             this.phonesServices = phonesServices;
         }
 
+
+        [AcceptVerbs("Get", "Post")]
+        public IActionResult VerifyPhone(string phone)
+        {
+            
+            if (!this.phonesServices.IsAvailablePhoneNumber(phone))
+            {
+                return Json($"Phone {phone} is already in use");
+            }
+            return Json(true);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add(PhoneCreateInputModel input)
         {
+
+            //if (await this.phonesServices.IsExistPhoneNumber(input.Phone))
+            //{
+            //   ModelState.AddModelError("Phone", "Phone is already taken");
+            //}
+
             await this.phonesServices.CreatePhoneAsync(input.Phone, input.PhoneType, input.ContactId);
             return this.RedirectToAction("Details", "Contacts", new {id = input.ContactId});
         }

@@ -1,4 +1,8 @@
-﻿namespace CRMSystem.Web.ViewModels.Phones
+﻿using System.Net.Security;
+using AutoMapper.Configuration.Annotations;
+using Microsoft.AspNetCore.Mvc;
+
+namespace CRMSystem.Web.ViewModels.Phones
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -10,10 +14,12 @@
     {
         [Required]
         public int ContactId { get; set; }
+
         [Required]
         [Phone(ErrorMessage = "It is not valid phone number")]
-
+        [Remote(action: "VerifyPhone", controller: "Phones")]
         public string Phone { get; set; }
+
         [Required]
         public PhoneType PhoneType { get; set; }
     }
