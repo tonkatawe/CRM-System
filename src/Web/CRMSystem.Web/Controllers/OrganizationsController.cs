@@ -49,7 +49,7 @@
                 await this.contactsService.AddToOrganizationAsync(contactId, organizationId);
             }
 
-            return this.Redirect("/Contacts/GetByUser");
+            return this.RedirectToAction("Index", "Contacts");
         }
 
         [Authorize]
@@ -86,7 +86,7 @@
 
             //todo include userId
             await this.contactsService.AddToOrganizationAsync(contactId, organizationId);
-            return this.Redirect("/Contacts/GetByUser");
+            return this.RedirectToAction("Index", "Contacts");
         }
     }
 }

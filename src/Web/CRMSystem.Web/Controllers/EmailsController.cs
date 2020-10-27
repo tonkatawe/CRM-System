@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CRMSystem.Services.Data.Contracts;
+using CRMSystem.Web.ViewModels.Contacts;
 using CRMSystem.Web.ViewModels.Emails;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +18,10 @@ namespace CRMSystem.Web.Controllers
         }
 
         [AcceptVerbs("Get", "Post")]
-        public IActionResult VerifyEmail(string email)
+        public IActionResult VerifyEmail(string email, ContactCreateInputModel input = null)
         {
 
-            if (!this.emailsService.IsAvailableEmail(email))
+            if (!this.emailsService.IsAvailableEmail(email) || !this.emailsService.IsAvailableEmail(input.Email.Email))
             {
                 return Json($"Email {email} is already in use");
             }

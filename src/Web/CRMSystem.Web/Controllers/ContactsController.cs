@@ -23,18 +23,19 @@ namespace CRMSystem.Web.Controllers
     {
         private readonly IContactsService contactsService;
         private readonly IEmailsService emailsService;
-        private readonly IOrganizationsService organizationsService;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IPhonesServices phonesService;
+     private readonly UserManager<ApplicationUser> userManager;
 
         public ContactsController(
             IContactsService contactsService,
             IEmailsService emailsService,
-            IOrganizationsService organizationsService,
+            IPhonesServices phonesService,
+
             UserManager<ApplicationUser> userManager)
         {
             this.contactsService = contactsService;
             this.emailsService = emailsService;
-            this.organizationsService = organizationsService;
+            this.phonesService = phonesService;
             this.userManager = userManager;
         }
 
@@ -102,7 +103,7 @@ namespace CRMSystem.Web.Controllers
         {
             return this.View();
         }
-
+        
         [HttpPost]
         public async Task<IActionResult> Create(ContactCreateInputModel input)
         {

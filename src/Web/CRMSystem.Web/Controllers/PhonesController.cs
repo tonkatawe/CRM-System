@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CRMSystem.Services.Data.Contracts;
+using CRMSystem.Web.ViewModels.Contacts;
 using CRMSystem.Web.ViewModels.Phones;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,10 +19,10 @@ namespace CRMSystem.Web.Controllers
 
 
         [AcceptVerbs("Get", "Post")]
-        public IActionResult VerifyPhone(string phone)
+        public IActionResult VerifyPhone(string phone, ContactCreateInputModel input = null)
         {
 
-            if (!this.phonesServices.IsAvailablePhoneNumber(phone))
+            if (!this.phonesServices.IsAvailablePhoneNumber(phone) || !this.phonesServices.IsAvailablePhoneNumber(input.PhoneNumber.Phone))
             {
                 return Json($"Phone {phone} is already in use");
             }
@@ -40,7 +41,7 @@ namespace CRMSystem.Web.Controllers
             await this.phonesServices.DeletePhoneAsync(id);
 
             //todo for this user check..
-            
+
             return this.RedirectToAction("Details", "Contacts", new { id = contactId });
         }
     }

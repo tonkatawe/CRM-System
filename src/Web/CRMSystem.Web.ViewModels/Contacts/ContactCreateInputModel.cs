@@ -1,4 +1,5 @@
 ﻿using CRMSystem.Web.ViewModels.Addresses;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CRMSystem.Web.ViewModels.Contacts
 {
@@ -42,14 +43,10 @@ namespace CRMSystem.Web.ViewModels.Contacts
         [Required]
         public EmailCreateInputModel Email { get; set; }
 
-        public EmailType EmailType { get; set; }
-
+        [Required]
         public PhoneCreateInputModel PhoneNumber { get; set; }
-
-        public PhoneType PhoneType { get; set; }
 
         public SocialNetworkCreateInputModel Network { get; set; }
 
-        public SocialNetworkType SocialNetworkType { get; set; }
     }
 }

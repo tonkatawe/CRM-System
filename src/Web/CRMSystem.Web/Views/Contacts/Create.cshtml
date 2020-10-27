@@ -72,19 +72,19 @@
                 <span asp-validation-for="PhoneNumber.Phone" class="text-danger"></span>
             </div>
             <div class="form-group col-md-2">
-                <label asp-for="PhoneType"></label>
+                <label asp-for="PhoneNumber.PhoneType"></label>
                 <select asp-for="PhoneNumber.PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control"></select>
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <span asp-validation-for="PhoneNumber.PhoneType" class="text-danger"></span>
             </div>
             <div class="form-group col-md-2">
                 <label asp-for="Email.Email">Email address</label>
-                <input class="form-control" asp-for="Email.Email" placeholder="Email address">
+     <input class="form-control" asp-for="Email.Email" placeholder="Email address">
                 <span asp-validation-for="Email.Email" class="text-danger"></span>
             </div>
             <div class="form-group col-md-2">
-                <label asp-for="EmailType"></label>
-                <select asp-for="EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <label asp-for="Email.EmailType"></label>
+                <select asp-for="Email.EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
+                <span asp-validation-for="Email.EmailType" class="text-danger"></span>
             </div>
             <div class="form-group col-md-2">
                 <label asp-for="Network.Name">Social Name</label>
@@ -92,9 +92,9 @@
                 <span asp-validation-for="Network.Name" class="text-danger"></span>
             </div>
             <div class="form-group col-md-2">
-                <label asp-for="SocialNetworkType"></label>
-                <select asp-for="Network" asp-items="Html.GetEnumSelectList<SocialNetworkType>()" class="form-control"></select>
-                <span asp-validation-for="SocialNetworkType" class="text-danger"></span>
+                <label asp-for="Network.SocialNetworkType"></label>
+                <select asp-for="Network.SocialNetworkType" asp-items="Html.GetEnumSelectList<SocialNetworkType>()" class="form-control"></select>
+                <span asp-validation-for="Network.SocialNetworkType" class="text-danger"></span>
             </div>
         </div>
         <div class="form-row">

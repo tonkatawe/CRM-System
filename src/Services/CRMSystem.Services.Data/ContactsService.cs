@@ -128,7 +128,7 @@
                     contact.Id);
 
             var socialNetwork =
-                await this.socialNetworkService.CreateSocialNetworkAsync(input.Network.Name, input.SocialNetworkType,
+                await this.socialNetworkService.CreateSocialNetworkAsync(input.Network.Name, input.Network.SocialNetworkType,
                     contact.Id);
 
             contact.PhoneNumbers.Add(phoneNumber);
