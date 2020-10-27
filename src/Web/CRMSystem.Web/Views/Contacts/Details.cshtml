@@ -1,13 +1,199 @@
-﻿@model CRMSystem.Web.ViewModels.Contacts.ContactViewModel;
+﻿@using CRMSystem.Data.Models
+@using CRMSystem.Web.ViewModels.Contacts
+@using CRMSystem.Web.ViewModels.Organizations
+@using CRMSystem.Web.ViewModels.Phones
+@using Microsoft.CodeAnalysis.CSharp.Syntax
+@model CRMSystem.Web.ViewModels.Contacts.GetDetailsViewModel
 @{
-    this.ViewData["Title"] = "All contacts";
+    this.ViewData["Title"] = "Get details";
+
+}
+<h4><b>Details about:</b></h4>
+
+<h5>
+    <b>@Html.DisplayFor(m => m.TitleAsString).</b> <i>@Html.DisplayFor(m => m.FullName)</i>
+</h5>
+<h6>
+    @this.Model.JobTitle
+</h6>
+
+<!--TODO: MAKE SALES AND EARNINGS-->
+<p class="proile-rating">RANKINGS : <span>8/10</span></p>
+
+<div class="col-md-8">
+    <div class="tab-content profile-tab" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>First Name:</b></label>
+                </div>
+                <div class="col-md-6">
+                    <p> @Html.DisplayFor(m => m.FirstName)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Middle Name:</b></label>
+                </div>
+                <div class="col-md-6">
+                    <p> @Html.DisplayFor(m => m.MiddleName)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Last Name:</b></label>
+                </div>
+                <div class="col-md-6">
+                    <p> @Html.DisplayFor(m => m.LastName)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Work in:</b></label>
+                </div>
+                <div class="col-md-6">
+                    <p> @Html.DisplayFor(m => m.IndustryAsString) Industry.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Email</b></label>
+                </div>
+                <div class="col-md-6">
+                    @foreach (var email in this.Model.EmailAddresses)
+                    {
+                        <p>
+                            @email.Email
+                        </p>
+                    }
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Phone</b></label>
+                </div>
+                <div class="col-md-6">
+                    @foreach (var phone in this.Model.PhoneNumbers)
+                    {
+
+                        @if (phone.PhoneType.ToString() == "Home")
+                        {
+
+                            <p>  @phone.Phone <i class="fas fa-home" title="Home"></i></p>
+
+                        }
+                        else if (phone.PhoneType.ToString() == "Work")
+                        {
+                            <p> @phone.Phone <i class="fas fa-building"></i></p>
+                        }
+                        else if (phone.PhoneType.ToString() == "Mobile")
+                        {
+                            <p> @phone.Phone <i class="fas fa-mobile" title="Mobile"></i></p>
+                        }
+                        else if (phone.PhoneType.ToString() == "Fax")
+                        {
+                            <p>  @phone.Phone <i class="fas fa-fax" title="Fax"></i></p>
+                        }
+
+                    }
+                    <a href="#" onclick="showAddPhoneForm()"><i class="fas fa-plus-circle" title="Add more phones">Add other phone</i></a>
+                    <div id="AddOrganizationForm" style="display: none" class="form-row">
+                        @await Html.PartialAsync("_AddPhone", new PhoneCreateInputModel() { ContactId = Model.Id })
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Profession</b></label>
+                </div>
+                <div class="col-md-6">
+                    <p>@Html.DisplayFor(m => m.JobTitle)</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label><b>Address:</b></label>
+                </div>
+                <div class="col-md-6">
+                    <p>@Html.DisplayFor(m => m.Address.Country), @Html.DisplayFor(m => m.Address.City), @Html.DisplayFor(m => m.Address.Street), @Html.DisplayFor(m => m.Address.ZipCode)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (Model.Organization != null)
+{
+    @await Html.PartialAsync("_GetOrganization", Model.Organization);
 
 }
 
+<p>
+    <a asp-action="Index">Back to contacts</a>
+</p>
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id" data-toggle="modal"
+       data-target="#modal-delete" data-id="@Model.Id">Edit contact as modal</a>
+</p>
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit contact direct</a>
+</p>
 
-<dt class="col-sm-2">
-    @Html.DisplayNameFor(model => model.LastName)
-</dt>
-<dd class="col-sm-10">
-    @Html.DisplayFor(model => model.LastName)
-</dd>
+<form asp-action="Edit" role="form" id="myForm" method="get">
+    <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDeleteLabel">Change Contact info</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="form-control">
+                    @await Html.PartialAsync("_EditContact", new EditContactInputModel() { Id = Model.Id })
+                    <input hidden name="id" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-outline-primary" id="modalUpdateButton">Update Contact</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+
+@section Scripts
+{
+    <script>
+        $(function () {
+            $('#modal-delete').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data("id");
+                var modal = $(this);
+
+                modal.find('.modal-content input').val(id);
+            });
+
+            $("#modalUpdateButton").click(function () {
+                $("#myForm").submit();
+
+            });
+
+        });
+    </script>
+    <script>
+        function showAddPhoneForm() {
+            $("#AddOrganizationForm").show();
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#AddOrganizationForm").offset().top
+            }, 2500);
+        }
+    </script>
+}

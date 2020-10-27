@@ -27,5 +27,8 @@ namespace CRMSystem.Services.Data.Contracts
         Task<int> CreateContactAsync(ContactCreateInputModel input, string userId);
 
         Task<int> AddToOrganizationAsync(int? contactId, int organizationId);
+
+        Task<int> UpdateContact(EditContactInputModel input);
+
     }
 }

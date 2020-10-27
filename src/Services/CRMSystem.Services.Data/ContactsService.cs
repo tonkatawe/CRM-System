@@ -150,5 +150,16 @@
             return contact.Id;
 
         }
+
+        public Task<int> UpdateContact(EditContactInputModel input)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        //public async Task<int> UpdateContact(EditContactInputModel input)
+        //{
+        //    var contact = await contactsRepository.GetByIdWithDeletedAsync(input.Id);
+        //    contact.FirstName = input.
+        //}
     }
 }

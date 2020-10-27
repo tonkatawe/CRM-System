@@ -1,10 +1,12 @@
 ﻿@using CRMSystem.Data.Models
-@using CRMSystem.Web.ViewModels.Organizations
-@model CRMSystem.Web.ViewModels.Contacts.GetDetailsViewModel
+@model CRMSystem.Web.ViewModels.Contacts.EditContactInputModel
+
+
 
 
 <h5>
-    <b>@Html.DisplayFor(m => m.TitleAsString).</b> <i>@Html.DisplayFor(m => m.FullName)</i>
+    <select asp-for="Title" asp-items="Html.GetEnumSelectList<Title>()" class="form-control"></select>
+    <span asp-validation-for="Title" class="text-danger"></span> <i>@Html.DisplayFor(m => m.FirstName)</i>
 </h5>
 
 
@@ -17,7 +19,9 @@
                     <label><b>First Name:</b></label>
                 </div>
                 <div class="col-md-6">
-                    <p> @Html.DisplayFor(m => m.FirstName)</p>
+                    @Model.FirstName <a asp-action="Edit" onclick="showAddCommentForm(@Model.FirstName)"><i class="fas fa-pencil-alt"></i></a>
+                    <input asp-for="FirstName" class="form-control" placeholder="First Name" id="AddCommentForm" style="display: none">
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
                 </div>
             </div>
             <div class="row">
@@ -38,15 +42,15 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label><b>Work in:</b></label>
+                    <label><b>Industry:</b></label>
                 </div>
                 <div class="col-md-6">
-                    <p> @Html.DisplayFor(m => m.IndustryAsString) Industry.</p>
+                    @*<p> @Html.DisplayFor(m => m.IndustryAsString) Industry.</p>*@
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label><b>Email</b></label>
+                    <label><b>Email:</b></label>
                 </div>
                 <div class="col-md-6">
                     @foreach (var email in this.Model.EmailAddresses)
@@ -59,7 +63,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label><b>Phone</b></label>
+                    <label><b>Phone:</b></label>
                 </div>
                 <div class="col-md-6">
                     @foreach (var phone in this.Model.PhoneNumbers)
@@ -72,7 +76,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label><b>Profession</b></label>
+                    <label><b>Job Title</b></label>
                 </div>
                 <div class="col-md-6">
                     <p>@Html.DisplayFor(m => m.JobTitle)</p>
@@ -89,3 +93,15 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        function showAddCommentForm(data) {
+            $("#AddCommentForm input[name='ParentId']").val(data);
+            $("#AddCommentForm").show();
+
+        }
+
+
+    </script>
+}

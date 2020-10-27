@@ -18,6 +18,7 @@ namespace CRMSystem.Web.Controllers
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class ContactsController : Controller
     {
         private readonly IContactsService contactsService;
@@ -37,7 +38,6 @@ namespace CRMSystem.Web.Controllers
             this.userManager = userManager;
         }
 
-        [Authorize]
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -71,7 +71,7 @@ namespace CRMSystem.Web.Controllers
             {
                 case "organ_desc":
                     //todo: make it work correctly
-                  //  contacts = contacts.OrderBy(x=>x.Organization.Name);
+                    //  contacts = contacts.OrderBy(x=>x.Organization.Name);
                     break;
                 case "name_desc":
                     contacts = contacts
@@ -98,15 +98,12 @@ namespace CRMSystem.Web.Controllers
             return View(await PaginatedList<ContactViewModel>.CreateAsync(contacts, pageNumber ?? 1, pageSize));
         }
 
-
-        [Authorize]
         public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Create(ContactCreateInputModel input)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -120,21 +117,22 @@ namespace CRMSystem.Web.Controllers
             return this.RedirectToAction("ConnectToOrganization", "Organizations", new { contactId = contactId });
         }
 
+
         public async Task<IActionResult> Edit(int id)
         {
-            var contact =  this.contactsService.GetContactById<GetDetailsViewModel>(id);
-            if (contact == null)
+            var viewModel = this.contactsService.GetContactById<GetDetailsViewModel>(id);
+            if (viewModel == null)
             {
                 return NotFound();
             }
 
-            return this.View(contact);
+            return this.View(viewModel);
         }
 
-        [HttpPost, ActionName("Edit")]
-        public async Task<IActionResult> EditPost(int id)
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditContactInputModel input)
         {
-            var contact = this.contactsService.GetContactById<GetDetailsViewModel>(id);
+            var contact = this.contactsService.GetContactById<GetDetailsViewModel>(input.Id);
             if (contact == null)
             {
                 return NotFound();
@@ -158,9 +156,10 @@ namespace CRMSystem.Web.Controllers
             //    return RedirectToAction(nameof(Index));
             //}
 
-            return this.RedirectToAction("Details", new {id = contact.Id});
+            return this.RedirectToAction("Details", new { id = contact.Id });
         }
 
+     
         public async Task<IActionResult> Details(int id)
         {
             //todo make method async
@@ -173,10 +172,10 @@ namespace CRMSystem.Web.Controllers
                 return NotFound();
             }
 
-            return View("Get", viewModel);
+            return View(viewModel);
         }
 
-        [Authorize]
+     
         public async Task<IActionResult> Delete(int id)
         {
             var contact = await this.contactsService.DeleteContactAsync(id);
@@ -188,14 +187,6 @@ namespace CRMSystem.Web.Controllers
             }
 
             return this.RedirectToAction("Index");
-        }
-
-
-        [Authorize]
-        public IActionResult GetDetails(int contactId)
-        {
-            var viewModel = this.contactsService.GetContactById<GetDetailsViewModel>(contactId);
-            return this.View(viewModel);
         }
     }
 }
