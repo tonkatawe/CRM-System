@@ -45,8 +45,17 @@ namespace CRMSystem.Services.Data
 
         public bool IsAvailablePhoneNumber(string phoneNumber)
         {
+            //todo: make better check with regex
             var phone =  this.phonesRepository.All().FirstOrDefault(x=>x.Phone == phoneNumber);
             return phone == null;
+        }
+
+        public async Task<int> DeletePhoneAsync(int id)
+        {
+            var phone =  await this.phonesRepository.GetByIdWithDeletedAsync(id);
+            this.phonesRepository.Delete(phone);
+
+            return await this.phonesRepository.SaveChangesAsync();
         }
     }
 }

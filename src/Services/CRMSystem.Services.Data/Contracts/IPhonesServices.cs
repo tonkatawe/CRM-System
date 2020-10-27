@@ -13,5 +13,7 @@
         Task<PhoneNumber> CreatePhoneAsync(string phone, PhoneType type, int contactId);
 
         bool IsAvailablePhoneNumber(string phoneNumber);
+
+        Task<int> DeletePhoneAsync(int id);
     }
 }

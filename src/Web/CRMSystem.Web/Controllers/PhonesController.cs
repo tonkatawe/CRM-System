@@ -18,7 +18,7 @@ namespace CRMSystem.Web.Controllers
         [AcceptVerbs("Get", "Post")]
         public IActionResult VerifyPhone(string phone)
         {
-            
+
             if (!this.phonesServices.IsAvailablePhoneNumber(phone))
             {
                 return Json($"Phone {phone} is already in use");
@@ -36,7 +36,17 @@ namespace CRMSystem.Web.Controllers
             //}
 
             await this.phonesServices.CreatePhoneAsync(input.Phone, input.PhoneType, input.ContactId);
-            return this.RedirectToAction("Details", "Contacts", new {id = input.ContactId});
+            return this.RedirectToAction("Details", "Contacts", new { id = input.ContactId });
+        }
+
+        public async Task<IActionResult> Delete(int id, int contactId)
+        {
+            await this.phonesServices.DeletePhoneAsync(id);
+
+            //todo for this user check..
+
+
+            return this.RedirectToAction("Details", "Contacts", new { id = contactId });
         }
     }
 }

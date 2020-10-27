@@ -80,25 +80,48 @@
                         @if (phone.PhoneType.ToString() == "Home")
                         {
 
-                            <p>  @phone.Phone <i class="fas fa-home" title="Home"></i></p>
+                            <p>
+                                @phone.Phone 
+                                <i class="fas fa-home" title="Home"></i> 
+                                <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@phone.Id">
+                                    <i class="fas fa-minus-circle" style="color: red"></i>
+                                </a>
+                            </p>
 
                         }
                         else if (phone.PhoneType.ToString() == "Work")
                         {
-                            <p> @phone.Phone <i class="fas fa-building" title="Work"></i></p>
+                            <p>
+                                @phone.Phone <i class="fas fa-building" title="Work"></i>
+                                <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@phone.Id">
+                                    <i class="fas fa-minus-circle" style="color: red"></i>
+                                </a>
+                            </p>
                         }
                         else if (phone.PhoneType.ToString() == "Mobile")
                         {
-                            <p> @phone.Phone <i class="fas fa-mobile" title="Mobile"></i></p>
+                            <p>
+                                @phone.Phone 
+                                <i class="fas fa-mobile" title="Mobile"></i>
+                                <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@phone.Id">
+                                    <i class="fas fa-minus-circle" style="color: red"></i>
+                                </a>
+                            </p>
                         }
                         else if (phone.PhoneType.ToString() == "Fax")
                         {
-                            <p>  @phone.Phone <i class="fas fa-fax" title="Fax"></i></p>
+                            <p>
+                                 @phone.Phone
+                                 <i class="fas fa-fax" title="Fax"></i>
+                                 <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@phone.Id">
+                                     <i class="fas fa-minus-circle" style="color: red"></i>
+                                 </a>
+                            </p>
                         }
 
                     }
                     <a href="#" onclick="showAddPhoneForm()"><i class="fas fa-plus-circle" title="Add more phones">Add other phone</i></a>
-                    <div id="AddOrganizationForm" style="display: none" class="form-row">
+                    <div id="AddPhoneForm" style="display: none" class="form-row">
                         @await Html.PartialAsync("_AddPhone", new PhoneCreateInputModel() { ContactId = Model.Id })
                     </div>
 
@@ -190,9 +213,9 @@
     </script>
     <script>
         function showAddPhoneForm() {
-            $("#AddOrganizationForm").show();
+            $("#AddPhoneForm").show();
             $([document.documentElement, document.body]).animate({
-                scrollTop: $("#AddOrganizationForm").offset().top
+                scrollTop: $("#AddPhoneForm").offset().top
             }, 2500);
         }
     </script>

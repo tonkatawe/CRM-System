@@ -159,7 +159,7 @@ namespace CRMSystem.Web.Controllers
             return this.RedirectToAction("Details", new { id = contact.Id });
         }
 
-     
+
         public async Task<IActionResult> Details(int id)
         {
             //todo make method async
@@ -175,16 +175,13 @@ namespace CRMSystem.Web.Controllers
             return View(viewModel);
         }
 
-     
+
         public async Task<IActionResult> Delete(int id)
         {
-            var contact = await this.contactsService.DeleteContactAsync(id);
+            await this.contactsService.DeleteContactAsync(id);
 
             //todo for this user check..
-            if (contact == null)
-            {
-                return NotFound();
-            }
+
 
             return this.RedirectToAction("Index");
         }
