@@ -20,8 +20,12 @@ namespace CRMSystem.Web.Controllers
         [AcceptVerbs("Get", "Post")]
         public IActionResult VerifyEmail(string email, ContactCreateInputModel input = null)
         {
+            if (input.Email != null && !this.emailsService.IsAvailableEmail(input.Email.Email))
+            {
+                return Json($"Email {input.Email.Email} is already in use");
+            }
 
-            if (!this.emailsService.IsAvailableEmail(email) || !this.emailsService.IsAvailableEmail(input.Email.Email))
+            if (!this.emailsService.IsAvailableEmail(email))
             {
                 return Json($"Email {email} is already in use");
             }

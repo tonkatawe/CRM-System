@@ -21,8 +21,12 @@ namespace CRMSystem.Web.Controllers
         [AcceptVerbs("Get", "Post")]
         public IActionResult VerifyPhone(string phone, ContactCreateInputModel input = null)
         {
+            if (input.PhoneNumber != null && !this.phonesServices.IsAvailablePhoneNumber(input.PhoneNumber.Phone))
+            {
+                return Json($"Phone {input.PhoneNumber.Phone} is already in use");
+            }
 
-            if (!this.phonesServices.IsAvailablePhoneNumber(phone) || !this.phonesServices.IsAvailablePhoneNumber(input.PhoneNumber.Phone))
+            if (!this.phonesServices.IsAvailablePhoneNumber(phone))
             {
                 return Json($"Phone {phone} is already in use");
             }
