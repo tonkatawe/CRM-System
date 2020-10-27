@@ -41,9 +41,18 @@
             return emailAddress;
         }
 
+        public bool IsAvailableEmail(string email)
+        {
+            var mail = this.emailRepository.All().FirstOrDefault(x => x.Email == email);
+            return mail == null;
+        }
+
         public async Task<int> DeleteEmailAsync(int contactId)
         {
-            throw new System.NotImplementedException();
+            var phone = await this.emailRepository.GetByIdWithDeletedAsync(contactId);
+            this.emailRepository.Delete(phone);
+
+            return await this.emailRepository.SaveChangesAsync();
         }
     }
 }

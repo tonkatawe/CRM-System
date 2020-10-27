@@ -12,6 +12,8 @@
 
         Task<EmailAddress> CreateEmailAsync(string email, EmailType type, int contactId);
 
-        Task<int> DeleteEmailAsync(int contactId);
+        bool IsAvailableEmail(string email);
+
+        Task<int> DeleteEmailAsync(int id);
     }
 }

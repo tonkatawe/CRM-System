@@ -1,4 +1,6 @@
-﻿namespace CRMSystem.Web.ViewModels.Emails
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace CRMSystem.Web.ViewModels.Emails
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -8,6 +10,10 @@
 
     public class EmailCreateInputModel : IMapFrom<EmailAddress>
     {
+        [Required]
+        public int ContactId { get; set; }
+
+        [Remote(action: "VerifyEmail", controller: "Emails")]
         [EmailAddress(ErrorMessage = "The Emails is not valid")]
         public string Email { get; set; }
 

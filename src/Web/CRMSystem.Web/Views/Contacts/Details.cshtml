@@ -1,5 +1,6 @@
 ﻿@using CRMSystem.Data.Models
 @using CRMSystem.Web.ViewModels.Contacts
+@using CRMSystem.Web.ViewModels.Emails
 @using CRMSystem.Web.ViewModels.Organizations
 @using CRMSystem.Web.ViewModels.Phones
 @using Microsoft.CodeAnalysis.CSharp.Syntax
@@ -63,10 +64,32 @@
                 <div class="col-md-6">
                     @foreach (var email in this.Model.EmailAddresses)
                     {
-                        <p>
-                            @email.Email
-                        </p>
+                        @if (email.EmailType.ToString() == "Home")
+                        {
+
+                            <p>
+                                @email.Email
+                                <i class="fas fa-home" title="Home"></i>
+                                <a asp-action="Delete" asp-controller="Emails" asp-route-contactId="@Model.Id" asp-route-id="@email.Id">
+                                    <i class="fas fa-minus-circle" style="color: red"></i>
+                                </a>
+                            </p>
+
+                        }
+                        else if (email.EmailType.ToString() == "Work")
+                        {
+                            <p>
+                                @email.Email <i class="fas fa-building" title="Work"></i>
+                                <a asp-action="Delete" asp-controller="Emails" asp-route-contactId="@Model.Id" asp-route-id="@email.Id">
+                                    <i class="fas fa-minus-circle" style="color: red"></i>
+                                </a>
+                            </p>
+                        }
                     }
+                    <a href="#" onclick="showAddEmailForm()"><i class="fas fa-plus-circle" title="Add more phones">Add other email</i></a>
+                    <div id="AddEmailForm" style="display: none" class="form-row">
+                        @await Html.PartialAsync("_AddEmail", new EmailCreateInputModel() { ContactId = Model.Id })
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -81,8 +104,8 @@
                         {
 
                             <p>
-                                @phone.Phone 
-                                <i class="fas fa-home" title="Home"></i> 
+                                @phone.Phone
+                                <i class="fas fa-home" title="Home"></i>
                                 <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@phone.Id">
                                     <i class="fas fa-minus-circle" style="color: red"></i>
                                 </a>
@@ -101,7 +124,7 @@
                         else if (phone.PhoneType.ToString() == "Mobile")
                         {
                             <p>
-                                @phone.Phone 
+                                @phone.Phone
                                 <i class="fas fa-mobile" title="Mobile"></i>
                                 <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@phone.Id">
                                     <i class="fas fa-minus-circle" style="color: red"></i>
@@ -111,11 +134,11 @@
                         else if (phone.PhoneType.ToString() == "Fax")
                         {
                             <p>
-                                 @phone.Phone
-                                 <i class="fas fa-fax" title="Fax"></i>
-                                 <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@phone.Id">
-                                     <i class="fas fa-minus-circle" style="color: red"></i>
-                                 </a>
+                                @phone.Phone
+                                <i class="fas fa-fax" title="Fax"></i>
+                                <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@phone.Id">
+                                    <i class="fas fa-minus-circle" style="color: red"></i>
+                                </a>
                             </p>
                         }
 
@@ -210,13 +233,20 @@
             });
 
         });
+
     </script>
     <script>
         function showAddPhoneForm() {
             $("#AddPhoneForm").show();
             $([document.documentElement, document.body]).animate({
                 scrollTop: $("#AddPhoneForm").offset().top
-            }, 2500);
+            }, 1500);
+        }
+        function showAddEmailForm() {
+            $("#AddEmailForm").show();
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#AddEmailForm").offset().top
+            }, 1500);
         }
     </script>
 }

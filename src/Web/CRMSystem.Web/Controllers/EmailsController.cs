@@ -1,46 +1,45 @@
 ﻿using System.Threading.Tasks;
 using CRMSystem.Services.Data.Contracts;
-using CRMSystem.Web.ViewModels.Phones;
+using CRMSystem.Web.ViewModels.Emails;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRMSystem.Web.Controllers
 {
     [Authorize]
-    public class PhonesController : Controller
+    public class EmailsController : Controller
     {
-        private readonly IPhonesServices phonesServices;
+        private readonly IEmailsService emailsService;
 
-        public PhonesController(IPhonesServices phonesServices)
+        public EmailsController(IEmailsService emailsService)
         {
-            this.phonesServices = phonesServices;
+            this.emailsService = emailsService;
         }
 
-
         [AcceptVerbs("Get", "Post")]
-        public IActionResult VerifyPhone(string phone)
+        public IActionResult VerifyEmail(string email)
         {
 
-            if (!this.phonesServices.IsAvailablePhoneNumber(phone))
+            if (!this.emailsService.IsAvailableEmail(email))
             {
-                return Json($"Phone {phone} is already in use");
+                return Json($"Email {email} is already in use");
             }
             return Json(true);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(PhoneCreateInputModel input)
+        public async Task<IActionResult> Add(EmailCreateInputModel input)
         {
-            await this.phonesServices.CreatePhoneAsync(input.Phone, input.PhoneType, input.ContactId);
+            await this.emailsService.CreateEmailAsync(input.Email, input.EmailType, input.ContactId);
             return this.RedirectToAction("Details", "Contacts", new { id = input.ContactId });
         }
 
         public async Task<IActionResult> Delete(int id, int contactId)
         {
-            await this.phonesServices.DeletePhoneAsync(id);
+            await this.emailsService.DeleteEmailAsync(id);
 
             //todo for this user check..
-            
+
             return this.RedirectToAction("Details", "Contacts", new { id = contactId });
         }
     }
