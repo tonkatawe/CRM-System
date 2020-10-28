@@ -9,7 +9,7 @@
 
 <h1>You are success add your contact no you have a choice to add this to organization or not</h1>
 
-<form method="post" asp-action="ConnectToOrganization" asp-route-contactId="@Model.ContactId">
+<form id = "ExistedOrganization" method="post" asp-action="ConnectToOrganization" asp-route-contactId="@Model.ContactId">
     <div class="form-row">
         <div class="form-group col-md-4">
             <label asp-for="OrganizationId"></label>
@@ -21,7 +21,7 @@
 </form>
 <hr />
 
-<div class="px-4 pt-3"> <button type="button" class="btn btn-primary float-right" onclick="showAddOrganizationForm()"><i class="fa fa-plus"></i>&nbsp; Add new organization</button> </div>
+<div class="px-4 pt-3" id="AddNewOrganization"> <button type="button" class="btn btn-primary float-right" onclick="showAddOrganizationForm()"><i class="fa fa-plus"></i>&nbsp; Add new organization</button> </div>
 <div class="clearfix"></div>
 <div id="AddOrganizationForm" style="display: none">
     <partial name="_CreateOrganization" />
@@ -33,6 +33,8 @@
     <script>
         function showAddOrganizationForm() {
             $("#AddOrganizationForm").show();
+            $("#ExistedOrganization").hide();
+            $("#AddNewOrganization").hide();
             $([document.documentElement, document.body]).animate({
                 scrollTop: $("#AddOrganizationForm").offset().top
             }, 2500);

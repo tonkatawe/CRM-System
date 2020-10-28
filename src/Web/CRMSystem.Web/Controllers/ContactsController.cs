@@ -101,7 +101,9 @@ namespace CRMSystem.Web.Controllers
 
         public IActionResult Create()
         {
-            return this.View();
+
+            //Todo: make service for check existed phone and mail only from current user and delete method this check by other controllers
+          return this.View();
         }
         
         [HttpPost]

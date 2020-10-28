@@ -9,8 +9,7 @@
 
     public class GetDetailsViewModel : ContactViewModel
     {
-        public int Id { get; set; }
-
+       
         public Title Title { get; set; }
 
         public string TitleAsString => this.Title.ToString();
