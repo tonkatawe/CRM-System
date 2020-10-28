@@ -13,13 +13,17 @@
 <body id="page-top">
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
+                
             <div class="container-fluid">
                 <div class="row">
-
-                    <div class="col-xl-6 col-lg-7">
-                        <div class="card shadow mb-4">
+                    <div class="col-xl-6 col-lg-7" >
+                        <div id="EditPartial" style="display: none">
+                            <partial name="_EditContact" />
+                            @*@await Html.PartialAsync("_EditTest", new EditContactInputModel {Id = @Model.Id})*@
+                        </div>
+                        <div class="card shadow mb-4" id="CurrentContact">
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary">  <b>@Html.DisplayFor(m => m.TitleAsString).</b> <i>@Html.DisplayFor(m => m.FullName)</i></h6>
+                                <h6 class="m-0 font-weight-bold text-primary"> <b>@Html.DisplayFor(m => m.TitleAsString).</b> <i>@Html.DisplayFor(m => m.FullName)</i></h6>
                                 <div class="dropdown no-arrow">
                                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
@@ -95,7 +99,7 @@
                                         }
                                         <a href="#" onclick="showAddEmailForm()"><i class="fas fa-plus-circle" title="Add more phones">Add other email</i></a>
                                         <div id="AddEmailForm" style="display: none" class="form-row">
-                                            @await Html.PartialAsync("_AddEmail", new EmailCreateInputModel() { ContactId = Model.Id })
+                                            @await Html.PartialAsync("_AddEmail", new EmailCreateInputModel() {ContactId = Model.Id})
                                         </div>
                                     </div>
                                 </div>
@@ -152,7 +156,7 @@
                                         }
                                         <a href="#" onclick="showAddPhoneForm()"><i class="fas fa-plus-circle" title="Add more phones">Add other phone</i></a>
                                         <div id="AddPhoneForm" style="display: none" class="form-row">
-                                            @await Html.PartialAsync("_AddPhone", new PhoneCreateInputModel() { ContactId = Model.Id })
+                                            @await Html.PartialAsync("_AddPhone", new PhoneCreateInputModel() {ContactId = Model.Id})
                                         </div>
 
                                     </div>
@@ -177,6 +181,7 @@
                         </div>
                     </div>
 
+                
                     @if (Model.Organization != null)
                     {
                         @await Html.PartialAsync("_GetOrganization", Model.Organization);
@@ -186,10 +191,18 @@
                     {
                         <p>Create join to organization or ad to oder organization and bla bla bla</p>
                     }
-
                 </div>
             </div>
         </div>
+
+        
+        <!--Start under construction-->
+        <div class="px-4 pt-3" id="EditButton"> <button type="button" class="btn btn-primary float-right" onclick="showAddOrganizationForm()"><i class="fa fa-plus"></i>&nbsp; Edit Contact</button> </div>
+        <div class="clearfix"></div>
+     
+
+        <!--End under construction-->
+
         <p>
             <a asp-action="Index">Back to contacts</a>
         </p>
@@ -213,6 +226,14 @@
             $("#AddEmailForm").show();
             $([document.documentElement, document.body]).animate({
                 scrollTop: $("#AddEmailForm").offset().top
+            }, 1500);
+        }
+        function showAddOrganizationForm() {
+            $("#EditPartial").show();
+            $("#CurrentContact").hide();
+            $("#EditButton").hide();
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#AddOrganizationForm").offset().top
             }, 1500);
         }
     </script>

@@ -13,11 +13,9 @@ namespace CRMSystem.Web.ViewModels.Contacts
 
         public EditContactInputModel()
         {
-            this.Notes = new HashSet<Note>();
             this.PhoneNumbers = new HashSet<PhoneNumber>();
             this.EmailAddresses = new HashSet<EmailAddress>();
             this.SocialNetworks = new HashSet<SocialNetwork>();
-            this.Sales = new HashSet<Sale>();
         }
 
         [Required]
@@ -38,8 +36,6 @@ namespace CRMSystem.Web.ViewModels.Contacts
         [MaxLength(30)]
         public string JobTitle { get; set; }
 
-        public OrganizationViewModel Organization { get; set; }
-
         public IndustryType Industry { get; set; }
 
         [MaxLength(1000)]
@@ -48,14 +44,11 @@ namespace CRMSystem.Web.ViewModels.Contacts
         [Required]
         public Address Address { get; set; }
 
-       public ICollection<Note> Notes { get; set; }
-
         public ICollection<PhoneNumber> PhoneNumbers { get; set; }
 
         public ICollection<EmailAddress> EmailAddresses { get; set; }
 
         public ICollection<SocialNetwork> SocialNetworks { get; set; }
 
-        public ICollection<Sale> Sales { get; set; }
     }
 }
