@@ -3,13 +3,16 @@
     using System.Collections.Generic;
 
     using CRMSystem.Data.Models;
-    using CRMSystem.Data.Models.Enums;
-    using CRMSystem.Services.Mapping;
-    using CRMSystem.Web.ViewModels.Organizations;
+
 
     public class GetDetailsViewModel : ContactViewModel
     {
-       
+        public GetDetailsViewModel()
+        {
+            this.PhoneNumbers = new HashSet<PhoneNumber>();
+            this.EmailAddresses = new HashSet<EmailAddress>();
+            this.SocialNetworks = new HashSet<SocialNetwork>();
+        }
         public Title Title { get; set; }
 
         public string TitleAsString => this.Title.ToString();
@@ -25,5 +28,7 @@
         public ICollection<EmailAddress> EmailAddresses { get; set; }
 
         public ICollection<SocialNetwork> SocialNetworks { get; set; }
+
+        public EditContactInputModel SharedEditContactViewModel { get; set; }
     }
 }

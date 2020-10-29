@@ -50,5 +50,6 @@ namespace CRMSystem.Web.ViewModels.Contacts
 
         public ICollection<SocialNetwork> SocialNetworks { get; set; }
 
+      
     }
 }

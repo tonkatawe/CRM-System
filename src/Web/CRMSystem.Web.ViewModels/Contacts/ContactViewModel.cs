@@ -1,16 +1,14 @@
-﻿namespace CRMSystem.Web.ViewModels.Contacts
+﻿using CRMSystem.Data.Models;
+using CRMSystem.Services.Mapping;
+
+namespace CRMSystem.Web.ViewModels.Contacts
 {
     using System;
     using System.Globalization;
-    using System.Collections.Generic;
-
-    using CRMSystem.Data.Models;
     using CRMSystem.Data.Models.Enums;
-    using CRMSystem.Services.Mapping;
-    using CRMSystem.Web.ViewModels.Emails;
     using CRMSystem.Web.ViewModels.Organizations;
 
-    public class ContactViewModel : IMapFrom<Contact>
+    public class ContactViewModel:IMapFrom<Contact>
     {
 
         public int Id { get; set; }

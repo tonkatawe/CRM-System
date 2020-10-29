@@ -2,9 +2,10 @@
 @using CRMSystem.Data.Models.Enums
 @using CRMSystem.Web.ViewModels.Emails
 @using CRMSystem.Web.ViewModels.Phones
-@model CRMSystem.Web.ViewModels.Contacts.GetDetailsViewModel
-
-@*<div class="col-xl-6 col-lg-7">*@
+@using System.Linq
+@using CRMSystem.Data.Models
+@model CRMSystem.Web.ViewModels.Contacts.EditContactInputModel
+<form style="padding-bottom: 7rem" method="post" asp-action="Edit">
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">  <b>Update contact</b> </h6>
@@ -71,15 +72,20 @@
                 <div class="col-md-6">
                     @foreach (var email in this.Model.EmailAddresses)
                     {
-                        <p>
-                            <input asp-for="EmailAddresses" value="@email.Email" />
-                            <span asp-validation-for="EmailAddresses" class="text-danger"></span>
-                            <select asp-for="EmailAddresses" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
-
-                            <a asp-action="Delete" asp-controller="Emails" asp-route-contactId="@Model.Id" asp-route-id="@email.Id">
-                                <i class="fas fa-minus-circle" style="color: red"></i>
-                            </a>
-                        </p>
+                        <div class="form-row">
+                            <p>
+                                <div class="col-md-6">
+                                    <input asp-for="EmailAddresses" value="@email.Email" class="form-control" />
+                                    <span asp-validation-for="EmailAddresses" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <select asp-for="EmailAddresses.Where(x=>x.Email == @email.Email)" value="@email.EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
+                                </div>
+                                <a asp-action="Delete" asp-controller="Emails" asp-route-contactId="@Model.Id" asp-route-id="@email.Id">
+                                    <i class="fas fa-minus-circle" style="color: red"></i>
+                                </a>
+                            </p>
+                        </div>
                     }
 
                 </div>
@@ -91,13 +97,20 @@
                 <div class="col-md-6">
                     @foreach (var phone in this.Model.PhoneNumbers)
                     {
-                        <p>
-                            <input asp-for="PhoneNumbers" value="@phone.Phone" />
-                            <span asp-validation-for="PhoneNumbers" class="text-danger"></span>
-                            <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@phone.Id">
-                                <i class="fas fa-minus-circle" style="color: red"></i>
-                            </a>
-                        </p>
+                        <div class="form-row">
+                            <p>
+                                <div class="col-md-6">
+                                    <input asp-for="PhoneNumbers" value="@phone.Phone" class="form-control" />
+                                    <span asp-validation-for="EmailAddresses" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <select asp-for="PhoneNumber.Where(x=>x.Email == @phone.Phone)" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control"></select>
+                                </div>
+                                <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@phone.Id">
+                                    <i class="fas fa-minus-circle" style="color: red"></i>
+                                </a>
+                            </p>
+                        </div>
                     }
 
                 </div>
@@ -119,16 +132,18 @@
                 </div>
                 <div class="col-md-6">
                     <p>
-                        Country <br/>
-                        <input asp-for="Address" value="@Model.Address.Country"/><br/>
-                        City<br/>
-                        <input asp-for="Address" value="@Model.Address.City"/><br/>
-                        Street<br/>
-                        <input asp-for="Address" value="@Model.Address.Street"/><br/>
-                        Zip Code<br/><input asp-for="Address" value="@Model.Address.ZipCode"/>
+                        Country <br />
+                        <input asp-for="Address" value="@Model.Address.Country" /><br />
+                        City<br />
+                        <input asp-for="Address" value="@Model.Address.City" /><br />
+                        Street<br />
+                        <input asp-for="Address" value="@Model.Address.Street" /><br />
+                        Zip Code<br /><input asp-for="Address" value="@Model.Address.ZipCode" />
                     </p>
                 </div>
             </div>
         </div>
+        <input asp-for="@Model.Id" type="hidden" />
+        <button type="submit" class="btn btn-primary rounded-bottom">Save Changes</button>
     </div>
-@*</div>*@
+</form>

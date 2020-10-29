@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AutoMapper;
 using CRMSystem.Web.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
@@ -24,7 +25,7 @@ namespace CRMSystem.Web.Controllers
         private readonly IContactsService contactsService;
         private readonly IEmailsService emailsService;
         private readonly IPhonesServices phonesService;
-     private readonly UserManager<ApplicationUser> userManager;
+        private readonly UserManager<ApplicationUser> userManager;
 
         public ContactsController(
             IContactsService contactsService,
@@ -103,9 +104,9 @@ namespace CRMSystem.Web.Controllers
         {
 
             //Todo: make service for check existed phone and mail only from current user and delete method this check by other controllers
-          return this.View();
+            return this.View();
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Create(ContactCreateInputModel input)
         {
@@ -121,16 +122,16 @@ namespace CRMSystem.Web.Controllers
         }
 
 
-        public async Task<IActionResult> Edit(int id)
-        {
-            var viewModel = this.contactsService.GetContactById<GetDetailsViewModel>(id);
-            if (viewModel == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Edit(int id)
+        //{
+        //    var viewModel = this.contactsService.GetContactById<GetDetailsViewModel>(id);
+        //    if (viewModel == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return this.View(viewModel);
-        }
+        //    return this.View(viewModel);
+        //}
 
         [HttpPost]
         public async Task<IActionResult> Edit(EditContactInputModel input)
@@ -169,13 +170,15 @@ namespace CRMSystem.Web.Controllers
 
             var viewModel = this.contactsService.GetContactById<GetDetailsViewModel>(id);
 
+            viewModel.SharedEditContactViewModel = this.contactsService.GetContactById<EditContactInputModel>(viewModel.Id);
+            viewModel.SharedEditContactViewModel.Id = viewModel.Id;
 
             if (viewModel == null)
             {
                 return NotFound();
             }
 
-            return View(viewModel);
+            return this.View(viewModel);
         }
 
 
