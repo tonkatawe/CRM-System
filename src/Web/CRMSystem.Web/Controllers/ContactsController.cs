@@ -97,6 +97,7 @@ namespace CRMSystem.Web.Controllers
             }
 
             int pageSize = 10;
+
             return View(await PaginatedList<ContactViewModel>.CreateAsync(contacts, pageNumber ?? 1, pageSize));
         }
 
@@ -136,31 +137,17 @@ namespace CRMSystem.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(EditContactInputModel input)
         {
-            var contact = this.contactsService.GetContactById<GetDetailsViewModel>(input.Id);
-            if (contact == null)
-            {
-                return NotFound();
-            }
+            //todo Check for mail, phone social network, make limit for all types, try to get only changed properties
 
-            //if (await TryUpdateModelAsync<Course>(courseToUpdate,
-            //    "",
-            //    c => c.Credits, c => c.DepartmentID, c => c.Title))
+            var contactId = await this.contactsService.UpdateContact(input);
+            //var contact = this.contactsService.GetContactById<GetDetailsViewModel>(input.Id);
+            //if (contact == null)
             //{
-            //    try
-            //    {
-            //        await _context.SaveChangesAsync();
-            //    }
-            //    catch (DbUpdateException /* ex */)
-            //    {
-            //        //Log the error (uncomment ex variable name and write a log.)
-            //        ModelState.AddModelError("", "Unable to save changes. " +
-            //                                     "Try again, and if the problem persists, " +
-            //                                     "see your system administrator.");
-            //    }
-            //    return RedirectToAction(nameof(Index));
+            //    return NotFound();
             //}
 
-            return this.RedirectToAction("Details", new { id = contact.Id });
+
+            return this.RedirectToAction("Details", new { id = contactId });
         }
 
 
@@ -170,8 +157,13 @@ namespace CRMSystem.Web.Controllers
 
             var viewModel = this.contactsService.GetContactById<GetDetailsViewModel>(id);
 
-            viewModel.SharedEditContactViewModel = this.contactsService.GetContactById<EditContactInputModel>(viewModel.Id);
-            viewModel.SharedEditContactViewModel.Id = viewModel.Id;
+            //todo have to repair because it doesn't work :)
+            if (viewModel.SharedEditContactViewModel.Id != id)
+            {
+                viewModel.SharedEditContactViewModel = this.contactsService.GetContactById<EditContactInputModel>(viewModel.Id);
+                viewModel.SharedEditContactViewModel.Id = viewModel.Id;
+
+            }
 
             if (viewModel == null)
             {
@@ -188,8 +180,9 @@ namespace CRMSystem.Web.Controllers
 
             //todo for this user check..
 
-
             return this.RedirectToAction("Index");
         }
+
+
     }
 }

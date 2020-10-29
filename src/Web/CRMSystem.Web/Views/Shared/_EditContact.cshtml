@@ -4,6 +4,8 @@
 @using CRMSystem.Web.ViewModels.Phones
 @using System.Linq
 @using CRMSystem.Data.Models
+@using Microsoft.EntityFrameworkCore.Internal
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
 @model CRMSystem.Web.ViewModels.Contacts.EditContactInputModel
 <form style="padding-bottom: 7rem" method="post" asp-action="Edit">
     <div class="card shadow mb-4">
@@ -70,18 +72,18 @@
                     <label><b>Email</b></label>
                 </div>
                 <div class="col-md-6">
-                    @foreach (var email in this.Model.EmailAddresses)
+                    @for (int i = 0; i < @Model.EmailAddresses.Count; i++)
                     {
                         <div class="form-row">
                             <p>
                                 <div class="col-md-6">
-                                    <input asp-for="EmailAddresses" value="@email.Email" class="form-control" />
+                                    <input asp-for="EmailAddresses[i].Email"  value="@Model.EmailAddresses[i].Email" class="form-control" />
                                     <span asp-validation-for="EmailAddresses" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <select asp-for="EmailAddresses.Where(x=>x.Email == @email.Email)" value="@email.EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
+                                    <select asp-for="EmailAddresses[i].EmailType"  asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
                                 </div>
-                                <a asp-action="Delete" asp-controller="Emails" asp-route-contactId="@Model.Id" asp-route-id="@email.Id">
+                                <a asp-action="Delete" asp-controller="Emails" asp-route-contactId="@Model.EmailAddresses[i].ContactId">
                                     <i class="fas fa-minus-circle" style="color: red"></i>
                                 </a>
                             </p>
@@ -95,18 +97,20 @@
                     <label><b>Phone</b></label>
                 </div>
                 <div class="col-md-6">
-                    @foreach (var phone in this.Model.PhoneNumbers)
+                    @for (int i = 0; i < @Model.PhoneNumbers.Count; i++)
                     {
-                        <div class="form-row">
+                        
+                   <div class="form-row">
                             <p>
                                 <div class="col-md-6">
-                                    <input asp-for="PhoneNumbers" value="@phone.Phone" class="form-control" />
-                                    <span asp-validation-for="EmailAddresses" class="text-danger"></span>
+                                  
+                                    <input asp-for="PhoneNumbers[i].Phone" value="@Model.PhoneNumbers[i].Phone" class="form-control"/>
+                                    <span asp-validation-for="PhoneNumbers" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <select asp-for="PhoneNumber.Where(x=>x.Email == @phone.Phone)" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control"></select>
+                                    <select asp-for="PhoneNumbers[i].PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control"></select>
                                 </div>
-                                <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@phone.Id">
+                                <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@Model.PhoneNumbers[i].ContactId">
                                     <i class="fas fa-minus-circle" style="color: red"></i>
                                 </a>
                             </p>
@@ -133,12 +137,12 @@
                 <div class="col-md-6">
                     <p>
                         Country <br />
-                        <input asp-for="Address" value="@Model.Address.Country" /><br />
+                        <input asp-for="Address.Country" value="@Model.Address.Country" /><br />
                         City<br />
-                        <input asp-for="Address" value="@Model.Address.City" /><br />
+                        <input asp-for="Address.City" value="@Model.Address.City" /><br />
                         Street<br />
-                        <input asp-for="Address" value="@Model.Address.Street" /><br />
-                        Zip Code<br /><input asp-for="Address" value="@Model.Address.ZipCode" />
+                        <input asp-for="Address.Street" value="@Model.Address.Street" /><br />
+                        Zip Code<br /><input asp-for="Address.ZipCode" value="@Model.Address.ZipCode" />
                     </p>
                 </div>
             </div>

@@ -4,6 +4,7 @@ using CRMSystem.Data.Models;
 using CRMSystem.Data.Models.Enums;
 using CRMSystem.Services.Mapping;
 using CRMSystem.Web.ViewModels.Organizations;
+using CRMSystem.Web.ViewModels.Phones;
 
 namespace CRMSystem.Web.ViewModels.Contacts
 {
@@ -13,9 +14,9 @@ namespace CRMSystem.Web.ViewModels.Contacts
 
         public EditContactInputModel()
         {
-            this.PhoneNumbers = new HashSet<PhoneNumber>();
-            this.EmailAddresses = new HashSet<EmailAddress>();
-            this.SocialNetworks = new HashSet<SocialNetwork>();
+            this.PhoneNumbers = new List<PhoneNumber>();
+            this.EmailAddresses = new List<EmailAddress>();
+            this.SocialNetworks = new List<SocialNetwork>();
         }
 
         [Required]
@@ -44,12 +45,13 @@ namespace CRMSystem.Web.ViewModels.Contacts
         [Required]
         public Address Address { get; set; }
 
-        public ICollection<PhoneNumber> PhoneNumbers { get; set; }
-
-        public ICollection<EmailAddress> EmailAddresses { get; set; }
-
-        public ICollection<SocialNetwork> SocialNetworks { get; set; }
-
       
+        public IList<PhoneNumber> PhoneNumbers { get; set; }
+
+        public IList<EmailAddress> EmailAddresses { get; set; }
+
+        public IList<SocialNetwork> SocialNetworks { get; set; }
+
+
     }
 }

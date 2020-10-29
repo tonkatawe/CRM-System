@@ -151,9 +151,24 @@
 
         }
 
-        public Task<int> UpdateContact(EditContactInputModel input)
+        public async Task<int> UpdateContact(EditContactInputModel input)
         {
-            throw new System.NotImplementedException();
+
+            //todo try use reflection about properties 
+            var contact = await contactsRepository.GetByIdWithDeletedAsync(input.Id);
+            contact.PhoneNumbers = input.PhoneNumbers;
+            contact.EmailAddresses = input.EmailAddresses;
+            contact.SocialNetworks = input.SocialNetworks;
+            contact.Address = input.Address;
+            contact.FirstName = input.FirstName;
+            contact.MiddleName = input.MiddleName;
+            contact.LastName = input.LastName;
+            contact.AdditionalInfo = input.AdditionalInfo;
+            contact.JobTitle = input.JobTitle;
+
+            this.contactsRepository.Update(contact);
+
+            return await this.contactsRepository.SaveChangesAsync();
         }
 
         //public async Task<int> UpdateContact(EditContactInputModel input)
