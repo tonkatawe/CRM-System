@@ -1,11 +1,6 @@
 ﻿
 @using CRMSystem.Data.Models.Enums
-@using CRMSystem.Web.ViewModels.Emails
-@using CRMSystem.Web.ViewModels.Phones
-@using System.Linq
-@using CRMSystem.Data.Models
-@using Microsoft.EntityFrameworkCore.Internal
-@using Microsoft.EntityFrameworkCore.Metadata.Internal
+
 @model CRMSystem.Web.ViewModels.Contacts.EditContactInputModel
 <form style="padding-bottom: 7rem" method="post" asp-action="Edit">
     <div class="card shadow mb-4">
@@ -58,7 +53,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <label><b>Work in:</b></label>
+                    <label><b>Industry:</b></label>
                 </div>
                 <div class="col-md-6">
                     <p>
@@ -74,24 +69,25 @@
                 <div class="col-md-6">
                     @for (int i = 0; i < @Model.EmailAddresses.Count; i++)
                     {
-                        <div class="form-row">
-                            <p>
+                        <p>
+                            <div class="form-row">
                                 <div class="col-md-6">
-                                    <input asp-for="EmailAddresses[i].Email"  value="@Model.EmailAddresses[i].Email"  class="form-control" />
+                                    <input asp-for="EmailAddresses[i].Email" value="@Model.EmailAddresses[i].Email" class="form-control" />
+                                    <input asp-for="@Model.EmailAddresses[i].Id" type="hidden" />
                                     <span asp-validation-for="EmailAddresses" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <select asp-for="EmailAddresses[i].EmailType"  asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
+                                    <select asp-for="EmailAddresses[i].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
                                 </div>
-                            @*<a asp-action="Delete" asp-controller="Emails" asp-route-id="@Model.EmailAddresses[i].Id" asp-route-contactId="@Model.EmailAddresses[i].ContactId">*@
-                            <a href="#" onclick="del(@Model.EmailAddresses[i].Id, @Model.EmailAddresses[i].ContactId)">
+                                <a asp-action="Delete" asp-controller="Emails" asp-route-id="@Model.EmailAddresses[i]" asp-route-contactId="@Model.EmailAddresses[i].ContactId">
+
                                     <i class="fas fa-minus-circle" style="color: red"></i>
                                 </a>
-                            </p>
-                        </div>
+                            </div>
+                        </p>
                     }
-
                 </div>
+
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -100,12 +96,13 @@
                 <div class="col-md-6">
                     @for (int i = 0; i < @Model.PhoneNumbers.Count; i++)
                     {
-                        
-                   <div class="form-row">
-                            <p>
+
+                        <p>
+                            <div class="form-row">
                                 <div class="col-md-6">
-                                  
-                                    <input asp-for="PhoneNumbers[i].Phone" asp-route="@Model.PhoneNumbers[i].ContactId" value="@Model.PhoneNumbers[i].Phone" class="form-control"/>
+
+                                    <input asp-for="PhoneNumbers[i].Phone" asp-route="@Model.PhoneNumbers[i].ContactId" value="@Model.PhoneNumbers[i].Phone" class="form-control" />
+                                    <input asp-for="@Model.PhoneNumbers[i].Id" type="hidden" />
                                     <span asp-validation-for="PhoneNumbers" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4">
@@ -114,8 +111,8 @@
                                 <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@Model.PhoneNumbers[i].ContactId">
                                     <i class="fas fa-minus-circle" style="color: red"></i>
                                 </a>
-                            </p>
-                        </div>
+                            </div>
+                        </p>
                     }
 
                 </div>
@@ -144,19 +141,20 @@
                         Street<br />
                         <input asp-for="Address.Street" value="@Model.Address.Street" /><br />
                         Zip Code<br /><input asp-for="Address.ZipCode" value="@Model.Address.ZipCode" />
+                        <input asp-for="Address.Id" type="hidden" />
                     </p>
                 </div>
             </div>
         </div>
         <input asp-for="@Model.Id" type="hidden" />
-        <button type="submit" class="btn btn-primary rounded-bottom">Save Changes</button>
+        <button type="submit" class="btn btn-primary rounded-bottom">Save Changes</button>  <button type="submit" class="btn btn-danger rounded-bottom">Cancel</button>
     </div>
 </form>
 
 
 @section Scripts
 {
-  <script>
+    <script>
         function del(id, contactId) {
             $.ajax({
                 url: '/Emails/Delete',
@@ -165,11 +163,11 @@
                     contactId: contactId
                 },
                 contentType: 'application/json',
-                success: function(data) {
+                success: function (data) {
                     console.log(data);
                     location.reload(true);
                 },
-                error: function(e) {
+                error: function (e) {
                     console.log(e);
                 }
             });

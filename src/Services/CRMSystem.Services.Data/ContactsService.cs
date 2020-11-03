@@ -163,22 +163,8 @@ namespace CRMSystem.Services.Data
             var contact = await contactsRepository.GetByIdWithDeletedAsync(input.Id);
 
 
-            for (var i = 0; i < input.PhoneNumbers.Count(x => x.ContactId == contact.Id); i++)
-            {
-                if (contact.PhoneNumbers.Contains(input.PhoneNumbers[i]))
-                {
-                    continue;
 
-                }
-
-                if (!this.phonesServices.IsAvailablePhoneNumber(input.PhoneNumbers[i].Phone))
-                {
-                    continue;
-                }
-                contact.PhoneNumbers.Add(input.PhoneNumbers[i]);
-            }
-
-            // contact.PhoneNumbers = input.PhoneNumbers;
+            contact.PhoneNumbers = input.PhoneNumbers;
             contact.EmailAddresses = input.EmailAddresses;
             contact.SocialNetworks = input.SocialNetworks;
             contact.Address = input.Address;

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using CRMSystem.Data.Models;
 using CRMSystem.Data.Models.Enums;
 using CRMSystem.Services.Mapping;
-using CRMSystem.Web.ViewModels.Organizations;
+using CRMSystem.Web.ViewModels.Emails;
 using CRMSystem.Web.ViewModels.Phones;
+using CRMSystem.Web.ViewModels.SocialNetworks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CRMSystem.Web.ViewModels.Contacts
 {
@@ -46,9 +47,10 @@ namespace CRMSystem.Web.ViewModels.Contacts
         [Required]
         public Address Address { get; set; }
 
-      
         public IList<PhoneNumber> PhoneNumbers { get; set; }
 
+        [Remote("VerifyEmail", "Validates")]
+        [EmailAddress(ErrorMessage = "The Emails is not valid")]
         public IList<EmailAddress> EmailAddresses { get; set; }
 
         public IList<SocialNetwork> SocialNetworks { get; set; }
