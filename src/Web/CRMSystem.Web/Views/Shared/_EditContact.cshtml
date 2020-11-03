@@ -77,13 +77,14 @@
                         <div class="form-row">
                             <p>
                                 <div class="col-md-6">
-                                    <input asp-for="EmailAddresses[i].Email"  value="@Model.EmailAddresses[i].Email" class="form-control" />
+                                    <input asp-for="EmailAddresses[i].Email"  value="@Model.EmailAddresses[i].Email"  class="form-control" />
                                     <span asp-validation-for="EmailAddresses" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <select asp-for="EmailAddresses[i].EmailType"  asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
                                 </div>
-                                <a asp-action="Delete" asp-controller="Emails" asp-route-contactId="@Model.EmailAddresses[i].ContactId">
+                            @*<a asp-action="Delete" asp-controller="Emails" asp-route-id="@Model.EmailAddresses[i].Id" asp-route-contactId="@Model.EmailAddresses[i].ContactId">*@
+                            <a href="#" onclick="del(@Model.EmailAddresses[i].Id, @Model.EmailAddresses[i].ContactId)">
                                     <i class="fas fa-minus-circle" style="color: red"></i>
                                 </a>
                             </p>
@@ -104,7 +105,7 @@
                             <p>
                                 <div class="col-md-6">
                                   
-                                    <input asp-for="PhoneNumbers[i].Phone" value="@Model.PhoneNumbers[i].Phone" class="form-control"/>
+                                    <input asp-for="PhoneNumbers[i].Phone" asp-route="@Model.PhoneNumbers[i].ContactId" value="@Model.PhoneNumbers[i].Phone" class="form-control"/>
                                     <span asp-validation-for="PhoneNumbers" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4">
@@ -151,3 +152,27 @@
         <button type="submit" class="btn btn-primary rounded-bottom">Save Changes</button>
     </div>
 </form>
+
+
+@section Scripts
+{
+  <script>
+        function del(id, contactId) {
+            $.ajax({
+                url: '/Emails/Delete',
+                data: {
+                    id: id,
+                    contactId: contactId
+                },
+                contentType: 'application/json',
+                success: function(data) {
+                    console.log(data);
+                    location.reload(true);
+                },
+                error: function(e) {
+                    console.log(e);
+                }
+            });
+        }
+    </script>
+}

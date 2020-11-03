@@ -18,7 +18,6 @@ namespace CRMSystem.Web.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-
     [Authorize]
     public class ContactsController : Controller
     {
@@ -101,6 +100,8 @@ namespace CRMSystem.Web.Controllers
             return View(await PaginatedList<ContactViewModel>.CreateAsync(contacts, pageNumber ?? 1, pageSize));
         }
 
+    
+
         public IActionResult Create()
         {
 
@@ -139,15 +140,9 @@ namespace CRMSystem.Web.Controllers
         {
             //todo Check for mail, phone social network, make limit for all types, try to get only changed properties
 
-            var contactId = await this.contactsService.UpdateContact(input);
-            //var contact = this.contactsService.GetContactById<GetDetailsViewModel>(input.Id);
-            //if (contact == null)
-            //{
-            //    return NotFound();
-            //}
+            await this.contactsService.UpdateContact(input);
 
-
-            return this.RedirectToAction("Details", new { id = contactId });
+            return this.RedirectToAction("Details", new { id = input.Id });
         }
 
 
@@ -158,12 +153,12 @@ namespace CRMSystem.Web.Controllers
             var viewModel = this.contactsService.GetContactById<GetDetailsViewModel>(id);
 
             //todo have to repair because it doesn't work :)
-            if (viewModel.SharedEditContactViewModel.Id != id)
-            {
-                viewModel.SharedEditContactViewModel = this.contactsService.GetContactById<EditContactInputModel>(viewModel.Id);
-                viewModel.SharedEditContactViewModel.Id = viewModel.Id;
+            //if (viewModel.SharedEditContactViewModel.Id != id)
+            //{
+            viewModel.SharedEditContactViewModel = this.contactsService.GetContactById<EditContactInputModel>(viewModel.Id);
+            viewModel.SharedEditContactViewModel.Id = viewModel.Id;
 
-            }
+            //}
 
             if (viewModel == null)
             {
@@ -171,6 +166,7 @@ namespace CRMSystem.Web.Controllers
             }
 
             return this.View(viewModel);
+            //return this.View("DetailsEdit", viewModel);
         }
 
 

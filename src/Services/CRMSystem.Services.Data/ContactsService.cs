@@ -1,4 +1,7 @@
-﻿namespace CRMSystem.Services.Data
+﻿using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
+
+namespace CRMSystem.Services.Data
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -51,8 +54,10 @@
                 .Where(x => x.Id == contactId)
                 .To<T>()
                 .FirstOrDefault();
-
             return query;
+
+
+
         }
 
         public IEnumerable<T> GetByOrganization<T>(string userId, int organizationId, int skip = 0)
@@ -153,10 +158,27 @@
 
         public async Task<int> UpdateContact(EditContactInputModel input)
         {
-
+       
             //todo try use reflection about properties 
             var contact = await contactsRepository.GetByIdWithDeletedAsync(input.Id);
-            contact.PhoneNumbers = input.PhoneNumbers;
+
+
+            for (var i = 0; i < input.PhoneNumbers.Count(x => x.ContactId == contact.Id); i++)
+            {
+                if (contact.PhoneNumbers.Contains(input.PhoneNumbers[i]))
+                {
+                    continue;
+
+                }
+
+                if (!this.phonesServices.IsAvailablePhoneNumber(input.PhoneNumbers[i].Phone))
+                {
+                    continue;
+                }
+                contact.PhoneNumbers.Add(input.PhoneNumbers[i]);
+            }
+
+            // contact.PhoneNumbers = input.PhoneNumbers;
             contact.EmailAddresses = input.EmailAddresses;
             contact.SocialNetworks = input.SocialNetworks;
             contact.Address = input.Address;

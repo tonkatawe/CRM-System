@@ -13,12 +13,12 @@
 <body id="page-top">
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
-                
+
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-xl-6 col-lg-7" >
+                    <div class="col-xl-6 col-lg-7">
                         <div id="EditPartial" style="display: none">
-                          
+
                             @await Html.PartialAsync("_EditContact", Model.SharedEditContactViewModel)
                         </div>
                         <div class="card shadow mb-4" id="CurrentContact">
@@ -29,7 +29,7 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="#">Edit</a>
+                                        <a class="dropdown-item" href="#" onclick="editContact()">Edit</a>
                                         <a class="dropdown-item" href="#">Delete</a>
                                         <div class="dropdown-divider"></div>
                                     </div>
@@ -81,7 +81,9 @@
                                                 <p>
                                                     @email.Email
                                                     <i class="fas fa-home" title="Home"></i>
-                                                    <a asp-action="Delete" asp-controller="Emails" asp-route-contactId="@Model.Id" asp-route-id="@email.Id">
+
+                                                    @*<a asp-action="Delete" asp-controller="Emails" asp-route-contactId="@Model.Id" asp-route-id="@email.Id">*@
+                                                    <a href="#" onclick="del(@email.Id, @Model.Id)">
                                                         <i class="fas fa-minus-circle" style="color: red"></i>
                                                     </a>
                                                 </p>
@@ -99,7 +101,7 @@
                                         }
                                         <a href="#" onclick="showAddEmailForm()"><i class="fas fa-plus-circle" title="Add more phones">Add other email</i></a>
                                         <div id="AddEmailForm" style="display: none" class="form-row">
-                                            @await Html.PartialAsync("_AddEmail", new EmailCreateInputModel() {ContactId = Model.Id})
+                                            @await Html.PartialAsync("_AddEmail", new EmailCreateInputModel() { ContactId = Model.Id })
                                         </div>
                                     </div>
                                 </div>
@@ -156,7 +158,7 @@
                                         }
                                         <a href="#" onclick="showAddPhoneForm()"><i class="fas fa-plus-circle" title="Add more phones">Add other phone</i></a>
                                         <div id="AddPhoneForm" style="display: none" class="form-row">
-                                            @await Html.PartialAsync("_AddPhone", new PhoneCreateInputModel() {ContactId = Model.Id})
+                                            @await Html.PartialAsync("_AddPhone", new PhoneCreateInputModel() { ContactId = Model.Id })
                                         </div>
 
                                     </div>
@@ -181,7 +183,7 @@
                         </div>
                     </div>
 
-                
+
                     @if (Model.Organization != null)
                     {
                         @await Html.PartialAsync("_GetOrganization", Model.Organization);
@@ -195,11 +197,11 @@
             </div>
         </div>
 
-        
+
         <!--Start under construction-->
         <div class="px-4 pt-3" id="EditButton"> <button type="button" class="btn btn-primary float-right" onclick="showAddOrganizationForm()"><i class="fa fa-plus"></i>&nbsp; Edit Contact</button> </div>
         <div class="clearfix"></div>
-     
+
 
         <!--End under construction-->
 
@@ -236,5 +238,28 @@
                 scrollTop: $("#AddOrganizationForm").offset().top
             }, 1500);
         }
+        function editContact() {
+            $("#CurrentContact").hide();
+            $("#EditPartial").show();
+        }
+
+        function del(id, contactId) {
+         $.ajax({
+                url: '/Emails/Delete',
+                data: {
+                    id: id,
+                    contactId: contactId
+                },
+                contentType: 'application/json',
+                success: function(data) {
+                    console.log(data);
+                    location.reload(true);
+                },
+                error: function(e) {
+                    console.log(e);
+                }
+            });
+        }
+
     </script>
 }

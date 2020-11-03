@@ -16,7 +16,7 @@ namespace CRMSystem.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
-            this.Contacts = new HashSet<Contact>();
+            this.Contacts = new List<Contact>();
             this.Tasks = new HashSet<UserTask>();
             this.Organizations = new HashSet<Organization>();
         }

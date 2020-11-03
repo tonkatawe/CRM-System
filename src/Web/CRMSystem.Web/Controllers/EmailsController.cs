@@ -17,35 +17,23 @@ namespace CRMSystem.Web.Controllers
             this.emailsService = emailsService;
         }
 
-        [AcceptVerbs("Get", "Post")]
-        public IActionResult VerifyEmail(string email, ContactCreateInputModel input = null)
-        {
-            if (input.Email != null && !this.emailsService.IsAvailableEmail(input.Email.Email))
-            {
-                return Json($"Email {input.Email.Email} is already in use");
-            }
-
-            if (!this.emailsService.IsAvailableEmail(email))
-            {
-                return Json($"Email {email} is already in use");
-            }
-            return Json(true);
-        }
-
+       
         [HttpPost]
         public async Task<IActionResult> Add(EmailCreateInputModel input)
         {
             await this.emailsService.CreateEmailAsync(input.Email, input.EmailType, input.ContactId);
             return this.RedirectToAction("Details", "Contacts", new { id = input.ContactId });
         }
-
+      
+       
         public async Task<IActionResult> Delete(int id, int contactId)
         {
             await this.emailsService.DeleteEmailAsync(id);
 
             //todo for this user check..
 
-            return this.RedirectToAction("Details", "Contacts", new { id = contactId });
+            //return this.RedirectToAction("Details", "Contacts", new { id = contactId });
+            return Json(id);
 
         }
     }
