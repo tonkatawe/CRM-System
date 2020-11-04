@@ -1,4 +1,6 @@
-﻿namespace CRMSystem.Services.Data
+﻿using CRMSystem.Web.ViewModels.Emails;
+
+namespace CRMSystem.Services.Data
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -51,6 +53,16 @@
         {
             var phone = await this.emailRepository.GetByIdWithDeletedAsync(contactId);
             this.emailRepository.Delete(phone);
+
+            return await this.emailRepository.SaveChangesAsync();
+        }
+
+        public async Task<int> UpdateEmailAsync(EmailCreateInputModel input)
+        {
+            var email = await this.emailRepository.GetByIdWithDeletedAsync(input.Id);
+            email.Email = input.Email;
+            email.EmailType = input.EmailType;
+            this.emailRepository.Undelete(email);
 
             return await this.emailRepository.SaveChangesAsync();
         }

@@ -6,6 +6,7 @@
 
     public class EmailViewModel : IMapFrom<EmailAddress>
     {
+        public int Id { get; set; }
         public int ContactId { get; set; }
 
         public string Email { get; set; }

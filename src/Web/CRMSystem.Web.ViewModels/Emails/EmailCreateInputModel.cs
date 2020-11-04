@@ -10,6 +10,8 @@ namespace CRMSystem.Web.ViewModels.Emails
 
     public class EmailCreateInputModel : IMapFrom<EmailAddress>
     {
+        public int? Id { get; set; }
+
         [Required]
         public int ContactId { get; set; }
 

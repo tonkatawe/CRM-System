@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Collections;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 
 namespace CRMSystem.Services.Data
@@ -156,16 +157,26 @@ namespace CRMSystem.Services.Data
 
         }
 
-        public async Task<int> UpdateContact(EditContactInputModel input)
+        public async Task<int> UpdateContactAsync(EditContactInputModel input)
         {
        
             //todo try use reflection about properties 
             var contact = await contactsRepository.GetByIdWithDeletedAsync(input.Id);
 
-
+            foreach (var email in input.EmailAddresses) 
+            {
+                if (email.Id != null)
+                {
+                    await this.emailsService.UpdateEmailAsync(email);
+                }
+                else
+                {
+                    await this.emailsService.CreateEmailAsync(email.Email, email.EmailType, contact.Id);
+                }
+            }
 
             contact.PhoneNumbers = input.PhoneNumbers;
-            contact.EmailAddresses = input.EmailAddresses;
+   
             contact.SocialNetworks = input.SocialNetworks;
             contact.Address = input.Address;
             contact.FirstName = input.FirstName;

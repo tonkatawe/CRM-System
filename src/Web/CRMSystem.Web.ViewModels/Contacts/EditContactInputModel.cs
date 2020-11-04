@@ -17,7 +17,7 @@ namespace CRMSystem.Web.ViewModels.Contacts
         public EditContactInputModel()
         {
             this.PhoneNumbers = new List<PhoneNumber>();
-            this.EmailAddresses = new List<EmailAddress>();
+            this.EmailAddresses = new List<EmailCreateInputModel>();
             this.SocialNetworks = new List<SocialNetwork>();
         }
 
@@ -49,9 +49,7 @@ namespace CRMSystem.Web.ViewModels.Contacts
 
         public IList<PhoneNumber> PhoneNumbers { get; set; }
 
-        [Remote("VerifyEmail", "Validates")]
-        [EmailAddress(ErrorMessage = "The Emails is not valid")]
-        public IList<EmailAddress> EmailAddresses { get; set; }
+        public IList<EmailCreateInputModel> EmailAddresses { get; set; }
 
         public IList<SocialNetwork> SocialNetworks { get; set; }
 

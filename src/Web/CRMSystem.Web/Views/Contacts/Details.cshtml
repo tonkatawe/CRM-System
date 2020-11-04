@@ -99,10 +99,10 @@
                                                 </p>
                                             }
                                         }
-                                        <a href="#" onclick="showAddEmailForm()"><i class="fas fa-plus-circle" title="Add more phones">Add other email</i></a>
+                                        @*<a href="#" onclick="showAddEmailForm()"><i class="fas fa-plus-circle" title="Add more emails">Add other email</i></a>
                                         <div id="AddEmailForm" style="display: none" class="form-row">
                                             @await Html.PartialAsync("_AddEmail", new EmailCreateInputModel() { ContactId = Model.Id })
-                                        </div>
+                                        </div>*@
                                     </div>
                                 </div>
                                 <div class="row">
@@ -226,9 +226,10 @@
         }
         function showAddEmailForm() {
             $("#AddEmailForm").show();
-            $([document.documentElement, document.body]).animate({
-                scrollTop: $("#AddEmailForm").offset().top
-            }, 1500);
+          
+        }
+        function cancel() {
+            $("#AddEmailForm").hide();
         }
         function showAddOrganizationForm() {
             $("#EditPartial").show();
@@ -241,6 +242,10 @@
         function editContact() {
             $("#CurrentContact").hide();
             $("#EditPartial").show();
+        }
+        function showCurrentContact() {
+            $("#CurrentContact").show();
+            $("#EditPartial").hide();
         }
 
         function del(id, contactId) {

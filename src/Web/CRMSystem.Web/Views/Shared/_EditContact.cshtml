@@ -1,5 +1,8 @@
 ﻿
 @using CRMSystem.Data.Models.Enums
+@using CRMSystem.Web.ViewModels.Emails
+
+@using System.Linq
 
 @model CRMSystem.Web.ViewModels.Contacts.EditContactInputModel
 <form style="padding-bottom: 7rem" method="post" asp-action="Edit">
@@ -74,6 +77,8 @@
                                 <div class="col-md-6">
                                     <input asp-for="EmailAddresses[i].Email" value="@Model.EmailAddresses[i].Email" class="form-control" />
                                     <input asp-for="@Model.EmailAddresses[i].Id" type="hidden" />
+                                    <input asp-for="@Model.EmailAddresses[i].Email" type="hidden" />
+                         
                                     <span asp-validation-for="EmailAddresses" class="text-danger"></span>
                                 </div>
                                 <div class="col-md-4">
@@ -86,6 +91,24 @@
                             </div>
                         </p>
                     }
+                    <a href="#" onclick="showAddEmailForm()"><i class="fas fa-plus-circle" title="Add more emails">Add other email</i></a>
+                    <div id="AddEmailForm" style="display: none" class="form-row">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @{
+                                    Model.EmailAddresses.Add(new EmailCreateInputModel() { ContactId = Model.Id });
+                                }
+                                <input class="form-control" asp-for="@Model.EmailAddresses[(Model.EmailAddresses.Count()- 1)].Email" placeholder="Email">
+                                <span asp-validation-for="EmailAddresses" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <select asp-for="EmailAddresses[(Model.EmailAddresses.Count() - 1)].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control" placeholder="type"></select>
+                                <span asp-validation-for="EmailAddresses" class="text-danger"></span>
+                            </div>
+                            <input asp-for="@Model.EmailAddresses[(Model.EmailAddresses.Count() - 1)].ContactId" type="hidden" />
+                            <a href="#" onclick="cancel()">&nbsp;<i class="fas fa-window-close fa-lg" style="color: red"></i></a>
+                        </div>
+                      </div>
                 </div>
 
             </div>
@@ -147,7 +170,7 @@
             </div>
         </div>
         <input asp-for="@Model.Id" type="hidden" />
-        <button type="submit" class="btn btn-primary rounded-bottom">Save Changes</button>  <button type="submit" class="btn btn-danger rounded-bottom">Cancel</button>
+        <button type="submit" class="btn btn-primary rounded-bottom">Save Changes</button>  <a href="#" class="btn btn-danger rounded-bottom" onclick="showCurrentContact()">Cancel</a>
     </div>
 </form>
 
@@ -155,6 +178,7 @@
 @section Scripts
 {
     <script>
+
         function del(id, contactId) {
             $.ajax({
                 url: '/Emails/Delete',

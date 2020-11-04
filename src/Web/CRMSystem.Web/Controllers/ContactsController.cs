@@ -140,7 +140,7 @@ namespace CRMSystem.Web.Controllers
         {
             //todo Check for mail, phone social network, make limit for all types, try to get only changed properties
 
-            await this.contactsService.UpdateContact(input);
+            await this.contactsService.UpdateContactAsync(input);
 
             return this.RedirectToAction("Details", new { id = input.Id });
         }
