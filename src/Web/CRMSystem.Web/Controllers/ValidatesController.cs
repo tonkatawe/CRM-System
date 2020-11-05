@@ -30,7 +30,7 @@ namespace CRMSystem.Web.Controllers
 
 
         [AcceptVerbs("Get", "Post")]
-        public IActionResult VerifyPhone(string phone, ContactCreateInputModel input = null)
+        public IActionResult VerifyPhone(string phone, CustomerAddInputModel input = null)
         {
             if (input.PhoneNumber != null)
             {
@@ -57,7 +57,7 @@ namespace CRMSystem.Web.Controllers
         }
 
         [AcceptVerbs("Get", "Post")]
-        public IActionResult VerifyEmail(string email, EditContactInputModel test= null, ContactCreateInputModel input = null)
+        public IActionResult VerifyEmail(string email, EditContactInputModel test= null, CustomerAddInputModel input = null)
         {
             if (input.Email != null)
             {

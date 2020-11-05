@@ -1,4 +1,6 @@
-﻿namespace CRMSystem.Web.Controllers
+﻿using CRMSystem.Web.ViewModels.Customers;
+
+namespace CRMSystem.Web.Controllers
 {
     using System.Threading.Tasks;
 
@@ -34,29 +36,29 @@
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create(AddContactToOrganizationViewModel input, int? contactId = null)
-        {
-            var user = await this.userManager.GetUserAsync(this.User);
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(input);
-            }
+        //public async Task<IActionResult> Create(AddContactToOrganizationViewModel input, int? contactId = null)
+        //{
+        //    var user = await this.userManager.GetUserAsync(this.User);
+        //    if (!this.ModelState.IsValid)
+        //    {
+        //        return this.View(input);
+        //    }
 
-            var organizationId = await this.organizationsService.CreateOrganizationAsync(input.CreateOrganization, user.Id);
+        //    var organizationId = await this.organizationsService.CreateOrganizationAsync(input.CreateOrganization, user.Id);
 
-            if (contactId != null)
-            {
-                await this.contactsService.AddToOrganizationAsync(contactId, organizationId);
-            }
+        //    if (contactId != null)
+        //    {
+        //        //await this.contactsService.AddToOrganizationAsync(contactId, organizationId);
+        //    }
 
-            return this.RedirectToAction("Index", "Contacts");
-        }
+        //    return this.RedirectToAction("Index", "Contacts");
+        //}
 
         [Authorize]
         public async Task<IActionResult> ConnectToOrganization(int contactId)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            var contact = this.contactsService.GetContactById<ContactViewModel>(contactId);
+            var contact = this.contactsService.GetCustomerById<CustomerViewModel>(contactId);
 
             if (contact == null)
             {
@@ -73,20 +75,20 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> ConnectToOrganization(int contactId, int organizationId)
-        {
-            var user = await this.userManager.GetUserAsync(this.User);
+        //[Authorize]
+        //[HttpPost]
+        //public async Task<IActionResult> ConnectToOrganization(int contactId, int organizationId)
+        //{
+        //    var user = await this.userManager.GetUserAsync(this.User);
 
-            if (!this.ModelState.IsValid)
-            {
-                return this.NotFound();
-            }
+        //    if (!this.ModelState.IsValid)
+        //    {
+        //        return this.NotFound();
+        //    }
 
-            //todo include userId
-            await this.contactsService.AddToOrganizationAsync(contactId, organizationId);
-            return this.RedirectToAction("Index", "Contacts");
-        }
+        //    //todo include userId
+        //    await this.contactsService.AddToOrganizationAsync(contactId, organizationId);
+        //    return this.RedirectToAction("Index", "Contacts");
+        //}
     }
 }

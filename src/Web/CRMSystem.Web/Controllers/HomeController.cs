@@ -32,13 +32,12 @@ namespace CRMSystem.Web.Controllers
             }
 
             var userId = this.userManager.GetUserId(this.User);
-            var contactsCount = this.contactsService.AllContactCount(userId);
+           
             var userTasksCount = this.userTasksService.GetUserTasksCount(userId);
      
 
             var viewModel = new IndexViewModel
             {
-                ContactsCount = contactsCount,
                 TaskCount = userTasksCount,
              
             };
