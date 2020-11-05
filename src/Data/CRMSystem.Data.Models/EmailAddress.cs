@@ -7,12 +7,12 @@
 
     public class EmailAddress : BaseDeletableModel<int>
     {
-        public int ContactId { get; set; }
+        public int CustomerId { get; set; }
+
+        public Customer Customer { get; set; }
 
         [Required]
         public string Email { get; set; }
-
-        public Contact Contact { get; set; }
 
         public EmailType EmailType { get; set; }
     }

@@ -44,8 +44,4 @@
     <ProjectReference Include="..\CRMSystem.Data.Models\CRMSystem.Data.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

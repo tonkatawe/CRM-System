@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CRMSystem.Web.ViewModels.Contacts
 {
-    public class EditContactInputModel : IMapFrom<Contact>
+    public class EditContactInputModel : IMapFrom<Customer>
     {
         public int Id { get; set; }
 

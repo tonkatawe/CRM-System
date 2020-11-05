@@ -124,14 +124,15 @@
                             <div class="form-row">
                                 <div class="col-md-6">
 
-                                    <input asp-for="PhoneNumbers[i].Phone" asp-route="@Model.PhoneNumbers[i].ContactId" value="@Model.PhoneNumbers[i].Phone" class="form-control" />
+                                    <input asp-for="PhoneNumbers[i].Phone" asp-route="@Model.PhoneNumbers[i].CustomerId" value="@Model.PhoneNumbers[i].Phone" class="form-control" />
                                     <input asp-for="@Model.PhoneNumbers[i].Id" type="hidden" />
-                                    <span asp-validation-for="PhoneNumbers" class="text-danger"></span>
+                                    <span  asp-validation-for="PhoneNumbers" class="text-danger"></span>
+                                 
                                 </div>
                                 <div class="col-md-4">
                                     <select asp-for="PhoneNumbers[i].PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control"></select>
                                 </div>
-                                <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@Model.PhoneNumbers[i].ContactId">
+                                <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@Model.PhoneNumbers[i].CustomerId">
                                     <i class="fas fa-minus-circle" style="color: red"></i>
                                 </a>
                             </div>

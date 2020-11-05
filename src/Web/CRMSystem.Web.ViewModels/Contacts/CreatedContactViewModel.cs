@@ -3,7 +3,7 @@
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Mapping;
 
-    public class CreatedContactViewModel : IMapFrom<Contact>
+    public class CreatedContactViewModel : IMapFrom<Customer>
     {
         public string FirstName { get; set; }
 

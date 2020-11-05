@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CRMSystem.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -240,10 +240,12 @@ namespace CRMSystem.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Title = table.Column<string>(maxLength: 20, nullable: false),
-                    Description = table.Column<string>(maxLength: 1000, nullable: false),
+                    Title = table.Column<string>(maxLength: 80, nullable: false),
+                    Description = table.Column<string>(maxLength: 1500, nullable: false),
                     DeadLine = table.Column<DateTime>(nullable: false),
                     IsComplete = table.Column<bool>(nullable: false),
+                    InProgress = table.Column<bool>(nullable: false),
+                    UserTaskStatus = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -258,7 +260,7 @@ namespace CRMSystem.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Contacts",
+                name: "Customers",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -271,30 +273,30 @@ namespace CRMSystem.Data.Migrations
                     FirstName = table.Column<string>(maxLength: 20, nullable: false),
                     MiddleName = table.Column<string>(maxLength: 20, nullable: true),
                     LastName = table.Column<string>(maxLength: 20, nullable: false),
-                    JobTitle = table.Column<string>(maxLength: 30, nullable: false),
+                    JobTitle = table.Column<string>(maxLength: 30, nullable: true),
                     OrganizationId = table.Column<int>(nullable: false),
-                    Industry = table.Column<string>(maxLength: 20, nullable: true),
+                    Industry = table.Column<int>(nullable: false),
                     AdditionalInfo = table.Column<string>(maxLength: 1000, nullable: true),
                     AddressId = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Contacts", x => x.Id);
+                    table.PrimaryKey("PK_Customers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Contacts_Addresses_AddressId",
+                        name: "FK_Customers_Addresses_AddressId",
                         column: x => x.AddressId,
                         principalTable: "Addresses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Contacts_Organizations_OrganizationId",
+                        name: "FK_Customers_Organizations_OrganizationId",
                         column: x => x.OrganizationId,
                         principalTable: "Organizations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Contacts_AspNetUsers_UserId",
+                        name: "FK_Customers_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -311,7 +313,7 @@ namespace CRMSystem.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    ContactId = table.Column<int>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false),
                     Email = table.Column<string>(nullable: false),
                     EmailType = table.Column<int>(nullable: false)
                 },
@@ -319,9 +321,9 @@ namespace CRMSystem.Data.Migrations
                 {
                     table.PrimaryKey("PK_EmailAddresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EmailAddresses_Contacts_ContactId",
-                        column: x => x.ContactId,
-                        principalTable: "Contacts",
+                        name: "FK_EmailAddresses_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -336,7 +338,7 @@ namespace CRMSystem.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    ContactId = table.Column<int>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(maxLength: 20, nullable: false),
                     Description = table.Column<string>(maxLength: 1000, nullable: false)
                 },
@@ -344,9 +346,9 @@ namespace CRMSystem.Data.Migrations
                 {
                     table.PrimaryKey("PK_Notes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Notes_Contacts_ContactId",
-                        column: x => x.ContactId,
-                        principalTable: "Contacts",
+                        name: "FK_Notes_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -361,7 +363,7 @@ namespace CRMSystem.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    ContactId = table.Column<int>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false),
                     Phone = table.Column<string>(nullable: false),
                     PhoneType = table.Column<int>(nullable: false)
                 },
@@ -369,9 +371,9 @@ namespace CRMSystem.Data.Migrations
                 {
                     table.PrimaryKey("PK_PhoneNumbers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PhoneNumbers_Contacts_ContactId",
-                        column: x => x.ContactId,
-                        principalTable: "Contacts",
+                        name: "FK_PhoneNumbers_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -386,15 +388,15 @@ namespace CRMSystem.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    ContactId = table.Column<int>(nullable: false)
+                    CustomerId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Sales", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Sales_Contacts_ContactId",
-                        column: x => x.ContactId,
-                        principalTable: "Contacts",
+                        name: "FK_Sales_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -409,16 +411,17 @@ namespace CRMSystem.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    ContactId = table.Column<int>(nullable: false),
+                    CustomerId = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     SocialNetworkType = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SocialNetworks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_SocialNetworks_Contacts_ContactId",
-                        column: x => x.ContactId,
-                        principalTable: "Contacts",
+                        name: "FK_SocialNetworks_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -504,29 +507,29 @@ namespace CRMSystem.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contacts_AddressId",
-                table: "Contacts",
+                name: "IX_Customers_AddressId",
+                table: "Customers",
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contacts_IsDeleted",
-                table: "Contacts",
+                name: "IX_Customers_IsDeleted",
+                table: "Customers",
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contacts_OrganizationId",
-                table: "Contacts",
+                name: "IX_Customers_OrganizationId",
+                table: "Customers",
                 column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Contacts_UserId",
-                table: "Contacts",
+                name: "IX_Customers_UserId",
+                table: "Customers",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EmailAddresses_ContactId",
+                name: "IX_EmailAddresses_CustomerId",
                 table: "EmailAddresses",
-                column: "ContactId");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmailAddresses_IsDeleted",
@@ -534,9 +537,9 @@ namespace CRMSystem.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notes_ContactId",
+                name: "IX_Notes_CustomerId",
                 table: "Notes",
-                column: "ContactId");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notes_IsDeleted",
@@ -556,12 +559,13 @@ namespace CRMSystem.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Organizations_UserId",
                 table: "Organizations",
-                column: "UserId");
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_PhoneNumbers_ContactId",
+                name: "IX_PhoneNumbers_CustomerId",
                 table: "PhoneNumbers",
-                column: "ContactId");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PhoneNumbers_IsDeleted",
@@ -579,9 +583,9 @@ namespace CRMSystem.Data.Migrations
                 column: "SaleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sales_ContactId",
+                name: "IX_Sales_CustomerId",
                 table: "Sales",
-                column: "ContactId");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Sales_IsDeleted",
@@ -594,9 +598,9 @@ namespace CRMSystem.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SocialNetworks_ContactId",
+                name: "IX_SocialNetworks_CustomerId",
                 table: "SocialNetworks",
-                column: "ContactId");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SocialNetworks_IsDeleted",
@@ -659,7 +663,7 @@ namespace CRMSystem.Data.Migrations
                 name: "Sales");
 
             migrationBuilder.DropTable(
-                name: "Contacts");
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Organizations");

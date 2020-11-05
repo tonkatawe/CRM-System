@@ -22,8 +22,7 @@ namespace CRMSystem.Services.Data.Contracts
         int AllContactInOrganizationCount(int organizationId);
 
         Task<int> DeleteContactAsync(int id);
-
-        // TODO: Make change info at contact
+        
         Task<int> CreateContactAsync(ContactCreateInputModel input, string userId);
 
         Task<int> AddToOrganizationAsync(int? contactId, int organizationId);

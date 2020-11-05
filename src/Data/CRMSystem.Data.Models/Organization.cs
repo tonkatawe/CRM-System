@@ -9,7 +9,7 @@
     {
         public Organization()
         {
-            this.Contacts = new HashSet<Contact>();
+            this.Customers = new HashSet<Customer>();
         }
 
         [Required]
@@ -28,6 +28,6 @@
 
         public ApplicationUser User { get; set; }
 
-        public ICollection<Contact> Contacts { get; set; }
+        public ICollection<Customer> Customers { get; set; }
     }
 }

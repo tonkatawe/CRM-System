@@ -1,6 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Data;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using AutoMapper.Internal;
+using CRMSystem.Data.Models.Enums;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace CRMSystem.Services.Data
 {
@@ -16,7 +21,7 @@ namespace CRMSystem.Services.Data
 
     public class ContactsService : IContactsService
     {
-        private readonly IDeletableEntityRepository<Contact> contactsRepository;
+        private readonly IDeletableEntityRepository<Customer> contactsRepository;
         private readonly IAddressesService addressesService;
         private readonly IPhonesServices phonesServices;
         private readonly IEmailsService emailsService;
@@ -24,7 +29,7 @@ namespace CRMSystem.Services.Data
 
 
         public ContactsService(
-            IDeletableEntityRepository<Contact> contactsRepository,
+            IDeletableEntityRepository<Customer> contactsRepository,
             IAddressesService addressesService,
             IPhonesServices phonesServices,
             IEmailsService emailsService,
@@ -85,10 +90,15 @@ namespace CRMSystem.Services.Data
 
         public int AllContactCount(string userId)
         {
+
+        
             return this.contactsRepository
                 .All()
                 .Count(x => x.UserId == userId);
+
         }
+
+       
 
         public int AllContactInOrganizationCount(int organizationId)
         {
@@ -111,11 +121,11 @@ namespace CRMSystem.Services.Data
             var address = await this.addressesService.CreateAddressAsync(input.Address.Country, input.Address.City,
                 input.Address.Street, input.Address.ZipCode);
 
-            var contact = new Contact
+            var contact = new Customer
             {
                 Address = address,
                 UserId = userId,
-                OrganizationId = null,
+                
                 Title = input.Title,
                 FirstName = input.FirstName,
                 MiddleName = input.MiddleName,
@@ -159,11 +169,11 @@ namespace CRMSystem.Services.Data
 
         public async Task<int> UpdateContactAsync(EditContactInputModel input)
         {
-       
+
             //todo try use reflection about properties 
             var contact = await contactsRepository.GetByIdWithDeletedAsync(input.Id);
 
-            foreach (var email in input.EmailAddresses) 
+            foreach (var email in input.EmailAddresses)
             {
                 if (email.Id != null)
                 {
@@ -176,7 +186,7 @@ namespace CRMSystem.Services.Data
             }
 
             contact.PhoneNumbers = input.PhoneNumbers;
-   
+
             contact.SocialNetworks = input.SocialNetworks;
             contact.Address = input.Address;
             contact.FirstName = input.FirstName;
@@ -190,10 +200,5 @@ namespace CRMSystem.Services.Data
             return await this.contactsRepository.SaveChangesAsync();
         }
 
-        //public async Task<int> UpdateContact(EditContactInputModel input)
-        //{
-        //    var contact = await contactsRepository.GetByIdWithDeletedAsync(input.Id);
-        //    contact.FirstName = input.
-        //}
     }
 }

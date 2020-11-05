@@ -14,9 +14,9 @@
         }
 
         [Required]
-        public int ContactId { get; set; }
+        public int CustomerId { get; set; }
 
-        public Contact Contact { get; set; }
+        public Customer Customer { get; set; }
 
         public IEnumerable<Product> Products { get; set; }
 

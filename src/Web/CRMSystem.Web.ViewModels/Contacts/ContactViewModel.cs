@@ -8,7 +8,7 @@ namespace CRMSystem.Web.ViewModels.Contacts
     using CRMSystem.Data.Models.Enums;
     using CRMSystem.Web.ViewModels.Organizations;
 
-    public class ContactViewModel:IMapFrom<Contact>
+    public class ContactViewModel:IMapFrom<Customer>
     {
 
         public int Id { get; set; }

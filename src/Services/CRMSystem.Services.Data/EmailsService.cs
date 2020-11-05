@@ -24,7 +24,7 @@ namespace CRMSystem.Services.Data
         public IEnumerable<T> GetAllContactEmails<T>(int contactId)
         {
             var query = this.emailRepository.All()
-                .Where(x => x.ContactId == contactId);
+                .Where(x => x.CustomerId == contactId);
 
             return query.To<T>().ToList();
         }
@@ -33,7 +33,7 @@ namespace CRMSystem.Services.Data
         {
             var emailAddress = new EmailAddress
             {
-                ContactId = contactId,
+                CustomerId = contactId,
                 Email = email,
                 EmailType = type,
             };

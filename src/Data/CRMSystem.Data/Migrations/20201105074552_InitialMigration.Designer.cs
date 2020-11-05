@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRMSystem.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201014095636_ChangeJobTitleRequirments")]
-    partial class ChangeJobTitleRequirments
+    [Migration("20201105074552_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -184,7 +184,7 @@ namespace CRMSystem.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("CRMSystem.Data.Models.Contact", b =>
+            modelBuilder.Entity("CRMSystem.Data.Models.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -231,7 +231,7 @@ namespace CRMSystem.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("OrganizationId")
+                    b.Property<int>("OrganizationId")
                         .HasColumnType("int");
 
                     b.Property<int>("Title")
@@ -251,7 +251,7 @@ namespace CRMSystem.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("CRMSystem.Data.Models.EmailAddress", b =>
@@ -261,11 +261,11 @@ namespace CRMSystem.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ContactId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
@@ -285,7 +285,7 @@ namespace CRMSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContactId");
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("IsDeleted");
 
@@ -299,11 +299,11 @@ namespace CRMSystem.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ContactId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
@@ -326,7 +326,7 @@ namespace CRMSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContactId");
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("IsDeleted");
 
@@ -374,7 +374,8 @@ namespace CRMSystem.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Organizations");
                 });
@@ -386,11 +387,11 @@ namespace CRMSystem.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ContactId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
@@ -410,7 +411,7 @@ namespace CRMSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContactId");
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("IsDeleted");
 
@@ -468,11 +469,11 @@ namespace CRMSystem.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ContactId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
@@ -485,7 +486,7 @@ namespace CRMSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContactId");
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("IsDeleted");
 
@@ -531,11 +532,11 @@ namespace CRMSystem.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ContactId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
@@ -554,7 +555,7 @@ namespace CRMSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContactId");
+                    b.HasIndex("CustomerId");
 
                     b.HasIndex("IsDeleted");
 
@@ -579,8 +580,11 @@ namespace CRMSystem.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasColumnType("nvarchar(1500)")
+                        .HasMaxLength(1500);
+
+                    b.Property<bool>("InProgress")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsComplete")
                         .HasColumnType("bit");
@@ -593,12 +597,15 @@ namespace CRMSystem.Data.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
+                        .HasColumnType("nvarchar(80)")
+                        .HasMaxLength(80);
 
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("UserTaskStatus")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -713,7 +720,7 @@ namespace CRMSystem.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("CRMSystem.Data.Models.Contact", b =>
+            modelBuilder.Entity("CRMSystem.Data.Models.Customer", b =>
                 {
                     b.HasOne("CRMSystem.Data.Models.Address", "Address")
                         .WithMany()
@@ -722,11 +729,13 @@ namespace CRMSystem.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("CRMSystem.Data.Models.Organization", "Organization")
-                        .WithMany("Contacts")
-                        .HasForeignKey("OrganizationId");
+                        .WithMany("Customers")
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("CRMSystem.Data.Models.ApplicationUser", "User")
-                        .WithMany("Contacts")
+                        .WithMany("Customers")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -734,18 +743,18 @@ namespace CRMSystem.Data.Migrations
 
             modelBuilder.Entity("CRMSystem.Data.Models.EmailAddress", b =>
                 {
-                    b.HasOne("CRMSystem.Data.Models.Contact", "Contact")
+                    b.HasOne("CRMSystem.Data.Models.Customer", "Customer")
                         .WithMany("EmailAddresses")
-                        .HasForeignKey("ContactId")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("CRMSystem.Data.Models.Note", b =>
                 {
-                    b.HasOne("CRMSystem.Data.Models.Contact", null)
+                    b.HasOne("CRMSystem.Data.Models.Customer", "Customer")
                         .WithMany("Notes")
-                        .HasForeignKey("ContactId")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
@@ -759,17 +768,17 @@ namespace CRMSystem.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("CRMSystem.Data.Models.ApplicationUser", "User")
-                        .WithMany("Organizations")
-                        .HasForeignKey("UserId")
+                        .WithOne("Organization")
+                        .HasForeignKey("CRMSystem.Data.Models.Organization", "UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("CRMSystem.Data.Models.PhoneNumber", b =>
                 {
-                    b.HasOne("CRMSystem.Data.Models.Contact", "Contact")
+                    b.HasOne("CRMSystem.Data.Models.Customer", "Customer")
                         .WithMany("PhoneNumbers")
-                        .HasForeignKey("ContactId")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
@@ -783,18 +792,18 @@ namespace CRMSystem.Data.Migrations
 
             modelBuilder.Entity("CRMSystem.Data.Models.Sale", b =>
                 {
-                    b.HasOne("CRMSystem.Data.Models.Contact", "Contact")
+                    b.HasOne("CRMSystem.Data.Models.Customer", "Customer")
                         .WithMany("Sales")
-                        .HasForeignKey("ContactId")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("CRMSystem.Data.Models.SocialNetwork", b =>
                 {
-                    b.HasOne("CRMSystem.Data.Models.Contact", "Contact")
+                    b.HasOne("CRMSystem.Data.Models.Customer", "Customer")
                         .WithMany("SocialNetworks")
-                        .HasForeignKey("ContactId")
+                        .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

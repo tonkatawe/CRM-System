@@ -11,7 +11,7 @@
 
         public string Email { get; set; }
 
-        public Contact Contact { get; set; }
+        public Customer Contact { get; set; }
 
         public EmailType EmailType { get; set; }
     }

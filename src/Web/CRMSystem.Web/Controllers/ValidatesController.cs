@@ -18,9 +18,9 @@ namespace CRMSystem.Web.Controllers
         private readonly IPhonesServices phonesServices;
         private readonly IEmailsService emailsService;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IDeletableEntityRepository<Contact> contactsRepository;
+        private readonly IDeletableEntityRepository<Customer> contactsRepository;
 
-        public ValidatesController(IPhonesServices phonesServices,IEmailsService emailsService, UserManager<ApplicationUser> userManager, IDeletableEntityRepository<Contact> contactsRepository)
+        public ValidatesController(IPhonesServices phonesServices,IEmailsService emailsService, UserManager<ApplicationUser> userManager, IDeletableEntityRepository<Customer> contactsRepository)
         {
             this.phonesServices = phonesServices;
             this.emailsService = emailsService;

@@ -19,7 +19,7 @@
             IAddressesService addressesService,
             IDeletableEntityRepository<Organization> organizationRepository,
             IDeletableEntityRepository<ApplicationUser> userRepository,
-            IDeletableEntityRepository<Contact> contactRepository)
+            IDeletableEntityRepository<Customer> contactRepository)
         {
             this.addressesService = addressesService;
             this.organizationRepository = organizationRepository;

@@ -7,13 +7,14 @@
 
     public class PhoneNumber : BaseDeletableModel<int>
     {
-        public int ContactId { get; set; }
+        public int CustomerId { get; set; }
+
+        public Customer Customer { get; set; }
 
         [Required]
         public string Phone { get; set; }
 
-        public Contact Contact { get; set; }
-
+   
         public PhoneType PhoneType { get; set; }
     }
 }

@@ -7,7 +7,9 @@ namespace CRMSystem.Data.Models
 
     public class Note : BaseDeletableModel<int>
     {
-        public int ContactId { get; set; }
+        public int CustomerId { get; set; }
+
+        public Customer Customer { get; set; }
 
         [Required]
         [MaxLength(20)]

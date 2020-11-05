@@ -13,7 +13,7 @@ namespace CRMSystem.Web.ViewModels.Contacts
     using CRMSystem.Web.ViewModels.Phones;
     using CRMSystem.Web.ViewModels.SocialNetworks;
 
-    public class ContactCreateInputModel : IMapFrom<Contact>
+    public class ContactCreateInputModel : IMapFrom<Customer>
     {
 
         [Required]

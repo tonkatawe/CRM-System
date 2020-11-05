@@ -6,9 +6,9 @@
     using CRMSystem.Data.Common.Models;
     using CRMSystem.Data.Models.Enums;
 
-    public class Contact : BaseDeletableModel<int>
+    public class Customer : BaseDeletableModel<int>
     {
-        public Contact()
+        public Customer()
         {
             this.Notes = new HashSet<Note>();
             this.PhoneNumbers = new HashSet<PhoneNumber>();
@@ -35,7 +35,7 @@
         [MaxLength(30)]
         public string JobTitle { get; set; }
 
-        public int? OrganizationId { get; set; }
+        public int OrganizationId { get; set; }
 
         public Organization Organization { get; set; }
 

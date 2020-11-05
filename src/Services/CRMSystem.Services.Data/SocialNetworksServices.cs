@@ -20,10 +20,10 @@ namespace CRMSystem.Services.Data
             this.socialNetworkRepository = socialNetworkRepository;
         }
 
-        public IEnumerable<T> GetAllContactSocialNetworks<T>(int contactId)
+        public IEnumerable<T> GetAllContactSocialNetworks<T>(int ustomerId)
         {
             var query = this.socialNetworkRepository.All()
-                .Where(x => x.ContactId == contactId);
+                .Where(x => x.CustomerId == ustomerId);
             return query.To<T>().ToList();
         }
 
@@ -33,7 +33,7 @@ namespace CRMSystem.Services.Data
             {
                 Name = name,
                 SocialNetworkType = type,
-                ContactId = contactId,
+                CustomerId = contactId,
             };
 
             await this.socialNetworkRepository.AddAsync(socialNetwork);
