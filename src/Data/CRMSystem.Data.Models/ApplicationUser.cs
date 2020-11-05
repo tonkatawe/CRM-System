@@ -30,6 +30,11 @@ namespace CRMSystem.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
+        public bool HasOrganization { get; set; }
+
+        public bool IsPremium { get; set; }
+        public virtual Organization Organization { get; set; }
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
@@ -40,6 +45,5 @@ namespace CRMSystem.Data.Models
 
         public virtual ICollection<UserTask> Tasks { get; set; }
 
-        public virtual Organization Organization { get; set; }
     }
 }

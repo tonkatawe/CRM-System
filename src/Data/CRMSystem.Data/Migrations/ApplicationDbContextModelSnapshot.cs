@@ -128,7 +128,13 @@ namespace CRMSystem.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("HasOrganization")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPremium")
                         .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
