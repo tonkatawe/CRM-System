@@ -9,11 +9,7 @@
     {
         Task<int> CreateOrganizationAsync(OrganizationCreateInputModel input, string userId);
 
-        IEnumerable<T> GetAll<T>(string userId, int? count = null);
-
-        int AllOrganizationCount(int organizationId);
-
-        T GetOrganizationById<T>(int contactId);
-
+        int GetOrganizationId(string userId);
+        
     }
 }

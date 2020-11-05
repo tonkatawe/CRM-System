@@ -14,22 +14,23 @@
     {
         private readonly IAddressesService addressesService;
         private readonly IDeletableEntityRepository<Organization> organizationRepository;
+        private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
 
         public OrganizationsService(
             IAddressesService addressesService,
             IDeletableEntityRepository<Organization> organizationRepository,
-            IDeletableEntityRepository<ApplicationUser> userRepository,
-            IDeletableEntityRepository<Customer> contactRepository)
+          IDeletableEntityRepository<ApplicationUser> userRepository)
         {
             this.addressesService = addressesService;
             this.organizationRepository = organizationRepository;
+            this.userRepository = userRepository;
         }
 
         public async Task<int> CreateOrganizationAsync(OrganizationCreateInputModel input, string userId)
         {
             var address = await this.addressesService.CreateAddressAsync(input.Address.Country, input.Address.City,
                 input.Address.Street, input.Address.ZipCode);
-
+            var user = await this.userRepository.GetByIdWithDeletedAsync(userId);
             var organization = new Organization
             {
                 UserId = userId,
@@ -39,35 +40,26 @@
             };
             await this.organizationRepository.AddAsync(organization);
             await this.organizationRepository.SaveChangesAsync();
-            return organization.Id;
+            user.HasOrganization = true;
+            this.userRepository.Update(user);
+
+            return await this.userRepository.SaveChangesAsync();
+
         }
 
-        public IEnumerable<T> GetAll<T>(string userId, int? count = null)
+
+
+        public int GetOrganizationId(string userId)
         {
             var query = this.organizationRepository.All()
                     .Where(x => x.UserId == userId)
                     .OrderBy(x => x.Name)
-                    .To<T>()
-                    .ToList();
+                   .FirstOrDefault();
 
-            return query;
+            return query.Id;
         }
 
-        public int AllOrganizationCount(int organizationId)
-        {
-            return this.organizationRepository.All()
-                .Count(x => x.Id == organizationId);
-        }
 
-        public T GetOrganizationById<T>(int contactId)
-        {
-            var query = this.organizationRepository
-                .All()
-                .Where(x => x.Id == contactId)
-                .To<T>()
-                .FirstOrDefault();
 
-            return query;
-        }
     }
 }
