@@ -90,7 +90,7 @@ namespace CRMSystem.Web
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
-            services.AddTransient<IContactsService, ContactsService>();
+            services.AddTransient<ICustomersService, CustomersService>();
             services.AddTransient<IOrganizationsService, OrganizationsService>();
             services.AddTransient<IEmailsService, EmailsService>();
             services.AddTransient<IPhonesServices, PhonesServices>();

@@ -13,12 +13,12 @@
     public class OrganizationsController : Controller
     {
         private readonly IOrganizationsService organizationsService;
-        private readonly IContactsService contactsService;
+        private readonly ICustomersService contactsService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public OrganizationsController(
             IOrganizationsService organizationsService,
-            IContactsService contactsService,
+            ICustomersService contactsService,
             UserManager<ApplicationUser> userManager)
         {
             this.organizationsService = organizationsService;

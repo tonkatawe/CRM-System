@@ -13,11 +13,11 @@ namespace CRMSystem.Web.Controllers
 
     public class HomeController : BaseController
     {
-        private readonly IContactsService contactsService;
+        private readonly ICustomersService contactsService;
         private readonly IUserTasksService userTasksService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public HomeController(IContactsService contactsService, IUserTasksService userTasksService, UserManager<ApplicationUser> userManager)
+        public HomeController(ICustomersService contactsService, IUserTasksService userTasksService, UserManager<ApplicationUser> userManager)
         {
             this.contactsService = contactsService;
             this.userTasksService = userTasksService;
