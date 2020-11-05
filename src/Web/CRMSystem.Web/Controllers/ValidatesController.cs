@@ -6,6 +6,7 @@ using CRMSystem.Data.Common.Repositories;
 using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Web.ViewModels.Contacts;
+using CRMSystem.Web.ViewModels.Customers;
 using CRMSystem.Web.ViewModels.Emails;
 using CRMSystem.Web.ViewModels.Phones;
 using Microsoft.AspNetCore.Identity;
@@ -57,7 +58,7 @@ namespace CRMSystem.Web.Controllers
         }
 
         [AcceptVerbs("Get", "Post")]
-        public IActionResult VerifyEmail(string email, EditContactInputModel test= null, CustomerAddInputModel input = null)
+        public IActionResult VerifyEmail(string email, GetDetailsViewModel test= null, CustomerAddInputModel input = null)
         {
             if (input.Email != null)
             {
@@ -67,10 +68,10 @@ namespace CRMSystem.Web.Controllers
 
                 foreach (var contact in contacts)
                 {
-                    var currentEmails = this.emailsService.GetAllContactEmails<EmailCreateInputModel>(contact.Id);
+                    var currentEmails = this.emailsService.GetAllCustomerEmails<EmailCreateInputModel>(contact.Id);
                     if (currentEmails.Any(x => x.Email == email))
                     {
-                        return Json($"Email {input.Email.Email} is already in use (in other contact)");
+                        return Json($"Email {input.Email.Email} is already in use (in other Customer)");
                     }
                 }
             }

@@ -1,0 +1,131 @@
+﻿@using System.Globalization
+@model CRMSystem.Web.Infrastructure.PaginatedList<CRMSystem.Web.ViewModels.Customers.CustomerViewModel>
+@{
+    this.ViewData["Title"] = "All contacts";
+
+}
+
+
+<p>
+    <a asp-action="AddCustomer">Add New Customer</a>
+</p>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["SortByName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Full Name</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["SortByIndustry"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Industry</a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["SortByDate"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Created on</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var contact in Model)
+        {
+            var tm = "#myModal" + contact.Id;
+            var mid = "myModal" + contact.Id;
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => (contact.FullName))
+                </td>
+
+                <td>
+                    @Html.DisplayFor(m => contact.IndustryAsString)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => contact.CreatedOnAsString)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@contact.Id">Details</a> |
+                    <a asp-route-id="@contact.Id" data-toggle="modal"
+                       data-target="#modal-delete" data-id="@contact.Id">Delete</a>
+
+                    <form asp-action="Delete" role="form" id="myForm">
+                        <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modalDeleteLabel">Delete contact</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="form-control">
+                                        Are you sure you want to delete @contact.FullName?
+                                        <input hidden name="id" />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-danger" id="modalDeleteButton">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+
+
+<ul class="pagination">
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+</ul>
+@section Scripts
+{
+    <script>
+        $(function () {
+            $('#modal-delete').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var id = button.data("id");
+                var modal = $(this);
+
+                modal.find('.modal-content input').val(id);
+            });
+
+            $("#modalDeleteButton").click(function () {
+                $("#myForm").submit();
+
+            });
+
+        });
+    </script>
+}

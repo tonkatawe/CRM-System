@@ -21,8 +21,8 @@ namespace CRMSystem.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(EmailCreateInputModel input)
         {
-            await this.emailsService.CreateEmailAsync(input.Email, input.EmailType, input.ContactId);
-            return this.RedirectToAction("Details", "Contacts", new { id = input.ContactId });
+            await this.emailsService.CreateEmailAsync(input.Email, input.EmailType, input.CustomerId);
+            return this.RedirectToAction("Details", "Customers", new { id = input.CustomerId });
         }
       
        

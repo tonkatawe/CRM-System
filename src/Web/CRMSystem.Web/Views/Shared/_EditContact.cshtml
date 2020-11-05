@@ -1,10 +1,9 @@
 ﻿
 @using CRMSystem.Data.Models.Enums
+@using System.Linq
 @using CRMSystem.Web.ViewModels.Emails
 
-@using System.Linq
-
-@model CRMSystem.Web.ViewModels.Contacts.EditContactInputModel
+@model CRMSystem.Web.ViewModels.Customers.EditCustomerInputModel
 <form style="padding-bottom: 7rem" method="post" asp-action="Edit">
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -70,21 +69,22 @@
                     <label><b>Email</b></label>
                 </div>
                 <div class="col-md-6">
+               
                     @for (int i = 0; i < @Model.EmailAddresses.Count; i++)
                     {
                         <p>
                             <div class="form-row">
                                 <div class="col-md-6">
-                                    <input asp-for="EmailAddresses[i].Email" value="@Model.EmailAddresses[i].Email" class="form-control" />
-                                    <input asp-for="@Model.EmailAddresses[i].Id" type="hidden" />
-                                    <input asp-for="@Model.EmailAddresses[i].Email" type="hidden" />
-                         
-                                    <span asp-validation-for="EmailAddresses" class="text-danger"></span>
+                                    <input asp-for="EmailAddresses[i].Email" value="@Model.EmailAddresses[i].Email" class="form-control"/>
+                                    <input asp-for="EmailAddresses[i].Id" type="hidden" />
+                                    <input asp-for="EmailAddresses[i].Email" type="hidden"/>
+
+                                    <span asp-validation-for="EmailAddresses" class="field-validation-valid"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <select asp-for="EmailAddresses[i].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
                                 </div>
-                                <a asp-action="Delete" asp-controller="Emails" asp-route-id="@Model.EmailAddresses[i]" asp-route-contactId="@Model.EmailAddresses[i].ContactId">
+                                <a asp-action="Delete" asp-controller="Emails" asp-route-id="EmailAddresses[i]" asp-route-contactId="EmailAddresses[i].CustomerId">
 
                                     <i class="fas fa-minus-circle" style="color: red"></i>
                                 </a>
@@ -96,19 +96,19 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 @{
-                                    Model.EmailAddresses.Add(new EmailCreateInputModel() { ContactId = Model.Id });
+                                    Model.EmailAddresses.Add(new EmailCreateInputModel() {CustomerId = Model.Id});
                                 }
-                                <input class="form-control" asp-for="@Model.EmailAddresses[(Model.EmailAddresses.Count()- 1)].Email" placeholder="Email">
+                                <input class="form-control" asp-for="@Model.EmailAddresses[(Model.EmailAddresses.Count() - 1)].Email" placeholder="Email">
                                 <span asp-validation-for="EmailAddresses" class="text-danger"></span>
                             </div>
                             <div class="form-group col-md-4">
                                 <select asp-for="EmailAddresses[(Model.EmailAddresses.Count() - 1)].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control" placeholder="type"></select>
                                 <span asp-validation-for="EmailAddresses" class="text-danger"></span>
                             </div>
-                            <input asp-for="@Model.EmailAddresses[(Model.EmailAddresses.Count() - 1)].ContactId" type="hidden" />
+                            <input asp-for="@Model.EmailAddresses[(Model.EmailAddresses.Count() - 1)].CustomerId" type="hidden"/>
                             <a href="#" onclick="cancel()">&nbsp;<i class="fas fa-window-close fa-lg" style="color: red"></i></a>
                         </div>
-                      </div>
+                    </div>
                 </div>
 
             </div>

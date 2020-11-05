@@ -21,7 +21,7 @@ namespace CRMSystem.Services.Data
             this.emailRepository = emailRepository;
         }
 
-        public IEnumerable<T> GetAllContactEmails<T>(int contactId)
+        public IEnumerable<T> GetAllCustomerEmails<T>(int contactId)
         {
             var query = this.emailRepository.All()
                 .Where(x => x.CustomerId == contactId);

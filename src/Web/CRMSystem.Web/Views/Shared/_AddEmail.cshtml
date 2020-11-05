@@ -9,7 +9,7 @@
         <div class="form-group col-md-4">
             <select asp-for="EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control" placeholder="type"></select>
             <span asp-validation-for="EmailType" class="text-danger"></span>
-            <input asp-for="ContactId" type="hidden" />
+            <input asp-for="CustomerId" type="hidden" />
         </div>
         <div class="form-group col-md-2">
             <button type="submit" class="btn btn-primary">Add</button>

@@ -13,9 +13,10 @@ namespace CRMSystem.Web.ViewModels.Emails
         public int? Id { get; set; }
 
         [Required]
-        public int ContactId { get; set; }
+        public int CustomerId { get; set; }
 
         [Required]
+        [Remote("VerifyEmail", "Validates")]
         [EmailAddress(ErrorMessage = "The Emails is not valid")]
         public string Email { get; set; }
 
