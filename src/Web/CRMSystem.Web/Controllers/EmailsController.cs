@@ -33,8 +33,8 @@ namespace CRMSystem.Web.Controllers
 
             //todo for this user check..
 
-            //return this.RedirectToAction("Details", "Contacts", new { id = contactId });
-            return Json(id);
+            return this.RedirectToAction("Edit", "Customers", new { id = contactId });
+
 
         }
 
