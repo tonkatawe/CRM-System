@@ -1,4 +1,6 @@
-﻿namespace CRMSystem.Data.Models
+﻿using System.Collections.Generic;
+
+namespace CRMSystem.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -17,5 +19,11 @@
         [Required]
         [Range(typeof(decimal), "0", "79228162514264337593543950335")]
         public decimal Price { get; set; }
+
+        public int OrganizationId { get; set; }
+
+        public Organization Organization { get; set; }
+
+       
     }
 }

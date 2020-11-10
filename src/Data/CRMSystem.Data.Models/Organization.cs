@@ -10,6 +10,8 @@
         public Organization()
         {
             this.Customers = new HashSet<Customer>();
+            this.Products = new HashSet<Product>();
+            this.Sales = new HashSet<Sale>();
         }
 
         [Required]
@@ -29,5 +31,8 @@
         public ApplicationUser User { get; set; }
 
         public ICollection<Customer> Customers { get; set; }
+        public ICollection<Product> Products { get; set; }
+
+        public ICollection<Sale> Sales { get; set; }
     }
 }
