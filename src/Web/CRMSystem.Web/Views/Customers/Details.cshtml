@@ -12,7 +12,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-xl-6 col-lg-7">
-                  <div class="card shadow mb-4" id="CurrentContact">
+                        <div class="card shadow mb-4" id="CurrentContact">
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                 <h6 class="m-0 font-weight-bold text-primary"> <b>@Html.DisplayFor(m => m.TitleAsString).</b> <i>@Html.DisplayFor(m => m.FullName)</i></h6>
                                 <div class="dropdown no-arrow">
@@ -20,7 +20,7 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                     
+
                                         <a asp-action="Edit" asp-route-id="@Model.Id" class="dropdown-item">Edit</a>
 
                                         <a class="dropdown-item" href="#">Delete</a>
@@ -70,32 +70,19 @@
                                         {
                                             @if (email.EmailType.ToString() == "Home")
                                             {
-
                                                 <p>
                                                     @email.Email
                                                     <i class="fas fa-home" title="Home"></i>
-
-                                                    @*<a asp-action="Delete" asp-controller="Emails" asp-route-contactId="@Model.Id" asp-route-id="@email.Id">*@
-                                                    <a href="#" onclick="del(@email.Id, @Model.Id)">
-                                                        <i class="fas fa-minus-circle" style="color: red"></i>
-                                                    </a>
                                                 </p>
-
                                             }
                                             else if (email.EmailType.ToString() == "Work")
                                             {
                                                 <p>
-                                                    @email.Email <i class="fas fa-building" title="Work"></i>
-                                                    <a asp-action="Delete" asp-controller="Emails" asp-route-contactId="@Model.Id" asp-route-id="@email.Id">
-                                                        <i class="fas fa-minus-circle" style="color: red"></i>
-                                                    </a>
+                                                    @email.Email
+                                                    <i class="fas fa-building"></i>
                                                 </p>
                                             }
                                         }
-                                        @*<a href="#" onclick="showAddEmailForm()"><i class="fas fa-plus-circle" title="Add more emails">Add other email</i></a>
-                                            <div id="AddEmailForm" style="display: none" class="form-row">
-                                                @await Html.PartialAsync("_AddEmail", new EmailCreateInputModel() { ContactId = Model.Id })
-                                            </div>*@
                                     </div>
                                 </div>
                                 <div class="row">
@@ -112,47 +99,82 @@
                                                 <p>
                                                     @phone.Phone
                                                     <i class="fas fa-home" title="Home"></i>
-                                                    <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@phone.Id">
-                                                        <i class="fas fa-minus-circle" style="color: red"></i>
-                                                    </a>
                                                 </p>
 
                                             }
                                             else if (phone.PhoneType.ToString() == "Work")
                                             {
                                                 <p>
-                                                    @phone.Phone <i class="fas fa-building" title="Work"></i>
-                                                    <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@phone.Id">
-                                                        <i class="fas fa-minus-circle" style="color: red"></i>
-                                                    </a>
+                                                    @phone.Phone
+                                                    <i class="fas fa-building"></i>
                                                 </p>
                                             }
                                             else if (phone.PhoneType.ToString() == "Mobile")
                                             {
                                                 <p>
                                                     @phone.Phone
-                                                    <i class="fas fa-mobile" title="Mobile"></i>
-                                                    <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@phone.Id">
-                                                        <i class="fas fa-minus-circle" style="color: red"></i>
-                                                    </a>
+                                                    <i class="fas fa-mobile-alt"></i>
                                                 </p>
                                             }
                                             else if (phone.PhoneType.ToString() == "Fax")
                                             {
                                                 <p>
                                                     @phone.Phone
-                                                    <i class="fas fa-fax" title="Fax"></i>
-                                                    <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@phone.Id">
-                                                        <i class="fas fa-minus-circle" style="color: red"></i>
-                                                    </a>
+                                                    <i class="fas fa-fax"></i>
                                                 </p>
                                             }
 
                                         }
-                                        <a href="#" onclick="showAddPhoneForm()"><i class="fas fa-plus-circle" title="Add more phones">Add other phone</i></a>
-                                        <div id="AddPhoneForm" style="display: none" class="form-row">
-                                            @await Html.PartialAsync("_AddPhone", new PhoneCreateInputModel() { CustomerId = Model.Id })
-                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label><b>Social Network</b></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @foreach (var sn in this.Model.SocialNetworks)
+                                        {
+
+                                            @if (sn.SocialNetworkType.ToString() == "Website")
+                                            {
+
+                                                <p>
+                                                    @sn.Name
+                                                    <i class="fab fa-internet-explorer"></i>
+                                                </p>
+
+                                            }
+                                            else if (sn.SocialNetworkType.ToString() == "Twitter")
+                                            {
+                                                <p>
+                                                    @sn.Name
+                                                    <i class="fab fa-twitter"></i>
+                                                </p>
+                                            }
+                                            else if (sn.SocialNetworkType.ToString() == "Facebook")
+                                            {
+                                                <p>
+                                                    @sn.Name
+                                                    <i class="fab fa-facebook"></i>
+                                                </p>
+                                            }
+                                            else if (sn.SocialNetworkType.ToString() == "LinkedIn")
+                                            {
+                                                <p>
+                                                    @sn.Name
+                                                    <i class="fab fa-linkedin-in"></i>
+                                                </p>
+                                            }
+                                            else if (sn.SocialNetworkType.ToString() == "Skype")
+                                            {
+                                                <p>
+                                                    @sn.Name
+                                                    <i class="fab fa-skype"></i>
+                                                </p>
+                                            }
+
+                                        }
 
                                     </div>
                                 </div>
@@ -170,6 +192,14 @@
                                     </div>
                                     <div class="col-md-6">
                                         <p>@Html.DisplayFor(m => m.Address.Country), @Html.DisplayFor(m => m.Address.City), @Html.DisplayFor(m => m.Address.Street), @Html.DisplayFor(m => m.Address.ZipCode)</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label><b>Additional info:</b></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p> @Html.DisplayFor(m => m.AdditionalInfo)</p>
                                     </div>
                                 </div>
                             </div>
@@ -190,21 +220,11 @@
             </div>
         </div>
 
-
-        <!--Start under construction-->
-        <div class="px-4 pt-3" id="EditButton"> <button type="button" class="btn btn-primary float-right" onclick="showAddOrganizationForm()"><i class="fa fa-plus"></i>&nbsp; Edit Contact</button> </div>
-        <div class="clearfix"></div>
-
-
-        <!--End under construction-->
-
         <p>
             <a asp-action="Index">Back to contacts</a>
         </p>
 
-        <p>
-            <a asp-action="Edit" asp-route-id="@Model.Id">Edit contact direct</a>
-        </p>
+
 
     </div>
 </body>
@@ -217,47 +237,5 @@
                 scrollTop: $("#AddPhoneForm").offset().top
             }, 1500);
         }
-        function showAddEmailForm() {
-            $("#AddEmailForm").show();
-
-        }
-        function cancel() {
-            $("#AddEmailForm").hide();
-        }
-        function showAddOrganizationForm() {
-            $("#EditPartial").show();
-            $("#CurrentContact").hide();
-            $("#EditButton").hide();
-            $([document.documentElement, document.body]).animate({
-                scrollTop: $("#AddOrganizationForm").offset().top
-            }, 1500);
-        }
-        function editContact() {
-            $("#CurrentContact").hide();
-            $("#EditPartial").show();
-        }
-        function showCurrentContact() {
-            $("#CurrentContact").show();
-            $("#EditPartial").hide();
-        }
-
-        function del(id, contactId) {
-            $.ajax({
-                url: '/Emails/Delete',
-                data: {
-                    id: id,
-                    contactId: contactId
-                },
-                contentType: 'application/json',
-                success: function (data) {
-                    console.log(data);
-                    location.reload(true);
-                },
-                error: function (e) {
-                    console.log(e);
-                }
-            });
-        }
-
     </script>
 }

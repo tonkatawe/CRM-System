@@ -23,7 +23,7 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Add(EmailCreateInputModel input)
         {
             await this.emailsService.CreateEmailAsync(input.Email, input.EmailType, input.CustomerId);
-            return this.RedirectToAction("Details", "Customers", new { id = input.CustomerId });
+            return this.RedirectToAction("Edit", "Customers", new { id = input.CustomerId });
         }
       
        

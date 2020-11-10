@@ -1,6 +1,6 @@
 ﻿@using CRMSystem.Data.Models.Enums
 @model CRMSystem.Web.ViewModels.Emails.EmailCreateInputModel
-@*<form style="padding-bottom: 7rem" method="post" asp-action="Add" asp-controller="Emails">*@
+<form asp-controller="Emails" asp-action="Add" method="post">
     <div class="form-row">
         <div class="form-group col-md-6">
             <input class="form-control" asp-for="Email" placeholder="Email">
@@ -11,12 +11,9 @@
             <span asp-validation-for="EmailType" class="text-danger"></span>
             <input asp-for="CustomerId" type="hidden" />
         </div>
-        <a asp-action="Delete" asp-controller="Emails" asp-route-contactId="@Model.CustomerId" asp-route-id="@Model.Id" >
+        <input type="submit" value="&#xf0c7" class="fa-lg" style="color: blue">
+        @*<a href="#" type="submit" class="hide"><i class="fas fa-save fa-lg" style="color: blue"></i></a>*@
+        <a href="#" onclick=cancelNewEmail()>&nbsp;<i class="fas fa-window-close fa-lg" style="color: red"></i></a>
 
-            <i class="fas fa-minus-circle" style="color: red"></i>
-        </a>
-        @*<div class="form-group col-md-2">
-            <button type="submit" class="btn btn-primary">Add</button>
-        </div>*@
     </div>
-@*</form>*@
+</form>
