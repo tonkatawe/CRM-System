@@ -2,6 +2,7 @@
 
 using CRMSystem.Web.Infrastructure;
 using CRMSystem.Web.ViewModels.Customers;
+using CRMSystem.Web.ViewModels.Emails;
 
 namespace CRMSystem.Web.Controllers
 {
@@ -61,7 +62,7 @@ namespace CRMSystem.Web.Controllers
             ViewData["CurrentFilter"] = searchString;
 
             var customers = from c in allUserCustomers
-                           select c;
+                            select c;
             if (!String.IsNullOrEmpty(searchString))
             {
                 customers = customers.Where(s => s.LastName.Contains(searchString)
@@ -99,7 +100,7 @@ namespace CRMSystem.Web.Controllers
             return View(await PaginatedList<CustomerViewModel>.CreateAsync(customers, pageNumber ?? 1, pageSize));
         }
 
-    
+
 
         public async Task<IActionResult> AddCustomer()
         {
@@ -133,21 +134,36 @@ namespace CRMSystem.Web.Controllers
         }
 
 
-        //public async Task<IActionResult> Edit(int id)
-        //{
-        //    var viewModel = this.customersService.GetCustomerById<GetDetailsViewModel>(id);
-        //    if (viewModel == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public IActionResult Edit(int id)
+        {
+            var viewModel = this.customersService.GetCustomerById<EditCustomerInputModel>(id);
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
 
-        //    return this.View(viewModel);
-        //}
+            return this.View(viewModel);
+        }
 
         [HttpPost]
         public async Task<IActionResult> Edit(EditCustomerInputModel input)
         {
             //todo Check for mail, phone social network, make limit for all types, try to get only changed properties
+        
+            if (ModelState.IsValid)
+            {
+                foreach (var email in input.EmailAddresses)
+                {
+                    bool test = !this.emailsService.IsAvailableEmail(email.Email);
+                    if (test)
+                    {
+
+                        ViewData.ModelState.AddModelError($"{email.Email}", "e zaet");
+                       
+                    }
+                }
+            }
+
 
             await this.customersService.UpdateCustomerAsync(input);
 
@@ -162,10 +178,10 @@ namespace CRMSystem.Web.Controllers
             var viewModel = this.customersService.GetCustomerById<GetDetailsViewModel>(id);
 
             //todo have to repair because it doesn't work :)
-            //if (viewModel.SharedEditContactViewModel.Id != id)
+            //if (viewModel.SharedEditCustomerViewModel.Id != id)
             //{
-            viewModel.SharedEditContactViewModel = this.customersService.GetCustomerById<EditCustomerInputModel>(viewModel.Id);
-            viewModel.SharedEditContactViewModel.Id = viewModel.Id;
+            //viewModel.SharedEditCustomerViewModel = this.customersService.GetCustomerById<EditCustomerInputModel>(viewModel.Id);
+            //viewModel.SharedEditCustomerViewModel.Id = viewModel.Id;
 
             //}
 

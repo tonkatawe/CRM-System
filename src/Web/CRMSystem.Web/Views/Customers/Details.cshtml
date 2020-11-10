@@ -1,8 +1,9 @@
 ﻿@using CRMSystem.Web.ViewModels.Phones
+@using CRMSystem.Web.ViewModels.Customers
 @model CRMSystem.Web.ViewModels.Customers.GetDetailsViewModel
 @{
     this.ViewData["Title"] = "Get details";
- 
+
 }
 
 <body id="page-top">
@@ -14,7 +15,7 @@
                     <div class="col-xl-6 col-lg-7">
                         <div id="EditPartial" style="display: none">
 
-                            @await Html.PartialAsync("_EditContact", Model.SharedEditContactViewModel)
+                            @*@await Html.PartialAsync("_EditContact", Model.SharedEditCustomerViewModel)*@
                         </div>
                         <div class="card shadow mb-4" id="CurrentContact">
                             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -24,7 +25,9 @@
                                         <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="#" onclick="editContact()">Edit</a>
+                                        @*<a class="dropdown-item" href="#" onclick="editContact()">Edit</a>*@
+                                        <a asp-action="Edit" asp-route-id="@Model.Id" class="dropdown-item">Edit</a>
+
                                         <a class="dropdown-item" href="#">Delete</a>
                                         <div class="dropdown-divider"></div>
                                     </div>
@@ -95,9 +98,9 @@
                                             }
                                         }
                                         @*<a href="#" onclick="showAddEmailForm()"><i class="fas fa-plus-circle" title="Add more emails">Add other email</i></a>
-                                        <div id="AddEmailForm" style="display: none" class="form-row">
-                                            @await Html.PartialAsync("_AddEmail", new EmailCreateInputModel() { ContactId = Model.Id })
-                                        </div>*@
+                                            <div id="AddEmailForm" style="display: none" class="form-row">
+                                                @await Html.PartialAsync("_AddEmail", new EmailCreateInputModel() { ContactId = Model.Id })
+                                            </div>*@
                                     </div>
                                 </div>
                                 <div class="row">
@@ -180,14 +183,14 @@
 
 
                     @*@if (Model.Organization != null)
-                    {
-                        @await Html.PartialAsync("_GetOrganization", Model.Organization);
+                        {
+                            @await Html.PartialAsync("_GetOrganization", Model.Organization);
 
-                    }
-                    else
-                    {
-                        <p>Create join to organization or ad to oder organization and bla bla bla</p>
-                    }*@
+                        }
+                        else
+                        {
+                            <p>Create join to organization or ad to oder organization and bla bla bla</p>
+                        }*@
                 </div>
             </div>
         </div>
@@ -221,7 +224,7 @@
         }
         function showAddEmailForm() {
             $("#AddEmailForm").show();
-          
+
         }
         function cancel() {
             $("#AddEmailForm").hide();
@@ -244,18 +247,18 @@
         }
 
         function del(id, contactId) {
-         $.ajax({
+            $.ajax({
                 url: '/Emails/Delete',
                 data: {
                     id: id,
                     contactId: contactId
                 },
                 contentType: 'application/json',
-                success: function(data) {
+                success: function (data) {
                     console.log(data);
                     location.reload(true);
                 },
-                error: function(e) {
+                error: function (e) {
                     console.log(e);
                 }
             });

@@ -1,10 +1,10 @@
 ﻿
 @using CRMSystem.Data.Models.Enums
-@using System.Linq
-@using AutoMapper.Internal
 @using CRMSystem.Web.ViewModels.Emails
-@using Microsoft.AspNetCore.Mvc.Rendering
+@{
+    this.ViewData["Title"] = "Edit Customer";
 
+}
 @model CRMSystem.Web.ViewModels.Customers.EditCustomerInputModel
 <form style="padding-bottom: 7rem" method="post" asp-action="Edit" asp-controller="Customers">
     <div class="card shadow mb-4">
@@ -28,7 +28,7 @@
                 </div>
                 <div class="col-md-6">
                     <p>
-                        <input asp-for="FirstName" value="@Model.FirstName" class="rounded"/>
+                        <input asp-for="FirstName" value="@Model.FirstName" class="rounded" />
                         <span asp-validation-for="FirstName" class="text-danger"></span>
                     </p>
                 </div>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-md-6">
                     <p>
-                        <input asp-for="MiddleName" value="@Model.MiddleName" class="rounded"/>
+                        <input asp-for="MiddleName" value="@Model.MiddleName" class="rounded" />
                         <span asp-validation-for="MiddleName" class="text-danger"></span>
                     </p>
                 </div>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-md-6">
                     <p>
-                        <input asp-for="LastName" value="@Model.LastName" class="rounded"/>
+                        <input asp-for="LastName" value="@Model.LastName" class="rounded" />
                         <span asp-validation-for="LastName" class="text-danger"></span>
                     </p>
                 </div>
@@ -83,10 +83,10 @@
                             <div class="form-row">
                                 <div class="col-md-6">
 
-                                    <input asp-for="@Model.EmailAddresses[i].Email" value="@Model.EmailAddresses[i].Email" class="form-control" asp-route="@Model.EmailAddresses[i].Email"/>
+                                    <input asp-for="@Model.EmailAddresses[i].Email" value="@Model.EmailAddresses[i].Email" class="form-control" asp-route="@Model.EmailAddresses[i].Email" />
 
-                                    <input asp-for="@Model.EmailAddresses[i].Id" type="hidden"/>
-                                    <input asp-for="@Model.EmailAddresses[i].Email" type="hidden"/>
+                                    <input asp-for="@Model.EmailAddresses[i].Id" type="hidden" />
+                                    <input asp-for="@Model.EmailAddresses[i].Email" type="hidden" />
                                     <span asp-validation-for="@Model.EmailAddresses[i].Email" class="text-danger"></span>
 
 
@@ -105,22 +105,22 @@
                     }
                     <a href="#" onclick="showAddEmailForm()"><i class="fas fa-plus-circle" title="Add more emails">Add other email</i></a>
                     @*<div id="AddEmailForm" style="display: none" class="form-row">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
 
-                                <input class="form-control" asp-for="@Model.EmailAddresses[(Model.EmailAddresses.Count() - 1)].Email" placeholder="Email">
-                                <span asp-validation-for="EmailAddresses" class="text-danger"></span>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <select asp-for="EmailAddresses[(Model.EmailAddresses.Count() - 1)].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control" placeholder="type"></select>
+                                    <input class="form-control" asp-for="@Model.EmailAddresses[(Model.EmailAddresses.Count() - 1)].Email" placeholder="Email">
+                                    <span asp-validation-for="EmailAddresses" class="text-danger"></span>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <select asp-for="EmailAddresses[(Model.EmailAddresses.Count() - 1)].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control" placeholder="type"></select>
 
-                                <span asp-validation-for="EmailAddresses" class="text-danger"></span>
+                                    <span asp-validation-for="EmailAddresses" class="text-danger"></span>
+                                </div>
+                                <input asp-for="@Model.EmailAddresses[(Model.EmailAddresses.Count() - 1)].CustomerId" type="hidden" />
+                                <a href="#" onclick="cancel()">&nbsp;<i class="fas fa-window-close fa-lg" style="color: red"></i></a>
                             </div>
-                            <input asp-for="@Model.EmailAddresses[(Model.EmailAddresses.Count() - 1)].CustomerId" type="hidden" />
-                            <a href="#" onclick="cancel()">&nbsp;<i class="fas fa-window-close fa-lg" style="color: red"></i></a>
                         </div>
-                    </div>
-                    <span asp-validation-for="EmailAddresses" class="text-danger"></span>*@
+                        <span asp-validation-for="EmailAddresses" class="text-danger"></span>*@
 
                 </div>
 
@@ -137,8 +137,8 @@
                             <div class="form-row">
                                 <div class="col-md-6">
 
-                                    <input asp-for="PhoneNumbers[i].Phone" asp-route="@Model.PhoneNumbers[i].CustomerId" value="@Model.PhoneNumbers[i].Phone" class="form-control"/>
-                                    <input asp-for="@Model.PhoneNumbers[i].Id" type="hidden"/>
+                                    <input asp-for="PhoneNumbers[i].Phone" asp-route="@Model.PhoneNumbers[i].CustomerId" value="@Model.PhoneNumbers[i].Phone" class="form-control" />
+                                    <input asp-for="@Model.PhoneNumbers[i].Id" type="hidden" />
                                     <span asp-validation-for="PhoneNumbers" class="text-danger"></span>
 
                                 </div>
@@ -160,7 +160,7 @@
                 </div>
                 <div class="col-md-6">
                     <p>
-                        <input asp-for="JobTitle" value="@Model.JobTitle"/>
+                        <input asp-for="JobTitle" value="@Model.JobTitle" />
                         <span asp-validation-for="JobTitle" class="text-danger"></span>
                     </p>
                 </div>
@@ -171,22 +171,23 @@
                 </div>
                 <div class="col-md-6">
                     <p>
-                        Country <br/>
-                        <input asp-for="Address.Country" value="@Model.Address.Country"/><br/>
-                        City<br/>
-                        <input asp-for="Address.City" value="@Model.Address.City"/><br/>
-                        Street<br/>
-                        <input asp-for="Address.Street" value="@Model.Address.Street"/><br/>
-                        Zip Code<br/><input asp-for="Address.ZipCode" value="@Model.Address.ZipCode"/>
-                        <input asp-for="Address.Id" type="hidden"/>
+                        Country <br />
+                        <input asp-for="Address.Country" value="@Model.Address.Country" /><br />
+                        City<br />
+                        <input asp-for="Address.City" value="@Model.Address.City" /><br />
+                        Street<br />
+                        <input asp-for="Address.Street" value="@Model.Address.Street" /><br />
+                        Zip Code<br /><input asp-for="Address.ZipCode" value="@Model.Address.ZipCode" />
+                        <input asp-for="Address.Id" type="hidden" />
                     </p>
                 </div>
             </div>
         </div>
-        <input asp-for="@Model.Id" type="hidden"/>
+        <input asp-for="@Model.Id" type="hidden" />
 
         <button type="submit" class="btn btn-primary rounded-bottom">Save Changes</button>  <a href="#" class="btn btn-danger rounded-bottom" onclick="showCurrentContact()">Cancel</a>
     </div>
 </form>
+
 
 

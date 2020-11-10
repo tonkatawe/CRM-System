@@ -29,6 +29,6 @@ namespace CRMSystem.Web.ViewModels.Customers
 
         public IList<SocialNetwork> SocialNetworks { get; set; }
 
-        public EditCustomerInputModel SharedEditContactViewModel { get; set; }
+    
     }
 }

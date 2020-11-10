@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Web.ViewModels.Contacts;
 using CRMSystem.Web.ViewModels.Emails;
@@ -34,6 +35,12 @@ namespace CRMSystem.Web.Controllers
 
             //return this.RedirectToAction("Details", "Contacts", new { id = contactId });
             return Json(id);
+
+        }
+
+        public async Task<IActionResult> Update(EmailCreateInputModel input)
+        {
+           throw new NotImplementedException();
 
         }
     }

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CRMSystem.Data.Common.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CRMSystem.Web.ViewModels.Emails
 {
@@ -8,18 +11,23 @@ namespace CRMSystem.Web.ViewModels.Emails
     using CRMSystem.Data.Models.Enums;
     using CRMSystem.Services.Mapping;
 
+
     public class EmailCreateInputModel : IMapFrom<EmailAddress>
     {
+
         public int? Id { get; set; }
 
         [Required]
         public int CustomerId { get; set; }
 
         [Required]
-        [Remote("VerifyEmail", "Validates")]
+        //[Remote("VerifyEmail", "Validation", AdditionalFields = nameof(Id))]
+
         [EmailAddress(ErrorMessage = "The Emails is not valid")]
+
         public string Email { get; set; }
 
         public EmailType EmailType { get; set; }
+
     }
 }

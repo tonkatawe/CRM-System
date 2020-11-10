@@ -1,5 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using CRMSystem.Data.Models;
 using CRMSystem.Data.Models.Enums;
 using CRMSystem.Services.Mapping;
@@ -47,11 +51,11 @@ namespace CRMSystem.Web.ViewModels.Customers
 
         public IList<PhoneNumber> PhoneNumbers { get; set; }
 
-        [Remote("VerifyEmail", "Validates")]
         public IList<EmailCreateInputModel> EmailAddresses { get; set; }
 
         public IList<SocialNetwork> SocialNetworks { get; set; }
 
+     
 
     }
 }
