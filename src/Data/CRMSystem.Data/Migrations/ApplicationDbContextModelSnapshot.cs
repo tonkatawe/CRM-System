@@ -457,16 +457,11 @@ namespace CRMSystem.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("SaleId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("OrganizationId");
-
-                    b.HasIndex("SaleId");
 
                     b.ToTable("Products");
                 });
@@ -496,9 +491,6 @@ namespace CRMSystem.Data.Migrations
                     b.Property<int?>("OrganizationId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
@@ -507,41 +499,29 @@ namespace CRMSystem.Data.Migrations
 
                     b.HasIndex("OrganizationId");
 
-                    b.HasIndex("ProductId");
-
                     b.ToTable("Sales");
                 });
 
-            modelBuilder.Entity("CRMSystem.Data.Models.Setting", b =>
+            modelBuilder.Entity("CRMSystem.Data.Models.SaleProducts", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("SaleId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IsDeleted");
+                    b.HasIndex("ProductId");
 
-                    b.ToTable("Settings");
+                    b.HasIndex("SaleId");
+
+                    b.ToTable("SaleProducts");
                 });
 
             modelBuilder.Entity("CRMSystem.Data.Models.SocialNetwork", b =>
@@ -809,10 +789,6 @@ namespace CRMSystem.Data.Migrations
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("CRMSystem.Data.Models.Sale", null)
-                        .WithMany("Products")
-                        .HasForeignKey("SaleId");
                 });
 
             modelBuilder.Entity("CRMSystem.Data.Models.Sale", b =>
@@ -826,10 +802,19 @@ namespace CRMSystem.Data.Migrations
                     b.HasOne("CRMSystem.Data.Models.Organization", null)
                         .WithMany("Sales")
                         .HasForeignKey("OrganizationId");
+                });
 
+            modelBuilder.Entity("CRMSystem.Data.Models.SaleProducts", b =>
+                {
                     b.HasOne("CRMSystem.Data.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("SaleProducts")
                         .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CRMSystem.Data.Models.Sale", "Sale")
+                        .WithMany("SaleProducts")
+                        .HasForeignKey("SaleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

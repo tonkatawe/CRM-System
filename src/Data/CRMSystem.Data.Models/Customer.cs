@@ -37,7 +37,7 @@
 
         public int OrganizationId { get; set; }
 
-        public Organization Organization { get; set; }
+        public virtual Organization Organization { get; set; }
 
         public IndustryType Industry { get; set; }
 
@@ -47,21 +47,20 @@
         public int AddressId { get; set; }
 
         [Required]
-        public Address Address { get; set; }
+        public virtual Address Address { get; set; }
 
         [Required]
         public string UserId { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
-        public ICollection<Note> Notes { get; set; }
-
-        public ICollection<PhoneNumber> PhoneNumbers { get; set; }
-
-        public ICollection<EmailAddress> EmailAddresses { get; set; }
-
-        public ICollection<SocialNetwork> SocialNetworks { get; set; }
-
-        public ICollection<Sale> Sales { get; set; }
+        public virtual ICollection<Note> Notes { get; set; }
+        public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
+               
+        public virtual ICollection<EmailAddress> EmailAddresses { get; set; }
+               
+        public virtual ICollection<SocialNetwork> SocialNetworks { get; set; }
+               
+        public virtual ICollection<Sale> Sales { get; set; }
     }
 }

@@ -8,6 +8,10 @@ namespace CRMSystem.Data.Models
 
     public class Product : BaseDeletableModel<int>
     {
+        public Product()
+        {
+            this.SaleProducts = new HashSet<SaleProducts>();
+        }
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
@@ -22,8 +26,8 @@ namespace CRMSystem.Data.Models
 
         public int OrganizationId { get; set; }
 
-        public Organization Organization { get; set; }
+        public virtual Organization Organization { get; set; }
 
-       
+        public virtual ICollection<SaleProducts>  SaleProducts { get; set; }
     }
 }

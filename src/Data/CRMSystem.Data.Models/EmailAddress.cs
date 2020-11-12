@@ -9,7 +9,7 @@
     {
         public int CustomerId { get; set; }
 
-        public Customer Customer { get; set; }
+        public virtual Customer Customer { get; set; }
 
         [Required]
         public string Email { get; set; }

@@ -10,22 +10,18 @@
     {
         public Sale()
         {
-            this.Products = new HashSet<Product>();
+            this.SaleProducts = new HashSet<SaleProducts>();
         }
 
         [Required]
         public int CustomerId { get; set; }
 
-        public Customer Customer { get; set; }
-        
-        public int ProductId { get; set; }
+        public virtual Customer Customer { get; set; }
 
-        public Product Product { get; set; }
+        public virtual ICollection<SaleProducts> SaleProducts { get; set; }
 
-        public IEnumerable<Product> Products { get; set; }
+        //public decimal Benefit => this.Products.Sum(x => x.Price);
 
-        public decimal Benefit => this.Products.Sum(x => x.Price);
-
-        public int ProductCount => this.Products.Count();
+        //public int ProductCount => this.Products.Count();
     }
 }

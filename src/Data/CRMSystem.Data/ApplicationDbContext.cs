@@ -27,7 +27,7 @@ namespace CRMSystem.Data
         {
         }
 
-        public DbSet<Setting> Settings { get; set; }
+        public DbSet<SaleProducts> SaleProducts { get; set; }
 
         public DbSet<Address> Addresses { get; set; }
 
