@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CRMSystem.Web.ViewModels.Contacts
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using CRMSystem.Data.Models;
@@ -15,6 +16,11 @@ namespace CRMSystem.Web.ViewModels.Contacts
 
     public class CustomerAddInputModel : IMapFrom<Customer>
     {
+        public CustomerAddInputModel()
+        {
+            this.Emails = new List<EmailCreateInputModel>();
+            this.Phones = new List<PhoneCreateInputModel>();
+        }
 
         [Required]
         public Title Title { get; set; }
@@ -39,14 +45,14 @@ namespace CRMSystem.Web.ViewModels.Contacts
         public string AdditionalInfo { get; set; }
 
         public AddressCreateInputModel Address { get; set; }
+        
+        public IList<EmailCreateInputModel> Emails { get; set; }
 
-        [Required]
-        public EmailCreateInputModel Email { get; set; }
+       public IList<PhoneCreateInputModel> Phones { get; set; }
 
-        [Required]
-        public PhoneCreateInputModel PhoneNumber { get; set; }
+        public IList<SocialNetworkCreateInputModel> Networks { get; set; }
 
-        public SocialNetworkCreateInputModel Network { get; set; }
 
+    
     }
 }

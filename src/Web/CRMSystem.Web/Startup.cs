@@ -56,13 +56,13 @@ namespace CRMSystem.Web
                         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     }).AddRazorRuntimeCompilation();
 
+            services.AddRazorPages();
+
             //todo it would be unnecessary
             services.AddAntiforgery(options =>
             {
                 options.HeaderName = "X-CSRF-TOKEN";
             });
-
-            services.AddRazorPages();
 
             services.AddMvc();
             services.AddMvc().AddNewtonsoftJson(options =>

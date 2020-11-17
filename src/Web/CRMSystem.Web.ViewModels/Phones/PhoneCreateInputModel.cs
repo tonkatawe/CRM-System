@@ -17,7 +17,7 @@ namespace CRMSystem.Web.ViewModels.Phones
 
         [Required]
         [Phone(ErrorMessage = "It is not valid phone number")]
-        [Remote( "VerifyPhone", "Validation")]
+        [Remote("VerifyPhone", "Validation")]
         public string Phone { get; set; }
 
         [Required]

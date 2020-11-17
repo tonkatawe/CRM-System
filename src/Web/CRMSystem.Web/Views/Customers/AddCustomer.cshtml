@@ -9,11 +9,10 @@
 }
 
 
-
-
 <h3>@this.ViewData["Title"]</h3>
 <div class="container">
     <form style="padding-bottom: 7rem" method="post" asp-action="AddCustomer">
+        <div asp-validation-summary="All" class="text-danger"></div>
         <div class="form-row">
             <div class="form-group col-md-3">
                 <label asp-for="Title"></label>
@@ -58,38 +57,52 @@
                 <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
             </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-2">
-                <label asp-for="PhoneNumber.Phone">Phone number</label>
-                <input class="form-control" asp-for="PhoneNumber.Phone" placeholder="Phone number">
-                <span asp-validation-for="PhoneNumber.Phone" class="text-danger"></span>
+        <hr />
+        <label>Phone</label>
+        <div class="form-row phone_input" id="phonesDiv">
+            <div class="form-group col-md-3 ">
+                <input asp-for="Phones[0].Phone" class="form-control" placeholder="Phone number">
+                <span asp-validation-for="Phones[0].Phone" class="text-danger"></span>
             </div>
-            <div class="form-group col-md-2">
-                <label asp-for="PhoneNumber.PhoneType"></label>
-                <select asp-for="PhoneNumber.PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control"></select>
-                <span asp-validation-for="PhoneNumber.PhoneType" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-2">
-                <label asp-for="Email.Email">Email address</label>
-                <input class="form-control" asp-for="Email.Email" placeholder="Email address">
-                <span asp-validation-for="Email.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-2">
-                <label asp-for="Email.EmailType"></label>
-                <select asp-for="Email.EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
-                <span asp-validation-for="Email.EmailType" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-2">
-                <label asp-for="Network.Name">Social Name</label>
-                <input class="form-control" asp-for="Network.Name" placeholder="Social Network">
-                <span asp-validation-for="Network.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-2">
-                <label asp-for="Network.SocialNetworkType"></label>
-                <select asp-for="Network.SocialNetworkType" asp-items="Html.GetEnumSelectList<SocialNetworkType>()" class="form-control"></select>
-                <span asp-validation-for="Network.SocialNetworkType" class="text-danger"></span>
+            <div class="form-group col-md-3">
+                <select asp-for="Phones[0].PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control"></select>
+                <span asp-validation-for="Phones[0].PhoneType" class="text-danger"></span>
             </div>
         </div>
+        <div id="PhoneContainer"></div>
+        <a class="add_Phone">Add more phones</a>
+        <hr />
+
+        <label>Email</label>
+        <div class="form-row email_input" id="emailsDiv">
+            <div class="form-group col-md-3 ">
+                <input asp-for="Emails[0].Email" class="form-control" placeholder="Email address">
+                <span asp-validation-for="Emails[0].Email" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <select asp-for="Emails[0].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
+                <span asp-validation-for="Emails[0].EmailType" class="text-danger"></span>
+            </div>
+        </div>
+        <div id="EmailContainer"></div>
+        <a class="add_Email">Add more emails</a>
+        <hr />
+
+        <label>Networks</label>
+        <div class="form-row network_input" id="networksDiv">
+            <div class="form-group col-md-3 ">
+                <input asp-for="Networks[0].Name" class="form-control" placeholder="Social networks">
+                <span asp-validation-for="Networks[0].Name" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <select asp-for="Networks[0].SocialNetworkType" asp-items="Html.GetEnumSelectList<SocialNetworkType>()" class="form-control"></select>
+                <span asp-validation-for="Networks[0].SocialNetworkType" class="text-danger"></span>
+            </div>
+        </div>
+        <div id="NetworksContainer"></div>
+        <a class="add_Networks">Add more social networks</a>
+        <hr />
+
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label asp-for="JobTitle">Job Title</label>
@@ -109,12 +122,90 @@
                 <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Add Customer</button>
+        <button type="submit" id="btnSubmit" class="btn btn-primary">Add Customer</button>
     </form>
 </div>
 
 
+@section Scripts {
+    <script>
+        // Cloned elements count
+        var phoneCounter = 0;
+        var phoneLimit = 3;
+        $(".add_Phone").click(function AddPhone() {
+            //    Increment the cloned element count
+            phoneCounter++;
+            if (phoneCounter <= phoneLimit) {
+                //     Clone the element and assign it to a variable
+                var clone = $("#phonesDiv").clone(true)
+                    .append($('<a class="deletePhone" href="#"><i class="fas fa-window-close fa-lg" style="color: red"></i></a>'))
+                    .appendTo("#PhoneContainer");
+                //     Modify cloned element, using the counter variable
+                clone.find('input').attr('name', "Phones[" + phoneCounter + "].Phone");
+                clone.find('input').attr('id', "Phones_" + phoneCounter + "__.Phone");
+                clone.find('span').attr('data-valmsg-for', "Phones[" + phoneCounter + "].Phone");
+                clone.find('select').attr('name', "Phones[" + phoneCounter + "].PhoneType");
+            }
+        });
+        $("body").on('click',
+            ".deletePhone",
+            function () {
+                $(this).closest(".phone_input").remove();
+                phoneCounter--; // Modify the counter
+            });
 
+        var emailCounter = 0;
+        var emailLimit = 1;
+        $(".add_Email").click(function AddEmail() {
+
+            emailCounter++;
+            if (emailCounter <= emailLimit) {
+
+                var clone = $("#emailsDiv").clone(true)
+                    .append($('<a class="deleteEmail" href="#"><i class="fas fa-window-close fa-lg" style="color: red"></i></a>'))
+                    .appendTo("#EmailContainer");
+
+                clone.find('input').attr('name', "Emails[" + emailCounter + "].Email");
+                clone.find('input').attr('id', "Emails_" + emailCounter + "__.Email");
+                clone.find('span').attr('data-valmsg-for', "Emails[" + emailCounter + "].Email");
+                clone.find('select').attr('name', "Emails[" + emailCounter + "].EmailType");
+            }
+        });
+        $("body").on('click',
+            ".deleteEmail",
+            function () {
+                $(this).closest(".email_input").remove();
+                emailCounter--;
+            });
+
+
+
+        var networkCounter = 0;
+        var networkLimit = 4;
+        $(".add_Networks").click(function AddNetwork() {
+
+            networkCounter++;
+            if (networkCounter <= networkLimit) {
+
+
+                var clone = $("#networksDiv").clone(true)
+                    .append($('<a class="deleteNetwork" href="#"><i class="fas fa-window-close fa-lg" style="color: red"></i></a>'))
+                    .appendTo("#NetworksContainer");
+
+                clone.find('input').attr('name', "Networks[" + networkCounter + "].Name");
+                clone.find('input').attr('id', "Networks_" + networkCounter + "__.Name");
+                clone.find('span').attr('data-valmsg-for', "Networks[" + networkCounter + "].Name");
+                clone.find('select').attr('name', "Networks[" + networkCounter + "].SocialNetworkType");
+            }
+        });
+        $("body").on('click',
+            ".deleteNetwork",
+            function () {
+                $(this).closest(".network_input").remove();
+                networkCounter--;
+            });
+    </script>
+}
 
 
 

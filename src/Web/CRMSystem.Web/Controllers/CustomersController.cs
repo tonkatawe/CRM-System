@@ -1,5 +1,5 @@
 ﻿using System;
-
+using AutoMapper.Internal;
 using CRMSystem.Web.Infrastructure;
 using CRMSystem.Web.ViewModels.Customers;
 using CRMSystem.Web.ViewModels.Emails;
@@ -118,6 +118,22 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> AddCustomer(CustomerAddInputModel input)
         {
             var user = await this.userManager.GetUserAsync(this.User);
+      
+            for (int i = 0; i < input.Emails.Count; i++)
+            {
+
+            }
+
+            foreach (var email in input.Emails)
+            {
+                if (!this.emailsService.IsAvailableEmail(email.Email))
+                {
+
+                    ModelState.AddModelError("", $"This {email.Email} is already use");
+                  
+                }
+            }
+
             if (!user.HasOrganization)
             {
                 return this.RedirectToAction("Create", "Organizations");
@@ -128,6 +144,7 @@ namespace CRMSystem.Web.Controllers
                 return this.View(input);
             }
 
+            return Json(input);
             await this.customersService.CreateCustomerAsync(input, user.Id);
 
             return this.RedirectToAction("Index");
@@ -149,7 +166,7 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Edit(EditCustomerInputModel input)
         {
             //todo Check for mail, phone social network, make limit for all types, try to get only changed properties
-        
+
             if (ModelState.IsValid)
             {
                 foreach (var email in input.EmailAddresses)
@@ -159,7 +176,7 @@ namespace CRMSystem.Web.Controllers
                     {
 
                         ViewData.ModelState.AddModelError($"{email.Email}", "e zaet");
-                       
+
                     }
                 }
             }
