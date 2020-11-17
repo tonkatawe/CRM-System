@@ -18,7 +18,7 @@ namespace CRMSystem.Services.Data
             this.phonesRepository = phonesRepository;
         }
 
-        public IEnumerable<T> GetAllContactPhones<T>(int contactId)
+        public IEnumerable<T> GetAll<T>(int contactId)
         {
             var query = this.phonesRepository.All()
                 .Where(x => x.CustomerId == contactId);
@@ -26,7 +26,7 @@ namespace CRMSystem.Services.Data
             return query.To<T>().ToList();
         }
 
-        public async Task<PhoneNumber> CreatePhoneAsync(string phone, PhoneType type, int contactId)
+        public async Task<PhoneNumber> CreateAsync(string phone, PhoneType type, int contactId)
         {
             var phoneNumber = new PhoneNumber
             {
@@ -48,7 +48,7 @@ namespace CRMSystem.Services.Data
             return phone == null;
         }
 
-        public async Task<int> DeletePhoneAsync(int id)
+        public async Task<int> DeleteAsync(int id)
         {
             var phone = await this.phonesRepository.GetByIdWithDeletedAsync(id);
             this.phonesRepository.Delete(phone);

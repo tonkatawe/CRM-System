@@ -8,12 +8,12 @@
 
     public interface IPhonesServices
     {
-        IEnumerable<T> GetAllContactPhones<T>(int contactId);
+        IEnumerable<T> GetAll<T>(int contactId);
 
-        Task<PhoneNumber> CreatePhoneAsync(string phone, PhoneType type, int contactId);
+        Task<PhoneNumber> CreateAsync(string phone, PhoneType type, int contactId);
 
         bool IsAvailablePhoneNumber(string phoneNumber);
 
-        Task<int> DeletePhoneAsync(int id);
+        Task<int> DeleteAsync(int id);
     }
 }

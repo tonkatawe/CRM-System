@@ -10,17 +10,17 @@ namespace CRMSystem.Services.Data.Contracts
 
     public interface ICustomersService
     {
-        IQueryable<T> GetAllUserCustomers<T>(string userId);
+        IQueryable<T> GetAll<T>(string userId);
 
-        T GetCustomerById<T>(int contactId);
+        T GetById<T>(int contactId);
         
         IEnumerable<T> GetByName<T>(string userId, int skip = 0);
         
-        Task<int> DeleteCustomerAsync(int id);
+        Task<int> DeleteAsync(int id);
         
-        Task<int> CreateCustomerAsync(CustomerAddInputModel input, string userId);
+        Task<int> CreateSync(CustomerAddInputModel input, string userId);
         
-        Task<int> UpdateCustomerAsync(EditCustomerInputModel input);
+        Task<int> UpdateAsync(EditCustomerInputModel input);
 
     }
 }

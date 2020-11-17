@@ -23,13 +23,13 @@ namespace CRMSystem.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(PhoneCreateInputModel input)
         {
-            await this.phonesServices.CreatePhoneAsync(input.Phone, input.PhoneType, input.CustomerId);
+            await this.phonesServices.CreateAsync(input.Phone, input.PhoneType, input.CustomerId);
             return this.RedirectToAction("Details", "Customers", new { id = input.CustomerId });
         }
 
         public async Task<IActionResult> Delete(int id, int contactId)
         {
-            await this.phonesServices.DeletePhoneAsync(id);
+            await this.phonesServices.DeleteAsync(id);
 
             //todo for this user check..
 

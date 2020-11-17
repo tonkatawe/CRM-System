@@ -1,8 +1,10 @@
 ﻿using System;
-using AutoMapper.Internal;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using CRMSystem.Web.Infrastructure;
 using CRMSystem.Web.ViewModels.Customers;
 using CRMSystem.Web.ViewModels.Emails;
+using CRMSystem.Web.ViewModels.Phones;
 
 namespace CRMSystem.Web.Controllers
 {
@@ -43,7 +45,7 @@ namespace CRMSystem.Web.Controllers
             {
                 return this.RedirectToAction("Create", "Organizations");
             }
-            var allUserCustomers = this.customersService.GetAllUserCustomers<CustomerViewModel>(user.Id);
+            var allUserCustomers = this.customersService.GetAll<CustomerViewModel>(user.Id);
             ViewData["CurrentSort"] = sortOrder;
             ViewData["SortByName"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["SortByOrganization"] = String.IsNullOrEmpty(sortOrder) ? "organ_desc" : "";
@@ -102,7 +104,7 @@ namespace CRMSystem.Web.Controllers
 
 
 
-        public async Task<IActionResult> AddCustomer()
+        public async Task<IActionResult> Create()
         {
             var user = await this.userManager.GetUserAsync(this.User);
             if (!user.HasOrganization)
@@ -110,42 +112,66 @@ namespace CRMSystem.Web.Controllers
                 return this.RedirectToAction("Create", "Organizations");
             }
 
-            //Todo: make service for check existed phone and mail only from current user and delete method this check by other controllers
             return this.View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCustomer(CustomerAddInputModel input)
+        public async Task<IActionResult> Create(CustomerAddInputModel input)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-      
-            for (int i = 0; i < input.Emails.Count; i++)
-            {
-
-            }
-
-            foreach (var email in input.Emails)
-            {
-                if (!this.emailsService.IsAvailableEmail(email.Email))
-                {
-
-                    ModelState.AddModelError("", $"This {email.Email} is already use");
-                  
-                }
-            }
 
             if (!user.HasOrganization)
             {
                 return this.RedirectToAction("Create", "Organizations");
             }
+
+            //TODO REFACTOR BELOW
+            var customers = this.customersService
+                .GetAll<CustomerViewModel>(user.Id)
+                .Select(x => x.Id);
+
+
+            foreach (var customerId in customers)
+            {
+                var currentEmails = this.emailsService
+                    .GetAllCustomerEmails<EmailCreateInputModel>(customerId)
+                    .Select(x => x.Email);
+
+                foreach (var email in input.Emails)
+                {
+                    if (currentEmails.Contains(email.Email))
+                    {
+
+                        ModelState.AddModelError("", $"This {email.Email} is already use at other customer");
+
+                    }
+                }
+
+                foreach (var phone in input.Phones)
+                {
+                    var currentPhones = this.phonesService
+                        .GetAll<PhoneCreateInputModel>(customerId)
+                        .Select(x => x.Phone);
+                    if (currentPhones.Contains(phone.Phone))
+                    {
+
+                        ModelState.AddModelError("", $"This {phone.Phone} is already use at other customer");
+
+                    }
+                }
+
+            }
+       
+
+            //TODO: MAKE SOCIAL NETWORKS VALIDATION
 
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
 
-            return Json(input);
-            await this.customersService.CreateCustomerAsync(input, user.Id);
+
+            await this.customersService.CreateSync(input, user.Id);
 
             return this.RedirectToAction("Index");
         }
@@ -153,7 +179,7 @@ namespace CRMSystem.Web.Controllers
 
         public IActionResult Edit(int id)
         {
-            var viewModel = this.customersService.GetCustomerById<EditCustomerInputModel>(id);
+            var viewModel = this.customersService.GetById<EditCustomerInputModel>(id);
             if (viewModel == null)
             {
                 return NotFound();
@@ -182,7 +208,7 @@ namespace CRMSystem.Web.Controllers
             }
 
 
-            await this.customersService.UpdateCustomerAsync(input);
+            await this.customersService.UpdateAsync(input);
 
             return this.RedirectToAction("Details", new { id = input.Id });
         }
@@ -192,12 +218,12 @@ namespace CRMSystem.Web.Controllers
         {
             //todo make method async
 
-            var viewModel = this.customersService.GetCustomerById<GetDetailsViewModel>(id);
+            var viewModel = this.customersService.GetById<GetDetailsViewModel>(id);
 
             //todo have to repair because it doesn't work :)
             //if (viewModel.SharedEditCustomerViewModel.Id != id)
             //{
-            //viewModel.SharedEditCustomerViewModel = this.customersService.GetCustomerById<EditCustomerInputModel>(viewModel.Id);
+            //viewModel.SharedEditCustomerViewModel = this.customersService.GetById<EditCustomerInputModel>(viewModel.Id);
             //viewModel.SharedEditCustomerViewModel.Id = viewModel.Id;
 
             //}
@@ -214,7 +240,7 @@ namespace CRMSystem.Web.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            await this.customersService.DeleteCustomerAsync(id);
+            await this.customersService.DeleteAsync(id);
 
             //todo for this user check..
 

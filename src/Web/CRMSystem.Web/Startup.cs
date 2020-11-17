@@ -96,7 +96,6 @@ namespace CRMSystem.Web
             services.AddTransient<ISocialNetworksServices, SocialNetworksServices>();
             services.AddTransient<IAddressesService, AddressesService>();
             services.AddTransient<IUserTasksService, UserTasksService>();
-            services.AddTransient<IEditService, EditService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
