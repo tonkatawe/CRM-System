@@ -12,12 +12,13 @@ namespace CRMSystem.Web.ViewModels.Phones
 
     public class PhoneCreateInputModel : IMapFrom<PhoneNumber>
     {
+        public int? Id { get; set; }
+
         [Required]
         public int CustomerId { get; set; }
 
         [Required]
         [Phone(ErrorMessage = "It is not valid phone number")]
-        [Remote("VerifyPhone", "Validation")]
         public string Phone { get; set; }
 
         [Required]

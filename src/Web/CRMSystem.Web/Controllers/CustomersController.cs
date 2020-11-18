@@ -127,7 +127,7 @@ namespace CRMSystem.Web.Controllers
             {
                 return this.RedirectToAction("Create", "Organizations");
             }
-            
+
             foreach (var email in input.Emails)
             {
                 if (!this.validationService.IsAvailableEmail(user.Id, email.Email))
@@ -143,45 +143,7 @@ namespace CRMSystem.Web.Controllers
                     ModelState.AddModelError("", $"This {phone.Phone} is already taken by other customer in your list");
                 }
             }
-            ////TODO REFACTOR BELOW
-            //var customers = this.customersService
-            //    .GetAll<CustomerViewModel>(user.Id);
 
-
-
-            //foreach (var customerId in customers)
-            //{
-            //    var currentEmails = this.emailsService
-            //        .GetAllCustomerEmails<EmailCreateInputModel>(customerId)
-            //        .Select(x => x.Email);
-
-            //    foreach (var email in input.Emails)
-            //    {
-            //        if (currentEmails.Contains(email.Email))
-            //        {
-
-            //            ModelState.AddModelError("", $"This {email.Email} is already use at other customer");
-
-            //        }
-            //    }
-
-            //    foreach (var phone in input.Phones)
-            //    {
-            //        var currentPhones = this.phonesService
-            //            .GetAll<PhoneCreateInputModel>(customerId)
-            //            .Select(x => x.Phone);
-            //        if (currentPhones.Contains(phone.Phone))
-            //        {
-
-            //            ModelState.AddModelError("", $"This {phone.Phone} is already use at other customer");
-
-            //        }
-            //    }
-
-            //}
-
-
-            ////TODO: MAKE SOCIAL NETWORKS VALIDATION
 
             if (!this.ModelState.IsValid)
             {
@@ -195,13 +157,23 @@ namespace CRMSystem.Web.Controllers
         }
 
 
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            if (!user.HasOrganization)
+            {
+                return this.RedirectToAction("Create", "Organizations");
+            }
+
             var viewModel = this.customersService.GetById<EditCustomerInputModel>(id);
             if (viewModel == null)
             {
                 return NotFound();
             }
+
+            viewModel.Phones = this.phonesService.GetAll<PhoneCreateInputModel>(id).ToList();
+            viewModel.Emails = this.emailsService.GetAll<EmailCreateInputModel>(id).ToList();
 
             return this.View(viewModel);
         }
@@ -216,45 +188,24 @@ namespace CRMSystem.Web.Controllers
                 return this.RedirectToAction("Create", "Organizations");
             }
 
-            //TODO REFACTOR BELOW
-            var customers = this.customersService
-                .GetAll<CustomerViewModel>(user.Id)
-                .Select(x => x.Id);
 
-
-            foreach (var customerId in customers)
+            foreach (var email in input.Emails)
             {
-                var currentEmails = this.emailsService
-                    .GetAllCustomerEmails<EmailCreateInputModel>(customerId)
-                    .Select(x => x.Email);
 
-                foreach (var email in input.Emails)
+                if (!this.validationService.IsAvailableEmail(user.Id, email.Email, email.Id, email.CustomerId))
                 {
-                    if (currentEmails.Contains(email.Email))
-                    {
-
-                        ModelState.AddModelError("", $"This {email.Email} is already use at other customer");
-
-                    }
+                    ModelState.AddModelError("", $"This {email.Email} is already taken by other customer in your list");
                 }
-
-                foreach (var phone in input.Phones)
-                {
-                    var currentPhones = this.phonesService
-                        .GetAll<PhoneCreateInputModel>(customerId)
-                        .Select(x => x.Phone);
-                    if (currentPhones.Contains(phone.Phone))
-                    {
-
-                        ModelState.AddModelError("", $"This {phone.Phone} is already use at other customer");
-
-                    }
-                }
-
             }
 
+            foreach (var phone in input.Phones)
+            {
+                if (!this.validationService.IsAvailablePhone(user.Id, phone.Phone, phone.Id, phone.CustomerId))
+                {
+                    ModelState.AddModelError("", $"This {phone.Phone} is already taken by other customer in your list");
+                }
+            }
 
-            //TODO: MAKE SOCIAL NETWORKS VALIDATION
 
             if (!this.ModelState.IsValid)
             {

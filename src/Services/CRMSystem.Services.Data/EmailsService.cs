@@ -21,19 +21,19 @@ namespace CRMSystem.Services.Data
             this.emailRepository = emailRepository;
         }
 
-        public IEnumerable<T> GetAllCustomerEmails<T>(int contactId)
+        public IEnumerable<T> GetAll<T>(int customerId)
         {
             var query = this.emailRepository.All()
-                .Where(x => x.CustomerId == contactId);
+                .Where(x => x.CustomerId == customerId);
 
             return query.To<T>().ToList();
         }
 
-        public async Task<EmailAddress> CreateEmailAsync(string email, EmailType type, int contactId)
+        public async Task<EmailAddress> CreateAsync(string email, EmailType type, int customerId)
         {
             var emailAddress = new EmailAddress
             {
-                CustomerId = contactId,
+                CustomerId = customerId,
                 Email = email,
                 EmailType = type,
             };
@@ -45,7 +45,7 @@ namespace CRMSystem.Services.Data
 
        
 
-        public async Task<int> DeleteEmailAsync(int contactId)
+        public async Task<int> DeleteAsync(int contactId)
         {
             var phone = await this.emailRepository.GetByIdWithDeletedAsync(contactId);
             this.emailRepository.Delete(phone);
@@ -53,7 +53,7 @@ namespace CRMSystem.Services.Data
             return await this.emailRepository.SaveChangesAsync();
         }
 
-        public async Task<int> UpdateEmailAsync(EmailCreateInputModel input)
+        public async Task<int> UpdateAsync(EmailCreateInputModel input)
         {
             var email = await this.emailRepository.GetByIdWithDeletedAsync(input.Id);
             email.Email = input.Email;

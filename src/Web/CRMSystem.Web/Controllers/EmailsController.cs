@@ -22,14 +22,14 @@ namespace CRMSystem.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(EmailCreateInputModel input)
         {
-            await this.emailsService.CreateEmailAsync(input.Email, input.EmailType, input.CustomerId);
+            await this.emailsService.CreateAsync(input.Email, input.EmailType, input.CustomerId);
             return this.RedirectToAction("Edit", "Customers", new { id = input.CustomerId });
         }
       
        
         public async Task<IActionResult> Delete(int id, int contactId)
         {
-            await this.emailsService.DeleteEmailAsync(id);
+            await this.emailsService.DeleteAsync(id);
 
             //todo for this user check..
 

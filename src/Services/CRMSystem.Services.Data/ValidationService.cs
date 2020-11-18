@@ -18,25 +18,26 @@ namespace CRMSystem.Services.Data
             this.customersRepository = customersRepository;
             this.phonesRepository = phonesRepository;
         }
-        public bool IsAvailableEmail(string userId, string email)
+        public bool IsAvailableEmail(string userId, string email, int? id = null, int? customerId = null)
         {
             var result = this.customersRepository
                 .All()
                 .Where(x => x.UserId == userId)
                 .SelectMany(x => x.EmailAddresses)
-                .FirstOrDefault(x => x.Email == email);
+                .FirstOrDefault(x => x.Email == email && x.Id != id && x.CustomerId != customerId);
 
             return result == null;
 
         }
 
-        public bool IsAvailablePhone(string userId, string phone)
+        public bool IsAvailablePhone(string userId, string phone, int? id = null, int? customerId = null)
         {
             var result = this.customersRepository
                 .All()
                 .Where(x => x.UserId == userId)
                 .SelectMany(x => x.PhoneNumbers)
-                .FirstOrDefault(x=> x.Phone == phone);
+                .FirstOrDefault(x => x.Phone == phone && x.Id != id && x.CustomerId != customerId);
+
             return result == null;
         }
     }

@@ -63,7 +63,16 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label><b>Email</b></label>
+                                        <label>
+                                            @if (Model.EmailAddresses.Count > 0)
+                                            {
+                                                <b>Emails</b>
+                                            }
+                                            else
+                                            {
+                                                <b>Email</b>
+                                            }
+                                        </label>
                                     </div>
                                     <div class="col-md-6">
                                         @foreach (var email in this.Model.EmailAddresses)
@@ -87,7 +96,16 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label><b>Phone</b></label>
+                                        <label>
+                                            @if (Model.PhoneNumbers.Count > 0)
+                                            {
+                                                <b>Phones</b>
+                                            }
+                                            else
+                                            {
+                                                <b>Phone</b>
+                                            }
+                                        </label>
                                     </div>
                                     <div class="col-md-6">
                                         @foreach (var phone in this.Model.PhoneNumbers)
@@ -128,56 +146,7 @@
 
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label><b>Social Network</b></label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        @foreach (var sn in this.Model.SocialNetworks)
-                                        {
 
-                                            @if (sn.SocialNetworkType.ToString() == "Website")
-                                            {
-
-                                                <p>
-                                                    @sn.Name
-                                                    <i class="fab fa-internet-explorer"></i>
-                                                </p>
-
-                                            }
-                                            else if (sn.SocialNetworkType.ToString() == "Twitter")
-                                            {
-                                                <p>
-                                                    @sn.Name
-                                                    <i class="fab fa-twitter"></i>
-                                                </p>
-                                            }
-                                            else if (sn.SocialNetworkType.ToString() == "Facebook")
-                                            {
-                                                <p>
-                                                    @sn.Name
-                                                    <i class="fab fa-facebook"></i>
-                                                </p>
-                                            }
-                                            else if (sn.SocialNetworkType.ToString() == "LinkedIn")
-                                            {
-                                                <p>
-                                                    @sn.Name
-                                                    <i class="fab fa-linkedin-in"></i>
-                                                </p>
-                                            }
-                                            else if (sn.SocialNetworkType.ToString() == "Skype")
-                                            {
-                                                <p>
-                                                    @sn.Name
-                                                    <i class="fab fa-skype"></i>
-                                                </p>
-                                            }
-
-                                        }
-
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label><b>Profession</b></label>

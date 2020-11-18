@@ -10,12 +10,12 @@ namespace CRMSystem.Services.Data.Contracts
 
     public interface IEmailsService
     {
-        IEnumerable<T> GetAllCustomerEmails<T>(int contactId);
+        IEnumerable<T> GetAll<T>(int contactId);
 
-        Task<EmailAddress> CreateEmailAsync(string email, EmailType type, int contactId);
+        Task<EmailAddress> CreateAsync(string email, EmailType type, int customerId);
 
-     Task<int> DeleteEmailAsync(int id);
+        Task<int> DeleteAsync(int id);
 
-        Task<int> UpdateEmailAsync(EmailCreateInputModel input);
+        Task<int> UpdateAsync(EmailCreateInputModel input);
     }
 }

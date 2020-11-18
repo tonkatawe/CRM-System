@@ -117,7 +117,7 @@ namespace CRMSystem.Services.Data
 
             foreach (var email in input.Emails)
             {
-                var emailAddress = await this.emailsService.CreateEmailAsync(email.Email, email.EmailType, contact.Id);
+                var emailAddress = await this.emailsService.CreateAsync(email.Email, email.EmailType, contact.Id);
                 contact.EmailAddresses.Add(emailAddress);
             }
 
@@ -126,9 +126,7 @@ namespace CRMSystem.Services.Data
                 var phoneNumber = await this.phonesServices.CreateAsync(phone.Phone, phone.PhoneType, contact.Id);
                 contact.PhoneNumbers.Add(phoneNumber);
             }
-
-        
-
+            
             return contact.Id;
         }
 
@@ -138,19 +136,19 @@ namespace CRMSystem.Services.Data
          
             //todo try use reflection about properties 
             var customer = await customersRepository.GetByIdWithDeletedAsync(input.Id);
-            var customerEmails = this.emailsService.GetAllCustomerEmails<EmailCreateInputModel>(input.Id);
+            var customerEmails = this.emailsService.GetAll<EmailCreateInputModel>(input.Id);
             foreach (var email in input.Emails)
             {
                 if (email.Id != null &&
                     (email.Email != customerEmails.FirstOrDefault(x => x.Id == email.Id)?.Email ||
-                     email.EmailType != customerEmails.FirstOrDefault(x => x.Id == email.Id).EmailType))
+                     email.EmailType != customerEmails.FirstOrDefault(x => x.Id == email.Id)?.EmailType))
                 {
-                    await this.emailsService.UpdateEmailAsync(email);
+                    await this.emailsService.UpdateAsync(email);
                 }
                 else if (email.Email != null && email.Id == null)
                 {
 
-                    await this.emailsService.CreateEmailAsync(email.Email, email.EmailType, customer.Id);
+                    await this.emailsService.CreateAsync(email.Email, email.EmailType, customer.Id);
                 }
             }
 
