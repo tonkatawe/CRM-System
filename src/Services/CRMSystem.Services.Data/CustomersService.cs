@@ -28,7 +28,6 @@ namespace CRMSystem.Services.Data
         private readonly IAddressesService addressesService;
         private readonly IPhonesServices phonesServices;
         private readonly IEmailsService emailsService;
-        private readonly ISocialNetworksServices socialNetworkService;
         private readonly IOrganizationsService organizationsService;
 
 
@@ -44,7 +43,6 @@ namespace CRMSystem.Services.Data
             this.addressesService = addressesService;
             this.phonesServices = phonesServices;
             this.emailsService = emailsService;
-            this.socialNetworkService = socialNetworkService;
             this.organizationsService = organizationsService;
         }
 
@@ -96,7 +94,7 @@ namespace CRMSystem.Services.Data
 
         public async Task<int> CreateSync(CustomerAddInputModel input, string userId)
         {
-            var address = await this.addressesService.CreateAddressAsync(input.Address.Country, input.Address.City,
+            var address = await this.addressesService.CreateAsync(input.Address.Country, input.Address.City,
                 input.Address.Street, input.Address.ZipCode);
             var organizationId = this.organizationsService.GetOrganizationId(userId);
             var contact = new Customer
@@ -173,12 +171,10 @@ namespace CRMSystem.Services.Data
                 }
             }
 
+            await this.addressesService.UpdateAsync(input.Address);
+
             customer.Title = input.Title;
             customer.Industry = input.Industry;
-            customer.Address.City = input.Address.City;
-            customer.Address.Street = input.Address.Street;
-            customer.Address.Country = input.Address.Country;
-            customer.Address.ZipCode = input.Address.ZipCode;
             customer.FirstName = input.FirstName;
             customer.MiddleName = input.MiddleName;
             customer.LastName = input.LastName;

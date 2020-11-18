@@ -1,4 +1,6 @@
-﻿namespace CRMSystem.Services.Data
+﻿using CRMSystem.Web.ViewModels.Addresses;
+
+namespace CRMSystem.Services.Data
 {
     using System.Threading.Tasks;
 
@@ -15,7 +17,7 @@
             this.addressRepository = addressRepository;
         }
 
-        public async Task<Address> CreateAddressAsync(string country, string city, string street = null, int? zipCode = null)
+        public async Task<Address> CreateAsync(string country, string city, string street = null, int? zipCode = null)
         {
             var address = new Address
             {
@@ -29,6 +31,19 @@
             await this.addressRepository.SaveChangesAsync();
 
             return address;
+        }
+
+        public async Task<int> UpdateAsync(AddressCreateInputModel input)
+        {
+            var address = await this.addressRepository.GetByIdWithDeletedAsync(input.Id);
+            address.City = input.City;
+            address.Country = input.Country;
+            address.Street = input.Street;
+            address.ZipCode = input.ZipCode;
+
+            this.addressRepository.Update(address);
+
+            return await this.addressRepository.SaveChangesAsync();
         }
     }
 }

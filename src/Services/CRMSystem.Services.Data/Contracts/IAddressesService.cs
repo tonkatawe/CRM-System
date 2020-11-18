@@ -1,4 +1,5 @@
 ﻿using CRMSystem.Data.Models;
+using CRMSystem.Web.ViewModels.Addresses;
 
 namespace CRMSystem.Services.Data.Contracts
 {
@@ -7,6 +8,8 @@ namespace CRMSystem.Services.Data.Contracts
 
     public interface IAddressesService
     {
-        Task<Address> CreateAddressAsync(string country, string city, string street = null, int? zipCode = null);
+        Task<Address> CreateAsync(string country, string city, string street = null, int? zipCode = null);
+
+        Task<int> UpdateAsync(AddressCreateInputModel input);
     }
 }

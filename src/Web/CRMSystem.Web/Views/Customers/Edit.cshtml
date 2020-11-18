@@ -102,7 +102,7 @@
                                             @for (int i = 0; i < @Model.Emails.Count; i++)
                                             {
                                                 <p>
-                                                    <div class="form-row">
+                                                    <div class="form-row email_input" id="emailsDiv">
                                                         <div class="col-md-6">
 
                                                             <input asp-for="Emails[i].Email" value="@Model.Emails[i].Email" class="form-control" asp-route="Emails[i].Email" />
@@ -124,7 +124,12 @@
                                                     </div>
                                                 </p>
                                             }
+                                            @if (Model.Emails.Count < 2)
+                                            {
+                                                <div id="EmailContainer"></div>
+                                                <a class="add_Email">Add more emails</a>
 
+                                            }
                                         </div>
 
                                     </div>
@@ -146,7 +151,7 @@
                                             {
 
                                                 <p>
-                                                    <div class="form-row">
+                                                    <div class="form-row phone_input" id="phonesDiv">
                                                         <div class="col-md-6">
 
                                                             <input asp-for="Phones[i].Phone" asp-route="Phones[i].CustomerId" value="@Model.Phones[i].Phone" class="form-control" />
@@ -168,6 +173,11 @@
                                                     </div>
                                                 </p>
                                             }
+                                        @if (Model.Emails.Count < 3)
+                                        {
+                                            <div id="PhoneContainer"></div>
+                                            <a class="add_Phone">Add more phones</a>
+                                        }
 
                                         </div>
                                     </div>
@@ -212,7 +222,8 @@
                                 </div>
                                 <input asp-for="@Model.Id" type="hidden" />
 
-                                <button type="submit" class="btn btn-primary rounded-bottom">Save Changes</button> <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-danger rounded-bottom">Cancel</a>
+                                <button type="submit" class="btn btn-primary rounded-bottom">Save Changes</button>
+                                <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-danger rounded-bottom">Cancel</a>
                             </div>
                         </div>
                     </div>

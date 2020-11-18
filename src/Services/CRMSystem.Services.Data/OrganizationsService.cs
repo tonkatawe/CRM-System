@@ -28,7 +28,7 @@
 
         public async Task<int> CreateOrganizationAsync(OrganizationCreateInputModel input, string userId)
         {
-            var address = await this.addressesService.CreateAddressAsync(input.Address.Country, input.Address.City,
+            var address = await this.addressesService.CreateAsync(input.Address.Country, input.Address.City,
                 input.Address.Street, input.Address.ZipCode);
             var user = await this.userRepository.GetByIdWithDeletedAsync(userId);
             var organization = new Organization

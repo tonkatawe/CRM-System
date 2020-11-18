@@ -1,19 +1,14 @@
-﻿using CRMSystem.Web.ViewModels.Addresses;
-using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using CRMSystem.Data.Models;
+using CRMSystem.Data.Models.Enums;
+using CRMSystem.Services.Mapping;
+using CRMSystem.Web.ViewModels.Addresses;
+using CRMSystem.Web.ViewModels.Emails;
+using CRMSystem.Web.ViewModels.Phones;
 
-namespace CRMSystem.Web.ViewModels.Contacts
+namespace CRMSystem.Web.ViewModels.Customers
 {
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
-    using CRMSystem.Data.Models;
-    using CRMSystem.Data.Models.Enums;
-    using CRMSystem.Services.Mapping;
-    using CRMSystem.Web.ViewModels.Emails;
-    using CRMSystem.Web.ViewModels.Organizations;
-    using CRMSystem.Web.ViewModels.Phones;
-    using CRMSystem.Web.ViewModels.SocialNetworks;
-
     public class CustomerAddInputModel : IMapFrom<Customer>
     {
         public CustomerAddInputModel()
