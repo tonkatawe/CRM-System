@@ -7,6 +7,7 @@ using AutoMapper.Internal;
 using CRMSystem.Data.Models.Enums;
 using CRMSystem.Web.ViewModels.Customers;
 using CRMSystem.Web.ViewModels.Emails;
+using CRMSystem.Web.ViewModels.Phones;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace CRMSystem.Services.Data
@@ -126,17 +127,22 @@ namespace CRMSystem.Services.Data
                 var phoneNumber = await this.phonesServices.CreateAsync(phone.Phone, phone.PhoneType, contact.Id);
                 contact.PhoneNumbers.Add(phoneNumber);
             }
-            
+
             return contact.Id;
         }
 
 
         public async Task<int> UpdateAsync(EditCustomerInputModel input)
         {
-         
+
             //todo try use reflection about properties 
             var customer = await customersRepository.GetByIdWithDeletedAsync(input.Id);
+
+
+            //todo check is it necessary
             var customerEmails = this.emailsService.GetAll<EmailCreateInputModel>(input.Id);
+            var customerPhones = this.phonesServices.GetAll<PhoneCreateInputModel>(input.Id);
+
             foreach (var email in input.Emails)
             {
                 if (email.Id != null &&
@@ -152,15 +158,32 @@ namespace CRMSystem.Services.Data
                 }
             }
 
-            //customer.PhoneNumbers = input.Phones;
-            //customer.Industry = input.Industry;
-            //customer.SocialNetworks = input.SocialNetworks;
-            //customer.Address = input.Address;
-            //customer.FirstName = input.FirstName;
-            //customer.MiddleName = input.MiddleName;
-            //customer.LastName = input.LastName;
-            //customer.AdditionalInfo = input.AdditionalInfo;
-            //customer.JobTitle = input.JobTitle;
+            foreach (var phone in input.Phones)
+            {
+                if (phone.Id != null &&
+                    (phone.Phone != customerPhones.FirstOrDefault(x => x.Id == phone.Id)?.Phone ||
+                     phone.PhoneType != customerPhones.FirstOrDefault(x => x.Id == phone.Id)?.PhoneType))
+                {
+                    await this.phonesServices.UpdateAsync(phone);
+                }
+                else if (phone.Phone != null && phone.Id == null)
+                {
+
+                    await this.phonesServices.CreateAsync(phone.Phone, phone.PhoneType, customer.Id);
+                }
+            }
+
+            customer.Title = input.Title;
+            customer.Industry = input.Industry;
+            customer.Address.City = input.Address.City;
+            customer.Address.Street = input.Address.Street;
+            customer.Address.Country = input.Address.Country;
+            customer.Address.ZipCode = input.Address.ZipCode;
+            customer.FirstName = input.FirstName;
+            customer.MiddleName = input.MiddleName;
+            customer.LastName = input.LastName;
+            customer.AdditionalInfo = input.AdditionalInfo;
+            customer.JobTitle = input.JobTitle;
 
             this.customersRepository.Update(customer);
 

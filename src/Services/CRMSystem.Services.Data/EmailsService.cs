@@ -43,7 +43,7 @@ namespace CRMSystem.Services.Data
             return emailAddress;
         }
 
-       
+
 
         public async Task<int> DeleteAsync(int contactId)
         {
@@ -58,7 +58,7 @@ namespace CRMSystem.Services.Data
             var email = await this.emailRepository.GetByIdWithDeletedAsync(input.Id);
             email.Email = input.Email;
             email.EmailType = input.EmailType;
-            this.emailRepository.Undelete(email);
+            this.emailRepository.Update(email);
 
             return await this.emailRepository.SaveChangesAsync();
         }
