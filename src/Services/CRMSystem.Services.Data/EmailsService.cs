@@ -45,9 +45,9 @@ namespace CRMSystem.Services.Data
 
 
 
-        public async Task<int> DeleteAsync(int contactId)
+        public async Task<int> DeleteAsync(int customerId)
         {
-            var phone = await this.emailRepository.GetByIdWithDeletedAsync(contactId);
+            var phone = await this.emailRepository.GetByIdWithDeletedAsync(customerId);
             this.emailRepository.Delete(phone);
 
             return await this.emailRepository.SaveChangesAsync();

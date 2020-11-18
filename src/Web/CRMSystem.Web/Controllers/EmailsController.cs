@@ -27,13 +27,13 @@ namespace CRMSystem.Web.Controllers
         }
       
        
-        public async Task<IActionResult> Delete(int id, int contactId)
+        public async Task<IActionResult> Delete(int id, int customerId)
         {
             await this.emailsService.DeleteAsync(id);
 
             //todo for this user check..
 
-            return this.RedirectToAction("Edit", "Customers", new { id = contactId });
+            return this.RedirectToAction("Edit", "Customers", new { id = customerId });
 
 
         }

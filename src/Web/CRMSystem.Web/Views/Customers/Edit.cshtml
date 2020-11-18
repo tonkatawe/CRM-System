@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label><b>Middle Name:</b></label>
+                                            <label><b>McustomerIddle Name:</b></label>
                                         </div>
                                         <div class="col-md-6">
                                             <p>
@@ -116,7 +116,7 @@
                                                         </div>
                                                         @if (Model.Emails.Count > 1)
                                                         {
-                                                            <a asp-action="Delete" asp-controller="Emails" asp-route-id="@Model.Emails[i].Id" asp-route-contactId="@Model.Emails[i].CustomerId">
+                                                            <a asp-action="Delete" asp-controller="Emails" asp-route-id="@Model.Emails[i].Id" asp-route-customerId="@Model.Emails[i].CustomerId">
 
                                                                 <i class="fas fa-minus-circle" style="color: red"></i>
                                                             </a>
@@ -166,7 +166,7 @@
                                                         </div>
                                                         @if (Model.Phones.Count > 1)
                                                         {
-                                                            <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@Model.Phones[i].CustomerId">
+                                                            <a asp-action="Delete" asp-controller="Phones" asp-route-id="@Model.Phones[i].Id" asp-route-customerId="@Model.Phones[i].CustomerId">
                                                                 <i class="fas fa-minus-circle" style="color: red"></i>
                                                             </a>
                                                         }

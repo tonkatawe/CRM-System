@@ -53,22 +53,22 @@
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@contact.Id">Details</a> |
-                    <a asp-route-id="@contact.Id" data-toggle="modal"
-                       data-target="#modal-delete" data-id="@contact.Id">Delete</a>
+                    <a asp-route-customerId="@contact.Id" data-toggle="modal"
+                       data-target="#modal-delete" data-customerId="@contact.Id">Delete</a>
 
                     <form asp-action="Delete" role="form" id="myForm">
-                        <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                        <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hcustomerIdden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="modalDeleteLabel">Delete contact</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
+                                            <span aria-hcustomerIdden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="form-control">
                                         Are you sure you want to delete @contact.FullName?
-                                        <input hidden name="id" />
+                                        <input hidden name="customerId" />
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -115,7 +115,7 @@
         $(function () {
             $('#modal-delete').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
-                var id = button.data("id");
+                var id = button.data("customerId");
                 var modal = $(this);
 
                 modal.find('.modal-content input').val(id);

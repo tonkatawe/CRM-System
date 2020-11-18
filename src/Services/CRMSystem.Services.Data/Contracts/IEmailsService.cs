@@ -14,7 +14,7 @@ namespace CRMSystem.Services.Data.Contracts
 
         Task<EmailAddress> CreateAsync(string email, EmailType type, int customerId);
 
-        Task<int> DeleteAsync(int id);
+        Task<int> DeleteAsync(int customerId);
 
         Task<int> UpdateAsync(EmailCreateInputModel input);
     }
