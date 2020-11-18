@@ -1,4 +1,6 @@
-﻿namespace CRMSystem.Services.Data.Contracts
+﻿using CRMSystem.Web.ViewModels.Phones;
+
+namespace CRMSystem.Services.Data.Contracts
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -11,7 +13,9 @@
         IEnumerable<T> GetAll<T>(int contactId);
 
         Task<PhoneNumber> CreateAsync(string phone, PhoneType type, int contactId);
-        
+
+        Task<int> UpdateAsync(PhoneCreateInputModel input);
+
         Task<int> DeleteAsync(int id);
     }
 }

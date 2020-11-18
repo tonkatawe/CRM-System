@@ -87,7 +87,16 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label><b>Email</b></label>
+                                            <label>
+                                                @if (Model.Emails.Count > 1)
+                                                {
+                                                    <b>Emails</b>
+                                                }
+                                                else
+                                                {
+                                                    <b>Email</b>
+                                                }
+                                            </label>
                                         </div>
                                         <div class="col-md-6">
                                             @for (int i = 0; i < @Model.Emails.Count; i++)
@@ -105,10 +114,13 @@
                                                         <div class="col-md-4">
                                                             <select asp-for="Emails[i].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
                                                         </div>
-                                                        <a asp-action="Delete" asp-controller="Emails" asp-route-id="@Model.Emails[i].Id" asp-route-contactId="Emails[i].CustomerId">
+                                                        @if (Model.Emails.Count > 1)
+                                                        {
+                                                            <a asp-action="Delete" asp-controller="Emails" asp-route-id="@Model.Emails[i].Id" asp-route-contactId="@Model.Emails[i].CustomerId">
 
-                                                            <i class="fas fa-minus-circle" style="color: red"></i>
-                                                        </a>
+                                                                <i class="fas fa-minus-circle" style="color: red"></i>
+                                                            </a>
+                                                        }
                                                     </div>
                                                 </p>
                                             }
@@ -118,7 +130,16 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label><b>Phone</b></label>
+                                            <label>
+                                                @if (Model.Phones.Count > 1)
+                                                {
+                                                    <b>Phones</b>
+                                                }
+                                                else
+                                                {
+                                                    <b>Phone</b>
+                                                }
+                                            </label>
                                         </div>
                                         <div class="col-md-6">
                                             @for (int i = 0; i < @Model.Phones.Count; i++)
@@ -138,9 +159,12 @@
                                                         <div class="col-md-4">
                                                             <select asp-for="Phones[i].PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control"></select>
                                                         </div>
-                                                        <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="Phones[i].CustomerId">
-                                                            <i class="fas fa-minus-circle" style="color: red"></i>
-                                                        </a>
+                                                        @if (Model.Phones.Count > 1)
+                                                        {
+                                                            <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@Model.Phones[i].CustomerId">
+                                                                <i class="fas fa-minus-circle" style="color: red"></i>
+                                                            </a>
+                                                        }
                                                     </div>
                                                 </p>
                                             }

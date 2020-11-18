@@ -6,6 +6,7 @@ using CRMSystem.Services.Mapping;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CRMSystem.Web.ViewModels.Phones;
 
 namespace CRMSystem.Services.Data
 {
@@ -41,7 +42,16 @@ namespace CRMSystem.Services.Data
             return phoneNumber;
         }
 
-     
+        public async Task<int> UpdateAsync(PhoneCreateInputModel input)
+        {
+            var phone = await this.phonesRepository.GetByIdWithDeletedAsync(input.Id);
+            phone.Phone = input.Phone;
+            phone.PhoneType = input.PhoneType;
+            this.phonesRepository.Update(phone);
+
+            return await this.phonesRepository.SaveChangesAsync();
+        }
+
         public async Task<int> DeleteAsync(int id)
         {
             var phone = await this.phonesRepository.GetByIdWithDeletedAsync(id);
