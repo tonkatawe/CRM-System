@@ -7,6 +7,8 @@
 
     public class AddressCreateInputModel : IMapFrom<Address>
     {
+        public int? Id { get; set; }
+
         [Required]
         [MaxLength(30)]
         public string Country { get; set; }

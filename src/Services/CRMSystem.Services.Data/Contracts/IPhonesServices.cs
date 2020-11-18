@@ -11,9 +11,7 @@
         IEnumerable<T> GetAll<T>(int contactId);
 
         Task<PhoneNumber> CreateAsync(string phone, PhoneType type, int contactId);
-
-        bool IsAvailablePhoneNumber(string phoneNumber);
-
+        
         Task<int> DeleteAsync(int id);
     }
 }

@@ -23,18 +23,21 @@ namespace CRMSystem.Web.Controllers
         private readonly ICustomersService customersService;
         private readonly IEmailsService emailsService;
         private readonly IPhonesServices phonesService;
+        private readonly IValidationService validationService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public CustomersController(
             ICustomersService customersService,
             IEmailsService emailsService,
             IPhonesServices phonesService,
+            IValidationService validationService,
 
             UserManager<ApplicationUser> userManager)
         {
             this.customersService = customersService;
             this.emailsService = emailsService;
             this.phonesService = phonesService;
+            this.validationService = validationService;
             this.userManager = userManager;
         }
 
@@ -124,6 +127,94 @@ namespace CRMSystem.Web.Controllers
             {
                 return this.RedirectToAction("Create", "Organizations");
             }
+            
+            foreach (var email in input.Emails)
+            {
+                if (!this.validationService.IsAvailableEmail(user.Id, email.Email))
+                {
+                    ModelState.AddModelError("", $"This {email.Email} is already taken by other customer in your list");
+                }
+            }
+
+            foreach (var phone in input.Phones)
+            {
+                if (!this.validationService.IsAvailablePhone(user.Id, phone.Phone))
+                {
+                    ModelState.AddModelError("", $"This {phone.Phone} is already taken by other customer in your list");
+                }
+            }
+            ////TODO REFACTOR BELOW
+            //var customers = this.customersService
+            //    .GetAll<CustomerViewModel>(user.Id);
+
+
+
+            //foreach (var customerId in customers)
+            //{
+            //    var currentEmails = this.emailsService
+            //        .GetAllCustomerEmails<EmailCreateInputModel>(customerId)
+            //        .Select(x => x.Email);
+
+            //    foreach (var email in input.Emails)
+            //    {
+            //        if (currentEmails.Contains(email.Email))
+            //        {
+
+            //            ModelState.AddModelError("", $"This {email.Email} is already use at other customer");
+
+            //        }
+            //    }
+
+            //    foreach (var phone in input.Phones)
+            //    {
+            //        var currentPhones = this.phonesService
+            //            .GetAll<PhoneCreateInputModel>(customerId)
+            //            .Select(x => x.Phone);
+            //        if (currentPhones.Contains(phone.Phone))
+            //        {
+
+            //            ModelState.AddModelError("", $"This {phone.Phone} is already use at other customer");
+
+            //        }
+            //    }
+
+            //}
+
+
+            ////TODO: MAKE SOCIAL NETWORKS VALIDATION
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+
+            await this.customersService.CreateSync(input, user.Id);
+
+            return this.RedirectToAction("Index");
+        }
+
+
+        public IActionResult Edit(int id)
+        {
+            var viewModel = this.customersService.GetById<EditCustomerInputModel>(id);
+            if (viewModel == null)
+            {
+                return NotFound();
+            }
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditCustomerInputModel input)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            if (!user.HasOrganization)
+            {
+                return this.RedirectToAction("Create", "Organizations");
+            }
 
             //TODO REFACTOR BELOW
             var customers = this.customersService
@@ -161,50 +252,13 @@ namespace CRMSystem.Web.Controllers
                 }
 
             }
-       
+
 
             //TODO: MAKE SOCIAL NETWORKS VALIDATION
 
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
-            }
-
-
-            await this.customersService.CreateSync(input, user.Id);
-
-            return this.RedirectToAction("Index");
-        }
-
-
-        public IActionResult Edit(int id)
-        {
-            var viewModel = this.customersService.GetById<EditCustomerInputModel>(id);
-            if (viewModel == null)
-            {
-                return NotFound();
-            }
-
-            return this.View(viewModel);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Edit(EditCustomerInputModel input)
-        {
-            //todo Check for mail, phone social network, make limit for all types, try to get only changed properties
-
-            if (ModelState.IsValid)
-            {
-                foreach (var email in input.EmailAddresses)
-                {
-                    bool test = !this.emailsService.IsAvailableEmail(email.Email);
-                    if (test)
-                    {
-
-                        ViewData.ModelState.AddModelError($"{email.Email}", "e zaet");
-
-                    }
-                }
             }
 
 

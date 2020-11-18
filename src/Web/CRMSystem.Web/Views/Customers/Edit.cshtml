@@ -77,22 +77,22 @@
                                             <label><b>Email</b></label>
                                         </div>
                                         <div class="col-md-6">
-                                            @for (int i = 0; i < @Model.EmailAddresses.Count; i++)
+                                            @for (int i = 0; i < @Model.Emails.Count; i++)
                                             {
                                                 <p>
                                                     <div class="form-row">
                                                         <div class="col-md-6">
 
-                                                            <input asp-for="@Model.EmailAddresses[i].Email" value="@Model.EmailAddresses[i].Email" class="form-control" asp-route="@Model.EmailAddresses[i].Email" />
+                                                            <input asp-for="@Model.Emails[i].Email" value="@Model.Emails[i].Email" class="form-control" asp-route="@Model.Emails[i].Email" />
 
-                                                            <input asp-for="@Model.EmailAddresses[i].Id" type="hidden" />
-                                                            <input asp-for="@Model.EmailAddresses[i].Email" type="hidden" />
-                                                            <span asp-validation-for="@Model.EmailAddresses[i].Email" class="text-danger"></span>
+                                                            <input asp-for="@Model.Emails[i].Id" type="hidden" />
+                                                            <input asp-for="@Model.Emails[i].Email" type="hidden" />
+                                                            <span asp-validation-for="@Model.Emails[i].Email" class="text-danger"></span>
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <select asp-for="EmailAddresses[i].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
+                                                            <select asp-for="Emails[i].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
                                                         </div>
-                                                        <a asp-action="Delete" asp-controller="Emails" asp-route-id="@Model.EmailAddresses[i].Id" asp-route-contactId="@Model.EmailAddresses[i].CustomerId">
+                                                        <a asp-action="Delete" asp-controller="Emails" asp-route-id="@Model.Emails[i].Id" asp-route-contactId="@Model.Emails[i].CustomerId">
 
                                                             <i class="fas fa-minus-circle" style="color: red"></i>
                                                         </a>
@@ -108,22 +108,22 @@
                                             <label><b>Phone</b></label>
                                         </div>
                                         <div class="col-md-6">
-                                            @for (int i = 0; i < @Model.PhoneNumbers.Count; i++)
+                                            @for (int i = 0; i < @Model.Phones.Count; i++)
                                             {
 
                                                 <p>
                                                     <div class="form-row">
                                                         <div class="col-md-6">
 
-                                                            <input asp-for="PhoneNumbers[i].Phone" asp-route="@Model.PhoneNumbers[i].CustomerId" value="@Model.PhoneNumbers[i].Phone" class="form-control" />
-                                                            <input asp-for="@Model.PhoneNumbers[i].Id" type="hidden" />
-                                                            <span asp-validation-for="PhoneNumbers" class="text-danger"></span>
+                                                            <input asp-for="Phones[i].Phone" asp-route="@Model.Phones[i].CustomerId" value="@Model.Phones[i].Phone" class="form-control" />
+                                                            <input asp-for="@Model.Phones[i].CustomerId" type="hidden" />
+                                                            <span asp-validation-for="Phones" class="text-danger"></span>
 
                                                         </div>
                                                         <div class="col-md-4">
-                                                            <select asp-for="PhoneNumbers[i].PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control"></select>
+                                                            <select asp-for="Phones[i].PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control"></select>
                                                         </div>
-                                                        <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@Model.PhoneNumbers[i].CustomerId">
+                                                        <a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@Model.Phones[i].CustomerId">
                                                             <i class="fas fa-minus-circle" style="color: red"></i>
                                                         </a>
                                                     </div>
@@ -132,36 +132,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label><b>Social Network</b></label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            @for (int i = 0; i < @Model.SocialNetworks.Count; i++)
-                                            {
-
-                                                <p>
-                                                    <div class="form-row">
-                                                        <div class="col-md-6">
-
-                                                            <input asp-for="SocialNetworks[i].Name" asp-route="@Model.SocialNetworks[i].CustomerId" value="@Model.SocialNetworks[i].Name" class="form-control" />
-                                                            <input asp-for="@Model.SocialNetworks[i].Id" type="hidden" />
-                                                            <span asp-validation-for="SocialNetworks" class="text-danger"></span>
-
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <select asp-for="SocialNetworks[i].SocialNetworkType" asp-items="Html.GetEnumSelectList<SocialNetworkType>()" class="form-control"></select>
-                                                        </div>
-                                                        @*<a asp-action="Delete" asp-controller="Phones" asp-route-contactId="@Model.Id" asp-route-id="@Model.PhoneNumbers[i].CustomerId">
-                                                                <i class="fas fa-minus-circle" style="color: red"></i>
-                                                            </a>*@
-                                                    </div>
-                                                </p>
-                                            }
-
-                                        </div>
-                                    </div>
-                                    <div class="row">
+                                 <div class="row">
                                         <div class="col-md-6">
                                             <label><b>Profession</b></label>
                                         </div>

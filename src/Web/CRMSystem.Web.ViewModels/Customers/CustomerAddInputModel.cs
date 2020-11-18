@@ -20,7 +20,6 @@ namespace CRMSystem.Web.ViewModels.Contacts
         {
             this.Emails = new List<EmailCreateInputModel>();
             this.Phones = new List<PhoneCreateInputModel>();
-            this.Networks = new List<SocialNetworkCreateInputModel>();
         }
 
         [Required]
@@ -50,10 +49,6 @@ namespace CRMSystem.Web.ViewModels.Contacts
         public IList<EmailCreateInputModel> Emails { get; set; }
 
        public IList<PhoneCreateInputModel> Phones { get; set; }
-
-        public IList<SocialNetworkCreateInputModel> Networks { get; set; }
-
-
     
     }
 }
