@@ -1,4 +1,5 @@
 ﻿@using System.Globalization
+@using CRMSystem.Data.Models
 @model CRMSystem.Web.Infrastructure.PaginatedList<CRMSystem.Web.ViewModels.Customers.CustomerViewModel>
 @{
     this.ViewData["Title"] = "All contacts";
@@ -36,43 +37,43 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var contact in Model)
+        @foreach (var customer in Model)
         {
-            var tm = "#myModal" + contact.Id;
-            var mid = "myModal" + contact.Id;
+            var tm = "#myModal" + customer.Id;
+            var mid = "myModal" + customer.Id;
             <tr>
                 <td>
-                    @Html.DisplayFor(m => (contact.FullName))
+                    @customer.FullName
                 </td>
 
                 <td>
-                    @Html.DisplayFor(m => contact.IndustryAsString)
+                    @customer.IndustryAsString
                 </td>
                 <td>
-                    @Html.DisplayFor(m => contact.CreatedOnAsString)
+                    @customer.CreatedOnAsString
                 </td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@contact.Id">Details</a> |
-                    <a asp-route-customerId="@contact.Id" data-toggle="modal"
-                       data-target="#modal-delete" data-customerId="@contact.Id">Delete</a>
+                    <a asp-action="Details" asp-route-id="@customer.Id">Details</a> |
+                    <a asp-route-id="@customer.Id" data-toggle="modal"
+                       data-target="#modal-delete" data-customerId="@customer.Id">Delete</a>
 
                     <form asp-action="Delete" role="form" id="myForm">
-                        <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hcustomerIdden="true">
+                        <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modalDeleteLabel">Delete contact</h5>
+                                        <h5 class="modal-title" id="modalDeleteLabel">Delete customer</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hcustomerIdden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="form-control">
-                                        Are you sure you want to delete @contact.FullName?
-                                        <input hidden name="customerId" />
+                                        Are you sure you want to delete @customer.FullName?
+                                        <input type="hidden" id="hiddenId" asp-for="@customer.Id" />
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-danger" id="modalDeleteButton">Delete</button>
+                                        <button type="submit" asp-action="Delete" asp-route-id="@customer.Id" class="btn btn-danger" id="modalDeleteButton">Delete</button>
                                     </div>
                                 </div>
                             </div>
@@ -91,24 +92,26 @@
 }
 
 
-
 <ul class="pagination">
-    <a asp-action="Index"
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
-       asp-route-pageNumber="@(Model.PageIndex - 1)"
-       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-       class="btn btn-default @prevDisabled">
-        Previous
-    </a>
+    
+    <li><a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-pageNumber="@(Model.PageIndex - 1)"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-default @prevDisabled">
+            Previous
+        </a>
 
-    <a asp-action="Index"
-       asp-route-sortOrder="@ViewData["CurrentSort"]"
-       asp-route-pageNumber="@(Model.PageIndex + 1)"
-       asp-route-currentFilter="@ViewData["CurrentFilter"]"
-       class="btn btn-default @nextDisabled">
-        Next
-    </a>
+        <a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-pageNumber="@(Model.PageIndex + 1)"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-default @nextDisabled">
+            Next
+        </a>
+    </li>
 </ul>
+
 @section Scripts
 {
     <script>
@@ -118,7 +121,7 @@
                 var id = button.data("customerId");
                 var modal = $(this);
 
-                modal.find('.modal-content input').val(id);
+                modal.find('#hiddenId').val(id);
             });
 
             $("#modalDeleteButton").click(function () {

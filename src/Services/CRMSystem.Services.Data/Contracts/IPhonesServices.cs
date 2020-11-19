@@ -10,9 +10,9 @@ namespace CRMSystem.Services.Data.Contracts
 
     public interface IPhonesServices
     {
-        IEnumerable<T> GetAll<T>(int contactId);
+        IEnumerable<T> GetAll<T>(int customerId);
 
-        Task<PhoneNumber> CreateAsync(string phone, PhoneType type, int contactId);
+        Task<PhoneNumber> CreateAsync(string phone, PhoneType type, int customerId);
 
         Task<int> UpdateAsync(PhoneCreateInputModel input);
 

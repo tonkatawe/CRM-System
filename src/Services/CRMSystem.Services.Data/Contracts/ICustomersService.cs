@@ -12,13 +12,13 @@ namespace CRMSystem.Services.Data.Contracts
     {
         IQueryable<T> GetAll<T>(string userId);
 
-        T GetById<T>(int contactId);
+        T GetById<T>(int customerId);
         
         IEnumerable<T> GetByName<T>(string userId, int skip = 0);
         
         Task<int> DeleteAsync(int id);
         
-        Task<int> CreateSync(CustomerAddInputModel input, string userId);
+        Task<int> CreateAsync(CustomerAddInputModel input, string userId);
         
         Task<int> UpdateAsync(EditCustomerInputModel input);
 

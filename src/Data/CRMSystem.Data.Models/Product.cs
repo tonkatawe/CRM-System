@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace CRMSystem.Data.Models
 {
@@ -24,10 +25,14 @@ namespace CRMSystem.Data.Models
         [Range(typeof(decimal), "0", "79228162514264337593543950335")]
         public decimal Price { get; set; }
 
+        [Range(0, Int32.MaxValue)]
+        public int Quantity { get; set; }
+
         public int OrganizationId { get; set; }
+
 
         public virtual Organization Organization { get; set; }
 
-        public virtual ICollection<SaleProducts>  SaleProducts { get; set; }
+        public virtual ICollection<SaleProducts> SaleProducts { get; set; }
     }
 }

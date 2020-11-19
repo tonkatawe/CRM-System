@@ -49,7 +49,7 @@
 
 
 
-        public int GetOrganizationId(string userId)
+        public int GetById(string userId)
         {
             var query = this.organizationRepository.All()
                     .Where(x => x.UserId == userId)

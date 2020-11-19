@@ -151,7 +151,7 @@ namespace CRMSystem.Web.Controllers
             }
 
 
-            await this.customersService.CreateSync(input, user.Id);
+            await this.customersService.CreateAsync(input, user.Id);
 
             return this.RedirectToAction("Index");
         }
@@ -246,7 +246,7 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             await this.customersService.DeleteAsync(id);
-
+            //todo fix sent wrong id
             //todo for this user check..
 
             return this.RedirectToAction("Index");
