@@ -8,8 +8,8 @@
 
     public interface ISocialNetworksServices
     {
-        IEnumerable<T> GetAllContactSocialNetworks<T>(int contactId);
+        IEnumerable<T> GetAllContactSocialNetworks<T>(int customerId);
 
-        Task<SocialNetwork> CreateSocialNetworkAsync(string name, SocialNetworkType type, int contactId);
+        Task<SocialNetwork> CreateSocialNetworkAsync(string name, SocialNetworkType type, int customerId);
     }
 }

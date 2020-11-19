@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CRMSystem.Services.Data.Contracts;
-using CRMSystem.Web.ViewModels.Contacts;
 using CRMSystem.Web.ViewModels.Emails;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

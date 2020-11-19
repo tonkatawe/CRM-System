@@ -19,21 +19,21 @@ namespace CRMSystem.Services.Data
             this.phonesRepository = phonesRepository;
         }
 
-        public IEnumerable<T> GetAll<T>(int contactId)
+        public IEnumerable<T> GetAll<T>(int customerId)
         {
             var query = this.phonesRepository.All()
-                .Where(x => x.CustomerId == contactId);
+                .Where(x => x.CustomerId == customerId);
 
             return query.To<T>().ToList();
         }
 
-        public async Task<PhoneNumber> CreateAsync(string phone, PhoneType type, int contactId)
+        public async Task<PhoneNumber> CreateAsync(string phone, PhoneType type, int customerId)
         {
             var phoneNumber = new PhoneNumber
             {
                 Phone = phone,
                 PhoneType = type,
-                CustomerId = contactId,
+                CustomerId = customerId,
             };
 
             await this.phonesRepository.AddAsync(phoneNumber);

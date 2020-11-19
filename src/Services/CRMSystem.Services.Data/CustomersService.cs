@@ -57,11 +57,11 @@ namespace CRMSystem.Services.Data
             return query;
         }
 
-        public T GetById<T>(int contactId)
+        public T GetById<T>(int customerId)
         {
             var query = this.customersRepository
                 .All()
-                .Where(x => x.Id == contactId)
+                .Where(x => x.Id == customerId)
                 .To<T>()
                 .FirstOrDefault();
             return query;
@@ -84,20 +84,20 @@ namespace CRMSystem.Services.Data
 
         public async Task<int> DeleteAsync(int id)
         {
-            var contact = await this.customersRepository
+            var customer = await this.customersRepository
                 .GetByIdWithDeletedAsync(id);
 
-            this.customersRepository.Delete(contact);
+            this.customersRepository.Delete(customer);
 
             return await this.customersRepository.SaveChangesAsync();
         }
 
-        public async Task<int> CreateSync(CustomerAddInputModel input, string userId)
+        public async Task<int> CreateAsync(CustomerAddInputModel input, string userId)
         {
             var address = await this.addressesService.CreateAsync(input.Address.Country, input.Address.City,
                 input.Address.Street, input.Address.ZipCode);
-            var organizationId = this.organizationsService.GetOrganizationId(userId);
-            var contact = new Customer
+            var organizationId = this.organizationsService.GetById(userId);
+            var customer = new Customer
             {
                 Address = address,
                 UserId = userId,
@@ -111,22 +111,22 @@ namespace CRMSystem.Services.Data
                 AdditionalInfo = input.AdditionalInfo,
             };
 
-            await this.customersRepository.AddAsync(contact);
+            await this.customersRepository.AddAsync(customer);
             await this.customersRepository.SaveChangesAsync();
 
             foreach (var email in input.Emails)
             {
-                var emailAddress = await this.emailsService.CreateAsync(email.Email, email.EmailType, contact.Id);
-                contact.EmailAddresses.Add(emailAddress);
+                var emailAddress = await this.emailsService.CreateAsync(email.Email, email.EmailType, customer.Id);
+                customer.EmailAddresses.Add(emailAddress);
             }
 
             foreach (var phone in input.Phones)
             {
-                var phoneNumber = await this.phonesServices.CreateAsync(phone.Phone, phone.PhoneType, contact.Id);
-                contact.PhoneNumbers.Add(phoneNumber);
+                var phoneNumber = await this.phonesServices.CreateAsync(phone.Phone, phone.PhoneType, customer.Id);
+                customer.PhoneNumbers.Add(phoneNumber);
             }
 
-            return contact.Id;
+            return customer.Id;
         }
 
 

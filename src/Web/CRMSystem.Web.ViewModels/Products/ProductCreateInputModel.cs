@@ -1,38 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
+using System;
+using System.ComponentModel.DataAnnotations;
+using CRMSystem.Data.Models;
+using CRMSystem.Services.Mapping;
 
-namespace CRMSystem.Data.Models
+namespace CRMSystem.Web.ViewModels.Products
 {
-    using System.ComponentModel.DataAnnotations;
-
-    using CRMSystem.Data.Common.Models;
-
-    public class Product : BaseDeletableModel<int>
+    public class ProductCreateInputModel : IMapFrom<Product>
     {
-        public Product()
-        {
-            this.SaleProducts = new HashSet<SaleProducts>();
-        }
         [Required]
         [MaxLength(50)]
+        [MinLength(3)]
         public string Name { get; set; }
 
         [Required]
         [MaxLength(1000)]
+        [MinLength(10)]
         public string Description { get; set; }
 
         [Required]
         [Range(typeof(decimal), "0", "79228162514264337593543950335")]
         public decimal Price { get; set; }
 
-        [Range(0, Int32.MaxValue)]
+        [Required]
+        [Range(1, Int32.MaxValue)]
         public int Quantity { get; set; }
 
         public int OrganizationId { get; set; }
 
-
         public virtual Organization Organization { get; set; }
-
-        public virtual ICollection<SaleProducts> SaleProducts { get; set; }
     }
 }

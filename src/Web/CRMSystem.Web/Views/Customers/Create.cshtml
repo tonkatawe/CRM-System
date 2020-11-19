@@ -1,0 +1,126 @@
+﻿@using CRMSystem.Data.Models
+@using CRMSystem.Data.Models.Enums
+@using Microsoft.AspNetCore.Identity
+@model CRMSystem.Web.ViewModels.Customers.CustomerAddInputModel
+
+@{
+    this.ViewData["Title"] = "Add new customer";
+
+}
+
+
+<h3>@this.ViewData["Title"]</h3>
+<div class="container">
+    <form style="padding-bottom: 7rem" method="post" asp-action="Create">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label asp-for="Title"></label>
+                <select asp-for="Title" asp-items="Html.GetEnumSelectList<Title>()" class="form-control"></select>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="FirstName">First Name</label>
+                <input asp-for="FirstName" class="form-control" placeholder="First Name">
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="MiddleName">Middle Name</label>
+                <input asp-for="MiddleName" class="form-control" placeholder="Middle Name">
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="LastName">Last Name</label>
+                <input asp-for="LastName" class="form-control" placeholder="Last Name">
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label asp-for="Address.Country">Country</label>
+                <input asp-for="Address.Country" class="form-control" placeholder="Country">
+                <span asp-validation-for="Address.Country" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Address.City">City</label>
+                <input asp-for="Address.City" class="form-control" placeholder="City">
+                <span asp-validation-for="Address.City" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Address.Street">Street</label>
+                <input asp-for="Address.Street" class="form-control" placeholder="Street">
+                <span asp-validation-for="Address.Street" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <label asp-for="Address.ZipCode">Zip Code</label>
+                <input asp-for="Address.ZipCode" class="form-control" placeholder="Zip Code">
+                <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <label>Phone</label>
+        <div class="form-row phone_input" id="phonesDiv">
+            <div class="form-group col-md-3 ">
+                <input asp-for="Phones[0].Phone" class="form-control" placeholder="Phone number">
+                <span asp-validation-for="Phones[0].Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <select asp-for="Phones[0].PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control"></select>
+                <span asp-validation-for="Phones[0].PhoneType" class="text-danger"></span>
+            </div>
+        </div>
+        <div id="PhoneContainer"></div>
+        <a class="add_Phone">Add more phones</a>
+        <hr />
+
+        <label>Email</label>
+        <div class="form-row email_input" id="emailsDiv">
+            <div class="form-group col-md-3 ">
+                <input asp-for="Emails[0].Email" class="form-control" placeholder="Email address">
+                <span asp-validation-for="Emails[0].Email" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-3">
+                <select asp-for="Emails[0].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
+                <span asp-validation-for="Emails[0].EmailType" class="text-danger"></span>
+            </div>
+        </div>
+        <div id="EmailContainer"></div>
+        <a class="add_Email">Add more emails</a>
+        <hr />
+
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label asp-for="JobTitle">Job Title</label>
+                <input asp-for="JobTitle" class="form-control" placeholder="Job Title">
+                <span asp-validation-for="JobTitle" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Industry"></label>
+                <select asp-for="Industry" asp-items="Html.GetEnumSelectList<IndustryType>()" class="form-control"></select>
+                <span asp-validation-for="Industry" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-12">
+                <label asp-for="AdditionalInfo">Additional information</label>
+                <textarea asp-for="AdditionalInfo" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
+            </div>
+        </div>
+        <button type="submit" id="btnSubmit" class="btn btn-primary">Add Customer</button>
+    </form>
+</div>
+
+
+@section Scripts {
+
+
+    <script src="~/js/CreateEditCustomer.js"></script>
+
+}
+
+
+
+
+

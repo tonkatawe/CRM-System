@@ -27,13 +27,13 @@ namespace CRMSystem.Services.Data
             return query.To<T>().ToList();
         }
 
-        public async Task<SocialNetwork> CreateSocialNetworkAsync(string name, SocialNetworkType type, int contactId)
+        public async Task<SocialNetwork> CreateSocialNetworkAsync(string name, SocialNetworkType type, int customerId)
         {
             var socialNetwork = new SocialNetwork
             {
                 Name = name,
                 SocialNetworkType = type,
-                CustomerId = contactId,
+                CustomerId = customerId,
             };
 
             await this.socialNetworkRepository.AddAsync(socialNetwork);

@@ -9,7 +9,7 @@
     {
         Task<int> CreateOrganizationAsync(OrganizationCreateInputModel input, string userId);
 
-        int GetOrganizationId(string userId);
+        int GetById(string userId);
         
     }
 }
