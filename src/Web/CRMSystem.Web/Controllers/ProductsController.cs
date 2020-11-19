@@ -25,7 +25,6 @@ namespace CRMSystem.Web.Controllers
             this.userManager = userManager;
         }
 
-        // GET: ProductsController
         public async Task<IActionResult> Index()
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -34,19 +33,13 @@ namespace CRMSystem.Web.Controllers
             return View(viewModel);
         }
 
-        // GET: ProductsController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: ProductsController/Create
+  
         public async Task<IActionResult> Create()
         {
             return View();
         }
 
-        // POST: ProductsController/Create
+        
         [HttpPost]
         public async Task<IActionResult> Create(ProductCreateInputModel input)
         {
@@ -59,7 +52,7 @@ namespace CRMSystem.Web.Controllers
 
         }
 
-        // GET: ProductsController/Edit/5
+
         public IActionResult Edit(int id)
         {
             var viewModel = this.productsService.GetById<EditProductInputModel>(id);
@@ -67,7 +60,7 @@ namespace CRMSystem.Web.Controllers
             return View(viewModel);
         }
 
-        // POST: ProductsController/Edit/5
+     
         [HttpPost]
         public async Task<IActionResult> Edit(EditProductInputModel input)
         {
@@ -81,28 +74,15 @@ namespace CRMSystem.Web.Controllers
             return this.RedirectToAction("Index");
         }
 
-        // GET: ProductsController/Delete/5
+       
         public async Task<IActionResult> Delete(int id)
         {
-            //todo check for security delete by other users!!! 
+            //todo check for security delete by other users!!! its so import
 
             await this.productsService.DeleteAsync(id);
             return this.RedirectToAction("Index");
         }
-
-        // POST: ProductsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        
+     
     }
 }
