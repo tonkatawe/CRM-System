@@ -8,20 +8,18 @@
 
     public class Sale : BaseDeletableModel<int>
     {
-        public Sale()
-        {
-            this.SaleProducts = new HashSet<SaleProducts>();
-        }
 
         [Required]
         public int CustomerId { get; set; }
 
         public virtual Customer Customer { get; set; }
 
-        public virtual ICollection<SaleProducts> SaleProducts { get; set; }
+        public int ProductId { get; set; }
 
-        //public decimal Benefit => this.Products.Sum(x => x.Price);
+        public virtual Product Product { get; set; }
+        [Range(0, int.MaxValue)]
+        public int Quantity { get; set; }
 
-        //public int ProductCount => this.Products.Count();
+
     }
 }

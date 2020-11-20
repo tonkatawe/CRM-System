@@ -98,6 +98,7 @@ namespace CRMSystem.Web
             services.AddTransient<IUserTasksService, UserTasksService>();
             services.AddTransient<IValidationService, ValidationService>();
             services.AddTransient<IProductsService, ProductsService>();
+            services.AddTransient<ISaleProductsService, SaleProductsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

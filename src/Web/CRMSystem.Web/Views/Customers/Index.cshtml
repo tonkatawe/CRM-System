@@ -53,6 +53,7 @@
                     @customer.CreatedOnAsString
                 </td>
                 <td>
+                    <a asp-controller="SaleProducts" asp-action="Sale" asp-route-id="@customer.Id">Add Sale</a> |
                     <a asp-action="Details" asp-route-id="@customer.Id">Details</a> |
                     <a asp-route-id="@customer.Id" data-toggle="modal"
                        data-target="#modal-delete" data-customerId="@customer.Id">Delete</a>
@@ -69,7 +70,7 @@
                                     </div>
                                     <div class="form-control">
                                         Are you sure you want to delete @customer.FullName?
-                                        <input type="hidden" id="hiddenId" asp-for="@customer.Id" />
+                                        <input type="hidden" id="hiddenId" asp-for="@customer.Id"/>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

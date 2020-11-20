@@ -494,6 +494,12 @@ namespace CRMSystem.Data.Migrations
                     b.Property<int?>("OrganizationId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
@@ -502,29 +508,9 @@ namespace CRMSystem.Data.Migrations
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("Sales");
-                });
-
-            modelBuilder.Entity("CRMSystem.Data.Models.SaleProducts", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SaleId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("SaleId");
-
-                    b.ToTable("SaleProducts");
+                    b.ToTable("Sales");
                 });
 
             modelBuilder.Entity("CRMSystem.Data.Models.SocialNetwork", b =>
@@ -805,19 +791,10 @@ namespace CRMSystem.Data.Migrations
                     b.HasOne("CRMSystem.Data.Models.Organization", null)
                         .WithMany("Sales")
                         .HasForeignKey("OrganizationId");
-                });
 
-            modelBuilder.Entity("CRMSystem.Data.Models.SaleProducts", b =>
-                {
                     b.HasOne("CRMSystem.Data.Models.Product", "Product")
-                        .WithMany("SaleProducts")
+                        .WithMany("Sales")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("CRMSystem.Data.Models.Sale", "Sale")
-                        .WithMany("SaleProducts")
-                        .HasForeignKey("SaleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

@@ -1,0 +1,26 @@
+﻿@model CRMSystem.Web.ViewModels.SaleProducts.SaleCreateInputModel
+@{
+    this.ViewData["Title"] = "Add sale to customer";
+    var products = Model.Products.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+}
+
+<h2>@Model.CustomerId</h2>
+<h1>@this.ViewData["Title"]</h1>
+
+<form method="post" asp-action="Sale">
+   <div asp-validation-summary="All" class="text-danger"></div>
+    <div>
+        <label asp-for="Quantity"></label>
+        <input asp-for="Quantity" class="form-control" />
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label asp-for="ProductId"></label>
+        <select asp-for="ProductId" asp-items="products" class="form-control"></select>
+        <span asp-validation-for="ProductId" class="text-danger"></span>
+    </div>
+   <input asp-for="CustomerId" type="hidden"/>
+   <input asp-for="Products" value="@products" type="hidden"/>
+    <input type="submit" class="btn btn-primary" />
+</form>
