@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CRMSystem.Data.Models;
+﻿using CRMSystem.Data.Models;
 using CRMSystem.Services.Mapping;
 
-namespace CRMSystem.Web.ViewModels.SaleProducts
+namespace CRMSystem.Web.ViewModels.Sales
 {
     public class ProductDropDownViewModel : IMapFrom<Product>
     {

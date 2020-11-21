@@ -24,6 +24,7 @@ namespace CRMSystem.Web.Controllers
         private readonly IEmailsService emailsService;
         private readonly IPhonesServices phonesService;
         private readonly IValidationService validationService;
+        private readonly ISalesService salesService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public CustomersController(
@@ -31,6 +32,7 @@ namespace CRMSystem.Web.Controllers
             IEmailsService emailsService,
             IPhonesServices phonesService,
             IValidationService validationService,
+            ISalesService salesService,
 
             UserManager<ApplicationUser> userManager)
         {
@@ -38,6 +40,7 @@ namespace CRMSystem.Web.Controllers
             this.emailsService = emailsService;
             this.phonesService = phonesService;
             this.validationService = validationService;
+            this.salesService = salesService;
             this.userManager = userManager;
         }
 
@@ -224,14 +227,8 @@ namespace CRMSystem.Web.Controllers
             //todo make method async
 
             var viewModel = this.customersService.GetById<GetDetailsViewModel>(id);
-
-            //todo have to repair because it doesn't work :)
-            //if (viewModel.SharedEditCustomerViewModel.Id != id)
-            //{
-            //viewModel.SharedEditCustomerViewModel = this.customersService.GetById<EditCustomerInputModel>(viewModel.Id);
-            //viewModel.SharedEditCustomerViewModel.Id = viewModel.Id;
-
-            //}
+            viewModel.CustomerStats = await this.salesService.GetStatsAsync(id);
+            
 
             if (viewModel == null)
             {
@@ -239,7 +236,7 @@ namespace CRMSystem.Web.Controllers
             }
 
             return this.View(viewModel);
-            //return this.View("DetailsEdit", viewModel);
+      
         }
 
 

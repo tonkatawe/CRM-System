@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace CRMSystem.Web.ViewModels.SaleProducts
+namespace CRMSystem.Web.ViewModels.Sales
 {
     public class SaleCreateInputModel
     {
@@ -11,6 +10,8 @@ namespace CRMSystem.Web.ViewModels.SaleProducts
         public IEnumerable<ProductDropDownViewModel> Products { get; set; }
 
         public int ProductId { get; set; }
+        [Required]
+        [Range(1, int.MaxValue)]
         public int Quantity { get; set; }
     }
 }

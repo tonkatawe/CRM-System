@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Web.ViewModels.Products;
-using CRMSystem.Web.ViewModels.SaleProducts;
+using CRMSystem.Web.ViewModels.Sales;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -15,13 +15,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace CRMSystem.Web.Controllers
 {
     [Authorize]
-    public class SaleProductsController : Controller
+    public class SalesController : Controller
     {
-        private readonly ISaleProductsService saleProductsService;
+        private readonly ISalesService saleProductsService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IProductsService productsService;
 
-        public SaleProductsController(ISaleProductsService saleProductsService,
+        public SalesController(ISalesService saleProductsService,
                                       UserManager<ApplicationUser> userManager,
                                       IProductsService productsService)
         {

@@ -65,9 +65,6 @@ namespace CRMSystem.Services.Data
                 .To<T>()
                 .FirstOrDefault();
             return query;
-
-
-
         }
 
         public IEnumerable<T> GetByName<T>(string userId, int skip = 0)

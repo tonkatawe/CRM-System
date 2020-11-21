@@ -64,7 +64,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>
-                                            @if (Model.EmailAddresses.Count > 1)
+                                            @if (Model.Emails.Count > 1)
                                             {
                                                 <b>Emails</b>
                                             }
@@ -75,7 +75,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-6">
-                                        @foreach (var email in this.Model.EmailAddresses)
+                                        @foreach (var email in this.Model.Emails)
                                         {
                                             @if (email.EmailType.ToString() == "Home")
                                             {
@@ -97,7 +97,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>
-                                            @if (Model.PhoneNumbers.Count > 1)
+                                            @if (Model.Phones.Count > 1)
                                             {
                                                 <b>Phones</b>
                                             }
@@ -108,7 +108,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-6">
-                                        @foreach (var phone in this.Model.PhoneNumbers)
+                                        @foreach (var phone in this.Model.Phones)
                                         {
 
                                             @if (phone.PhoneType.ToString() == "Home")
@@ -152,7 +152,7 @@
                                         <label><b>Profession</b></label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>@Html.DisplayFor(m => m.JobTitle)</p>
+                                        <p>@Model.JobTitle</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -160,7 +160,7 @@
                                         <label><b>Address:</b></label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>@Html.DisplayFor(m => m.Address.Country), @Html.DisplayFor(m => m.Address.City), @Html.DisplayFor(m => m.Address.Street), @Html.DisplayFor(m => m.Address.ZipCode)</p>
+                                        <p>@Model.Address.Country, @Model.Address.City, @Model.Address.Street, @Model.Address.ZipCode</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -168,7 +168,7 @@
                                         <label><b>Additional info:</b></label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p> @Html.DisplayFor(m => m.AdditionalInfo)</p>
+                                        <p> @Model.AdditionalInfo</p>
                                     </div>
                                 </div>
                             </div>
@@ -185,6 +185,7 @@
                         {
                             <p>Create join to organization or ad to oder organization and bla bla bla</p>
                         }*@
+                   <partial name="_CustomerStats" model="Model.CustomerStats"/>
                 </div>
             </div>
         </div>

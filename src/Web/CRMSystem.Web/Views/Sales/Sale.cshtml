@@ -1,4 +1,4 @@
-﻿@model CRMSystem.Web.ViewModels.SaleProducts.SaleCreateInputModel
+﻿@model CRMSystem.Web.ViewModels.Sales.SaleCreateInputModel
 @{
     this.ViewData["Title"] = "Add sale to customer";
     var products = Model.Products.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
@@ -21,6 +21,6 @@
         <span asp-validation-for="ProductId" class="text-danger"></span>
     </div>
    <input asp-for="CustomerId" type="hidden"/>
-   <input asp-for="Products" value="@products" type="hidden"/>
+   <input asp-for="Products" type="hidden"/>
     <input type="submit" class="btn btn-primary" />
 </form>

@@ -2,6 +2,8 @@
 using CRMSystem.Data.Models;
 using CRMSystem.Web.ViewModels.Contacts;
 using CRMSystem.Web.ViewModels.Emails;
+using CRMSystem.Web.ViewModels.Phones;
+using CRMSystem.Web.ViewModels.Sales;
 
 namespace CRMSystem.Web.ViewModels.Customers
 {
@@ -9,26 +11,24 @@ namespace CRMSystem.Web.ViewModels.Customers
     {
         public GetDetailsViewModel()
         {
-            this.PhoneNumbers = new List<PhoneNumber>();
-            this.EmailAddresses = new List<EmailCreateInputModel>();
-            this.SocialNetworks = new List<SocialNetwork>();
+            this.Phones = new List<PhoneCreateInputModel>();
+            this.Emails = new List<EmailCreateInputModel>();
         }
         public Title Title { get; set; }
 
         public string TitleAsString => this.Title.ToString();
 
         public string JobTitle { get; set; }
-        
+
         public string AdditionalInfo { get; set; }
 
         public Address Address { get; set; }
+        public IEnumerable<SaleCustomerStatsViewModel> CustomerStats { get; set; }
 
-        public IList<PhoneNumber> PhoneNumbers { get; set; }
+        public IList<PhoneCreateInputModel> Phones { get; set; }
 
-        public IList<EmailCreateInputModel> EmailAddresses { get; set; }
+        public IList<EmailCreateInputModel> Emails { get; set; }
 
-        public IList<SocialNetwork> SocialNetworks { get; set; }
 
-    
     }
 }

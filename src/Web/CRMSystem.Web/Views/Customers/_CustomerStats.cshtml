@@ -1,0 +1,10 @@
+﻿@model IEnumerable<CRMSystem.Web.ViewModels.Sales.SaleCustomerStatsViewModel>
+<p>This customer has already generated <b>@Model.Count()</b> sales</p>
+
+
+@foreach (var sale in Model)
+{
+    <p><h1>@sale.ProductName</h1></p> 
+    <p>  <h1>@sale.ProductQuantity</h1></p>
+    <p>  <h1>@sale.ProductPrice</h1></p>
+}
