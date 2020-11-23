@@ -84,6 +84,7 @@ namespace CRMSystem.Services.Data
             var query = this.ordersRepository
                 .All()
                 .Where(x => x.CustomerId == customerId)
+                .OrderByDescending(x=>x.CreatedOn)
                 .To<T>()
                 .AsQueryable();
 

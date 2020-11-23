@@ -8,13 +8,13 @@
     <thead>
         <tr>
             <th>
-                <a asp-action="GetOrders" asp-route-sortOrder="@ViewData["SortByName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Ordered date</a>
+                <a asp-action="GetOrders" asp-route-sortOrder="@ViewData["SortByDate"]">Ordered date</a>
             </th>
             <th>
-                <a asp-action="GetOrders" asp-route-sortOrder="@ViewData["SortByIndustry"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Product name</a>
+                <a asp-action="GetOrders" asp-route-sortOrder="@ViewData["SortByName"]">Product name</a>
             </th>
             <th>
-                <a asp-action="GetOrders" asp-route-sortOrder="@ViewData["SortByDate"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Quantity</a>
+                <a asp-action="GetOrders" asp-route-sortOrder="@ViewData["SortByQuantity"]">Quantity</a>
             </th>
             <th></th>
         </tr>
