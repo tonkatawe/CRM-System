@@ -5,6 +5,7 @@ using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Web.ViewModels.Sales;
 using System.Threading.Tasks;
+using CRMSystem.Web.ViewModels.Products;
 using Microsoft.EntityFrameworkCore;
 
 namespace CRMSystem.Services.Data
@@ -13,11 +14,11 @@ namespace CRMSystem.Services.Data
     {
         private readonly IDeletableEntityRepository<Product> productsRepository;
         private readonly IDeletableEntityRepository<Customer> customersRepository;
-        private readonly IDeletableEntityRepository<Sale> salesRepository;
+        private readonly IDeletableEntityRepository<Order> salesRepository;
 
         public SalesService(IDeletableEntityRepository<Product> productsRepository,
             IDeletableEntityRepository<Customer> customersRepository,
-            IDeletableEntityRepository<Sale> salesRepository)
+            IDeletableEntityRepository<Order> salesRepository)
         {
             this.productsRepository = productsRepository;
             this.customersRepository = customersRepository;
@@ -33,9 +34,9 @@ namespace CRMSystem.Services.Data
             this.productsRepository.Update(product);
             await this.productsRepository.SaveChangesAsync();
 
-            var sale = new Sale
+            var order = new Order
             {
-
+                OrganizationId = customer.OrganizationId,
                 CustomerId = customerId,
                 ProductId = productId,
                 Quantity = quantity,
@@ -43,27 +44,36 @@ namespace CRMSystem.Services.Data
 
 
 
-            customer.Sales.Add(sale);
+            customer.Sales.Add(order);
 
             return await this.customersRepository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<SaleCustomerStatsViewModel>> GetStatsAsync(int customerId)
+        public async Task<SaleCustomerStatsViewModel> GetStatsAsync(int customerId)
         {
-            var sales = await this.salesRepository
+            var totalOrders = await this.salesRepository
+                .All()
+                .CountAsync(x => x.CustomerId == customerId);
+
+            var differentProducts = await this.salesRepository
                 .All()
                 .Where(x => x.CustomerId == customerId)
-                .Select(x => new SaleCustomerStatsViewModel
-                {
-                   ProductName = x.Product.Name,
-                   ProductQuantity = x.Product.Quantity,
-                   ProductPrice = x.Product.Price,
-                })
-                .ToListAsync();
+                .Select(x => x.ProductId)
+                .Distinct()
+                .CountAsync();
 
+            var benefits = await this.salesRepository
+                .All()
+                .Where(x => x.CustomerId == customerId)
+                .SumAsync(x => x.Product.Price * x.Quantity);
 
+            return new SaleCustomerStatsViewModel
+            {
+                TotalOrders = totalOrders,
+                DifferentProducts = differentProducts,
+                Benefits = benefits,
 
-            return sales;
+            };
         }
     }
 }

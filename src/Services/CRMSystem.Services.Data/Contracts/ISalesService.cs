@@ -10,6 +10,6 @@ namespace CRMSystem.Services.Data.Contracts
     {
         Task<int> CreateSale(int customerId, int productId, int quantity);
 
-        Task<IEnumerable<SaleCustomerStatsViewModel>> GetStatsAsync(int customerId);
+        Task<SaleCustomerStatsViewModel> GetStatsAsync(int customerId);
     }
 }

@@ -11,7 +11,7 @@
         {
             this.Customers = new HashSet<Customer>();
             this.Products = new HashSet<Product>();
-            this.Sales = new HashSet<Sale>();
+            this.Sales = new HashSet<Order>();
         }
 
         [Required]
@@ -33,6 +33,6 @@
         public virtual ICollection<Customer> Customers { get; set; }
         public virtual ICollection<Product> Products { get; set; }
 
-        public virtual ICollection<Sale> Sales { get; set; }
+        public virtual ICollection<Order> Sales { get; set; }
     }
 }

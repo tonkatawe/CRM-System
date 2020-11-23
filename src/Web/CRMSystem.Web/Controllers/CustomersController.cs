@@ -224,17 +224,12 @@ namespace CRMSystem.Web.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            //todo make method async
+            //todo check for security
 
             var viewModel = this.customersService.GetById<GetDetailsViewModel>(id);
             viewModel.CustomerStats = await this.salesService.GetStatsAsync(id);
             
-
-            if (viewModel == null)
-            {
-                return NotFound();
-            }
-
+            
             return this.View(viewModel);
       
         }

@@ -23,7 +23,7 @@ namespace CRMSystem.Web.ViewModels.Customers
         public string AdditionalInfo { get; set; }
 
         public Address Address { get; set; }
-        public IEnumerable<SaleCustomerStatsViewModel> CustomerStats { get; set; }
+        public SaleCustomerStatsViewModel CustomerStats { get; set; }
 
         public IList<PhoneCreateInputModel> Phones { get; set; }
 
