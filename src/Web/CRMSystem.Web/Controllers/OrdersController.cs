@@ -5,6 +5,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
+using CRMSystem.Web.Infrastructure;
+using CRMSystem.Web.ViewModels.Orders;
 using CRMSystem.Web.ViewModels.Products;
 using CRMSystem.Web.ViewModels.Sales;
 using Microsoft.AspNetCore.Authorization;
@@ -17,15 +19,15 @@ namespace CRMSystem.Web.Controllers
     [Authorize]
     public class OrdersController : Controller
     {
-        private readonly IOrdersService saleProductsService;
+        private readonly IOrdersService ordersService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IProductsService productsService;
 
-        public OrdersController(IOrdersService saleProductsService,
+        public OrdersController(IOrdersService ordersService,
                                       UserManager<ApplicationUser> userManager,
                                       IProductsService productsService)
         {
-            this.saleProductsService = saleProductsService;
+            this.ordersService = ordersService;
             this.userManager = userManager;
             this.productsService = productsService;
         }
@@ -75,14 +77,18 @@ namespace CRMSystem.Web.Controllers
             }
 
 
-            await this.saleProductsService.CreateSale(input.CustomerId, input.ProductId, input.Quantity);
+            await this.ordersService.CreateSale(input.CustomerId, input.ProductId, input.Quantity);
 
             return this.RedirectToAction("Index", "Customers");
         }
 
-        public async Task<IActionResult> CustomerOrders(string id)
+        public async Task<IActionResult> GetOrders(int id, int? pageNumber)
         {
-            return this.View();
+            var allOrders = this.ordersService.GetOrders<OrderViewModel>(id);
+            int pageSize = 3;
+            ViewData["CustomerId"] = id;
+            var orders = from o in allOrders select o;
+            return View(await PaginatedList<OrderViewModel>.CreateAsync(orders, pageNumber ?? 1, pageSize));
         }
 
     }

@@ -5,6 +5,8 @@ using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Web.ViewModels.Sales;
 using System.Threading.Tasks;
+using CRMSystem.Services.Mapping;
+using CRMSystem.Web.ViewModels.Orders;
 using CRMSystem.Web.ViewModels.Products;
 using Microsoft.EntityFrameworkCore;
 
@@ -69,11 +71,26 @@ namespace CRMSystem.Services.Data
 
             return new OrderCustomerStatsViewModel
             {
+                Id = customerId,
                 TotalOrders = totalOrders,
                 DifferentProducts = differentProducts,
                 Benefits = benefits,
 
             };
         }
+
+        public IQueryable<T> GetOrders<T>(int customerId)
+        {
+            var query = this.ordersRepository
+                .All()
+                .Where(x => x.CustomerId == customerId)
+                .To<T>()
+                .AsQueryable();
+
+            return query;
+
+        }
+
+
     }
 }

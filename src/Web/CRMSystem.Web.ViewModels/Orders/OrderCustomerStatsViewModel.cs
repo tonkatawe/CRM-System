@@ -10,7 +10,7 @@ namespace CRMSystem.Web.ViewModels.Sales
 {
     public class OrderCustomerStatsViewModel
     {
-
+        public int Id  { get; set; }
         public int TotalOrders { get; set; }
         
         public decimal Benefits { get; set; }
