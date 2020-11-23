@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CRMSystem.Web.ViewModels.Sales
 {
-    public class SaleCreateInputModel
+    public class OrderCreateInputModel
     {
         public int CustomerId { get; set; }
 

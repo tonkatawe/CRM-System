@@ -15,13 +15,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace CRMSystem.Web.Controllers
 {
     [Authorize]
-    public class SalesController : Controller
+    public class OrdersController : Controller
     {
-        private readonly ISalesService saleProductsService;
+        private readonly IOrdersService saleProductsService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IProductsService productsService;
 
-        public SalesController(ISalesService saleProductsService,
+        public OrdersController(IOrdersService saleProductsService,
                                       UserManager<ApplicationUser> userManager,
                                       IProductsService productsService)
         {
@@ -31,7 +31,7 @@ namespace CRMSystem.Web.Controllers
         }
 
 
-        public async Task<IActionResult> Sale(int id)
+        public async Task<IActionResult> Create(int id)
         {
             var user = await this.userManager.GetUserAsync(this.User);
             var products = this.productsService.GetAll<ProductDropDownViewModel>(user.Id).ToList();
@@ -44,7 +44,7 @@ namespace CRMSystem.Web.Controllers
             }
 
 
-            var viewModel = new SaleCreateInputModel
+            var viewModel = new OrderCreateInputModel
             {
                 CustomerId = id,
                 Products = products,
@@ -55,7 +55,7 @@ namespace CRMSystem.Web.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Sale(SaleCreateInputModel input)
+        public async Task<IActionResult> Create(OrderCreateInputModel input)
         {
 
             var user = await this.userManager.GetUserAsync(this.User);
@@ -78,6 +78,11 @@ namespace CRMSystem.Web.Controllers
             await this.saleProductsService.CreateSale(input.CustomerId, input.ProductId, input.Quantity);
 
             return this.RedirectToAction("Index", "Customers");
+        }
+
+        public async Task<IActionResult> CustomerOrders(string id)
+        {
+            return this.View();
         }
 
     }

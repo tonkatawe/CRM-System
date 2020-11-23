@@ -53,7 +53,7 @@
                     @customer.CreatedOnAsString
                 </td>
                 <td>
-                    <a asp-controller="Sales" asp-action="Sale" asp-route-id="@customer.Id">Add Sale</a> |
+                    <a asp-controller="Orders" asp-action="Create" asp-route-id="@customer.Id">Add Create</a> |
                     <a asp-action="Details" asp-route-id="@customer.Id">Details</a> |
                     <a asp-route-id="@customer.Id" data-toggle="modal"
                        data-target="#modal-delete" data-customerId="@customer.Id">Delete</a>
@@ -95,22 +95,27 @@
 
 <ul class="pagination">
     
-    <li><a asp-action="Index"
+   <a asp-action="Index"
            asp-route-sortOrder="@ViewData["CurrentSort"]"
            asp-route-pageNumber="@(Model.PageIndex - 1)"
            asp-route-currentFilter="@ViewData["CurrentFilter"]"
            class="btn btn-default @prevDisabled">
-            Previous
+        Previous
         </a>
-
-        <a asp-action="Index"
+        @for (var i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(Model.PageIndex == i ? "active" : string.Empty)">
+                <a class="page-link" asp-route-pageNumber="@i">@i</a>
+            </li>
+        }
+         <a asp-action="Index"
            asp-route-sortOrder="@ViewData["CurrentSort"]"
            asp-route-pageNumber="@(Model.PageIndex + 1)"
            asp-route-currentFilter="@ViewData["CurrentFilter"]"
            class="btn btn-default @nextDisabled">
-            Next
+       Next
         </a>
-    </li>
+   
 </ul>
 
 @section Scripts

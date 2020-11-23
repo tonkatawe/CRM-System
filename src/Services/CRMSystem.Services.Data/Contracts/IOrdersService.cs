@@ -6,10 +6,10 @@ using CRMSystem.Web.ViewModels.Sales;
 
 namespace CRMSystem.Services.Data.Contracts
 {
-    public  interface ISalesService
+    public  interface IOrdersService
     {
         Task<int> CreateSale(int customerId, int productId, int quantity);
 
-        Task<SaleCustomerStatsViewModel> GetStatsAsync(int customerId);
+        Task<OrderCustomerStatsViewModel> GetStatsAsync(int customerId);
     }
 }

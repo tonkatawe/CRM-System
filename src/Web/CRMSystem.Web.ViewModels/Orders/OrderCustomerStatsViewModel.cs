@@ -8,7 +8,7 @@ using CRMSystem.Web.ViewModels.Products;
 
 namespace CRMSystem.Web.ViewModels.Sales
 {
-    public class SaleCustomerStatsViewModel
+    public class OrderCustomerStatsViewModel
     {
 
         public int TotalOrders { get; set; }

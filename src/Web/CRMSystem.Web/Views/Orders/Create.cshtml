@@ -1,4 +1,4 @@
-﻿@model CRMSystem.Web.ViewModels.Sales.SaleCreateInputModel
+﻿@model CRMSystem.Web.ViewModels.Sales.OrderCreateInputModel
 @{
     this.ViewData["Title"] = "Add sale to customer";
     var products = Model.Products.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
@@ -7,7 +7,7 @@
 <h2>@Model.CustomerId</h2>
 <h1>@this.ViewData["Title"]</h1>
 
-<form method="post" asp-action="Sale">
+<form method="post" asp-action="Create">
    <div asp-validation-summary="All" class="text-danger"></div>
     <div>
         <label asp-for="Quantity"></label>

@@ -24,7 +24,7 @@ namespace CRMSystem.Web.Controllers
         private readonly IEmailsService emailsService;
         private readonly IPhonesServices phonesService;
         private readonly IValidationService validationService;
-        private readonly ISalesService salesService;
+        private readonly IOrdersService salesService;
         private readonly UserManager<ApplicationUser> userManager;
 
         public CustomersController(
@@ -32,7 +32,7 @@ namespace CRMSystem.Web.Controllers
             IEmailsService emailsService,
             IPhonesServices phonesService,
             IValidationService validationService,
-            ISalesService salesService,
+            IOrdersService salesService,
 
             UserManager<ApplicationUser> userManager)
         {
@@ -103,7 +103,7 @@ namespace CRMSystem.Web.Controllers
                     break;
             }
 
-            int pageSize = 10;
+            int pageSize = 3;
 
             return View(await PaginatedList<CustomerViewModel>.CreateAsync(customers, pageNumber ?? 1, pageSize));
         }
