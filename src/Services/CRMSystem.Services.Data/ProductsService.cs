@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using CRMSystem.Data.Common.Repositories;
 using CRMSystem.Data.Models;
@@ -10,6 +12,7 @@ namespace CRMSystem.Services.Data
 {
     public class ProductsService : IProductsService
     {
+        private readonly string[] allowedExtensions = new[] { "jpg", "jpeg", "png", "gif" };
         private readonly IDeletableEntityRepository<Product> productsRepository;
         private readonly IOrganizationsService organizationsService;
 
@@ -19,7 +22,7 @@ namespace CRMSystem.Services.Data
             this.organizationsService = organizationsService;
         }
 
-        public async Task<int> CreateAsync(ProductCreateInputModel input, string userId)
+        public async Task<int> CreateAsync(ProductCreateInputModel input, string userId, string imagePath)
         {
             var organizationId = this.organizationsService.GetById(userId);
 
@@ -31,6 +34,28 @@ namespace CRMSystem.Services.Data
                 Description = input.Description,
                 Quantity = input.Quantity,
             };
+
+
+
+            Directory.CreateDirectory($"{imagePath}/products");
+            foreach (var image in input.Images)
+            {
+                var extension = Path.GetExtension(image.FileName).TrimStart('.');
+                if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
+                {
+                    throw new Exception($"Invalid image extension {extension}");
+                }
+
+                var dbImage = new Image
+                {
+                    Extension = extension,
+                };
+                product.Images.Add(dbImage);
+
+                var physicalPath = $"{imagePath}/products/{dbImage.Id}.{extension}";
+                await using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
+                await image.CopyToAsync(fileStream);
+            }
 
             await this.productsRepository.AddAsync(product);
 

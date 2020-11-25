@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CRMSystem.Web.ViewModels.Orders;
 using CRMSystem.Web.ViewModels.Sales;
 
 namespace CRMSystem.Services.Data.Contracts

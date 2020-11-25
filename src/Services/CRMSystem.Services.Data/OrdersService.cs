@@ -42,8 +42,8 @@ namespace CRMSystem.Services.Data
             var order = new Order
             {
                 OrganizationId = customer.OrganizationId,
-                CustomerId = customerId,
-                //ProductId = productId,
+                Customer = customer,
+                Product = product,
                 Quantity = quantity,
             };
 
@@ -97,7 +97,7 @@ namespace CRMSystem.Services.Data
 
         public IEnumerable<T> GetOrdersType<T>(int customerId)
         {
-
+     
             var query = this.ordersRepository
                 .All()
                 .Where(x => x.CustomerId == customerId)

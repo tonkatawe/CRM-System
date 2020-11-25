@@ -8,7 +8,7 @@ namespace CRMSystem.Services.Data.Contracts
 {
     public interface IProductsService
     {
-        Task<int> CreateAsync(ProductCreateInputModel input, string userId);
+        Task<int> CreateAsync(ProductCreateInputModel input, string userId, string imagePath);
 
         Task<int> UpdateAsync(EditProductInputModel input);
 

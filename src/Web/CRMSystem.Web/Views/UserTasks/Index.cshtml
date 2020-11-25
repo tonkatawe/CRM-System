@@ -92,7 +92,6 @@
 {
     <script type="text/javascript">
         $(document).ready(function LoadData() {
-
             $('#callAllUserTasks').show(function () {
                 $.ajax({
                     type: 'GET',
@@ -108,14 +107,11 @@
                             s += '<p>' + result[i].UserTaskStatus + '</p>';
                             s += '<p>' + result[i].UserTaskStatus + '</p>';
                             s += '<button class="btn btn-warning" data-toggle="modal" data-target="#modalChangeStatus" onclick=EditStudentRecord(' + result[i].Id + ') >Change Status</button> <button class="btn btn-danger" customerId="deleteTask" onclick="Delete(' + result[i].Id + ')") >Remove</button>';
-
                         }
                         $('#showAllUserTasks').html(s);
                     }
                 });
-
             });
-
         });
     </script>
 }

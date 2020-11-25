@@ -1,8 +1,10 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CRMSystem.Data.Models;
 using CRMSystem.Services.Mapping;
+using Microsoft.AspNetCore.Http;
 
 namespace CRMSystem.Web.ViewModels.Products
 {
@@ -29,5 +31,7 @@ namespace CRMSystem.Web.ViewModels.Products
         public int OrganizationId { get; set; }
 
         public virtual Organization Organization { get; set; }
+
+        public IEnumerable<IFormFile> Images { get; set; }
     }
 }

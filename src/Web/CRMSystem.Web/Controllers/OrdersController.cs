@@ -117,7 +117,9 @@ namespace CRMSystem.Web.Controllers
 
         public IActionResult OrderTypes(int id)
         {
-            var viewModel = this.ordersService.GetOrdersType<OrderTypeViewModel>(id).Distinct();
+            var viewModel = this.ordersService.GetOrdersType<OrderTypeViewModel>(id);
+          
+
             return this.View(viewModel);
         }
 

@@ -47,6 +47,10 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             var user = await this.userManager.GetUserAsync(this.User);
+            if (user == null)
+            {
+                return RedirectToPage("~/Account/Login");
+            }
             if (!user.HasOrganization)
             {
                 return this.RedirectToAction("Create", "Organizations");
@@ -228,10 +232,10 @@ namespace CRMSystem.Web.Controllers
 
             var viewModel = this.customersService.GetById<GetDetailsViewModel>(id);
             viewModel.CustomerStats = await this.salesService.GetStatsAsync(id);
-            
-            
+
+
             return this.View(viewModel);
-      
+
         }
 
 

@@ -6,6 +6,7 @@ using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Web.ViewModels.Products;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +17,17 @@ namespace CRMSystem.Web.Controllers
     public class ProductsController : Controller
     {
         private readonly IProductsService productsService;
+        private readonly IWebHostEnvironment environment;
         private readonly UserManager<ApplicationUser> userManager;
 
 
-        public ProductsController(IProductsService productsService, UserManager<ApplicationUser> userManager)
+        public ProductsController(
+            IProductsService productsService,
+            IWebHostEnvironment environment,
+            UserManager<ApplicationUser> userManager)
         {
             this.productsService = productsService;
+            this.environment = environment;
             this.userManager = userManager;
         }
 
@@ -43,9 +49,21 @@ namespace CRMSystem.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProductCreateInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
             var user = await this.userManager.GetUserAsync(this.User);
 
-            await this.productsService.CreateAsync(input, user.Id);
+            try
+            {
+                await this.productsService.CreateAsync(input, user.Id, $"{this.environment.WebRootPath}/images");
+            }
+            catch (Exception ex)
+            {
+                this.ModelState.AddModelError("", ex.Message);
+                return this.View(input);
+            }
 
 
             return this.RedirectToAction("Index");

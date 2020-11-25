@@ -13,6 +13,7 @@ namespace CRMSystem.Data.Models
         {
             this.Orders = new HashSet<Order>();
             this.Customers = new HashSet<Customer>();
+            this.Images = new HashSet<Image>();
         }
         [Required]
         [MaxLength(50)]
@@ -36,5 +37,7 @@ namespace CRMSystem.Data.Models
 
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Customer> Customers { get; set; }
+
+        public ICollection<Image> Images { get; set; }
     }
 }
