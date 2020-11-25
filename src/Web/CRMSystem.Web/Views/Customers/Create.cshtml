@@ -10,6 +10,9 @@
 
 
 <h3>@this.ViewData["Title"]</h3>
+
+
+
 <div class="container">
     <form style="padding-bottom: 7rem" method="post" asp-action="Create">
         <div asp-validation-summary="All" class="text-danger"></div>
@@ -104,7 +107,7 @@
         <div class="form-row">
             <div class="form-group col-md-12">
                 <label asp-for="AdditionalInfo">Additional information</label>
-                <textarea asp-for="AdditionalInfo" class="form-control" rows="3"></textarea>
+                <textarea asp-for="AdditionalInfo" class="form-control" rows="5"></textarea>
                 <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
             </div>
         </div>
@@ -115,7 +118,8 @@
 
 @section Scripts {
 
-
+    
+   
     <script src="~/js/CreateEditCustomer.js"></script>
 
 }

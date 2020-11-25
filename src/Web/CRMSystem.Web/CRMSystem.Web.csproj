@@ -76,6 +76,9 @@
     <Content Update="wwwroot\js\sb-admin-2.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\lib\moment\min\moment-with-locales.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

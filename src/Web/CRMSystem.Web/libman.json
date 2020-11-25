@@ -29,6 +29,13 @@
       ]
     },
     {
+      "library": "moment@2.29.1",
+      "destination": "wwwroot/lib/moment/",
+      "files": [
+        "min/moment-with-locales.min.js"
+      ]
+    },
+    {
       "library": "jquery-validation-unobtrusive@3.2.11",
       "destination": "wwwroot/lib/jquery-validation-unobtrusive/",
       "files": [
