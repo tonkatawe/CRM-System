@@ -27,7 +27,7 @@ namespace CRMSystem.Data
         {
         }
 
-     public DbSet<Address> Addresses { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         public DbSet<Customer> Customers { get; set; }
 
@@ -46,6 +46,8 @@ namespace CRMSystem.Data
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Order> Orders { get; set; }
+
+        public DbSet<Image> Images { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -94,8 +96,8 @@ namespace CRMSystem.Data
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
-         
-            
+
+
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
