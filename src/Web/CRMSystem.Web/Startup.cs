@@ -57,6 +57,7 @@ namespace CRMSystem.Web
                     }).AddRazorRuntimeCompilation();
 
             services.AddRazorPages();
+            services.AddDatabaseDeveloperPageExceptionFilter();
 
             //todo it would be unnecessary
             services.AddAntiforgery(options =>
@@ -117,7 +118,7 @@ namespace CRMSystem.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {

@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using CRMSystem.Data.Common.Repositories;
 using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
@@ -27,7 +30,7 @@ namespace CRMSystem.Services.Data
             this.ordersRepository = ordersRepository;
         }
 
-        public async Task<int> CreateSale(int customerId, int productId, int quantity)
+        public async Task<int> CreateOrder(int customerId, int productId, int quantity)
         {
             var product = await this.productsRepository.GetByIdWithDeletedAsync(productId);
             var customer = await this.customersRepository.GetByIdWithDeletedAsync(customerId);
@@ -40,13 +43,13 @@ namespace CRMSystem.Services.Data
             {
                 OrganizationId = customer.OrganizationId,
                 CustomerId = customerId,
-                ProductId = productId,
+                //ProductId = productId,
                 Quantity = quantity,
             };
 
 
 
-            customer.Sales.Add(order);
+            customer.Orders.Add(order);
 
             return await this.customersRepository.SaveChangesAsync();
         }
@@ -84,7 +87,7 @@ namespace CRMSystem.Services.Data
             var query = this.ordersRepository
                 .All()
                 .Where(x => x.CustomerId == customerId)
-                .OrderByDescending(x=>x.CreatedOn)
+                .OrderByDescending(x => x.CreatedOn)
                 .To<T>()
                 .AsQueryable();
 
@@ -92,6 +95,18 @@ namespace CRMSystem.Services.Data
 
         }
 
+        public IEnumerable<T> GetOrdersType<T>(int customerId)
+        {
 
+            var query = this.ordersRepository
+                .All()
+                .Where(x => x.CustomerId == customerId)
+                .To<T>()
+                .ToList();
+
+            return query;
+
+
+        }
     }
 }

@@ -9,11 +9,13 @@ namespace CRMSystem.Services.Data.Contracts
 {
     public  interface IOrdersService
     {
-        Task<int> CreateSale(int customerId, int productId, int quantity);
+        Task<int> CreateOrder(int customerId, int productId, int quantity);
 
         Task<OrderCustomerStatsViewModel> GetStatsAsync(int customerId);
 
         IQueryable<T> GetOrders<T>(int customerId);
 
+
+        IEnumerable<T> GetOrdersType<T>(int customerId);
     }
 }

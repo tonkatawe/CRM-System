@@ -8,6 +8,7 @@
 
     public class Order : BaseDeletableModel<int>
     {
+     
 
         [Required]
         public int CustomerId { get; set; }
@@ -24,6 +25,6 @@
 
         public Organization Organization { get; set; }
 
-
+      
     }
 }

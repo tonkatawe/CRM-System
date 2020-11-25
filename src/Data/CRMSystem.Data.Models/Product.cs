@@ -11,7 +11,8 @@ namespace CRMSystem.Data.Models
     {
         public Product()
         {
-            this.Sales = new HashSet<Order>();
+            this.Orders = new HashSet<Order>();
+            this.Customers = new HashSet<Customer>();
         }
         [Required]
         [MaxLength(50)]
@@ -33,6 +34,7 @@ namespace CRMSystem.Data.Models
 
         public virtual Organization Organization { get; set; }
 
-        public virtual ICollection<Order> Sales { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }

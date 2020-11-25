@@ -14,7 +14,7 @@ namespace CRMSystem.Services.Data.Contracts
 
         T GetById<T>(int customerId);
         
-        IEnumerable<T> GetByName<T>(string userId, int skip = 0);
+        IEnumerable<T> GetByName<T>(string userId);
         
         Task<int> DeleteAsync(int id);
         

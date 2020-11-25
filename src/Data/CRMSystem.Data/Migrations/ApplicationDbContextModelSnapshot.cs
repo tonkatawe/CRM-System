@@ -238,6 +238,9 @@ namespace CRMSystem.Data.Migrations
                     b.Property<int>("OrganizationId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Title")
                         .HasColumnType("int");
 
@@ -252,6 +255,8 @@ namespace CRMSystem.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.HasIndex("OrganizationId");
+
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
@@ -722,6 +727,10 @@ namespace CRMSystem.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CRMSystem.Data.Models.Product", null)
+                        .WithMany("Customers")
+                        .HasForeignKey("ProductId");
+
                     b.HasOne("CRMSystem.Data.Models.ApplicationUser", "User")
                         .WithMany("Customers")
                         .HasForeignKey("UserId")
@@ -750,7 +759,7 @@ namespace CRMSystem.Data.Migrations
             modelBuilder.Entity("CRMSystem.Data.Models.Order", b =>
                 {
                     b.HasOne("CRMSystem.Data.Models.Customer", "Customer")
-                        .WithMany("Sales")
+                        .WithMany("Orders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -762,7 +771,7 @@ namespace CRMSystem.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("CRMSystem.Data.Models.Product", "Product")
-                        .WithMany("Sales")
+                        .WithMany("Orders")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

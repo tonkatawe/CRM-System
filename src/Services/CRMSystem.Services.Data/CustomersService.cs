@@ -49,8 +49,8 @@ namespace CRMSystem.Services.Data
         public IQueryable<T> GetAll<T>(string userId)
         {
             var query = this.customersRepository.All()
-                .OrderByDescending(x => x.CreatedOn)
                 .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.CreatedOn)
                 .To<T>()
                 .AsQueryable();
 
@@ -67,12 +67,12 @@ namespace CRMSystem.Services.Data
             return query;
         }
 
-        public IEnumerable<T> GetByName<T>(string userId, int skip = 0)
+        public IEnumerable<T> GetByName<T>(string userId)
         {
             var query = this.customersRepository.All()
+                .Where(x => x.UserId == userId)
                 .OrderBy(x => x.FirstName)
                 .ThenBy(x => x.LastName)
-                .Where(x => x.UserId == userId)
                 .To<T>()
                 .ToList();
 

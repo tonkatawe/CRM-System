@@ -21,7 +21,7 @@ namespace CRMSystem.Web.ViewModels.Orders
             configuration.CreateMap<Order, OrderViewModel>()
                 .ForMember(x => x.ProductName, options =>
                 {
-                    options.MapFrom(o => o.Product.Name);
+              //      options.MapFrom(o => o.Product.Name);
                 });
 
         }

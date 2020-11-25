@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace CRMSystem.Web.Controllers
 {
@@ -77,7 +78,7 @@ namespace CRMSystem.Web.Controllers
             }
 
 
-            await this.ordersService.CreateSale(input.CustomerId, input.ProductId, input.Quantity);
+            await this.ordersService.CreateOrder(input.CustomerId, input.ProductId, input.Quantity);
 
             return this.RedirectToAction("Index", "Customers");
         }
@@ -112,6 +113,12 @@ namespace CRMSystem.Web.Controllers
 
 
             return View(await PaginatedList<OrderViewModel>.CreateAsync(orders, pageNumber ?? 1, pageSize));
+        }
+
+        public IActionResult OrderTypes(int id)
+        {
+            var viewModel = this.ordersService.GetOrdersType<OrderTypeViewModel>(id).Distinct();
+            return this.View(viewModel);
         }
 
     }

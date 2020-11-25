@@ -14,7 +14,7 @@
             this.PhoneNumbers = new HashSet<PhoneNumber>();
             this.EmailAddresses = new HashSet<EmailAddress>();
             this.SocialNetworks = new HashSet<SocialNetwork>();
-            this.Sales = new HashSet<Order>();
+            this.Orders = new HashSet<Order>();
         }
 
         [Required]
@@ -61,6 +61,6 @@
                
         public virtual ICollection<SocialNetwork> SocialNetworks { get; set; }
                
-        public virtual ICollection<Order> Sales { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }
