@@ -33,6 +33,7 @@ namespace CRMSystem.Data.Models
         public bool HasOrganization { get; set; }
 
         public bool IsPremium { get; set; }
+        
         public virtual Organization Organization { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }

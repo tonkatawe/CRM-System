@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Globalization;
+using AutoMapper;
 using CRMSystem.Data.Models;
 using CRMSystem.Data.Models.Enums;
 using CRMSystem.Services.Mapping;
 
 namespace CRMSystem.Web.ViewModels.Customers
 {
-    public class CustomerViewModel:IMapFrom<Customer>
+    public class CustomerViewModel : IMapFrom<Customer>, IHaveCustomMappings
     {
 
         public int Id { get; set; }
@@ -22,14 +23,26 @@ namespace CRMSystem.Web.ViewModels.Customers
             ? (this.FirstName + " " + this.LastName)
             : (this.FirstName + " " + this.MiddleName + " " + this.LastName);
 
+        public string Industry { get; set; }
 
-        public IndustryType Industry { get; set; }
 
-        public string IndustryAsString => this.Industry.ToString();
-        
-        public DateTime CreatedOn { get; set; }
 
-        public string CreatedOnAsString => this.CreatedOn.ToString("d", CultureInfo.InvariantCulture);
+        public int OrdersCount { get; set; }
 
+        public void CreateMappings(IProfileExpression configuration)
+        {
+    
+            configuration.CreateMap<Customer, CustomerViewModel>()
+                .ForMember(x => x.Industry, options =>
+                {
+                    options.MapFrom(c => c.Industry.ToString());
+                });
+
+            configuration.CreateMap<Customer, CustomerViewModel>()
+                .ForMember(x => x.OrdersCount, options =>
+                {
+                    options.MapFrom(c => c.Orders.Count);
+                });
+        }
     }
 }

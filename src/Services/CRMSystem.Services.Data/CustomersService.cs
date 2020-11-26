@@ -50,7 +50,7 @@ namespace CRMSystem.Services.Data
         {
             var query = this.customersRepository.All()
                 .Where(x => x.UserId == userId)
-                .OrderByDescending(x => x.CreatedOn)
+                //.OrderByDescending(x => x.CreatedOn)
                 .To<T>()
                 .AsQueryable();
 

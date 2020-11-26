@@ -47,6 +47,8 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             var user = await this.userManager.GetUserAsync(this.User);
+         
+
             if (user == null)
             {
                 return RedirectToPage("~/Account/Login");
@@ -97,10 +99,10 @@ namespace CRMSystem.Web.Controllers
                         .OrderByDescending(c => c.Industry);
                     break;
                 case "Date":
-                    customers = customers.OrderBy(c => c.CreatedOn);
+                    customers = customers.OrderBy(c => c.OrdersCount);
                     break;
                 case "date_desc":
-                    customers = customers.OrderByDescending(c => c.CreatedOn);
+                    customers = customers.OrderByDescending(c => c.OrdersCount);
                     break;
                 default:
                     customers = customers.OrderBy(c => c.LastName);

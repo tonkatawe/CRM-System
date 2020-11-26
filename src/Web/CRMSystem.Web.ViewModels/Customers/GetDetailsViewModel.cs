@@ -15,6 +15,7 @@ namespace CRMSystem.Web.ViewModels.Customers
             this.Phones = new List<PhoneCreateInputModel>();
             this.Emails = new List<EmailCreateInputModel>();
         }
+
         public Title Title { get; set; }
 
         public string TitleAsString => this.Title.ToString();
