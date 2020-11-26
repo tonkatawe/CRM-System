@@ -83,11 +83,11 @@ namespace CRMSystem.Web.Controllers
             return this.RedirectToAction("Index", "Customers");
         }
 
-        public async Task<IActionResult> GetOrders(string sortOrder, int id, int? pageNumber)
+        public async Task<IActionResult> History(string sortOrder, int id, string fullname, int? pageNumber)
         {
             var allOrders = this.ordersService.GetOrders<OrderViewModel>(id);
             int pageSize = 3;
-
+            ViewData["FullName"] = fullname;
             ViewData["CustomerId"] = id;
             ViewData["CurrentSort"] = sortOrder;
             ViewData["SortByDate"] = String.IsNullOrEmpty(sortOrder) ? "dateSorted" : "";

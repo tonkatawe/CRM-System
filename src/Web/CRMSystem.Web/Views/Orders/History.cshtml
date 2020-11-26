@@ -1,4 +1,11 @@
 ﻿@model CRMSystem.Web.Infrastructure.PaginatedList<CRMSystem.Web.ViewModels.Orders.OrderViewModel>
+
+@{
+    this.ViewData["Title"] = $"History order's of {this.ViewData["FullName"]}";
+
+}
+<h2>@ViewData["Title"]</h2>
+<hr/>
 <p>
     <a asp-action="Create" asp-route-id="@ViewData["CustomerId"]">Add New Order</a>
 </p>
@@ -8,13 +15,13 @@
     <thead>
         <tr>
             <th>
-                <a asp-action="GetOrders" asp-route-sortOrder="@ViewData["SortByDate"]">Ordered date</a>
+                <a asp-action="History" asp-route-sortOrder="@ViewData["SortByDate"]">Ordered date</a>
             </th>
             <th>
-                <a asp-action="GetOrders" asp-route-sortOrder="@ViewData["SortByName"]">Product name</a>
+                <a asp-action="History" asp-route-sortOrder="@ViewData["SortByName"]">Product name</a>
             </th>
             <th>
-                <a asp-action="GetOrders" asp-route-sortOrder="@ViewData["SortByQuantity"]">Quantity</a>
+                <a asp-action="History" asp-route-sortOrder="@ViewData["SortByQuantity"]">Quantity</a>
             </th>
             <th></th>
         </tr>
@@ -50,7 +57,7 @@
 <ul class="pagination">
 
     <li>
-        <a asp-action="GetOrders"
+        <a asp-action="History"
            asp-route-pageNumber="@(Model.PageIndex - 1)"
            class="btn @prevDisabled">
             Previous
@@ -61,7 +68,7 @@
             <a class="page-link" asp-route-pageNumber="@i">@i</a>
         </li>
     }
-        <a asp-action="GetOrders"
+        <a asp-action="History"
            asp-route-pageNumber="@(Model.PageIndex + 1)"
            class="btn  @nextDisabled">
             Next

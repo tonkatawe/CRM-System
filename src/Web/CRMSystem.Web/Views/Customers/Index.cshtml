@@ -57,9 +57,11 @@
                     else
                     {
                         
+                <a asp-action="History" asp-controller="Orders" asp-route-id="@customer.Id" asp-route-fullname="@customer.FullName" title="See history">
                     @customer.OrdersCount
+                    </a>
                     }
-                </td>
+</td>
                 <td>
                     <a asp-controller="Orders" asp-action="Create" asp-route-id="@customer.Id">Add Order</a> |
                     <a asp-action="Details" asp-route-id="@customer.Id">Details</a> |
