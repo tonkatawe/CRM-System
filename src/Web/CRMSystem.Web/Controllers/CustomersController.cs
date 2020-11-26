@@ -47,7 +47,7 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-         
+         //todo must refactoring this!
 
             if (user == null)
             {
