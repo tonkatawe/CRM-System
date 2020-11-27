@@ -49,10 +49,6 @@ namespace CRMSystem.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProductCreateInputModel input)
         {
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(input);
-            }
             var user = await this.userManager.GetUserAsync(this.User);
 
             try
@@ -65,6 +61,10 @@ namespace CRMSystem.Web.Controllers
                 return this.View(input);
             }
 
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
 
             return this.RedirectToAction("Index");
 

@@ -1,0 +1,20 @@
+﻿@model CRMSystem.Web.ViewModels.Statistics.GeneralStatisticViewModel
+@{
+    this.ViewData["Title"] = $"General {@Model.OrganizationName} Statistic";
+
+}
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+
+Your total benefits:   @Model.TotalBenefits
+<br />
+Your best customer is: @Model.BestCustomer.FullName
+<br />
+Your customer with most orders : @Model.CustomerWithMostOrders.FullName
+<br />
+Your most ordered product is : @Model.MostOrderedProduct.Name
+<br />
+Your product which bring most Benefit is : @Model.MostBenefitProduct.Name
+<br />
+TODO:MAKE PARTIAL FOR TOP ORDERS PRODUCT AND SO ON

@@ -1,45 +1,29 @@
-﻿@using CRMSystem.Web.ViewModels.Statistics
-@model CRMSystem.Web.ViewModels.Statistics.StatisticsIndexViewModel
-@{
-    this.ViewData["Title"] = $"{@Model.OrganizationName} Statistic";
-
-}
+﻿@model CRMSystem.Web.ViewModels.Statistics.IndexViewModel
 
 
 
-<h2>@ViewData["Title"]</h2>
-<hr />
+<vc:general-statistic></vc:general-statistic>
 
-Your total benefits:   @Model.TotalBenefits
-<br />
-Your best customer is: @Model.BestCustomer.FullName
-<br />
-Your customer with most orders : @Model.CustomerWithMostOrders.FullName
-<br />
-Your most ordered product is : @Model.MostOrderedProduct.Name
-<br />
-Your product which bring most Benefit is : @Model.MostBenefitProduct.Name
-<br />
-TODO:MAKE PARTIAL FOR TOP ORDERS PRODUCT AND SO ON
-<div class="container">
-    <form asp-action="WeeklyStatistics" asp-route-startDate="" asp-route-endDate="">
-        <div class="form-row">
-            <div class="input-group date col-md-3" data-provide="datepicker">
-                <input asp-for="StartDate" type="text" class="form-control datepicker-orient-bottom" placeholder="From date">
-                <div class="input-group-addon">
-                    <span><i class="far fa-calendar-alt"></i></span>
-                </div>
+
+<form asp-action="Index" method="post" asp-route-input="">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-row">
+        <div class="input-group date col-md-3" data-provide="datepicker">
+            <input asp-for="StartDate" type="text" class="form-control datepicker-orient-bottom" placeholder="From date">
+            <div class="input-group-addon">
+                <span><i class="far fa-calendar-alt"></i></span>
             </div>
-            <div class="input-group date col-md-3" data-provide="datepicker">
-                <input asp-for="EndDate" type="text" class="form-control" placeholder="To date">
-                <div class="input-group-addon">
-                    <span><i class="far fa-calendar-alt"></i></span>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Get Statistic</button>
         </div>
-    </form>
-</div>
+        <div class="input-group date col-md-3" data-provide="datepicker">
+            <input asp-for="EndDate" type="text" class="form-control" placeholder="To date">
+            <div class="input-group-addon">
+                <span><i class="far fa-calendar-alt"></i></span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Get Statistic</button>
+    </div>
+</form>
+
 
 @section Scripts
 {
@@ -52,3 +36,6 @@ TODO:MAKE PARTIAL FOR TOP ORDERS PRODUCT AND SO ON
     </script>
 
 }
+
+
+

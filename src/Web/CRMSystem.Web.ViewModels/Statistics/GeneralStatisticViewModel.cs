@@ -1,11 +1,10 @@
-﻿
-using System;
+﻿using System;
 using CRMSystem.Web.ViewModels.Customers;
 using CRMSystem.Web.ViewModels.Products;
 
 namespace CRMSystem.Web.ViewModels.Statistics
 {
-    public class StatisticsIndexViewModel
+    public class GeneralStatisticViewModel
     {
         public DateTime StartDate { get; set; }
 

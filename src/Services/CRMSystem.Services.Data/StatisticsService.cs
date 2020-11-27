@@ -31,13 +31,13 @@ namespace CRMSystem.Services.Data
 
         public async Task<decimal> GetTotalBenefitsAsync(int id, DateTime startDate, DateTime endDate)
         {
-            return await this.ordersRepository
+        return await this.ordersRepository
                 .All()
                 .Where(x => x.OrganizationId == id && x.CreatedOn >=startDate && x.CreatedOn <= endDate)
                 .SumAsync(x => x.Product.Price * x.Quantity);
         }
 
-        public async Task<DateTime> GetStartDate(int id)
+        public async Task<DateTime> GetStartDateAsync(int id)
         {
             var startDate = await this.ordersRepository
                 .All()
@@ -87,6 +87,26 @@ namespace CRMSystem.Services.Data
                 .OrderByDescending(x => x.Orders.Max(x => x.Product.Price * x.Quantity))
                 .To<T>()
                 .FirstOrDefaultAsync();
+        }
+
+        public bool ValidationDate(DateTime startDate, DateTime endDate, DateTime userStartDate)
+        {
+            var cuurentDate = DateTime.UtcNow;
+            if (startDate > endDate)
+            {
+                throw new Exception($"Star date ({startDate:d}) cannot be greater than end date ({endDate:d}).");
+            }
+
+            if (endDate > cuurentDate)
+            {
+                throw new Exception($"End date cannot be greater than {cuurentDate:d}");
+            }
+
+            if (startDate < userStartDate)
+            {
+                throw new Exception($"Start date cannot be before {userStartDate:d}");
+            }
+            return  true;
         }
     }
 }
