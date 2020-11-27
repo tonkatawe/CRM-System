@@ -59,7 +59,12 @@
             return query.Id;
         }
 
-
-
+        public string GetName(string userId)
+        {
+            return this.organizationRepository
+                .All()
+                .FirstOrDefault(x => x.UserId == userId)
+                .Name;
+        }
     }
 }

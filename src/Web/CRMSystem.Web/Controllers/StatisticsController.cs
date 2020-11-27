@@ -31,13 +31,16 @@ namespace CRMSystem.Web.Controllers
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var organizationId = this.organizationsService.GetById(userId);
+            var startDate = await this.statisticsService.GetStartDate(organizationId);
+            var endDate = DateTime.UtcNow;
 
-            var benefits = await this.statisticsService.GetTotalBenefitsAsync(organizationId);
+
+            var benefits = await this.statisticsService.GetTotalBenefitsAsync(organizationId,startDate, endDate);
             var bestCustomer = await this.statisticsService.GetBestCustomersAsync<CustomerViewModel>(organizationId);
             var customerWithMostOrders = await this.statisticsService.GetCustomerByOrdersAsync<CustomerViewModel>(organizationId);
             var mostOrdered = await this.statisticsService.GetMostOrderProductAsync<ProductViewModel>(organizationId);
             var mostBenefitProduct = await this.statisticsService.GetMostBenefitProductAsync<ProductViewModel>(organizationId);
-
+            var organizationName =  this.organizationsService.GetName(userId);
 
             var viewModel = new StatisticsIndexViewModel
             {
@@ -46,9 +49,24 @@ namespace CRMSystem.Web.Controllers
                CustomerWithMostOrders = customerWithMostOrders,
                MostOrderedProduct = mostOrdered,
                MostBenefitProduct = mostBenefitProduct,
+               OrganizationName = organizationName,
             };
 
             return View(viewModel);
+        }
+
+        public async Task<IActionResult> WeeklyStatistics(DateTime startDate, DateTime endDate)
+        {
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var organizationId = this.organizationsService.GetById(userId);
+            var todaysDate = DateTime.UtcNow;
+            var sevenDaysBefore = todaysDate.AddDays(-7);
+            //var totalBenefits =  await this.statisticsService.GetTotalBenefitsAsync(organizationId, sevenDaysBefore);
+            //var viewmodel = new WeeklyStatsViewModel
+            //{
+            //    TotalBenefits =  totalBenefits,
+            //};
+            return this.View();
         }
     }
 }

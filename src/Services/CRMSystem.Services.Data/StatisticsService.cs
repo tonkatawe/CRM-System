@@ -1,5 +1,6 @@
 ﻿
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using CRMSystem.Data.Common.Repositories;
@@ -28,12 +29,24 @@ namespace CRMSystem.Services.Data
 
 
 
-        public async Task<decimal> GetTotalBenefitsAsync(int id)
+        public async Task<decimal> GetTotalBenefitsAsync(int id, DateTime startDate, DateTime endDate)
         {
             return await this.ordersRepository
                 .All()
-                .Where(x => x.OrganizationId == id)
+                .Where(x => x.OrganizationId == id && x.CreatedOn >=startDate && x.CreatedOn <= endDate)
                 .SumAsync(x => x.Product.Price * x.Quantity);
+        }
+
+        public async Task<DateTime> GetStartDate(int id)
+        {
+            var startDate = await this.ordersRepository
+                .All()
+                .Where(x => x.OrganizationId == id)
+                .OrderBy(x => x.CreatedOn)
+                .Select(x=>x.CreatedOn)
+                .FirstOrDefaultAsync();
+
+            return startDate;
         }
 
         public async Task<T> GetBestCustomersAsync<T>(int id)

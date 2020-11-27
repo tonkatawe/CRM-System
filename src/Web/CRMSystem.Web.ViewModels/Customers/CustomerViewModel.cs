@@ -24,9 +24,6 @@ namespace CRMSystem.Web.ViewModels.Customers
             : (this.FirstName + " " + this.MiddleName + " " + this.LastName);
 
         public string Industry { get; set; }
-
-
-
         public int OrdersCount { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)

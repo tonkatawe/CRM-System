@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using CRMSystem.Web.Infrastructure;
 using CRMSystem.Web.ViewModels.Customers;
 using CRMSystem.Web.ViewModels.Emails;
@@ -13,7 +11,6 @@ namespace CRMSystem.Web.Controllers
 
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Data.Contracts;
-    using CRMSystem.Web.ViewModels.Contacts;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -33,7 +30,6 @@ namespace CRMSystem.Web.Controllers
             IPhonesServices phonesService,
             IValidationService validationService,
             IOrdersService salesService,
-
             UserManager<ApplicationUser> userManager)
         {
             this.customersService = customersService;

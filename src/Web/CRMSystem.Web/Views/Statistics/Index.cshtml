@@ -1,5 +1,14 @@
-﻿@model CRMSystem.Web.ViewModels.Statistics.StatisticsIndexViewModel
+﻿@using CRMSystem.Web.ViewModels.Statistics
+@model CRMSystem.Web.ViewModels.Statistics.StatisticsIndexViewModel
+@{
+    this.ViewData["Title"] = $"{@Model.OrganizationName} Statistic";
 
+}
+
+
+
+<h2>@ViewData["Title"]</h2>
+<hr />
 
 Your total benefits:   @Model.TotalBenefits
 <br />
@@ -10,3 +19,36 @@ Your customer with most orders : @Model.CustomerWithMostOrders.FullName
 Your most ordered product is : @Model.MostOrderedProduct.Name
 <br />
 Your product which bring most Benefit is : @Model.MostBenefitProduct.Name
+<br />
+TODO:MAKE PARTIAL FOR TOP ORDERS PRODUCT AND SO ON
+<div class="container">
+    <form asp-action="WeeklyStatistics" asp-route-startDate="" asp-route-endDate="">
+        <div class="form-row">
+            <div class="input-group date col-md-3" data-provide="datepicker">
+                <input asp-for="StartDate" type="text" class="form-control datepicker-orient-bottom" placeholder="From date">
+                <div class="input-group-addon">
+                    <span><i class="far fa-calendar-alt"></i></span>
+                </div>
+            </div>
+            <div class="input-group date col-md-3" data-provide="datepicker">
+                <input asp-for="EndDate" type="text" class="form-control" placeholder="To date">
+                <div class="input-group-addon">
+                    <span><i class="far fa-calendar-alt"></i></span>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Get Statistic</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts
+{
+
+    <script type="text/javascript">
+        $('.datepicker').datepicker({
+            format: 'mm/dd/yyyy',
+            startDate: '-3d'
+        });
+    </script>
+
+}
