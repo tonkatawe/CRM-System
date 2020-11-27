@@ -4,7 +4,7 @@ using CRMSystem.Web.ViewModels.Products;
 
 namespace CRMSystem.Web.ViewModels.Statistics
 {
-    public class GeneralStatisticViewModel
+    public class StatisticViewModel
     {
         public DateTime StartDate { get; set; }
 

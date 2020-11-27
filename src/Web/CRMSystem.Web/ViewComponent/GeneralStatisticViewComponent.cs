@@ -40,7 +40,7 @@ namespace CRMSystem.Web.ViewComponent
             var mostBenefitProduct = await this.statisticsService.GetMostBenefitProductAsync<ProductViewModel>(organizationId);
             var organizationName =  this.organizationsService.GetName(userId);
 
-            var viewModel = new GeneralStatisticViewModel
+            var viewModel = new StatisticViewModel
             {
                 TotalBenefits = benefits,
                 BestCustomer = bestCustomer,
