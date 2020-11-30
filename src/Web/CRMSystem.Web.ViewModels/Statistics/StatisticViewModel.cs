@@ -15,5 +15,7 @@ namespace CRMSystem.Web.ViewModels.Statistics
         public CustomerViewModel CustomerWithMostOrders { get; set; }
         public ProductViewModel MostOrderedProduct { get; set; }
         public ProductViewModel MostBenefitProduct { get; set; }
+
+        public int OrdersCount { get; set; }
     }
 }

@@ -7,11 +7,11 @@
     public class EmailViewModel : IMapFrom<EmailAddress>
     {
         public int Id { get; set; }
-        public int ContactId { get; set; }
+        public int CustomerId { get; set; }
 
         public string Email { get; set; }
 
-        public Customer Contact { get; set; }
+        public Customer Customer { get; set; }
 
         public EmailType EmailType { get; set; }
     }

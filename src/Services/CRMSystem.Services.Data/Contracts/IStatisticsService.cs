@@ -17,5 +17,7 @@ namespace CRMSystem.Services.Data.Contracts
 
         bool ValidationDate(DateTime startDate, DateTime endDate, DateTime userStartDate);
 
+        Task<int> OrdersCount(int id);
+
     }
 }

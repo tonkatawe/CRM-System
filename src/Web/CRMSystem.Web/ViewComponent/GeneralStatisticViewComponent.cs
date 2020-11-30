@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CRMSystem.Web.ViewComponent
 {
     [ViewComponent(Name = "GeneralStatistic")]
-    public class GeneralStatisticViewComponent:Microsoft.AspNetCore.Mvc.ViewComponent
+    public class GeneralStatisticViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
     {
         private readonly IStatisticsService statisticsService;
         private readonly IOrganizationsService organizationsService;
@@ -38,7 +38,7 @@ namespace CRMSystem.Web.ViewComponent
             var customerWithMostOrders = await this.statisticsService.GetCustomerByOrdersAsync<CustomerViewModel>(organizationId);
             var mostOrdered = await this.statisticsService.GetMostOrderProductAsync<ProductViewModel>(organizationId);
             var mostBenefitProduct = await this.statisticsService.GetMostBenefitProductAsync<ProductViewModel>(organizationId);
-            var organizationName =  this.organizationsService.GetName(userId);
+            var organizationName = this.organizationsService.GetName(userId);
 
             var viewModel = new StatisticViewModel
             {
@@ -48,6 +48,7 @@ namespace CRMSystem.Web.ViewComponent
                 MostOrderedProduct = mostOrdered,
                 MostBenefitProduct = mostBenefitProduct,
                 OrganizationName = organizationName,
+                OrdersCount = await this.statisticsService.OrdersCount(organizationId),
             };
 
             return View(viewModel);

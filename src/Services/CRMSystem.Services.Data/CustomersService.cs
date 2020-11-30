@@ -114,13 +114,13 @@ namespace CRMSystem.Services.Data
             foreach (var email in input.Emails)
             {
                 var emailAddress = await this.emailsService.CreateAsync(email.Email, email.EmailType, customer.Id);
-                customer.EmailAddresses.Add(emailAddress);
+                customer.Emails.Add(emailAddress);
             }
 
             foreach (var phone in input.Phones)
             {
                 var phoneNumber = await this.phonesServices.CreateAsync(phone.Phone, phone.PhoneType, customer.Id);
-                customer.PhoneNumbers.Add(phoneNumber);
+                customer.Phones.Add(phoneNumber);
             }
 
             return customer.Id;

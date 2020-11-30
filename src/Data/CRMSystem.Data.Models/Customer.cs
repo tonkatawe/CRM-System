@@ -11,8 +11,8 @@
         public Customer()
         {
             this.Notes = new HashSet<Note>();
-            this.PhoneNumbers = new HashSet<PhoneNumber>();
-            this.EmailAddresses = new HashSet<EmailAddress>();
+            this.Phones = new HashSet<PhoneNumber>();
+            this.Emails = new HashSet<EmailAddress>();
             this.SocialNetworks = new HashSet<SocialNetwork>();
             this.Orders = new HashSet<Order>();
         }
@@ -31,6 +31,10 @@
         [Required]
         [MaxLength(20)]
         public string LastName { get; set; }
+
+        public string FullName => string.IsNullOrEmpty(this.MiddleName)
+            ? (this.FirstName + " " + this.LastName)
+            : (this.FirstName + " " + this.MiddleName + " " + this.LastName);
 
         [MaxLength(30)]
         public string JobTitle { get; set; }
@@ -55,12 +59,12 @@
         public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<Note> Notes { get; set; }
-        public virtual ICollection<PhoneNumber> PhoneNumbers { get; set; }
-               
-        public virtual ICollection<EmailAddress> EmailAddresses { get; set; }
-               
+        public virtual ICollection<PhoneNumber> Phones { get; set; }
+
+        public virtual ICollection<EmailAddress> Emails { get; set; }
+
         public virtual ICollection<SocialNetwork> SocialNetworks { get; set; }
-               
+
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

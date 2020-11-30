@@ -80,8 +80,8 @@ namespace CRMSystem.Web.Controllers
                 MostOrderedProduct = mostOrdered,
                 MostBenefitProduct = mostBenefitProduct,
                 OrganizationName = organizationName,
-            };
 
+            };
 
             return this.View(viewModel);
         }

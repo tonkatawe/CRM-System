@@ -23,7 +23,7 @@ namespace CRMSystem.Services.Data
             var result = this.customersRepository
                 .All()
                 .Where(x => x.UserId == userId)
-                .SelectMany(x => x.EmailAddresses)
+                .SelectMany(x => x.Emails)
                 .FirstOrDefault(x => x.Email == email && x.Id != id && x.CustomerId != customerId);
 
             return result == null;
@@ -35,7 +35,7 @@ namespace CRMSystem.Services.Data
             var result = this.customersRepository
                 .All()
                 .Where(x => x.UserId == userId)
-                .SelectMany(x => x.PhoneNumbers)
+                .SelectMany(x => x.Phones)
                 .FirstOrDefault(x => x.Phone == phone && x.Id != id && x.CustomerId != customerId);
 
             return result == null;

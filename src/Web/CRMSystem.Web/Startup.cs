@@ -89,7 +89,7 @@ namespace CRMSystem.Web
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender>(serviceProvider => new SendGridEmailSender("snedGridApi!:)"));
             services.AddTransient<ICustomersService, CustomersService>();
             services.AddTransient<IOrganizationsService, OrganizationsService>();
             services.AddTransient<IEmailsService, EmailsService>();
