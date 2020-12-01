@@ -25,6 +25,11 @@ namespace CRMSystem.Web.Controllers
             this.userManager = userManager;
         }
 
+        public async Task<IActionResult> Index(int id)
+        {
+            return this.View();
+        }
+
         [Authorize]
         public async Task<IActionResult> Create()
         {

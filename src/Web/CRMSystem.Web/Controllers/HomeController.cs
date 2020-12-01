@@ -1,4 +1,6 @@
-﻿using CRMSystem.Data.Models;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
+using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
 using Microsoft.AspNetCore.Identity;
 using IndexViewModel = CRMSystem.Web.ViewModels.Home.IndexViewModel;
@@ -13,32 +15,34 @@ namespace CRMSystem.Web.Controllers
 
     public class HomeController : BaseController
     {
-        private readonly ICustomersService contactsService;
-        private readonly IUserTasksService userTasksService;
-        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ICustomersService customersService;
+        private readonly IOrganizationsService organizationsService;
 
-        public HomeController(ICustomersService contactsService, IUserTasksService userTasksService, UserManager<ApplicationUser> userManager)
+
+        public HomeController(ICustomersService customersService, IOrganizationsService organizationsService)
         {
-            this.contactsService = contactsService;
-            this.userTasksService = userTasksService;
-            this.userManager = userManager;
+            this.customersService = customersService;
+            this.organizationsService = organizationsService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            if (!this.User.Identity.IsAuthenticated)
+            if (this.User.Identity.IsAuthenticated)
             {
-                return this.Redirect("/Identity/Account/Login");
+                var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                var organizationId = this.organizationsService.GetById(userId);
+                return this.RedirectToAction("Index", "Organizations", new {id = organizationId});
             }
 
-            var userId = this.userManager.GetUserId(this.User);
-           
-            var userTasksCount = this.userTasksService.GetUserTasksCount(userId);
+            var organizationsCount = await this.organizationsService.GetCountAsync();
+
+            var customersCount = await this.customersService.GetCountAsync();
      
 
             var viewModel = new IndexViewModel
             {
-                TaskCount = userTasksCount,
+                OrganizationsCount = organizationsCount,
+                CustomersCount = customersCount,
              
             };
 

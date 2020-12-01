@@ -8,6 +8,7 @@ using CRMSystem.Data.Models.Enums;
 using CRMSystem.Web.ViewModels.Customers;
 using CRMSystem.Web.ViewModels.Emails;
 using CRMSystem.Web.ViewModels.Phones;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace CRMSystem.Services.Data
@@ -108,8 +109,6 @@ namespace CRMSystem.Services.Data
                 AdditionalInfo = input.AdditionalInfo,
             };
 
-            await this.customersRepository.AddAsync(customer);
-            await this.customersRepository.SaveChangesAsync();
 
             foreach (var email in input.Emails)
             {
@@ -123,6 +122,8 @@ namespace CRMSystem.Services.Data
                 customer.Phones.Add(phoneNumber);
             }
 
+            await this.customersRepository.AddAsync(customer);
+            await this.customersRepository.SaveChangesAsync();
             return customer.Id;
         }
 
@@ -183,5 +184,11 @@ namespace CRMSystem.Services.Data
             return await this.customersRepository.SaveChangesAsync();
         }
 
+        public async Task<int> GetCountAsync()
+        {
+            return await this.customersRepository
+                .All()
+                .CountAsync();
+        }
     }
 }

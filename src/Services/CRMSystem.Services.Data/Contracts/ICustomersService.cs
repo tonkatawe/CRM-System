@@ -22,5 +22,8 @@ namespace CRMSystem.Services.Data.Contracts
         
         Task<int> UpdateAsync(EditCustomerInputModel input);
 
+        Task<int> GetCountAsync();
+
+
     }
 }

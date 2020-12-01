@@ -13,5 +13,7 @@
 
         string GetName(string userId);
 
+        Task<int> GetCountAsync();
+
     }
 }

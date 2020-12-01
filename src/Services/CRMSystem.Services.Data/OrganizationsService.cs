@@ -1,4 +1,6 @@
-﻿namespace CRMSystem.Services.Data
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace CRMSystem.Services.Data
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -65,6 +67,11 @@
                 .All()
                 .FirstOrDefault(x => x.UserId == userId)
                 .Name;
+        }
+
+        public async Task<int> GetCountAsync()
+        {
+            return await this.organizationRepository.All().CountAsync();
         }
     }
 }
