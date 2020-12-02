@@ -89,11 +89,12 @@ namespace CRMSystem.Services.Data
         public async Task<int> UpdateAsync(EditOrganizationInputModel input)
         {
             var organization = await this.organizationRepository.GetByIdWithDeletedAsync(input.Id);
+
+            await this.addressesService.UpdateAsync(input.Address);
+
+
             organization.Name = input.Name;
             organization.Description = input.Description;
-            organization.Address.Country = input.Address.Country;
-            organization.Address.City = input.Address.City;
-            organization.Address.ZipCode = input.Address.ZipCode;
             this.organizationRepository.Update(organization);
 
             return await this.organizationRepository.SaveChangesAsync();
