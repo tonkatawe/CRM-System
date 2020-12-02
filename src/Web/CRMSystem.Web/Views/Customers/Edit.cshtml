@@ -1,12 +1,11 @@
 ﻿
+@model CRMSystem.Web.ViewModels.Customers.EditCustomerInputModel
 @using CRMSystem.Data.Models.Enums
-@using CRMSystem.Web.ViewModels.Emails
 @using CRMSystem.Data.Models
 @{
     this.ViewData["Title"] = "Edit Customer";
 
 }
-@model CRMSystem.Web.ViewModels.Customers.EditCustomerInputModel
 <body id="page-top">
     <form style="padding-bottom: 7rem" method="post" asp-action="Edit" asp-controller="Customers">
         <div asp-validation-summary="All" class="text-danger"></div>
@@ -54,7 +53,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label><b>McustomerIddle Name:</b></label>
+                                            <label><b>Middle Name:</b></label>
                                         </div>
                                         <div class="col-md-6">
                                             <p>

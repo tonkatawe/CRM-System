@@ -16,5 +16,9 @@
 
         Task<int> GetCountAsync();
 
+        Task<int> UpdateAsync(EditOrganizationInputModel input);
+
+
+
     }
 }

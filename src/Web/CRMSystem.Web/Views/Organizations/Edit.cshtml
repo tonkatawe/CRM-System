@@ -1,0 +1,78 @@
+﻿
+@model CRMSystem.Web.ViewModels.Organizations.EditOrganizationInputModel
+
+@{
+    this.ViewData["Title"] = "Edit Organization";
+
+}
+<body id="page-top">
+    <form style="padding-bottom: 7rem" method="post" asp-action="Edit" asp-controller="Organizations">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label><b>Name:</b></label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>
+                                                <input asp-for="Name" value="@Model.Name" class="form-control" />
+                                                <span asp-validation-for="Name" class="text-danger"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label><b>Description:</b></label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>
+                                                <textarea asp-for="Description" value="@Model.Description" class="form-control"></textarea>
+                                                <span asp-validation-for="Description" class="text-danger"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label><b>Address:</b></label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>
+                                                Country <br />
+                                                <input asp-for="Address.Country" value="@Model.Address.Country" class="form-control" /><br />
+                                                City<br />
+                                                <input asp-for="Address.City" value="@Model.Address.City" class="form-control" /><br />
+                                                Street<br />
+                                                <input asp-for="Address.Street" value="@Model.Address.Street" class="form-control" /><br />
+                                                Zip Code<br /><input asp-for="Address.ZipCode" value="@Model.Address.ZipCode" class="form-control" />
+                                                <input asp-for="Address.Id" type="hidden" />
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <input asp-for="@Model.Id" type="hidden" />
+                                    <div class="justify-content-center">
+                                        <button type="submit" class="btn btn-primary rounded-pill">Save Changes</button>
+                                        <a asp-action="Index" class="btn btn-danger rounded-pill">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+
+@section Scripts
+{
+
+    <script src="~/js/CreateEditCustomer.js"></script>
+}
