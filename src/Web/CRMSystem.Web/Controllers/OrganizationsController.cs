@@ -65,7 +65,10 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Edit()
         {
             var user = await this.userManager.GetUserAsync(this.User);
-
+            if (user == null)
+            {
+                return NotFound();
+            }
             var viewModel = this.organizationsService.GetById<EditOrganizationInputModel>(user.Id);
             return this.View(viewModel);
         }

@@ -6,17 +6,31 @@
 
 }
 
-
 <p>
-    <a asp-action="Create">Add New Customer</a>
+    <a asp-action="Create" class="btn btn-primary btn-icon-split rounded-pill">
+        <span class="icon text-white-50">
+            <i class="fas fa-user-plus"></i>
+        </span>
+        <span class="text">Add New Customer</span>
+    </a>
 </p>
 
 <form asp-action="Index" method="get">
-    <div class="form-actions no-color">
+    <div class="row">
         <p>
-            Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-            <input type="submit" value="Search" class="btn btn-default" /> |
-            <a asp-action="Index">Back to Full List</a>
+            Find by name: <input type="text" class="rounded-pill" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                          <button type="submit" class="btn btn-primary btn-icon-split rounded-pill btn-sm">
+                              <span class="icon text-white-50">
+                                  <i class="fas fa-search"></i>
+                                  </span> 
+                              <span class="text">Search</span>
+            </button>
+            <a asp-action="Index"  class="btn btn-info btn-icon-split rounded-pill btn-sm">
+                <span class="icon text-white-50">
+                    <i class="far fa-arrow-alt-circle-left"></i>
+                    </span> 
+                <span class="text">Back to full list</span>
+            </a>
         </p>
     </div>
 </form>
@@ -63,12 +77,27 @@
                     }
 </td>
                 <td>
-                    <a asp-controller="Orders" asp-action="Create" asp-route-id="@customer.Id">Add Order</a> |
-                    <a asp-action="Details" asp-route-id="@customer.Id">Details</a> |
+                    <a asp-controller="Orders" asp-action="Create" asp-route-id="@customer.Id" class="btn btn-primary btn-icon-split rounded-pill btn-sm">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-plus"></i> 
+                            </span>
+                        <span class="text">Add Order</span>
+                    </a> 
+                    <a asp-action="Details" asp-route-id="@customer.Id" class="btn btn-info btn-icon-split rounded-pill btn-sm">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-info"></i>
+                        </span>
+                        <span class="text">Details</span>
+                    </a> 
                     <a asp-route-id="@customer.Id" data-toggle="modal"
-                       data-target="#modal-delete" data-customerId="@customer.Id">Delete</a>
+                       data-target="#modal-delete" data-customerId="@customer.Id" class="btn btn-danger btn-icon-split rounded-pill btn-sm">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-user-times"></i>  
+                            </span>
+                        <span class="text">Delete</span>
+                    </a>
 
-                    <form asp-action="Delete" role="form" id="myForm">
+                    <form asp-action="Delete" role="form" id="myForm" >
                         <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -83,8 +112,8 @@
                                         <input type="hidden" id="hiddenId" asp-for="@customer.Id"/>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                        <button type="submit" asp-action="Delete" asp-route-id="@customer.Id" class="btn btn-danger" id="modalDeleteButton">Delete</button>
+                                        <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" asp-action="Delete" asp-route-id="@customer.Id" class="btn btn-danger rounded-pill" id="modalDeleteButton">Delete</button>
                                     </div>
                                 </div>
                             </div>
