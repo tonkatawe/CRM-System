@@ -5,7 +5,7 @@
 
     using CRMSystem.Data.Common.Models;
 
-    public class Organization : BaseDeletableModel<int>
+    public class Organization : BaseDeletableModel<int>, IAuditInfo
     {
         public Organization()
         {

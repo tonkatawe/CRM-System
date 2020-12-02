@@ -154,6 +154,9 @@ namespace CRMSystem.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -771,7 +774,7 @@ namespace CRMSystem.Data.Migrations
             modelBuilder.Entity("CRMSystem.Data.Models.EmailAddress", b =>
                 {
                     b.HasOne("CRMSystem.Data.Models.Customer", "Customer")
-                        .WithMany("EmailAddresses")
+                        .WithMany("Emails")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -850,7 +853,7 @@ namespace CRMSystem.Data.Migrations
             modelBuilder.Entity("CRMSystem.Data.Models.PhoneNumber", b =>
                 {
                     b.HasOne("CRMSystem.Data.Models.Customer", "Customer")
-                        .WithMany("PhoneNumbers")
+                        .WithMany("Phones")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -959,13 +962,13 @@ namespace CRMSystem.Data.Migrations
 
             modelBuilder.Entity("CRMSystem.Data.Models.Customer", b =>
                 {
-                    b.Navigation("EmailAddresses");
+                    b.Navigation("Emails");
 
                     b.Navigation("Notes");
 
                     b.Navigation("Orders");
 
-                    b.Navigation("PhoneNumbers");
+                    b.Navigation("Phones");
 
                     b.Navigation("SocialNetworks");
                 });

@@ -24,7 +24,7 @@ namespace CRMSystem.Services.Data
 
         public async Task<int> CreateAsync(ProductCreateInputModel input, string userId, string imagePath)
         {
-            var organizationId = this.organizationsService.GetById(userId);
+            var organizationId = this.organizationsService.GetId(userId);
 
             var product = new Product
             {
@@ -94,7 +94,7 @@ namespace CRMSystem.Services.Data
 
         public IQueryable<T> GetAll<T>(string userId)
         {
-            var organizationId = this.organizationsService.GetById(userId);
+            var organizationId = this.organizationsService.GetId(userId);
             return this.productsRepository
                 .All()
                 .Where(x => x.OrganizationId == organizationId)
@@ -104,7 +104,7 @@ namespace CRMSystem.Services.Data
 
         public int ProductsCount(string userId)
         {
-            var organizationId = this.organizationsService.GetById(userId);
+            var organizationId = this.organizationsService.GetId(userId);
             var products = this.productsRepository
                 .All()
                 .Where(x => x.OrganizationId == organizationId)

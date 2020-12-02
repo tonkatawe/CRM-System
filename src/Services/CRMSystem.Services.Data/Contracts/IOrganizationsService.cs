@@ -9,7 +9,8 @@
     {
         Task<int> CreateOrganizationAsync(OrganizationCreateInputModel input, string userId);
 
-        int GetById(string userId);
+        int GetId(string userId);
+        T GetById<T>(string userId);
 
         string GetName(string userId);
 

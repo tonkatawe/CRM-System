@@ -35,7 +35,7 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Index(IndexViewModel input)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var organizationId = this.organizationsService.GetById(userId);
+            var organizationId = this.organizationsService.GetId(userId);
             var userStartDate = await this.statisticsService.GetStartDateAsync(organizationId);
 
             try
@@ -55,7 +55,7 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> RangeStatistic(DateTime startDate, DateTime endDate)
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var organizationId = this.organizationsService.GetById(userId);
+            var organizationId = this.organizationsService.GetId(userId);
             var userStartDate = await this.statisticsService.GetStartDateAsync(organizationId);
 
             if (!this.statisticsService.ValidationDate(startDate, endDate, userStartDate))

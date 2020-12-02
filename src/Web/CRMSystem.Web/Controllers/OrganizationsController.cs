@@ -1,4 +1,5 @@
-﻿using CRMSystem.Web.ViewModels.Customers;
+﻿using System.Security.Claims;
+using CRMSystem.Web.ViewModels.Customers;
 
 namespace CRMSystem.Web.Controllers
 {
@@ -25,9 +26,15 @@ namespace CRMSystem.Web.Controllers
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> Index(int id)
+        public async Task<IActionResult> Index()
         {
-            return this.View();
+            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var viewModel = this.organizationsService.GetById<OrganizationViewModel>(userId);
+       //     viewModel.CustomerCount = user.Organization.Customers.Count;
+         //   viewModel.Id = user.Organization.Id;
+           // viewModel.ProductCount = user.Organization.Products.Count;
+            return this.View(viewModel);
         }
 
         [Authorize]

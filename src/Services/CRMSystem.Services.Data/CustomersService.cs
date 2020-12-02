@@ -94,7 +94,7 @@ namespace CRMSystem.Services.Data
         {
             var address = await this.addressesService.CreateAsync(input.Address.Country, input.Address.City,
                 input.Address.Street, input.Address.ZipCode);
-            var organizationId = this.organizationsService.GetById(userId);
+            var organizationId = this.organizationsService.GetId(userId);
             var customer = new Customer
             {
                 Address = address,

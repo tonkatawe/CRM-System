@@ -40,8 +40,10 @@ namespace CRMSystem.Services.Data
                 Description = input.Description,
                 Address = address,
             };
-            await this.organizationRepository.AddAsync(organization);
-            await this.organizationRepository.SaveChangesAsync();
+            //new for test
+            user.Organization = organization;
+            //await this.organizationRepository.AddAsync(organization);
+            //await this.organizationRepository.SaveChangesAsync();
             user.HasOrganization = true;
             this.userRepository.Update(user);
 
@@ -51,14 +53,24 @@ namespace CRMSystem.Services.Data
 
 
 
-        public int GetById(string userId)
+        public int GetId(string userId)
         {
-            var query = this.organizationRepository.All()
-                    .Where(x => x.UserId == userId)
-                    .OrderBy(x => x.Name)
-                   .FirstOrDefault();
+            var query = this.organizationRepository
+                .All()
+                .FirstOrDefault(x => x.UserId == userId);
 
             return query.Id;
+        }
+
+        public T GetById<T>(string userId)
+        {
+            var query = this.organizationRepository
+                .All()
+                .Where(x => x.UserId == userId)
+                .To<T>()
+                .FirstOrDefault();
+
+            return query;
         }
 
         public string GetName(string userId)

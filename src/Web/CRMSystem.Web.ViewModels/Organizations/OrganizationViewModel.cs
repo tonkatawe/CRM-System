@@ -1,4 +1,9 @@
-﻿namespace CRMSystem.Web.ViewModels.Organizations
+﻿using System.Collections.Generic;
+using AutoMapper;
+using CRMSystem.Web.ViewModels.Customers;
+using CRMSystem.Web.ViewModels.Products;
+
+namespace CRMSystem.Web.ViewModels.Organizations
 {
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Mapping;
@@ -14,9 +19,9 @@
         public int AddressId { get; set; }
 
         public Address Address { get; set; }
-
-        public string UserId { get; set; }
-
-        public ApplicationUser User { get; set; }
+        
+        public IEnumerable<CustomerViewModel> Customers { get; set; }
+        public IEnumerable<ProductViewModel> Products { get; set; }
+     
     }
 }

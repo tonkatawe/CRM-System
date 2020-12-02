@@ -26,7 +26,7 @@ namespace CRMSystem.Web.ViewComponent
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var userId = this.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            var organizationId = this.organizationsService.GetById(userId);
+            var organizationId = this.organizationsService.GetId(userId);
 
             var startDate = await this.statisticsService.GetStartDateAsync(organizationId);
             var endDate = DateTime.UtcNow;

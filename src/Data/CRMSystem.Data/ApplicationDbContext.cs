@@ -77,6 +77,13 @@ namespace CRMSystem.Data
 
             EntityIndexesConfiguration.Configure(builder);
 
+
+            builder.Entity<Organization>()
+                .HasOne(o => o.User)
+                .WithOne(u => u.Organization)
+                .HasForeignKey<ApplicationUser>(u => u.OrganizationId);
+
+
             var entityTypes = builder.Model.GetEntityTypes().ToList();
 
             // Set global query filter for not deleted entities only

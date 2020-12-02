@@ -1,11 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CRMSystem.Web.Views.Organizations
-{
-    public class Index
-    {
-    }
+﻿@model CRMSystem.Web.ViewModels.Organizations.OrganizationViewModel
+@{
+    this.ViewData["Title"] = $"{@Model.Name}";
 }
+<div class="container-fluid">
+    <div class="align-content-center">
+        <center>  <h2 class="justify-content-center">@Model.Name</h2></center>
+    </div>
+    <hr />
+
+    <div class="card">
+        <div class="card-body">
+            <i class="fas fa-info"></i>
+            @Model.Description
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <i class="fas fa-map-marked"></i>
+            @Model.Address.Country, @Model.Address.City, @Model.Address.Street, @Model.Address.ZipCode
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <i class="fas fa-users"></i>You have @Model.Customers.Count() customers
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <i class="fas fa-dolly"></i>You have @Model.Products.Count() products
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <a asp-controller="Customers" asp-action="Index" class="btn btn-primary rounded-pill col-md-12">
+
+                <span class="text">Your customers</span>
+            </a>
+        </div>
+        <div class="form-group col-md-4">
+            <a asp-controller="Products" asp-action="Index" class="btn btn-primary rounded-pill col-md-12">
+
+                <span class="text">Your products</span>
+            </a>
+        </div>
+        <div class="form-group col-md-4">
+            <a asp-controller="Statistics" asp-action="Index" class="btn btn-primary rounded-pill col-md-12">
+
+                <span class="text">Your statistic</span>
+            </a>
+        </div>
+    </div>
+    <div class="justify-content-center">
+        <a href="#" class="btn btn-danger rounded-pill col-md-12">
+
+            <span class="text">Edit your organization</span>
+        </a>
+    </div>
+</div>

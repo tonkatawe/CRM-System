@@ -17,34 +17,44 @@ namespace CRMSystem.Web.Controllers
     {
         private readonly ICustomersService customersService;
         private readonly IOrganizationsService organizationsService;
+        private readonly UserManager<ApplicationUser> userManager;
 
 
-        public HomeController(ICustomersService customersService, IOrganizationsService organizationsService)
+        public HomeController(ICustomersService customersService, IOrganizationsService organizationsService, UserManager<ApplicationUser> userManager)
         {
             this.customersService = customersService;
             this.organizationsService = organizationsService;
+            this.userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
         {
-            if (this.User.Identity.IsAuthenticated)
-            {
-                var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-                var organizationId = this.organizationsService.GetById(userId);
-                return this.RedirectToAction("Index", "Organizations", new {id = organizationId});
-            }
-
+         
             var organizationsCount = await this.organizationsService.GetCountAsync();
-
             var customersCount = await this.customersService.GetCountAsync();
-     
-
+            
             var viewModel = new IndexViewModel
             {
                 OrganizationsCount = organizationsCount,
                 CustomersCount = customersCount,
-             
+
             };
+
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            if (user == null)
+            {
+                return this.View(viewModel);
+            }
+
+            if (user.HasOrganization)
+            {
+                return this.RedirectToAction("Index", "Organizations");
+            }
+
+         
+
+
 
 
             return this.View(viewModel);
