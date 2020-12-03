@@ -7,8 +7,9 @@
 <h2>@Model.CustomerId</h2>
 <h1>@this.ViewData["Title"]</h1>
 
+
 <form method="post" asp-action="Create">
-   <div asp-validation-summary="All" class="text-danger"></div>
+    <div asp-validation-summary="All" class="text-danger"></div>
     <div>
         <label asp-for="Quantity"></label>
         <input asp-for="Quantity" class="form-control" />
@@ -17,10 +18,86 @@
 
     <div>
         <label asp-for="ProductId"></label>
-        <select asp-for="ProductId" asp-items="products" class="form-control"></select>
+        <select asp-for="ProductId" asp-items="products"  id="ProductId" class="form-control" ><option disabled selected>--Select Product--</option></select>
         <span asp-validation-for="ProductId" class="text-danger"></span>
     </div>
-   <input asp-for="CustomerId" type="hidden"/>
-   <input asp-for="Products" type="hidden"/>
+    <input asp-for="CustomerId" type="hidden" />
+    <input asp-for="Products" type="hidden" />
     <input type="submit" class="btn btn-primary" />
 </form>
+
+
+
+<div id="container"></div>
+ 
+
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#ProductId").change(function (e) {
+
+                var product = { "ProductId": $(this).val() };
+                $.ajax({
+                    type: 'get',
+                    url: '@Url.Action("ProductPartial")',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'html',
+                    data: { "ProductId": $(this).val() },
+                    success: function (result) {
+                        $("#container").html(result);
+                    },
+                    error: function (ex) {
+                        alert("Error");
+                    }
+                });
+
+            });
+
+        });
+    </script>
+    
+    <script type="text/javascript">
+        $(function () {
+            $(document).ready(function() {
+                $("#ProductId").change(function () {
+                    if ($(this).val() != "Ghana") { // It doesn't work over here.
+                        $("#showStateLga").show();
+                    } else {
+                        $("#showStateLga").hide();
+                    }
+                });
+            });
+        });
+    </script>
+  
+    <script>
+        $(document).ready(function () {
+            $("select").change(function () {
+                $(this).find("option:selected").each(function () {
+                    var optionValue = $(this).attr("value");
+                    if (optionValue) {
+                        $(".box").not("." + optionValue).hide();
+                        $("." + optionValue).show();
+                    } else {
+                        $(".box").hide();
+                    }
+                });
+            }).change();
+        });
+        function ProductInfo() {
+            $("#test").show();
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $("#AddPhoneForm").offset().top
+            }, 1500);
+
+
+
+            function cancel() {
+                $("#DetailsContent").hide();
+                $("#FirstName").show();
+
+            }
+    </script>
+}

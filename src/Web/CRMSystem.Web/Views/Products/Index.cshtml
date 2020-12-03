@@ -8,31 +8,7 @@
     <div class="row">
         @foreach (var product in Model)
         {
-            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
-                <div class="card">
-                    <img class="card-img justify-content-center" src="@product.ImageUrl" alt="Vans">
-                    <div class="card-img-overlay d-flex justify-content-end">
-                        <a asp-action="Edit" asp-route-id="@product.Id" class="card-link text-danger">
-                            <i class="fas fa-pen" style="color: red" title="Edit this product"></i>
-                        </a>
-                        <a asp-action="Delete" asp-route-id="@product.Id" class="card-link text-danger">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </div>
-
-                    <div class="card-body">
-                        <h4 class="card-title">@product.Name</h4>
-                        <p class="card-text">
-                            @product.Description
-                        </p>
-                        <h6 class="card-subtitle mb-2 text-muted">Quantity in storage: <b>@product.Quantity</b></h6>
-                        <div class="buy d-flex justify-content-between align-items-center">
-                            <div class="text-success"><h5 class="mt-4">@product.Price</h5></div>
-                        </div>
-                    </div>
-                </div>
-             
-            </div>
+        <partial name="_ProductPartial" model="@product"/>
         }
     </div>
 </div>

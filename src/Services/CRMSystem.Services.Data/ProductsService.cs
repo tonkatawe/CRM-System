@@ -36,25 +36,27 @@ namespace CRMSystem.Services.Data
             };
 
 
-
-            Directory.CreateDirectory($"{imagePath}/products");
-            foreach (var image in input.Images)
+            if (input.Images != null)
             {
-                var extension = Path.GetExtension(image.FileName).TrimStart('.');
-                if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
+                Directory.CreateDirectory($"{imagePath}/products");
+                foreach (var image in input.Images)
                 {
-                    throw new Exception($"Invalid image extension {extension}");
+                    var extension = Path.GetExtension(image.FileName).TrimStart('.');
+                    if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
+                    {
+                        throw new Exception($"Invalid image extension {extension}");
+                    }
+
+                    var dbImage = new Image
+                    {
+                        Extension = extension,
+                    };
+                    product.Images.Add(dbImage);
+
+                    var physicalPath = $"{imagePath}/products/{dbImage.Id}.{extension}";
+                    await using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
+                    await image.CopyToAsync(fileStream);
                 }
-
-                var dbImage = new Image
-                {
-                    Extension = extension,
-                };
-                product.Images.Add(dbImage);
-
-                var physicalPath = $"{imagePath}/products/{dbImage.Id}.{extension}";
-                await using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
-                await image.CopyToAsync(fileStream);
             }
 
             await this.productsRepository.AddAsync(product);

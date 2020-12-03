@@ -109,6 +109,9 @@ namespace CRMSystem.Services.Data
                 AdditionalInfo = input.AdditionalInfo,
             };
 
+            await this.customersRepository.AddAsync(customer);
+            await this.customersRepository.SaveChangesAsync();
+
 
             foreach (var email in input.Emails)
             {
@@ -122,8 +125,7 @@ namespace CRMSystem.Services.Data
                 customer.Phones.Add(phoneNumber);
             }
 
-            await this.customersRepository.AddAsync(customer);
-            await this.customersRepository.SaveChangesAsync();
+           
             return customer.Id;
         }
 

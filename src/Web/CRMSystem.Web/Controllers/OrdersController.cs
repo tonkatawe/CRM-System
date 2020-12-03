@@ -122,6 +122,11 @@ namespace CRMSystem.Web.Controllers
 
             return this.View(viewModel);
         }
+        public PartialViewResult ProductPartial(int productId)
+        {
+            var viewModel = this.productsService.GetById<ProductViewModel>(productId);
+            return PartialView("_ProductPartial", viewModel);
+        }
 
     }
 }

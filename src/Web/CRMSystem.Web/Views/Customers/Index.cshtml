@@ -6,14 +6,7 @@
 
 }
 
-<p>
-    <a asp-action="Create" class="btn btn-primary btn-icon-split rounded-pill">
-        <span class="icon text-white-50">
-            <i class="fas fa-user-plus"></i>
-        </span>
-        <span class="text">Add New Customer</span>
-    </a>
-</p>
+
 
 <form asp-action="Index" method="get">
     <div class="row">
@@ -143,8 +136,8 @@
         </a>
         @for (var i = 1; i <= Model.TotalPages; i++)
         {
-            <li class="page-item @(Model.PageIndex == i ? "active" : string.Empty)">
-                <a class="page-link" asp-route-pageNumber="@i">@i</a>
+            <li class="page-item  @(Model.PageIndex == i ? "active" : string.Empty)">
+                <a class="page-link rounded-pill" asp-route-pageNumber="@i">@i</a>
             </li>
         }
          <a asp-action="Index"
@@ -152,10 +145,19 @@
            asp-route-pageNumber="@(Model.PageIndex + 1)"
            asp-route-currentFilter="@ViewData["CurrentFilter"]"
            class="btn btn-default @nextDisabled">
-       Next
+         Next
         </a>
    
 </ul>
+
+<div>
+    <a asp-action="Create" class="btn btn-primary btn-icon-split rounded-pill">
+        <span class="icon text-white-50">
+            <i class="fas fa-user-plus"></i>
+        </span>
+        <span class="text">Add New Customer</span>
+    </a>
+</div>
 
 @section Scripts
 {
