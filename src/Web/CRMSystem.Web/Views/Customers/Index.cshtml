@@ -12,16 +12,16 @@
     <div class="row">
         <p>
             Find by name: <input type="text" class="rounded-pill" name="SearchString" value="@ViewData["CurrentFilter"]" />
-                          <button type="submit" class="btn btn-primary btn-icon-split rounded-pill btn-sm">
-                              <span class="icon text-white-50">
-                                  <i class="fas fa-search"></i>
-                                  </span> 
-                              <span class="text">Search</span>
+            <button type="submit" class="btn btn-primary btn-icon-split rounded-pill btn-sm">
+                <span class="icon text-white-50">
+                    <i class="fas fa-search"></i>
+                </span>
+                <span class="text">Search</span>
             </button>
-            <a asp-action="Index"  class="btn btn-info btn-icon-split rounded-pill btn-sm">
+            <a asp-action="Index" class="btn btn-info btn-icon-split rounded-pill btn-sm">
                 <span class="icon text-white-50">
                     <i class="far fa-arrow-alt-circle-left"></i>
-                    </span> 
+                </span>
                 <span class="text">Back to full list</span>
             </a>
         </p>
@@ -40,7 +40,9 @@
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["SortByDate"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Orders</a>
             </th>
-            <th></th>
+            <th class="flex-center">
+               Customer Settings
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -63,34 +65,40 @@
                     }
                     else
                     {
-                        
-                <a asp-action="History" asp-controller="Orders" asp-route-id="@customer.Id" asp-route-fullname="@customer.FullName" title="See history">
-                    @customer.OrdersCount
-                    </a>
+
+                        <a asp-action="History" asp-controller="Orders" asp-route-id="@customer.Id" asp-route-fullname="@customer.FullName" title="See history">
+                            @customer.OrdersCount
+                        </a>
                     }
-</td>
+                </td>
                 <td>
+                    <a asp-controller="Accounts" asp-action="Index" asp-route-organizationId="@customer.OrganizationId" asp-route-id="@customer.Id" class="btn btn-warning btn-icon-split rounded-pill btn-sm">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-user-plus"></i>
+                        </span>
+                        <span class="text">Add account</span>
+                    </a>
                     <a asp-controller="Orders" asp-action="Create" asp-route-id="@customer.Id" class="btn btn-primary btn-icon-split rounded-pill btn-sm">
                         <span class="icon text-white-50">
-                            <i class="fas fa-plus"></i> 
-                            </span>
+                            <i class="fas fa-plus"></i>
+                        </span>
                         <span class="text">Add Order</span>
-                    </a> 
+                    </a>
                     <a asp-action="Details" asp-route-id="@customer.Id" class="btn btn-info btn-icon-split rounded-pill btn-sm">
                         <span class="icon text-white-50">
                             <i class="fas fa-info"></i>
                         </span>
                         <span class="text">Details</span>
-                    </a> 
+                    </a>
                     <a asp-route-id="@customer.Id" data-toggle="modal"
                        data-target="#modal-delete" data-customerId="@customer.Id" class="btn btn-danger btn-icon-split rounded-pill btn-sm">
                         <span class="icon text-white-50">
-                            <i class="fas fa-user-times"></i>  
-                            </span>
+                            <i class="fas fa-user-times"></i>
+                        </span>
                         <span class="text">Delete</span>
                     </a>
 
-                    <form asp-action="Delete" role="form" id="myForm" >
+                    <form asp-action="Delete" role="form" id="myForm">
                         <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -102,7 +110,7 @@
                                     </div>
                                     <div class="form-control">
                                         Are you sure you want to delete @customer.FullName?
-                                        <input type="hidden" id="hiddenId" asp-for="@customer.Id"/>
+                                        <input type="hidden" id="hiddenId" asp-for="@customer.Id" />
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Cancel</button>
@@ -126,28 +134,28 @@
 
 
 <ul class="pagination">
-    
-   <a asp-action="Index"
-           asp-route-sortOrder="@ViewData["CurrentSort"]"
-           asp-route-pageNumber="@(Model.PageIndex - 1)"
-           asp-route-currentFilter="@ViewData["CurrentFilter"]"
-           class="btn btn-default @prevDisabled">
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @prevDisabled">
         Previous
-        </a>
-        @for (var i = 1; i <= Model.TotalPages; i++)
-        {
-            <li class="page-item  @(Model.PageIndex == i ? "active" : string.Empty)">
-                <a class="page-link rounded-pill" asp-route-pageNumber="@i">@i</a>
-            </li>
-        }
-         <a asp-action="Index"
-           asp-route-sortOrder="@ViewData["CurrentSort"]"
-           asp-route-pageNumber="@(Model.PageIndex + 1)"
-           asp-route-currentFilter="@ViewData["CurrentFilter"]"
-           class="btn btn-default @nextDisabled">
-         Next
-        </a>
-   
+    </a>
+    @for (var i = 1; i <= Model.TotalPages; i++)
+    {
+        <li class="page-item  @(Model.PageIndex == i ? "active" : string.Empty)">
+            <a class="page-link rounded-pill" asp-route-pageNumber="@i">@i</a>
+        </li>
+    }
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+
 </ul>
 
 <div>

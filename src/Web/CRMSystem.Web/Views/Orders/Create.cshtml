@@ -1,35 +1,41 @@
 ﻿@model CRMSystem.Web.ViewModels.Sales.OrderCreateInputModel
 @{
-    this.ViewData["Title"] = "Add sale to customer";
+    this.ViewData["Title"] = "Add order to customer";
     var products = Model.Products.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
 }
 
-<h2>@Model.CustomerId</h2>
 <h1>@this.ViewData["Title"]</h1>
 
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div>
+                <label asp-for="Quantity"></label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
 
-<form method="post" asp-action="Create">
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div>
-        <label asp-for="Quantity"></label>
-        <input asp-for="Quantity" class="form-control" />
-        <span asp-validation-for="Quantity" class="text-danger"></span>
+            <div>
+                <label asp-for="ProductId"></label>
+                <select asp-for="ProductId" asp-items="products" id="ProductId" class="form-control"><option disabled selected>--Select Product--</option></select>
+                <span asp-validation-for="ProductId" class="text-danger"></span>
+            </div>
+            <input asp-for="CustomerId" type="hidden" />
+            <input asp-for="Products" type="hidden" />
+            <div>
+                <button type="submit" class="btn btn-primary rounded-pill">Add order</button>
+            </div>
+        </form>
     </div>
-
-    <div>
-        <label asp-for="ProductId"></label>
-        <select asp-for="ProductId" asp-items="products"  id="ProductId" class="form-control" ><option disabled selected>--Select Product--</option></select>
-        <span asp-validation-for="ProductId" class="text-danger"></span>
+    <div class="col-md-6">
+        <div id="container"></div>
     </div>
-    <input asp-for="CustomerId" type="hidden" />
-    <input asp-for="Products" type="hidden" />
-    <input type="submit" class="btn btn-primary" />
-</form>
+</div>
 
 
 
-<div id="container"></div>
- 
+
 
 
 @section Scripts
@@ -38,7 +44,6 @@
         $(document).ready(function () {
             $("#ProductId").change(function (e) {
 
-                var product = { "ProductId": $(this).val() };
                 $.ajax({
                     type: 'get',
                     url: '@Url.Action("ProductPartial")',
@@ -57,10 +62,10 @@
 
         });
     </script>
-    
+
     <script type="text/javascript">
         $(function () {
-            $(document).ready(function() {
+            $(document).ready(function () {
                 $("#ProductId").change(function () {
                     if ($(this).val() != "Ghana") { // It doesn't work over here.
                         $("#showStateLga").show();
@@ -71,7 +76,7 @@
             });
         });
     </script>
-  
+
     <script>
         $(document).ready(function () {
             $("select").change(function () {

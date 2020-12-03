@@ -26,7 +26,7 @@ namespace CRMSystem.Web.ViewModels.Products
             configuration.CreateMap<Product, ProductViewModel>()
                 .ForMember(x => x.ImageUrl, options =>
                     options.MapFrom(x => x.Images.FirstOrDefault().Id == null ?
-                        "images/default-img.gif" :
+                        "/images/default-img.gif" :
                         "/images/products/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extension));
         }
     }
