@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CRMSystem.Common;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Services.Messaging;
 using CRMSystem.Web.ViewModels.Customers;
@@ -68,9 +69,9 @@ namespace CRMSystem.Web.Controllers
             //todo make get user or organization name
             var from = this.User.FindFirst(ClaimTypes.Email).Value;
             await this.emailSender.SendEmailAsync(
-                from,
+                GlobalConstants.SystemEmail,
                 "User - Name",
-                input.Email,
+                GlobalConstants.SystemEmail,
                 input.Subject,
                 input.Content);
 

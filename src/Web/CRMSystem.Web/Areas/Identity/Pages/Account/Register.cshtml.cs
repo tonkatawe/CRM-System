@@ -84,10 +84,13 @@ namespace CRMSystem.Web.Areas.Identity.Pages.Account
             {
                 var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
-                
+
                 if (result.Succeeded)
                 {
+                    //Every user must be add as role "Owner". It isn't required email confirmation
                     await _userManager.AddToRoleAsync(user, GlobalConstants.OwnerUserRoleName);
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    await _userManager.ConfirmEmailAsync(user, token);
 
                     _logger.LogInformation("User created a new account with password.");
 

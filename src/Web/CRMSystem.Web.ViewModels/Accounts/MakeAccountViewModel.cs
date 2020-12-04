@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using AutoMapper;
 using CRMSystem.Data.Models;
@@ -12,17 +13,23 @@ namespace CRMSystem.Web.ViewModels.Accounts
     public class MakeAccountViewModel : IMapFrom<Customer>, IHaveCustomMappings
     {
         public int Id { get; set; }
+
+        [Required]
         public string Username { get; set; }
 
+        [Required]
         public string Password { get; set; }
 
         public string FullName { get; set; }
 
         public IEnumerable<EmailDropDownViewModel> Emails { get; set; }
+
+        [Required]
         public string Email { get; set; }
 
         public IEnumerable<PhoneDropDownViewModel> Phones { get; set; }
 
+        [Required]
         public string Phone { get; set; }
 
         public int OrganizationId { get; set; }
