@@ -1,4 +1,7 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
+
+using System.ComponentModel.DataAnnotations;
+
 namespace CRMSystem.Data.Models
 {
     using System;

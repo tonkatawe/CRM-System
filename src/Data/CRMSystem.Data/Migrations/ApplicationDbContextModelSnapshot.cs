@@ -154,7 +154,7 @@ namespace CRMSystem.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("OrganizationId")
+                    b.Property<int?>("OrganizationId")
                         .HasColumnType("int");
 
                     b.Property<string>("PasswordHash")
@@ -187,6 +187,10 @@ namespace CRMSystem.Data.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("OrganizationId")
+                        .IsUnique()
+                        .HasFilter("[OrganizationId] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -446,16 +450,13 @@ namespace CRMSystem.Data.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
                     b.HasIndex("IsDeleted");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("Organizations");
                 });
@@ -740,6 +741,15 @@ namespace CRMSystem.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("CRMSystem.Data.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("CRMSystem.Data.Models.Organization", "Organization")
+                        .WithOne("User")
+                        .HasForeignKey("CRMSystem.Data.Models.ApplicationUser", "OrganizationId");
+
+                    b.Navigation("Organization");
+                });
+
             modelBuilder.Entity("CRMSystem.Data.Models.Customer", b =>
                 {
                     b.HasOne("CRMSystem.Data.Models.Address", "Address")
@@ -839,15 +849,7 @@ namespace CRMSystem.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CRMSystem.Data.Models.ApplicationUser", "User")
-                        .WithOne("Organization")
-                        .HasForeignKey("CRMSystem.Data.Models.Organization", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.Navigation("Address");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CRMSystem.Data.Models.PhoneNumber", b =>
@@ -953,8 +955,6 @@ namespace CRMSystem.Data.Migrations
 
                     b.Navigation("Logins");
 
-                    b.Navigation("Organization");
-
                     b.Navigation("Roles");
 
                     b.Navigation("Tasks");
@@ -980,6 +980,8 @@ namespace CRMSystem.Data.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Products");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CRMSystem.Data.Models.Product", b =>

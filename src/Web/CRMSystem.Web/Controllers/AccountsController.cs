@@ -64,12 +64,11 @@ namespace CRMSystem.Web.Controllers
 
                 if (!test.Succeeded)
                 {
-                    return this.Content("bdabasd");
+                    return this.Content($"{test.Errors}");
                 }
 
                 if (result.Succeeded)
                 {
-                    await this.applicationUserRepository.AddAsync(user);
 
                     return this.RedirectToAction("Index", "Customers");
 
