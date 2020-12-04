@@ -19,7 +19,7 @@ namespace CRMSystem.Web.Controllers
         private readonly ICustomersService customersService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IDeletableEntityRepository<ApplicationUser> applicationUserRepository;
-        private readonly SignInManager<ApplicationUser> signInManager;
+
 
         public AccountsController(IOrganizationsService organizationsService, ICustomersService customersService, UserManager<ApplicationUser> userManager, IDeletableEntityRepository<ApplicationUser> applicationUserRepository)
         {
@@ -27,7 +27,6 @@ namespace CRMSystem.Web.Controllers
             this.customersService = customersService;
             this.userManager = userManager;
             this.applicationUserRepository = applicationUserRepository;
-            this.signInManager = signInManager;
         }
 
         public async Task<IActionResult> Index(int organizationId, int id)
@@ -55,10 +54,19 @@ namespace CRMSystem.Web.Controllers
                 {
                     UserName = input.Email,
                     Email = input.Email,
-                    PasswordHash = input.Password,
+                    PhoneNumber = input.Phone,
+                    OrganizationId = input.OrganizationId,
 
                 };
-                var result = await this.userManager.CreateAsync(user);
+                var result = await this.userManager.CreateAsync(user, input.Password);
+
+                var test = await this.userManager.AddToRoleAsync(user, "Customer");
+
+                if (!test.Succeeded)
+                {
+                    return this.Content("bdabasd");
+                }
+
                 if (result.Succeeded)
                 {
                     await this.applicationUserRepository.AddAsync(user);
