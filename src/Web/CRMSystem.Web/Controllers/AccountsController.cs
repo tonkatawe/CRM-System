@@ -13,31 +13,30 @@ using CRMSystem.Services.Messaging;
 using CRMSystem.Web.ViewModels.Accounts;
 using CRMSystem.Web.ViewModels.Customers;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 
 namespace CRMSystem.Web.Controllers
 {
     public class AccountsController : Controller
     {
-        private readonly IOrganizationsService organizationsService;
+        private readonly IAccountsService accountsService;
         private readonly ICustomersService customersService;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IDeletableEntityRepository<ApplicationUser> applicationUserRepository;
         private readonly IEmailSender emailSender;
 
 
-        public AccountsController(IOrganizationsService organizationsService, ICustomersService customersService, UserManager<ApplicationUser> userManager, IDeletableEntityRepository<ApplicationUser> applicationUserRepository, IEmailSender emailSender)
+        public AccountsController(IAccountsService accountsService, ICustomersService customersService, UserManager<ApplicationUser> userManager,  IEmailSender emailSender)
         {
-            this.organizationsService = organizationsService;
+            this.accountsService = accountsService;
             this.customersService = customersService;
             this.userManager = userManager;
-            this.applicationUserRepository = applicationUserRepository;
             this.emailSender = emailSender;
         }
 
         public async Task<IActionResult> Index(int organizationId, int id)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+           var user = await this.userManager.GetUserAsync(this.User);
 
             if (user.OrganizationId != organizationId)
             {
@@ -54,28 +53,42 @@ namespace CRMSystem.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(MakeAccountViewModel input)
         {
+            var owner = await this.userManager.GetUserAsync(this.User);
             //todo correct input
             if (!ModelState.IsValid)
             {
                 var user = new ApplicationUser
                 {
-                    UserName = "test",
-                    Email = "test@tessssst.teeest",
-                    PhoneNumber = "4322342343",
+                    UserName = input.Username,
+                    Email = input.Email,
+                    PhoneNumber = input.Phone,
                     OrganizationId = input.OrganizationId,
 
                 };
-                var result = await this.userManager.CreateAsync(user, input.Password);
+
+                var testPassword = Guid.NewGuid().ToString().Substring(0, 8);
+                
+
+                var result = await this.userManager.CreateAsync(user, testPassword);
+
+                var organizationName = "IT Talants alpha";
 
                 if (result.Succeeded)
                 {
+                    await this.userManager.AddToRoleAsync(user, "Customer");
+
                     var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
+
                     var confirmationLink = Url.Action("ConfirmEmail", "Accounts",
-                        new { token, email = GlobalConstants.SystemEmail },
+                        new { token, email = user.Email },
                            Request.Scheme);
-                    await this.emailSender.SendEmailAsync(GlobalConstants.SystemEmail, "Anton",
-                        GlobalConstants.SystemEmail, "Email confirm link", $"Confirm link {confirmationLink}");
-                    var test = await this.userManager.AddToRoleAsync(user, "Customer");
+
+                    var msg = String.Format(OutputMessages.EmailConformation, input.FullName, organizationName,
+                        user.UserName, testPassword, confirmationLink );
+
+                    await this.emailSender.SendEmailAsync(owner.Email, owner.UserName,
+                        user.Email, "Email confirm link", msg);
+                   
 
                     return this.RedirectToAction("Index", "Customers");
 
@@ -99,7 +112,17 @@ namespace CRMSystem.Web.Controllers
             }
 
             var result = await this.userManager.ConfirmEmailAsync(user, token);
-            return View(result.Succeeded ? nameof(ConfirmEmail) : "Error");
+            if (result.Succeeded)
+            {
+                return this.View();
+            }
+            else
+            {
+                return View("Error");
+            }
+
+            //return View(result.Succeeded ? nameof(ConfirmEmail) : "Error");
         }
+    
     }
 }
