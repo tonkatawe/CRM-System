@@ -1,5 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
+using CRMSystem.Web.Infrastructure;
 
 namespace CRMSystem.Web.ViewModels.Contacts
 {
@@ -19,6 +20,7 @@ namespace CRMSystem.Web.ViewModels.Contacts
         [StringLength(15000, MinimumLength = 50)]
         public string Content { get; set; }
 
+        [GoogleReCaptchaValidation]
         public string RecaptchaValue { get; set; }
     }
 }

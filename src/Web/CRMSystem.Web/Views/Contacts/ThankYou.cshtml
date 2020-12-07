@@ -1,0 +1,14 @@
+﻿
+@{
+    this.ViewData["Title"] = "Contacts";
+}
+@if (this.TempData.ContainsKey("Messages"))
+{
+    <div class="alert alert-success">@this.TempData["Messages"]</div>
+}
+<h2>Thank you for getting in touch!</h2>
+<p>We appreciate you contacting us. One of our colleagues will get back in touch with you soon!</p>
+<br />
+
+
+<div><a asp-action="Index" asp-controller="Home" class="btn btn-success rounded-pill">Have a nice with our application</a></div>

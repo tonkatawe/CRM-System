@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\CRMSystem.Data.Models\CRMSystem.Data.Models.csproj" />
     <ProjectReference Include="..\..\Services\CRMSystem.Services.Mapping\CRMSystem.Services.Mapping.csproj" />
+    <ProjectReference Include="..\CRMSystem.Web.Infrastructure\CRMSystem.Web.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
