@@ -157,6 +157,9 @@ namespace CRMSystem.Data.Migrations
                     b.Property<int?>("OrganizationId")
                         .HasColumnType("int");
 
+                    b.Property<string>("ParentId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
@@ -191,6 +194,8 @@ namespace CRMSystem.Data.Migrations
                     b.HasIndex("OrganizationId")
                         .IsUnique()
                         .HasFilter("[OrganizationId] IS NOT NULL");
+
+                    b.HasIndex("ParentId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -747,7 +752,13 @@ namespace CRMSystem.Data.Migrations
                         .WithOne("User")
                         .HasForeignKey("CRMSystem.Data.Models.ApplicationUser", "OrganizationId");
 
+                    b.HasOne("CRMSystem.Data.Models.ApplicationUser", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentId");
+
                     b.Navigation("Organization");
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("CRMSystem.Data.Models.Customer", b =>

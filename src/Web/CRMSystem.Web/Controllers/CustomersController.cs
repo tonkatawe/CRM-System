@@ -14,7 +14,7 @@ namespace CRMSystem.Web.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    [Authorize]
+    [Authorize(Roles = "Admin, Owner")]
     public class CustomersController : Controller
     {
         private readonly ICustomersService customersService;

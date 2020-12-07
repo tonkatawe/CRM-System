@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CRMSystem.Data.Models;
@@ -7,7 +6,6 @@ using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Web.ViewModels.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +14,8 @@ namespace CRMSystem.Web.Controllers
     [Authorize]
     public class ProductsController : Controller
     {
+
+
         private readonly IProductsService productsService;
         private readonly IWebHostEnvironment environment;
         private readonly UserManager<ApplicationUser> userManager;
@@ -33,19 +33,28 @@ namespace CRMSystem.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+
+
             var user = await this.userManager.GetUserAsync(this.User);
-            var viewModel = this.productsService.GetAll<ProductViewModel>(user.Id).ToList();
+
+
+
+            var userId = user.ParentId ?? user.Id;
+
+
+
+            var viewModel = this.productsService.GetAll<ProductViewModel>(userId).ToList();
 
             return View(viewModel);
         }
 
-  
+
         public async Task<IActionResult> Create()
         {
             return View();
         }
 
-        
+
         [HttpPost]
         public async Task<IActionResult> Create(ProductCreateInputModel input)
         {
@@ -66,6 +75,7 @@ namespace CRMSystem.Web.Controllers
                 return this.View(input);
             }
 
+            this.TempData["Message"] = "Product added successfully";
             return this.RedirectToAction("Index");
 
         }
@@ -78,7 +88,7 @@ namespace CRMSystem.Web.Controllers
             return View(viewModel);
         }
 
-     
+
         [HttpPost]
         public async Task<IActionResult> Edit(EditProductInputModel input)
         {
@@ -92,7 +102,7 @@ namespace CRMSystem.Web.Controllers
             return this.RedirectToAction("Index");
         }
 
-       
+
         public async Task<IActionResult> Delete(int id)
         {
             //todo check for security delete by other users!!! its so import
@@ -100,7 +110,7 @@ namespace CRMSystem.Web.Controllers
             await this.productsService.DeleteAsync(id);
             return this.RedirectToAction("Index");
         }
-        
-     
+
+
     }
 }

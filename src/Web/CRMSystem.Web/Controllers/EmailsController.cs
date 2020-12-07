@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 using CRMSystem.Common;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Services.Messaging;
-using CRMSystem.Web.ViewModels.Customers;
 using CRMSystem.Web.ViewModels.Emails;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CRMSystem.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin, Owner")]
     public class EmailsController : Controller
     {
         private readonly IEmailsService emailsService;

@@ -1,42 +1,46 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Sockets;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using CRMSystem.Common;
-using CRMSystem.Data.Common.Repositories;
 using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Services.Messaging;
 using CRMSystem.Web.ViewModels.Accounts;
 using CRMSystem.Web.ViewModels.Customers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 
 namespace CRMSystem.Web.Controllers
 {
+    [Authorize(Roles = "Admin, Owner")]
     public class AccountsController : Controller
     {
-        private readonly IAccountsService accountsService;
+
         private readonly ICustomersService customersService;
+        private readonly IOrganizationsService organizationsService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IEmailSender emailSender;
 
 
-        public AccountsController(IAccountsService accountsService, ICustomersService customersService, UserManager<ApplicationUser> userManager,  IEmailSender emailSender)
+        public AccountsController(
+            ICustomersService customersService,
+            IOrganizationsService organizationsService,
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            IEmailSender emailSender)
         {
-            this.accountsService = accountsService;
             this.customersService = customersService;
+            this.organizationsService = organizationsService;
             this.userManager = userManager;
+            this.signInManager = signInManager;
             this.emailSender = emailSender;
         }
 
         public async Task<IActionResult> Index(int organizationId, int id)
         {
-           var user = await this.userManager.GetUserAsync(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
 
             if (user.OrganizationId != organizationId)
             {
@@ -63,15 +67,16 @@ namespace CRMSystem.Web.Controllers
                     Email = input.Email,
                     PhoneNumber = input.Phone,
                     OrganizationId = input.OrganizationId,
+                    Parent = owner,
 
                 };
 
-                var testPassword = Guid.NewGuid().ToString().Substring(0, 8);
-                
+                var userPassword = Guid.NewGuid().ToString().Substring(0, 8);
 
-                var result = await this.userManager.CreateAsync(user, testPassword);
 
-                var organizationName = "IT Talants alpha";
+                var result = await this.userManager.CreateAsync(user, userPassword);
+
+                var organizationName = this.organizationsService.GetName(owner.Id);
 
                 if (result.Succeeded)
                 {
@@ -84,11 +89,11 @@ namespace CRMSystem.Web.Controllers
                            Request.Scheme);
 
                     var msg = String.Format(OutputMessages.EmailConformation, input.FullName, organizationName,
-                        user.UserName, testPassword, confirmationLink );
+                        user.UserName, userPassword, confirmationLink);
 
                     await this.emailSender.SendEmailAsync(owner.Email, owner.UserName,
                         user.Email, "Email confirm link", msg);
-                   
+
 
                     return this.RedirectToAction("Index", "Customers");
 
@@ -96,7 +101,7 @@ namespace CRMSystem.Web.Controllers
                 }
 
 
-            
+
 
             }
 
@@ -106,23 +111,30 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> ConfirmEmail(string token, string email)
         {
             var user = await this.userManager.FindByEmailAsync(email);
+
             if (user == null)
             {
                 return View("Error");
             }
 
+
             var result = await this.userManager.ConfirmEmailAsync(user, token);
+
+
             if (result.Succeeded)
             {
-                return this.View();
+                this.TempData["ConfirmationEmail"] =
+                    "Thank you for confirming your email. You've already sing in. You can list our products";
+                await this.signInManager.SignInAsync(user, isPersistent: false);
+                return this.RedirectToAction("Index", "Products");
             }
             else
             {
                 return View("Error");
             }
 
-            //return View(result.Succeeded ? nameof(ConfirmEmail) : "Error");
+
         }
-    
+
     }
 }

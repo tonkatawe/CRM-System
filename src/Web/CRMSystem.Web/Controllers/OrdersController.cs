@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
@@ -10,14 +8,12 @@ using CRMSystem.Web.ViewModels.Orders;
 using CRMSystem.Web.ViewModels.Products;
 using CRMSystem.Web.ViewModels.Sales;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace CRMSystem.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin, Owner")]
     public class OrdersController : Controller
     {
         private readonly IOrdersService ordersService;
@@ -33,7 +29,7 @@ namespace CRMSystem.Web.Controllers
             this.productsService = productsService;
         }
 
-
+        
         public async Task<IActionResult> Create(int id)
         {
             var user = await this.userManager.GetUserAsync(this.User);

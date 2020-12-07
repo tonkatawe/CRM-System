@@ -17,9 +17,7 @@ namespace CRMSystem.Web.ViewModels.Accounts
         [Required]
         public string Username { get; set; }
 
-        [Required]
-        public string Password { get; set; }
-
+     
         public string FullName { get; set; }
 
         public IEnumerable<EmailDropDownViewModel> Emails { get; set; }

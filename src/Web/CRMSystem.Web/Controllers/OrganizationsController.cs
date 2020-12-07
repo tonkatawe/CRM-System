@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using CRMSystem.Web.ViewModels.Customers;
 
 namespace CRMSystem.Web.Controllers
 {
@@ -7,7 +6,6 @@ namespace CRMSystem.Web.Controllers
 
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Data.Contracts;
-    using CRMSystem.Web.ViewModels.Contacts;
     using CRMSystem.Web.ViewModels.Organizations;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;

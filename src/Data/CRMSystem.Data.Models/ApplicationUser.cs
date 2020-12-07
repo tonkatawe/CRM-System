@@ -40,6 +40,10 @@ namespace CRMSystem.Data.Models
         public int? OrganizationId { get; set; }
         public virtual Organization Organization { get; set; }
 
+        public string ParentId { get; set; }
+
+        public virtual ApplicationUser Parent { get; set; }
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }

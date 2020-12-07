@@ -1,6 +1,12 @@
 ﻿@model IEnumerable<CRMSystem.Web.ViewModels.Products.ProductViewModel>
-
-
+@if (this.TempData.ContainsKey("Message"))
+{
+    <div class="alert alert-success">@this.TempData["Message"]</div>
+}
+@if (this.TempData.ContainsKey("ConfirmationEmail"))
+{
+    <div class="alert alert-success">@this.TempData["ConfirmationEmail"]</div>
+}
 <h1>
     <p style="text-align: center;">Your company have @Model.Count() products</p>
 </h1>
