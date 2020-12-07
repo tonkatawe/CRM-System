@@ -13,37 +13,19 @@
                 <a class="nav-link text-dark" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
             </li>
         }
-        <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-plus-circle"></i>
-            </a>
-            <div class="dropdown form-control-plaintext">
-                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                    <h6 class="dropdown-header">
-                        Add to yourself
-                    </h6>
-                    <a class="dropdown-item" method="get" asp-controller="Customers" asp-action="Create">New Customer</a>
-                    <a class="dropdown-item" method="get" asp-controller="Organizations" asp-action="Create">Organization</a>
-                    <a class="dropdown-item" method="get" asp-controller="UserTasks" asp-action="Create">Task</a>
-                    <a class="dropdown-item" method="get" asp-controller="Products" asp-action="Create">Product</a>
-                </div>
-            </div>
-        </li>
+     
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@(this.User.Identity.Name)</span>
                 <img class="rounded-circle avatar" alt="avatar" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"
                      data-holder-rendered="true">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@(this.User.Identity.Name)</span>
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     Profile
                 </a>
-                <a class="dropdown-item" method="get" asp-controller="Customers" asp-action="GetByUser">
-                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    My Customers
-                </a>
+             
                 <a class="dropdown-item" method="get" asp-controller="Organizations" asp-action="Create">
                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                     My Organizations

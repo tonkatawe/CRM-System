@@ -1,0 +1,46 @@
+﻿@using CRMSystem.Common
+@using CRMSystem.Data.Models
+@using CRMSystem.Services.Data
+@using CRMSystem.Services.Data.Contracts
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+
+@if (this.SignInManager.IsSignedIn(this.User))
+{
+    if (this.User.IsInRole(GlobalConstants.OwnerUserRoleName))
+    {
+
+
+        <li class="nav-item dropdown no-arrow mx-1 sidebar-brand d-flex align-items-center justify-content-center">
+            <a class="nav-link dropdown-toggle sidebar-brand d-flex align-items-center justify-content-center sidebar-brand-text" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-database">Your data</i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" asp-controller="Customers" asp-action="Index"><i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>Customers</a>
+                <a class="dropdown-item" asp-controller="Organizations" asp-action="Index"><i class="fas fa-sitemap fa-sm fa-fw mr-2 text-gray-400"></i>Organization</a>
+                <a class="dropdown-item" asp-controller="Products" asp-action="Index"><i class="fas fa-shopping-cart fa-sm fa-fw mr-2 text-gray-400"></i>Products</a>
+                <a class="dropdown-item" asp-controller="Statistics" asp-action="Index"><i class="fas fa-chart-line fa-sm fa-fw mr-2 text-gray-400"></i>Statistics</a>
+                <a class="dropdown-item" href="cards.html">Earnings</a>
+                <a class="dropdown-item" asp-controller="UserTasks" asp-action="Index">Tasks</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown no-arrow mx-1 sidebar-brand d-flex align-items-center justify-content-center">
+            <a class="nav-link dropdown-toggle sidebar-brand d-flex align-items-center justify-content-center sidebar-brand-text" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-plus">Adding data</i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" asp-controller="Customers" asp-action="Create"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>New Customer</a>
+                <a class="dropdown-item" asp-controller="Products" asp-action="Create"><i class="fas fa-shopping-cart fa-sm fa-fw mr-2 text-gray-400"></i>Product</a>
+                <a class="dropdown-item" asp-controller="UserTasks" asp-action="Create">Task</a>
+            </div>
+        </li>
+    }
+    if (this.User.IsInRole(GlobalConstants.CustomerUserRoleName))
+    {
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-area="" asp-controller="Products" asp-action="Index">
+            <div class="sidebar-brand-text mx-3">Contact Us</div>
+        </a>
+    }
+}
