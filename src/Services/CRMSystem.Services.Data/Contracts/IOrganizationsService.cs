@@ -9,6 +9,7 @@
     {
         Task<int> CreateOrganizationAsync(OrganizationCreateInputModel input, string userId);
 
+        IEnumerable<T> GetAll<T>();
         int GetId(string userId);
         T GetById<T>(string userId);
 

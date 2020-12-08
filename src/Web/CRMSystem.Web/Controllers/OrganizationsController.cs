@@ -83,9 +83,10 @@ namespace CRMSystem.Web.Controllers
             return this.RedirectToAction("Index");
         }
         [AllowAnonymous]
-        public async Task<IActionResult> List()
+        public IActionResult List()
         {
-            return this.View();
+            var viewModel = this.organizationsService.GetAll<ListOrganizationViewModel>();
+            return this.View(viewModel);
         }
 
     }

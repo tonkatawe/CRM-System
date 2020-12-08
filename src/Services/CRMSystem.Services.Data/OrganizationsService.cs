@@ -52,6 +52,15 @@ namespace CRMSystem.Services.Data
 
         }
 
+        public IEnumerable<T> GetAll<T>()
+        {
+            var query = this.organizationRepository
+                .All()
+                .To<T>()
+                .ToList();
+
+            return query;
+        }
 
 
         public int GetId(string userId)
