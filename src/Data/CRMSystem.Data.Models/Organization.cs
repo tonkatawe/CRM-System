@@ -1,4 +1,6 @@
-﻿namespace CRMSystem.Data.Models
+﻿using CRMSystem.Data.Models.Enums;
+
+namespace CRMSystem.Data.Models
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -17,6 +19,8 @@
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
+
+        public IndustryType Industry { get; set; }
 
         [MaxLength(1000)]
         public string Description { get; set; }

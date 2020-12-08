@@ -98,11 +98,6 @@
                 <input asp-for="JobTitle" class="form-control" placeholder="Job Title">
                 <span asp-validation-for="JobTitle" class="text-danger"></span>
             </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Industry"></label>
-                <select asp-for="Industry" asp-items="Html.GetEnumSelectList<IndustryType>()" class="form-control"></select>
-                <span asp-validation-for="Industry" class="text-danger"></span>
-            </div>
         </div>
         <div class="form-row">
             <div class="form-group col-md-12">
@@ -118,8 +113,8 @@
 
 @section Scripts {
 
-    
-   
+
+
     <script src="~/js/CreateEditCustomer.js"></script>
 
 }

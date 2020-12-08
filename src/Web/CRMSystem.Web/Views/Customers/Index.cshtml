@@ -34,9 +34,7 @@
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["SortByName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Full Name</a>
             </th>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["SortByIndustry"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Industry</a>
-            </th>
+       
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["SortByDate"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Orders</a>
             </th>
@@ -55,9 +53,7 @@
                     @customer.FullName
                 </td>
 
-                <td>
-                    @customer.Industry
-                </td>
+             
                 <td>
                     @if (customer.OrdersCount == 0)
                     {

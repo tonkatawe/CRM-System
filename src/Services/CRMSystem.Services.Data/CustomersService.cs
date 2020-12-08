@@ -105,7 +105,6 @@ namespace CRMSystem.Services.Data
                 MiddleName = input.MiddleName,
                 LastName = input.LastName,
                 JobTitle = input.JobTitle,
-                Industry = input.Industry,
                 AdditionalInfo = input.AdditionalInfo,
             };
 
@@ -125,7 +124,7 @@ namespace CRMSystem.Services.Data
                 customer.Phones.Add(phoneNumber);
             }
 
-           
+
             return customer.Id;
         }
 
@@ -174,7 +173,6 @@ namespace CRMSystem.Services.Data
             await this.addressesService.UpdateAsync(input.Address);
 
             customer.Title = input.Title;
-            customer.Industry = input.Industry;
             customer.FirstName = input.FirstName;
             customer.MiddleName = input.MiddleName;
             customer.LastName = input.LastName;

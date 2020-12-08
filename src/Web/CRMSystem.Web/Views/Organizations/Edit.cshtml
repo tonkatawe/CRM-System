@@ -1,4 +1,5 @@
 ﻿
+@using CRMSystem.Data.Models.Enums
 @model CRMSystem.Web.ViewModels.Organizations.EditOrganizationInputModel
 
 @{
@@ -23,6 +24,19 @@
                                             <p>
                                                 <input asp-for="Name" value="@Model.Name" class="form-control" />
                                                 <span asp-validation-for="Name" class="text-danger"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label><b>Industry:</b></label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>
+
+                                                <select asp-for="Industry" asp-items="Html.GetEnumSelectList<IndustryType>()" class="form-control"></select>
+                                                <span asp-validation-for="Industry" class="text-danger"></span>
+
                                             </p>
                                         </div>
                                     </div>

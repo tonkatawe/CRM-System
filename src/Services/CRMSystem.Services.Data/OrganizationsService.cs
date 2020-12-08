@@ -37,6 +37,7 @@ namespace CRMSystem.Services.Data
             {
                 UserId = userId,
                 Name = input.Name,
+                Industry = input.Industry,
                 Description = input.Description,
                 Address = address,
             };
@@ -95,6 +96,7 @@ namespace CRMSystem.Services.Data
 
             organization.Name = input.Name;
             organization.Description = input.Description;
+            organization.Industry = input.Industry;
             this.organizationRepository.Update(organization);
 
             return await this.organizationRepository.SaveChangesAsync();

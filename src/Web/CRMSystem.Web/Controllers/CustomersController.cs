@@ -90,10 +90,7 @@ namespace CRMSystem.Web.Controllers
                         .ThenByDescending(c => c.LastName)
                         .ThenByDescending(c => c.MiddleName);
                     break;
-                case "industry_desc":
-                    customers = customers
-                        .OrderByDescending(c => c.Industry);
-                    break;
+             
                 case "Date":
                     customers = customers.OrderBy(c => c.OrdersCount);
                     break;

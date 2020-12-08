@@ -258,9 +258,6 @@ namespace CRMSystem.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("Industry")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -474,6 +471,9 @@ namespace CRMSystem.Data.Migrations
                     b.Property<string>("Description")
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("Industry")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");

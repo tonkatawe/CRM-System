@@ -1,4 +1,6 @@
-﻿namespace CRMSystem.Web.ViewModels.Organizations
+﻿using CRMSystem.Data.Models.Enums;
+
+namespace CRMSystem.Web.ViewModels.Organizations
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -16,6 +18,8 @@
 
         [MaxLength(1000)]
         public string Description { get; set; }
+
+        public IndustryType Industry { get; set; }
 
         public AddressCreateInputModel Address { get; set; }
     }

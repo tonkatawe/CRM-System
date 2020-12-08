@@ -75,17 +75,6 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <label><b>Industry:</b></label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>
-                                                <select asp-for="Industry" asp-items="Html.GetEnumSelectList<IndustryType>()" class="form-control" value="@Model.Industry.ToString()"></select>
-                                                <span asp-validation-for="Industry" class="text-danger"></span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
                                             <label>
                                                 @if (Model.Emails.Count > 1)
                                                 {
@@ -172,11 +161,11 @@
                                                     </div>
                                                 </p>
                                             }
-                                        @if (Model.Emails.Count < 3)
-                                        {
-                                            <div id="PhoneContainer"></div>
-                                            <a class="add_Phone">Add more phones</a>
-                                        }
+                                            @if (Model.Emails.Count < 3)
+                                            {
+                                                <div id="PhoneContainer"></div>
+                                                <a class="add_Phone">Add more phones</a>
+                                            }
 
                                         </div>
                                     </div>

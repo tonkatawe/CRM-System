@@ -43,8 +43,7 @@
 
         public virtual Organization Organization { get; set; }
 
-        public IndustryType Industry { get; set; }
-
+        
         [MaxLength(1000)]
         public string AdditionalInfo { get; set; }
 

@@ -8,7 +8,7 @@ namespace CRMSystem.Web.ViewModels.Organizations
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Mapping;
 
-    public class OrganizationViewModel : IMapFrom<Organization>
+    public class OrganizationViewModel : IMapFrom<Organization>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
@@ -18,10 +18,20 @@ namespace CRMSystem.Web.ViewModels.Organizations
 
         public int AddressId { get; set; }
 
+        public string Industry { get; set; }
+
         public Address Address { get; set; }
         
         public IEnumerable<CustomerViewModel> Customers { get; set; }
         public IEnumerable<ProductViewModel> Products { get; set; }
-     
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<Organization, OrganizationViewModel>()
+                .ForMember(x => x.Industry, options =>
+                {
+                    options.MapFrom(c => c.Industry.ToString());
+                });
+        }
     }
 }

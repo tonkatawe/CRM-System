@@ -34,16 +34,15 @@ namespace CRMSystem.Web.ViewModels.Customers
         [MaxLength(30)]
         public string JobTitle { get; set; }
 
-        public IndustryType Industry { get; set; }
 
         [MaxLength(1000)]
         public string AdditionalInfo { get; set; }
 
         public AddressCreateInputModel Address { get; set; }
-        
+
         public IList<EmailCreateInputModel> Emails { get; set; }
 
-       public IList<PhoneCreateInputModel> Phones { get; set; }
-    
+        public IList<PhoneCreateInputModel> Phones { get; set; }
+
     }
 }
