@@ -1,14 +1,54 @@
 ﻿@model CRMSystem.Web.ViewModels.Home.IndexViewModel
-@{
-    this.ViewData["Title"] = "Home Page";
-}
+@{ this.ViewData["Title"] = "Home Page"; }
 
 
 
-<div class="container">
-    <p class="align-content-center">Do you want to track your business and make your clients feel special? </p>
-    <h1>We are here!</h1>
-    <p class="lead text-muted">Our product would be helping you to track your orders and contact easily with your best clients</p>
-    <p>We already have @Model.OrganizationsCount companies and they tracking more than @Model.CustomersCount customers</p>
-    <p>If you want to use our app just <a href="#">register</a> or <a href="#">log in</a></p>
+
+<h2 class="text-center">Do you have business (<i>shop, offering some products, work with clients and etc.</i>) and you would want to track it and keep good relations? </h2>
+<h1 class="text-center font-weight-bold">This app could be useful for you</h1>
+<p class="text-center">We already have @Model.OrganizationsCount companies and they tracking more than @Model.CustomersCount customers</p>
+<div class="font-weight-bold">
+    <h2 class="text-center font-weight-bold">What we offer?</h2>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Have a business</h5>
+                <ul class="list-group-horizontal font-italic">
+                    <li>Add your company</li>
+                    <li>Add all your clients</li>
+                    <li>Add/Edit your products (track their quantity, orders and etc.)</li>
+                    <li>Get statistics (for yours: benefits, best client, most ordered products and more...)</li>
+                    <li>Create accounts to your clients (for more close relationship)</li>
+                    <li>Send emails to your clients (thankful emails, about your promotion, new products and more...)</li>
+                    <li>And many other features</li>
+                </ul>
+                <hr />
+                <p class="text-center font-weight-bold">If you want every above:</p>
+                <div class="d-flex justify-content-center p-2">
+                    <a class="btn btn-success rounded-pill" asp-area="Identity" asp-page="/Account/Register">Just Get Started</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Looking for business partner</h5>
+                <ul class="list-group-horizontal font-italic">
+                    <li>Find appropriate company</li>
+                    <li>Review products</li>
+                    <li>Request them to be their good client</li>
+
+                </ul>
+                <hr />
+                <p class="text-center font-weight-bold">If you want every above:</p>
+                <div class="d-flex justify-content-center p-2">
+                    <a class="btn btn-success rounded-pill" asp-area="" asp-controller="Organizations" asp-action="List">List companies</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
