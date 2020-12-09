@@ -49,6 +49,7 @@ namespace CRMSystem.Data
 
         public DbSet<Image> Images { get; set; }
         public DbSet<ContactFormMessage> ContactFormMessages { get; set; }
+        public DbSet<TemporaryCustomer> TemporaryCustomers { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 

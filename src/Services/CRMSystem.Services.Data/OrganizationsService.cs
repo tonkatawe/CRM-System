@@ -87,7 +87,7 @@ namespace CRMSystem.Services.Data
         {
             return this.organizationRepository
                 .All()
-                .FirstOrDefault(x => x.UserId == userId)
+                .FirstOrDefault(x => x.UserId== userId)
                 .Name;
         }
 

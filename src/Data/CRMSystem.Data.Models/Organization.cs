@@ -14,6 +14,7 @@ namespace CRMSystem.Data.Models
             this.Customers = new HashSet<Customer>();
             this.Products = new HashSet<Product>();
             this.Orders = new HashSet<Order>();
+            this.TemporaryCustomers = new HashSet<TemporaryCustomer>();
         }
 
         [Required]
@@ -35,6 +36,7 @@ namespace CRMSystem.Data.Models
         public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<Customer> Customers { get; set; }
+        public virtual ICollection<TemporaryCustomer> TemporaryCustomers { get; set; }
         public virtual ICollection<Product> Products { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }

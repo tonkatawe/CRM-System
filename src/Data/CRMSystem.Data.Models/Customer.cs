@@ -4,16 +4,13 @@
     using System.ComponentModel.DataAnnotations;
 
     using CRMSystem.Data.Common.Models;
-    using CRMSystem.Data.Models.Enums;
 
     public class Customer : BaseDeletableModel<int>
     {
         public Customer()
         {
-            this.Notes = new HashSet<Note>();
             this.Phones = new HashSet<PhoneNumber>();
             this.Emails = new HashSet<EmailAddress>();
-            this.SocialNetworks = new HashSet<SocialNetwork>();
             this.Orders = new HashSet<Order>();
         }
 
@@ -57,13 +54,9 @@
 
         public virtual ApplicationUser User { get; set; }
 
-        public virtual ICollection<Note> Notes { get; set; }
         public virtual ICollection<PhoneNumber> Phones { get; set; }
 
         public virtual ICollection<EmailAddress> Emails { get; set; }
-
-        public virtual ICollection<SocialNetwork> SocialNetworks { get; set; }
-
         public virtual ICollection<Order> Orders { get; set; }
     }
 }

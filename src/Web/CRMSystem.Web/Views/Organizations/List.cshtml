@@ -2,30 +2,38 @@
 @{ this.ViewData["Title"] = "All companies"; }
 
 <div class="row ">
+    <label></label>
 
     @foreach (var company in this.Model)
     {
 
-        <div class="card col-lg-4 col-md-4 col-sm-4 shadow">
-            <div class="card-body text-center">
-                <div class="text-center">
-                    <h4>@company.Name</h4>
-                </div>
-                <div class="text-center" id="shortdesc">
-                    <span >@company.ShortDescription</span>
-              </div>
-                <div class="text-center" id="fulldesc" style="display: none">
-                
-                    <span  >@company.Description</span>
-                </div>
-                @if (company.NotEqualDescription)
-                {
-                    <a href="#" onclick=showFullDescription() id="seeMore">See More</a>
-                    <a href="#" onclick=showShortDescription() id="seeLess" style="display: none">See Less</a>
+<div class="card col-lg-4 col-md-4 col-sm-4 shadow">
+    <div class="card-body text-center">
+        <div class="text-center">
+            <h4>@company.Name</h4>
+        </div>
+        <p>Industry: @company.Industry</p>
+        <div class="text-center" id="shortdesc">
+            <span>@company.ShortDescription</span>
+        </div>
+        <div class="text-center" id="fulldesc" style="display: none">
 
-                }
-            </div>
-        </div>}
+            <span>@company.Description</span>
+        </div>
+        @if (company.NotEqualDescription)
+        {
+<a href="#" onclick=showFullDescription() id="seeMore">See More</a>
+                    <a href="#" onclick=showShortDescription() id="seeLess" style="display: none">See Less</a>}
+    </div>
+    <hr />
+    <div>
+        <a href="#">view all poroducts</a>
+    </div>
+    <div>
+        <a asp-controller="TemporaryCustomers" asp-action="Create" asp-route-id="@company.Id">Make business with this company</a>
+    </div>
+
+</div>}
 </div>
 
 @section Scripts
@@ -38,7 +46,7 @@
             $("#seeMore").show();
 
         }
-      
+
         function showFullDescription() {
             $("#shortdesc").hide();
             $("#fulldesc").show();

@@ -334,11 +334,16 @@ namespace CRMSystem.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("TemporaryCustomerId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("TemporaryCustomerId");
 
                     b.ToTable("EmailAddresses");
                 });
@@ -528,11 +533,16 @@ namespace CRMSystem.Data.Migrations
                     b.Property<int>("PhoneType")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TemporaryCustomerId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("TemporaryCustomerId");
 
                     b.ToTable("PhoneNumbers");
                 });
@@ -619,6 +629,59 @@ namespace CRMSystem.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("SocialNetworks");
+                });
+
+            modelBuilder.Entity("CRMSystem.Data.Models.TemporaryCustomer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("AdditionalInfo")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("JobTitle")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("MiddleName")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OrganizationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Title")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("OrganizationId");
+
+                    b.ToTable("TemporaryCustomers");
                 });
 
             modelBuilder.Entity("CRMSystem.Data.Models.UserTask", b =>
@@ -833,6 +896,10 @@ namespace CRMSystem.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CRMSystem.Data.Models.TemporaryCustomer", null)
+                        .WithMany("Emails")
+                        .HasForeignKey("TemporaryCustomerId");
+
                     b.Navigation("Customer");
                 });
 
@@ -850,7 +917,7 @@ namespace CRMSystem.Data.Migrations
             modelBuilder.Entity("CRMSystem.Data.Models.Note", b =>
                 {
                     b.HasOne("CRMSystem.Data.Models.Customer", "Customer")
-                        .WithMany("Notes")
+                        .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -904,6 +971,10 @@ namespace CRMSystem.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("CRMSystem.Data.Models.TemporaryCustomer", null)
+                        .WithMany("Phones")
+                        .HasForeignKey("TemporaryCustomerId");
+
                     b.Navigation("Customer");
                 });
 
@@ -921,12 +992,31 @@ namespace CRMSystem.Data.Migrations
             modelBuilder.Entity("CRMSystem.Data.Models.SocialNetwork", b =>
                 {
                     b.HasOne("CRMSystem.Data.Models.Customer", "Customer")
-                        .WithMany("SocialNetworks")
+                        .WithMany()
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("CRMSystem.Data.Models.TemporaryCustomer", b =>
+                {
+                    b.HasOne("CRMSystem.Data.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CRMSystem.Data.Models.Organization", "Organization")
+                        .WithMany("TemporaryCustomers")
+                        .HasForeignKey("OrganizationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("Organization");
                 });
 
             modelBuilder.Entity("CRMSystem.Data.Models.UserTask", b =>
@@ -1008,13 +1098,9 @@ namespace CRMSystem.Data.Migrations
                 {
                     b.Navigation("Emails");
 
-                    b.Navigation("Notes");
-
                     b.Navigation("Orders");
 
                     b.Navigation("Phones");
-
-                    b.Navigation("SocialNetworks");
                 });
 
             modelBuilder.Entity("CRMSystem.Data.Models.Organization", b =>
@@ -1024,6 +1110,8 @@ namespace CRMSystem.Data.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("Products");
+
+                    b.Navigation("TemporaryCustomers");
 
                     b.Navigation("User");
                 });
@@ -1035,6 +1123,13 @@ namespace CRMSystem.Data.Migrations
                     b.Navigation("Images");
 
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("CRMSystem.Data.Models.TemporaryCustomer", b =>
+                {
+                    b.Navigation("Emails");
+
+                    b.Navigation("Phones");
                 });
 #pragma warning restore 612, 618
         }

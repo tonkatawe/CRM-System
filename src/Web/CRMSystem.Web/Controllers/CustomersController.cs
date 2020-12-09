@@ -43,7 +43,7 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-         //todo must refactoring this!
+            //todo must refactoring this!
 
             if (user == null)
             {
@@ -90,7 +90,7 @@ namespace CRMSystem.Web.Controllers
                         .ThenByDescending(c => c.LastName)
                         .ThenByDescending(c => c.MiddleName);
                     break;
-             
+
                 case "Date":
                     customers = customers.OrderBy(c => c.OrdersCount);
                     break;
@@ -108,9 +108,13 @@ namespace CRMSystem.Web.Controllers
         }
 
 
-
-        public async Task<IActionResult> Create()
+        [AllowAnonymous]
+        public async Task<IActionResult> Create(int? id = null)
         {
+            if (id != null)
+            {
+                return this.View();
+            }
             var user = await this.userManager.GetUserAsync(this.User);
             if (!user.HasOrganization)
             {
@@ -243,7 +247,7 @@ namespace CRMSystem.Web.Controllers
             return this.RedirectToAction("Index");
         }
 
-       
+
 
 
     }

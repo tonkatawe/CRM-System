@@ -59,6 +59,7 @@ namespace CRMSystem.Web
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
+
             //todo it would be unnecessary
             services.AddAntiforgery(options =>
             {
@@ -103,6 +104,7 @@ namespace CRMSystem.Web
             services.AddTransient<IOrdersService, OrdersService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
             services.AddTransient<IContactsService, ContactsService>();
+            services.AddTransient<ITemporaryCustomersService, TemporaryCustomersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -31,4 +31,8 @@
     <ProjectReference Include="..\..\Web\CRMSystem.Web\CRMSystem.Web.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\" />
+  </ItemGroup>
+
 </Project>
