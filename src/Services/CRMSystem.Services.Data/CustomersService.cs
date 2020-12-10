@@ -46,10 +46,10 @@ namespace CRMSystem.Services.Data
             this.organizationsService = organizationsService;
         }
 
-        public IQueryable<T> GetAll<T>(string userId)
+        public IQueryable<T> GetAll<T>(string userId, bool isTemporary)
         {
             var query = this.customersRepository.All()
-                .Where(x => x.UserId == userId)
+                .Where(x => x.UserId == userId && x.IsTemporary == isTemporary)
                 //.OrderByDescending(x => x.CreatedOn)
                 .To<T>()
                 .AsQueryable();
@@ -89,7 +89,7 @@ namespace CRMSystem.Services.Data
             return await this.customersRepository.SaveChangesAsync();
         }
 
-        public async Task<int> CreateAsync(CustomerAddInputModel input, string userId,string organizationId, bool isTemporary)
+        public async Task<int> CreateAsync(CustomerAddInputModel input, string userId, string organizationId, bool isTemporary)
         {
             var address = await this.addressesService.CreateAsync(input.Address.Country, input.Address.City,
                 input.Address.Street, input.Address.ZipCode);

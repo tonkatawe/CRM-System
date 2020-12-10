@@ -6,6 +6,6 @@ namespace CRMSystem.Web.ViewModels.Organizations
 {
     public class EditOrganizationInputModel : OrganizationCreateInputModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

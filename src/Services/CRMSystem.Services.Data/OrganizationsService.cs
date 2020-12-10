@@ -28,11 +28,11 @@ namespace CRMSystem.Services.Data
             this.userRepository = userRepository;
         }
 
-        public async Task<int> CreateOrganizationAsync(OrganizationCreateInputModel input, string userId)
+        public async Task<int> CreateAsync(OrganizationCreateInputModel input, string userId)
         {
             var address = await this.addressesService.CreateAsync(input.Address.Country, input.Address.City,
                 input.Address.Street, input.Address.ZipCode);
-            var user = await this.userRepository.GetByIdWithDeletedAsync(userId);
+             var user = await this.userRepository.GetByIdWithDeletedAsync(userId);
             var organization = new Organization
             {
                 UserId = userId,
@@ -41,11 +41,9 @@ namespace CRMSystem.Services.Data
                 Description = input.Description,
                 Address = address,
             };
-            //new for test
-            user.Organization = organization;
-            //await this.organizationRepository.AddAsync(organization);
-            //await this.organizationRepository.SaveChangesAsync();
-            user.HasOrganization = true;
+
+           user.Organization = organization;
+          
             this.userRepository.Update(user);
 
             return await this.userRepository.SaveChangesAsync();
@@ -87,7 +85,7 @@ namespace CRMSystem.Services.Data
         {
             return this.organizationRepository
                 .All()
-                .FirstOrDefault(x => x.UserId== userId)
+                .FirstOrDefault(x => x.UserId == userId)
                 .Name;
         }
 

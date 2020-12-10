@@ -1,4 +1,5 @@
-﻿using CRMSystem.Data.Models.Enums;
+﻿using System;
+using CRMSystem.Data.Models.Enums;
 
 namespace CRMSystem.Data.Models
 {
@@ -11,10 +12,11 @@ namespace CRMSystem.Data.Models
     {
         public Organization()
         {
+            this.Id = Guid.NewGuid().ToString();
             this.Customers = new HashSet<Customer>();
             this.Products = new HashSet<Product>();
             this.Orders = new HashSet<Order>();
-         }
+        }
 
         [Required]
         [MaxLength(50)]
@@ -35,7 +37,7 @@ namespace CRMSystem.Data.Models
         public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<Customer> Customers { get; set; }
-    public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
     }

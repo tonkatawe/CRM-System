@@ -52,7 +52,7 @@ namespace CRMSystem.Web.Controllers
                 return this.RedirectToAction("Create", "Organizations");
             }
 
-            if (user.HasOrganization)
+            if (user.OrganizationId != null)
             {
                 return this.RedirectToAction("Index", "Organizations");
             }

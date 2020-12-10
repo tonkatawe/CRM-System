@@ -33,8 +33,7 @@ namespace CRMSystem.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
-        public bool HasOrganization { get; set; }
-
+   
         public bool IsPremium { get; set; }
 
         public string OrganizationId { get; set; }

@@ -14,7 +14,7 @@ namespace CRMSystem.Web.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    [Authorize(Roles = "Admin, Owner")]
+    [Authorize(Roles = "Administrator, Owner")]
     public class CustomersController : Controller
     {
         private readonly ICustomersService customersService;
@@ -49,11 +49,11 @@ namespace CRMSystem.Web.Controllers
             {
                 return RedirectToPage("~/Account/Login");
             }
-            if (!user.HasOrganization)
+            if (user.OrganizationId == null)
             {
                 return this.RedirectToAction("Create", "Organizations");
             }
-            var allUserCustomers = this.customersService.GetAll<CustomerViewModel>(user.Id);
+            var allUserCustomers = this.customersService.GetAll<CustomerViewModel>(user.Id, false);
             ViewData["CurrentSort"] = sortOrder;
             ViewData["SortByName"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["SortByOrganization"] = String.IsNullOrEmpty(sortOrder) ? "organ_desc" : "";
@@ -113,7 +113,7 @@ namespace CRMSystem.Web.Controllers
         {
 
             var user = await this.userManager.GetUserAsync(this.User);
-            if (!user.HasOrganization)
+            if (user.OrganizationId == null)
             {
                 return this.RedirectToAction("Create", "Organizations");
             }
@@ -126,7 +126,7 @@ namespace CRMSystem.Web.Controllers
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            if (!user.HasOrganization)
+            if (user.OrganizationId == null)
             {
                 return this.RedirectToAction("Create", "Organizations");
             }
@@ -164,7 +164,7 @@ namespace CRMSystem.Web.Controllers
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            if (!user.HasOrganization)
+            if (user.OrganizationId == null)
             {
                 return this.RedirectToAction("Create", "Organizations");
             }
@@ -186,7 +186,7 @@ namespace CRMSystem.Web.Controllers
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
-            if (!user.HasOrganization)
+            if (user.OrganizationId == null)
             {
                 return this.RedirectToAction("Create", "Organizations");
             }

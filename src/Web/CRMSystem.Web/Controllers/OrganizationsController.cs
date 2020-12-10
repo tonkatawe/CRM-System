@@ -10,9 +10,11 @@ namespace CRMSystem.Web.Controllers
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    [Authorize]
+
+    [Authorize(Roles = ("Administrator, Owner"))]
     public class OrganizationsController : Controller
     {
+
         private readonly IOrganizationsService organizationsService;
         private readonly UserManager<ApplicationUser> userManager;
 
@@ -24,11 +26,16 @@ namespace CRMSystem.Web.Controllers
         }
 
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var user = await this.userManager.GetUserAsync(this.User);
+            if (user.OrganizationId == null)
+            {
+                return this.RedirectToAction("Create");
+            }
 
-            var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var viewModel = this.organizationsService.GetById<OrganizationViewModel>(userId);
+
+            var viewModel = this.organizationsService.GetById<OrganizationViewModel>(user.Id);
 
             return this.View(viewModel);
         }
@@ -36,12 +43,11 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Create()
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            if (user.HasOrganization)
+            if (user.OrganizationId != null)
             {
-
-                //todo make to redirect organization info
-                return RedirectToAction("Index", "Customers");
+                return RedirectToAction("Index");
             }
+
             return this.View();
         }
 
@@ -54,19 +60,20 @@ namespace CRMSystem.Web.Controllers
                 return this.View(input);
             }
 
-            await this.organizationsService.CreateOrganizationAsync(input, user.Id);
+            await this.organizationsService.CreateAsync(input, user.Id);
 
-            //todo make to redirect organization info
-            return RedirectToAction("Index", "Customers");
+            
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Edit()
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            if (user == null)
+            if (user.OrganizationId == null)
             {
-                return NotFound();
+                return this.RedirectToAction("Create");
             }
+
             var viewModel = this.organizationsService.GetById<EditOrganizationInputModel>(user.Id);
             return this.View(viewModel);
         }

@@ -79,10 +79,7 @@ namespace CRMSystem.Data
                 .HasOne(o => o.User)
                 .WithOne(u => u.Organization)
                 .HasForeignKey<ApplicationUser>(u => u.OrganizationId);
-            builder.Entity<ApplicationUser>()
-                .HasOne(u => u.Organization)
-                .WithOne(o => o.User)
-                .HasForeignKey<Organization>(o => o.UserId);
+
 
             var entityTypes = builder.Model.GetEntityTypes().ToList();
 

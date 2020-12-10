@@ -10,7 +10,7 @@ namespace CRMSystem.Services.Data.Contracts
 
     public interface ICustomersService
     {
-        IQueryable<T> GetAll<T>(string userId);
+        IQueryable<T> GetAll<T>(string userId, bool isTemporary);
 
         T GetById<T>(int customerId);
         
