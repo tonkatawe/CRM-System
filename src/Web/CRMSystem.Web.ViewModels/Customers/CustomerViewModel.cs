@@ -24,10 +24,12 @@ namespace CRMSystem.Web.ViewModels.Customers
 
         public int OrdersCount { get; set; }
 
+        public bool IsTemporary { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
 
-        
+
 
             configuration.CreateMap<Customer, CustomerViewModel>()
                 .ForMember(x => x.OrdersCount, options =>

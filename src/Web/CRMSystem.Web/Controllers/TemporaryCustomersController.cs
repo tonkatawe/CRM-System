@@ -8,7 +8,6 @@ using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Web.Infrastructure;
 using CRMSystem.Web.ViewModels.Customers;
-using CRMSystem.Web.ViewModels.TemporaryCustomers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
@@ -81,23 +80,23 @@ namespace CRMSystem.Web.Controllers
         [Authorize(Roles = ("Owner, Admin"))]
         public async Task<IActionResult> Index(int? pageNumber)
         {
+
             var user = await this.userManager.GetUserAsync(this.User);
-            //todo must refactoring this!
 
             if (user.OrganizationId == null)
             {
-                //todo make something
-                return RedirectToPage("~/Account/Login");
+                return this.RedirectToAction("Create", "Organizations");
             }
+            var allUserCustomers = this.customersService.GetAll<CustomerViewModel>(user.Id, true);
 
 
-
-
-
+            var customers = from c in allUserCustomers
+                            select c;
 
 
             int pageSize = 3;
-            return View();
+
+            return View(await PaginatedList<CustomerViewModel>.CreateAsync(customers, pageNumber ?? 1, pageSize));
         }
 
         [HttpPost]
@@ -105,13 +104,16 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Approve(int id, string organizationId)
         {
             var user = await this.userManager.GetUserAsync(this.User);
+
             if (user.OrganizationId != organizationId)
             {
                 return NotFound();
             }
 
-            await this.temporaryCustomersService.ApproveAsync(id, organizationId);
-            return this.View("Index");
+            await this.temporaryCustomersService.ApproveAsync(id);
+
+
+            return this.RedirectToAction("Index");
         }
     }
 }

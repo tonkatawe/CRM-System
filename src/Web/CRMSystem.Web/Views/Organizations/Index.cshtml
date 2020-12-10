@@ -2,13 +2,18 @@
 @{
     this.ViewData["Title"] = $"{@Model.Name}";
 }
+
 <div class="container-fluid">
     <div class="align-content-center">
         <center>  <h2 class="justify-content-center">@Model.Name</h2></center>
     </div>
     <hr />
-
-    <hr/>
+    @if (Model.Customers.Any(x=>x.IsTemporary))
+    {
+        <p>You have @Model.Customers.Count(x=>x.IsTemporary) who waiting for your approval</p>
+         <a asp-controller="TemporaryCustomers" asp-action="Index">click here to see them</a>
+    }
+    <hr />
     <div class="card">
         <div class="card-body">
             <i class="fas fa-industry"></i>
@@ -29,7 +34,7 @@
     </div>
     <div class="card">
         <div class="card-body">
-            <i class="fas fa-users"></i>You have @Model.Customers.Count() customers
+            <i class="fas fa-users"></i>You have @Model.Customers.Count(x => !x.IsTemporary) customers
         </div>
     </div>
     <div class="card">
