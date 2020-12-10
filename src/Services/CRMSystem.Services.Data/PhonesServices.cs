@@ -12,9 +12,9 @@ namespace CRMSystem.Services.Data
 {
     public class PhonesServices : IPhonesServices
     {
-        private readonly IDeletableEntityRepository<PhoneNumber> phonesRepository;
+        private readonly IRepository<PhoneNumber> phonesRepository;
 
-        public PhonesServices(IDeletableEntityRepository<PhoneNumber> phonesRepository)
+        public PhonesServices(IRepository<PhoneNumber> phonesRepository)
         {
             this.phonesRepository = phonesRepository;
         }
@@ -44,7 +44,10 @@ namespace CRMSystem.Services.Data
 
         public async Task<int> UpdateAsync(PhoneCreateInputModel input)
         {
-            var phone = await this.phonesRepository.GetByIdWithDeletedAsync(input.Id);
+            var phone =  this.phonesRepository.All().FirstOrDefault(x=>x.Id == input.Id);
+
+          //  var phoneOriginal = await this.phonesRepository.GetByIdWithDeletedAsync(input.Id);
+
             phone.Phone = input.Phone;
             phone.PhoneType = input.PhoneType;
             this.phonesRepository.Update(phone);
@@ -54,7 +57,8 @@ namespace CRMSystem.Services.Data
 
         public async Task<int> DeleteAsync(int id)
         {
-            var phone = await this.phonesRepository.GetByIdWithDeletedAsync(id);
+            var phone =  this.phonesRepository.All().FirstOrDefault(x => x.Id == id);
+            //  var phone = await this.phonesRepository.GetByIdWithDeletedAsync(id);
             this.phonesRepository.Delete(phone);
 
             return await this.phonesRepository.SaveChangesAsync();

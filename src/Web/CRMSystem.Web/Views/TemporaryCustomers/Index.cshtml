@@ -64,6 +64,16 @@
                         </span>
                         <span class="text">Details</span>
                     </a>
+
+                    
+                    <form asp-action="Reject" asp-controller="TemporaryCustomers" method="post" >
+                        <input type="hidden" name="Id" value="@customer.Id" />
+                        <input type="hidden" name="OrganizationId" value="@customer.OrganizationId" />
+
+                        <button type="submit" class="btn btn-info btn-icon-split rounded-pill btn-sm" title="Approve"><i class="fas fa-user-times"></i>Reject</button>
+                    </form>
+                    
+
                     <a asp-route-id="@customer.Id" data-toggle="modal"
                        data-target="#modal-delete" data-customerId="@customer.Id" class="btn btn-danger btn-icon-split rounded-pill btn-sm">
                         <span class="icon text-white-50">

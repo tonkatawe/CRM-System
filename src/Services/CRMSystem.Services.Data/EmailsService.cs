@@ -14,9 +14,9 @@ namespace CRMSystem.Services.Data
 
     public class EmailsService : IEmailsService
     {
-        private readonly IDeletableEntityRepository<EmailAddress> emailRepository;
+        private readonly IRepository<EmailAddress> emailRepository;
 
-        public EmailsService(IDeletableEntityRepository<EmailAddress> emailRepository)
+        public EmailsService(IRepository<EmailAddress> emailRepository)
         {
             this.emailRepository = emailRepository;
         }
@@ -47,15 +47,15 @@ namespace CRMSystem.Services.Data
 
         public async Task<int> DeleteAsync(int customerId)
         {
-            var phone = await this.emailRepository.GetByIdWithDeletedAsync(customerId);
-            this.emailRepository.Delete(phone);
+            var email =  this.emailRepository.All().FirstOrDefault(x=>x.Id == customerId);
+            this.emailRepository.Delete(email);
 
             return await this.emailRepository.SaveChangesAsync();
         }
 
         public async Task<int> UpdateAsync(EmailCreateInputModel input)
         {
-            var email = await this.emailRepository.GetByIdWithDeletedAsync(input.Id);
+            var email =  this.emailRepository.All().FirstOrDefault(x=>x.Id == input.Id);
             email.Email = input.Email;
             email.EmailType = input.EmailType;
             this.emailRepository.Update(email);

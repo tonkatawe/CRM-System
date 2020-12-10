@@ -1,4 +1,5 @@
 ﻿using CRMSystem.Web.ViewModels.Addresses;
+using Microsoft.EntityFrameworkCore;
 
 namespace CRMSystem.Services.Data
 {
@@ -10,9 +11,9 @@ namespace CRMSystem.Services.Data
 
     public class AddressesService : IAddressesService
     {
-        private readonly IDeletableEntityRepository<Address> addressRepository;
+        private readonly IRepository<Address> addressRepository;
 
-        public AddressesService(IDeletableEntityRepository<Address> addressRepository)
+        public AddressesService(IRepository<Address> addressRepository)
         {
             this.addressRepository = addressRepository;
         }
@@ -35,7 +36,7 @@ namespace CRMSystem.Services.Data
 
         public async Task<int> UpdateAsync(AddressCreateInputModel input)
         {
-            var address = await this.addressRepository.GetByIdWithDeletedAsync(input.Id);
+            var address = await this.addressRepository.All().FirstOrDefaultAsync(x=>x.Id == input.Id);
             address.City = input.City;
             address.Country = input.Country;
             address.Street = input.Street;

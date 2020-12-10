@@ -5,7 +5,7 @@
     using CRMSystem.Data.Common.Models;
     using CRMSystem.Data.Models.Enums;
 
-    public class EmailAddress : BaseDeletableModel<int>
+    public class EmailAddress : BaseModel<int>
     {
         public int CustomerId { get; set; }
 

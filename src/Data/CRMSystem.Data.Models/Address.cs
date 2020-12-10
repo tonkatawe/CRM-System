@@ -4,7 +4,7 @@
 
     using CRMSystem.Data.Common.Models;
 
-    public class Address : BaseDeletableModel<int>
+    public class Address : BaseModel<int>
     {
         [Required]
         [MaxLength(30)]

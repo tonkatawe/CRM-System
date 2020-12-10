@@ -112,6 +112,27 @@ namespace CRMSystem.Web.Controllers
 
             await this.temporaryCustomersService.ApproveAsync(id);
 
+            //TODO : MAKE ACCOUNT AND SEND EMAIL
+
+
+            return this.RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = ("Owner, Admin"))]
+
+        public async Task<IActionResult> Reject(int id, string organizationId)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            if (user.OrganizationId != organizationId)
+            {
+                return NotFound();
+            }
+
+            await this.temporaryCustomersService.RejectAsync(id);
+
+            //TODO : SEND EMAIL ABOUT INFORM REJECTION
 
             return this.RedirectToAction("Index");
         }

@@ -11,9 +11,9 @@ namespace CRMSystem.Services.Data
     public class ValidationService : IValidationService
     {
         private readonly IDeletableEntityRepository<Customer> customersRepository;
-        private readonly IDeletableEntityRepository<PhoneNumber> phonesRepository;
+        private readonly IRepository<PhoneNumber> phonesRepository;
 
-        public ValidationService(IDeletableEntityRepository<Customer> customersRepository, IDeletableEntityRepository<PhoneNumber> phonesRepository)
+        public ValidationService(IDeletableEntityRepository<Customer> customersRepository, IRepository<PhoneNumber> phonesRepository)
         {
             this.customersRepository = customersRepository;
             this.phonesRepository = phonesRepository;
