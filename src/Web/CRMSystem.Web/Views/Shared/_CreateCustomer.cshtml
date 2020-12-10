@@ -106,7 +106,16 @@
                 <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
             </div>
         </div>
-        <button type="submit" id="btnSubmit" class="btn btn-primary">Add Customer</button>
+        @if (this.User.IsInRole("Administrator") || this.User.IsInRole("Owner"))
+        {
+            <button type="submit" id="btnSubmit" class="btn btn-primary">Add Customer</button>
+        }
+        else
+        {
+            <input type="hidden" name="organizationId" value="@TempData["OrganizationId"]"/>
+            <button type="submit" id="btnSubmit" asp-controller="TemporaryCustomers" asp-action="Create" method="post" class="btn btn-primary">Send your data</button>
+
+        }
     </form>
 </div>
 

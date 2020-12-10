@@ -104,6 +104,7 @@ namespace CRMSystem.Services.Data
                 LastName = input.LastName,
                 JobTitle = input.JobTitle,
                 AdditionalInfo = input.AdditionalInfo,
+                IsTemporary = isTemporary,
             };
 
             await this.customersRepository.AddAsync(customer);

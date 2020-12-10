@@ -8,7 +8,7 @@ namespace CRMSystem.Web.ViewModels.Organizations
 {
     public class ListOrganizationViewModel : IMapFrom<Organization>, IHaveCustomMappings
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
 
         public string Description { get; set; }
