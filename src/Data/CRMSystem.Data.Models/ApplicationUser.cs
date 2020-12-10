@@ -37,7 +37,7 @@ namespace CRMSystem.Data.Models
 
         public bool IsPremium { get; set; }
 
-        public int? OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         public virtual Organization Organization { get; set; }
 
         public string ParentId { get; set; }

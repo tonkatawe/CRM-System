@@ -30,7 +30,7 @@ namespace CRMSystem.Web.ViewModels.Accounts
         [Required]
         public string Phone { get; set; }
 
-        public int OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
         public void CreateMappings(IProfileExpression configuration)
         {
 

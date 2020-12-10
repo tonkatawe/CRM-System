@@ -6,18 +6,18 @@ namespace CRMSystem.Services.Data.Contracts
 {
     public interface IStatisticsService
     {
-        Task<decimal> GetTotalBenefitsAsync(int id, DateTime startDate, DateTime endDate);
+        Task<decimal> GetTotalBenefitsAsync(string id, DateTime startDate, DateTime endDate);
 
-        Task<DateTime> GetStartDateAsync(int id);
-        Task<T> GetBestCustomersAsync<T>(int id);
+        Task<DateTime> GetStartDateAsync(string id);
+        Task<T> GetBestCustomersAsync<T>(string id);
 
-        Task<T> GetCustomerByOrdersAsync<T>(int id);
-        Task<T> GetMostOrderProductAsync<T>(int id);
-        Task<T> GetMostBenefitProductAsync<T>(int id);
+        Task<T> GetCustomerByOrdersAsync<T>(string id);
+        Task<T> GetMostOrderProductAsync<T>(string id);
+        Task<T> GetMostBenefitProductAsync<T>(string id);
 
         bool ValidationDate(DateTime startDate, DateTime endDate, DateTime userStartDate);
 
-        Task<int> OrdersCount(int id);
+        Task<int> OrdersCount(string id);
 
     }
 }

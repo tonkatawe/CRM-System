@@ -29,7 +29,7 @@ namespace CRMSystem.Services.Data
 
 
 
-        public async Task<decimal> GetTotalBenefitsAsync(int id, DateTime startDate, DateTime endDate)
+        public async Task<decimal> GetTotalBenefitsAsync(string id, DateTime startDate, DateTime endDate)
         {
             return await this.ordersRepository
                     .All()
@@ -37,7 +37,7 @@ namespace CRMSystem.Services.Data
                     .SumAsync(x => x.Product.Price * x.Quantity);
         }
 
-        public async Task<DateTime> GetStartDateAsync(int id)
+        public async Task<DateTime> GetStartDateAsync(string id)
         {
             var startDate = await this.ordersRepository
                 .All()
@@ -49,7 +49,7 @@ namespace CRMSystem.Services.Data
             return startDate;
         }
 
-        public async Task<T> GetBestCustomersAsync<T>(int id)
+        public async Task<T> GetBestCustomersAsync<T>(string id)
         {
             return await this.customerRepository
                 .All()
@@ -59,7 +59,7 @@ namespace CRMSystem.Services.Data
                  .FirstOrDefaultAsync();
         }
 
-        public async Task<T> GetCustomerByOrdersAsync<T>(int id)
+        public async Task<T> GetCustomerByOrdersAsync<T>(string id)
         {
             return await this.customerRepository
                 .All()
@@ -69,7 +69,7 @@ namespace CRMSystem.Services.Data
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<T> GetMostOrderProductAsync<T>(int id)
+        public async Task<T> GetMostOrderProductAsync<T>(string id)
         {
             return await this.productsRepository
                 .All()
@@ -79,7 +79,7 @@ namespace CRMSystem.Services.Data
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<T> GetMostBenefitProductAsync<T>(int id)
+        public async Task<T> GetMostBenefitProductAsync<T>(string id)
         {
             return await this.productsRepository
                 .All()
@@ -109,7 +109,7 @@ namespace CRMSystem.Services.Data
             return true;
         }
 
-        public Task<int> OrdersCount(int id)
+        public Task<int> OrdersCount(string id)
         {
             return this.ordersRepository
                 .All()

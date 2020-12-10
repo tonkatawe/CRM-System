@@ -36,10 +36,12 @@
         [MaxLength(30)]
         public string JobTitle { get; set; }
 
-        public int OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
 
         public virtual Organization Organization { get; set; }
 
+
+        public bool IsTemporary { get; set; }
         
         [MaxLength(1000)]
         public string AdditionalInfo { get; set; }

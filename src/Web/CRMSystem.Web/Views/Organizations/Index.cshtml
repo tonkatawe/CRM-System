@@ -7,10 +7,7 @@
         <center>  <h2 class="justify-content-center">@Model.Name</h2></center>
     </div>
     <hr />
-    @if (Model.TemporaryCustomers != null)
-    {
-        <p>There are @Model.TemporaryCustomers.Count() who are waiting your approval <a asp-controller="TemporaryCustomers" asp-action="Index">click here to see them</a></p>
-    }
+
     <hr/>
     <div class="card">
         <div class="card-body">

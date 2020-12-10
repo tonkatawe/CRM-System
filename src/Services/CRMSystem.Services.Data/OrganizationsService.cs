@@ -63,7 +63,7 @@ namespace CRMSystem.Services.Data
         }
 
 
-        public int GetId(string userId)
+        public string GetId(string userId)
         {
             var query = this.organizationRepository
                 .All()

@@ -108,20 +108,17 @@ namespace CRMSystem.Web.Controllers
         }
 
 
-        [AllowAnonymous]
-        public async Task<IActionResult> Create(int? id = null)
+
+        public async Task<IActionResult> Create()
         {
-            if (id != null)
-            {
-                return this.View();
-            }
+
             var user = await this.userManager.GetUserAsync(this.User);
             if (!user.HasOrganization)
             {
                 return this.RedirectToAction("Create", "Organizations");
             }
 
-            return this.View();
+            return this.View("_CreateCustomer");
         }
 
         [HttpPost]
@@ -153,11 +150,11 @@ namespace CRMSystem.Web.Controllers
 
             if (!this.ModelState.IsValid)
             {
-                return this.View(input);
+                return this.View("_CreateCustomer", input);
             }
 
 
-            await this.customersService.CreateAsync(input, user.Id);
+            await this.customersService.CreateAsync(input, user.Id, user.OrganizationId, false);
 
             return this.RedirectToAction("Index");
         }

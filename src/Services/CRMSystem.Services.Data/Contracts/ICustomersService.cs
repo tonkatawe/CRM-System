@@ -18,7 +18,7 @@ namespace CRMSystem.Services.Data.Contracts
         
         Task<int> DeleteAsync(int id);
         
-        Task<int> CreateAsync(CustomerAddInputModel input, string userId);
+        Task<int> CreateAsync(CustomerAddInputModel input, string userId, string organizationId, bool isTemporary);
         
         Task<int> UpdateAsync(EditCustomerInputModel input);
 

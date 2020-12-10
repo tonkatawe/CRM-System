@@ -96,7 +96,6 @@ namespace CRMSystem.Web
             services.AddTransient<IOrganizationsService, OrganizationsService>();
             services.AddTransient<IEmailsService, EmailsService>();
             services.AddTransient<IPhonesServices, PhonesServices>();
-            services.AddTransient<ISocialNetworksServices, SocialNetworksServices>();
             services.AddTransient<IAddressesService, AddressesService>();
             services.AddTransient<IUserTasksService, UserTasksService>();
             services.AddTransient<IValidationService, ValidationService>();

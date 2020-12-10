@@ -33,11 +33,8 @@ namespace CRMSystem.Data
 
         public DbSet<EmailAddress> EmailAddresses { get; set; }
 
-        public DbSet<Note> Notes { get; set; }
 
         public DbSet<PhoneNumber> PhoneNumbers { get; set; }
-
-        public DbSet<SocialNetwork> SocialNetworks { get; set; }
 
         public DbSet<UserTask> UserTasks { get; set; }
 
@@ -49,7 +46,6 @@ namespace CRMSystem.Data
 
         public DbSet<Image> Images { get; set; }
         public DbSet<ContactFormMessage> ContactFormMessages { get; set; }
-        public DbSet<TemporaryCustomer> TemporaryCustomers { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -79,12 +75,14 @@ namespace CRMSystem.Data
 
             EntityIndexesConfiguration.Configure(builder);
 
-
             builder.Entity<Organization>()
                 .HasOne(o => o.User)
                 .WithOne(u => u.Organization)
                 .HasForeignKey<ApplicationUser>(u => u.OrganizationId);
-
+            builder.Entity<ApplicationUser>()
+                .HasOne(u => u.Organization)
+                .WithOne(o => o.User)
+                .HasForeignKey<Organization>(o => o.UserId);
 
             var entityTypes = builder.Model.GetEntityTypes().ToList();
 

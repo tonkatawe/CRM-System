@@ -38,7 +38,7 @@ namespace CRMSystem.Web.Controllers
             this.emailSender = emailSender;
         }
 
-        public async Task<IActionResult> Index(int organizationId, int id)
+        public async Task<IActionResult> Index(string organizationId, int id)
         {
             var user = await this.userManager.GetUserAsync(this.User);
 

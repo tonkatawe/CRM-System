@@ -21,11 +21,9 @@ namespace CRMSystem.Web.ViewModels.Organizations
         public string Industry { get; set; }
 
         public Address Address { get; set; }
-        
+
         public IEnumerable<CustomerViewModel> Customers { get; set; }
         public IEnumerable<ProductViewModel> Products { get; set; }
-
-        public IEnumerable<TemporaryCustomer> TemporaryCustomers { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

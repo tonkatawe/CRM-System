@@ -21,7 +21,7 @@
         [Range(0, int.MaxValue)]
         public int Quantity { get; set; }
 
-        public int OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
 
         public Organization Organization { get; set; }
 

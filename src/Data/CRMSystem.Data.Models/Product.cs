@@ -30,7 +30,7 @@ namespace CRMSystem.Data.Models
         [Range(0, Int32.MaxValue)]
         public int Quantity { get; set; }
 
-        public int OrganizationId { get; set; }
+        public string OrganizationId { get; set; }
 
 
         public virtual Organization Organization { get; set; }

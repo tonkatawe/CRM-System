@@ -10,7 +10,7 @@
         Task<int> CreateOrganizationAsync(OrganizationCreateInputModel input, string userId);
 
         IEnumerable<T> GetAll<T>();
-        int GetId(string userId);
+        string GetId(string userId);
         T GetById<T>(string userId);
 
         string GetName(string userId);

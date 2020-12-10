@@ -37,7 +37,6 @@ namespace CRMSystem.Services.Data
             IAddressesService addressesService,
             IPhonesServices phonesServices,
             IEmailsService emailsService,
-            ISocialNetworksServices socialNetworkService,
             IOrganizationsService organizationsService)
         {
             this.customersRepository = customersRepository;
@@ -90,11 +89,10 @@ namespace CRMSystem.Services.Data
             return await this.customersRepository.SaveChangesAsync();
         }
 
-        public async Task<int> CreateAsync(CustomerAddInputModel input, string userId)
+        public async Task<int> CreateAsync(CustomerAddInputModel input, string userId,string organizationId, bool isTemporary)
         {
             var address = await this.addressesService.CreateAsync(input.Address.Country, input.Address.City,
                 input.Address.Street, input.Address.ZipCode);
-            var organizationId = this.organizationsService.GetId(userId);
             var customer = new Customer
             {
                 Address = address,
