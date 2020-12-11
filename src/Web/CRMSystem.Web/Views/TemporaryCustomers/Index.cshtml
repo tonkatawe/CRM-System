@@ -3,7 +3,7 @@
 @using CRMSystem.Data.Models
 @model CRMSystem.Web.Infrastructure.PaginatedList<CRMSystem.Web.ViewModels.Customers.CustomerViewModel>
 @{
-    this.ViewData["Title"] = "All contacts";
+    this.ViewData["Title"] = "Waiting for approval";
 
 }
 
@@ -40,70 +40,58 @@
                 <td>
                     @customer.FullName
                 </td>
-
-
-
                 <td>
-
-
-
-
-
-
-                    <form asp-action="Approve" asp-controller="TemporaryCustomers" method="post" >
-                        <input type="hidden" name="Id" value="@customer.Id" />
-                        <input type="hidden" name="OrganizationId" value="@customer.OrganizationId" />
-
-                        <button type="submit" class="btn btn-info btn-icon-split rounded-pill btn-sm" title="Approve"><i class="fas fa-user-times"></i>asds</button>
-                    </form>
-
-
-                    <a asp-action="Details" asp-route-id="@customer.Id" class="btn btn-info btn-icon-split rounded-pill btn-sm">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-info"></i>
-                        </span>
-                        <span class="text">Details</span>
-                    </a>
-
+               
+                        <ul class="list-inline">
+                            <li class="list-inline-item">
+                                <form asp-action="Approve" asp-route-id="@customer.Id" asp-route-organizationId="@customer.OrganizationId" method="post" class="form-inline">
+                                    <button type="submit" class="btn btn-success btn-icon-split rounded-pill btn-sm">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-user-times"></i>
+                                        </span>
+                                        <span class="text">Approve</span>
+                                    </button>
+                                </form>
+                            </li>
+                            <li class="list-inline-item">
+                                <form asp-action="Details" asp-controller="Customers" asp-route-id="@customer.Id" class="form-inline">
+                                    <button class="btn btn-info btn-icon-split rounded-pill btn-sm">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-info"></i>
+                                        </span>
+                                        <span class="text">Details</span>
+                                    </button>
+                                </form>
+                            </li>
+                            <li class="list-inline-item">
+                                <button type="button" class="btn btn-danger btn-icon-split rounded-pill btn-sm" data-toggle="modal" data-target="@tm">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-user-times"></i>
+                                    </span>
+                                    <span class="text">Reject</span>
+                                </button>
+                                <form class="form-inline" asp-action="Reject" asp-route-id="@customer.Id" asp-route-organizationId="@customer.OrganizationId" method="post">
+                                    <div class="modal fade" id="@mid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title" id="myModalLabel">Reject Confirmation</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure want to reject @customer.FullName?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" id="deleteBtn" class="btn bg-danger mr-1">Reject</button>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
                     
-                    <form asp-action="Reject" asp-controller="TemporaryCustomers" method="post" >
-                        <input type="hidden" name="Id" value="@customer.Id" />
-                        <input type="hidden" name="OrganizationId" value="@customer.OrganizationId" />
-
-                        <button type="submit" class="btn btn-info btn-icon-split rounded-pill btn-sm" title="Approve"><i class="fas fa-user-times"></i>Reject</button>
-                    </form>
-                    
-
-                    <a asp-route-id="@customer.Id" data-toggle="modal"
-                       data-target="#modal-delete" data-customerId="@customer.Id" class="btn btn-danger btn-icon-split rounded-pill btn-sm">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-user-times"></i>
-                        </span>
-                        <span class="text">Reject</span>
-                    </a>
-
-                    <form asp-action="Delete" role="form" id="myForm">
-                        <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modalDeleteLabel">Delete customer</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hcustomerIdden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="form-control">
-                                        Are you sure you want to delete @customer.FullName?
-                                        <input type="hidden" id="hiddenId" asp-for="@customer.Id" />
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Cancel</button>
-                                        <button type="submit" asp-action="Delete" asp-route-id="@customer.Id" class="btn btn-danger rounded-pill" id="modalDeleteButton">Delete</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
                 </td>
 
             </tr>

@@ -130,7 +130,8 @@ namespace CRMSystem.Web.Controllers
                 return NotFound();
             }
 
-            await this.temporaryCustomersService.RejectAsync(id);
+            await this.customersService.DeleteAsync(id);
+
 
             //TODO : SEND EMAIL ABOUT INFORM REJECTION
 

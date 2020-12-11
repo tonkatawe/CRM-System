@@ -11,6 +11,6 @@ namespace CRMSystem.Services.Data.Contracts
     {
         Task ApproveAsync(int id);
 
-        Task RejectAsync(int id);
+ 
     }
 }
