@@ -234,12 +234,19 @@ namespace CRMSystem.Web.Controllers
 
         }
 
-
+        [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
+            var user = await this.userManager.GetUserAsync(this.User);
+            
+            var customerUserId = await this.customersService.CustomerUserIdAsync(id);
+            if (user.Id != customerUserId)
+            {
+                return NotFound();
+            }
+
             await this.customersService.DeleteAsync(id);
-            //todo fix sent wrong id
-            //todo for this user check..
+
 
             return this.RedirectToAction("Index");
         }

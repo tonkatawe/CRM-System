@@ -34,12 +34,12 @@
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["SortByName"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Full Name</a>
             </th>
-       
+
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["SortByDate"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Orders</a>
             </th>
             <th class="flex-center">
-               Customer Settings
+                Customer Settings
             </th>
         </tr>
     </thead>
@@ -53,7 +53,7 @@
                     @customer.FullName
                 </td>
 
-             
+
                 <td>
                     @if (customer.OrdersCount == 0)
                     {
@@ -86,31 +86,27 @@
                         </span>
                         <span class="text">Details</span>
                     </a>
-                    <a asp-route-id="@customer.Id" data-toggle="modal"
-                       data-target="#modal-delete" data-customerId="@customer.Id" class="btn btn-danger btn-icon-split rounded-pill btn-sm">
+             
+                    <button type="button" class="btn btn-danger btn-icon-split rounded-pill btn-sm" data-toggle="modal" data-target="@tm">
                         <span class="icon text-white-50">
                             <i class="fas fa-user-times"></i>
                         </span>
                         <span class="text">Delete</span>
-                    </a>
-
-                    <form asp-action="Delete" role="form" id="myForm">
-                        <div class="modal fade" id="modal-delete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                    </button>
+                    <form asp-action="Delete" asp-route-id="@customer.Id" method="post">
+                        <div class="modal fade" id="@mid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modalDeleteLabel">Delete customer</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hcustomerIdden="true">&times;</span>
-                                        </button>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
                                     </div>
-                                    <div class="form-control">
-                                        Are you sure you want to delete @customer.FullName?
-                                        <input type="hidden" id="hiddenId" asp-for="@customer.Id" />
+                                    <div class="modal-body">
+                                        Are you sure want to delete @customer.FullName?
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Cancel</button>
-                                        <button type="submit" asp-action="Delete" asp-route-id="@customer.Id" class="btn btn-danger rounded-pill" id="modalDeleteButton">Delete</button>
+                                        <button type="submit" id="deleteBtn" class="btn bg-danger mr-1">Delete</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
@@ -163,23 +159,3 @@
     </a>
 </div>
 
-@section Scripts
-{
-    <script>
-        $(function () {
-            $('#modal-delete').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget);
-                var id = button.data("customerId");
-                var modal = $(this);
-
-                modal.find('#hiddenId').val(id);
-            });
-
-            $("#modalDeleteButton").click(function () {
-                $("#myForm").submit();
-
-            });
-
-        });
-    </script>
-}

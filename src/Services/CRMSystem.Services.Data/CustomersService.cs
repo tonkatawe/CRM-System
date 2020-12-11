@@ -67,16 +67,11 @@ namespace CRMSystem.Services.Data
             return query;
         }
 
-        public IEnumerable<T> GetByName<T>(string userId)
+        public async Task<string> CustomerUserIdAsync(int id)
         {
-            var query = this.customersRepository.All()
-                .Where(x => x.UserId == userId)
-                .OrderBy(x => x.FirstName)
-                .ThenBy(x => x.LastName)
-                .To<T>()
-                .ToList();
+            var customer = await this.customersRepository.GetByIdWithDeletedAsync(id);
 
-            return query;
+            return customer.UserId;
         }
 
         public async Task<int> DeleteAsync(int id)

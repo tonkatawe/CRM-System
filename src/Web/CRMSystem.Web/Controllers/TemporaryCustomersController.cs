@@ -15,7 +15,7 @@ namespace CRMSystem.Web.Controllers
 {
     public class TemporaryCustomersController : Controller
     {
-        private const string SentData = "Successful";
+        private const string SentData = "SentData";
 
 
         private readonly ITemporaryCustomersService temporaryCustomersService;
@@ -61,7 +61,7 @@ namespace CRMSystem.Web.Controllers
             var userId = this.usersService.GetUserIdByOrganizationId(organizationId);
             await this.customersService.CreateAsync(input, userId, organizationId, true);
 
-            this.TempData["Successful"] = "Your sent successful";
+            this.TempData["Successful"] = "Your data sent successful";
             this.TempData[SentData] = true;
 
             return this.RedirectToAction("Successful");
