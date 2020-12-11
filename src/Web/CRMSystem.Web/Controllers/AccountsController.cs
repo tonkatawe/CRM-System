@@ -48,62 +48,76 @@ namespace CRMSystem.Web.Controllers
             }
 
             var test = this.customersService.GetById<GetDetailsViewModel>(id);
-            var viewModel = this.customersService.GetById<MakeAccountViewModel>(id);
+            var viewModel = this.customersService.GetById<CreateAccountInputModel>(id);
             viewModel.Email = test.Emails.FirstOrDefault()?.Email;
 
             return View(viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(MakeAccountViewModel input)
+        public async Task<IActionResult> Create(int id, string organizationId)
         {
             var owner = await this.userManager.GetUserAsync(this.User);
-            //todo correct input
-            if (!ModelState.IsValid)
+            if (owner.OrganizationId != organizationId)
             {
-                var user = new ApplicationUser
-                {
-                    UserName = input.Username,
-                    Email = input.Email,
-                    PhoneNumber = input.Phone,
-                    OrganizationId = input.OrganizationId,
-                    Parent = owner,
-
-                };
-
-                var userPassword = Guid.NewGuid().ToString().Substring(0, 8);
-
-
-                var result = await this.userManager.CreateAsync(user, userPassword);
-
-                var organizationName = this.organizationsService.GetName(owner.Id);
-
-                if (result.Succeeded)
-                {
-                    await this.userManager.AddToRoleAsync(user, "Customer");
-
-                    var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
-
-                    var confirmationLink = Url.Action("ConfirmEmail", "Accounts",
-                        new { token, email = user.Email },
-                           Request.Scheme);
-
-                    var msg = String.Format(OutputMessages.EmailConformation, input.FullName, organizationName,
-                        user.UserName, userPassword, confirmationLink);
-
-                    await this.emailSender.SendEmailAsync(owner.Email, owner.UserName,
-                        user.Email, "Email confirm link", msg);
-
-
-                    return this.RedirectToAction("Index", "Customers");
-
-
-                }
-
-
-
-
+                return NotFound();
             }
+
+            var customer = this.customersService.GetById<CreateAccountInputModel>(id);
+
+            if (owner.Id != customer.UserId)
+            {
+                return NotFound();
+            }
+
+
+
+            //todo correct input
+            //if (!ModelState.IsValid)
+            //{
+            //    var user = new ApplicationUser
+            //    {
+            //        UserName = input.Username,
+            //        Email = input.Email,
+            //        PhoneNumber = input.Phone,
+            //        OrganizationId = input.OrganizationId,
+            //        Parent = owner,
+
+            //    };
+
+            //    var userPassword = Guid.NewGuid().ToString().Substring(0, 8);
+
+
+            //    var result = await this.userManager.CreateAsync(user, userPassword);
+
+            //    var organizationName = this.organizationsService.GetName(owner.Id);
+
+            //    if (result.Succeeded)
+            //    {
+            //        await this.userManager.AddToRoleAsync(user, "Customer");
+
+            //        var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
+
+            //        var confirmationLink = Url.Action("ConfirmEmail", "Accounts",
+            //            new { token, email = user.Email },
+            //               Request.Scheme);
+
+            //        var msg = String.Format(OutputMessages.EmailConformation, input.FullName, organizationName,
+            //            user.UserName, userPassword, confirmationLink);
+
+            //        await this.emailSender.SendEmailAsync(owner.Email, owner.UserName,
+            //            user.Email, "Email confirm link", msg);
+
+
+            //        return this.RedirectToAction("Index", "Customers");
+
+
+            //    }
+
+
+
+
+            //}
 
             return this.RedirectToAction("Index", "Customers");
         }

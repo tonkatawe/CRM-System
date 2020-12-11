@@ -68,52 +68,66 @@
                     }
                 </td>
                 <td>
-                    <a asp-controller="Accounts" asp-action="Index" asp-route-organizationId="@customer.OrganizationId" asp-route-id="@customer.Id" class="btn btn-warning btn-icon-split rounded-pill btn-sm">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-user-plus"></i>
-                        </span>
-                        <span class="text">Add account</span>
-                    </a>
-                    <a asp-controller="Orders" asp-action="Create" asp-route-id="@customer.Id" class="btn btn-primary btn-icon-split rounded-pill btn-sm">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-plus"></i>
-                        </span>
-                        <span class="text">Add Order</span>
-                    </a>
-                    <a asp-action="Details" asp-route-id="@customer.Id" class="btn btn-info btn-icon-split rounded-pill btn-sm">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-info"></i>
-                        </span>
-                        <span class="text">Details</span>
-                    </a>
-             
-                    <button type="button" class="btn btn-danger btn-icon-split rounded-pill btn-sm" data-toggle="modal" data-target="@tm">
-                        <span class="icon text-white-50">
-                            <i class="fas fa-user-times"></i>
-                        </span>
-                        <span class="text">Delete</span>
-                    </button>
-                    <form asp-action="Delete" asp-route-id="@customer.Id" method="post">
-                        <div class="modal fade" id="@mid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        Are you sure want to delete @customer.FullName?
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" id="deleteBtn" class="btn bg-danger mr-1">Delete</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <form asp-action="Create" asp-controller="Accounts" asp-route-id="@customer.Id" asp-route-organizationId="@customer.OrganizationId" method="post" class="form-inline">
+                                <button type="submit" class="btn btn-warning btn-icon-split rounded-pill btn-sm">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-user-times"></i>
+                                    </span>
+                                    <span class="text">Add account</span>
+                                </button>
+                            </form>
+                        </li>
+                        <li class="list-inline-item">
+                            <form asp-controller="Orders" asp-action="Create" asp-route-id="@customer.Id" class="form-inline">
+                                <button class="btn btn-primary btn-icon-split rounded-pill btn-sm">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
+                                    <span class="text">Add Order</span>
+                                </button>
+                            </form>
+                        </li>
+                        <li class="list-inline-item">
+                            <form asp-action="Details" asp-controller="Customers" asp-route-id="@customer.Id" class="form-inline">
+                                <button class="btn btn-info btn-icon-split rounded-pill btn-sm">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-info"></i>
+                                    </span>
+                                    <span class="text">Details</span>
+                                </button>
+                            </form>
+                        </li>
+                        <li class="list-inline-item">
+                            <button type="button" class="btn btn-danger btn-icon-split rounded-pill btn-sm" data-toggle="modal" data-target="@tm">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-user-times"></i>
+                                </span>
+                                <span class="text">Delete</span>
+                            </button>
+                            <form asp-action="Delete" asp-route-id="@customer.Id" method="post">
+                                <div class="modal fade" id="@mid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                Are you sure want to delete @customer.FullName?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" id="deleteBtn" class="btn bg-danger mr-1">Delete</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </form>
+                            </form>
+                        </li>
+                    </ul>
                 </td>
-
             </tr>
         }
     </tbody>

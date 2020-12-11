@@ -1,7 +1,6 @@
-﻿@model CRMSystem.Web.ViewModels.Accounts.MakeAccountViewModel
+﻿@model CRMSystem.Web.ViewModels.Accounts.CreateAccountInputModel
 @{
-    var emails = Model.Emails.Select(x => new SelectListItem(x.Email, x.Email));
-    var phones = Model.Phones.Select(x => new SelectListItem(x.Phone, x.Phone));
+
 }
 
 <div class="row">
@@ -23,7 +22,7 @@
                 <div class="card-body">
                     <i class="fas fa-at"></i>                    
                     <label>Email:</label><br/>
-                    <select asp-for="Email" asp-items="emails"  class="form-control"><option disabled selected>--Select Phone--</option></select>
+                    <select asp-for="Email"   class="form-control"><option disabled selected>--Select Phone--</option></select>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
             </div>
@@ -31,7 +30,7 @@
                 <div class="card-body">
                     <i class="fas fa-phone-alt"></i>
                     <label>Phone:</label><br/>
-                    <select asp-for="Phone" asp-items="phones"  class="form-control"><option disabled selected>--Select Phone--</option></select>
+                    <select asp-for="Phone"  class="form-control"><option disabled selected>--Select Phone--</option></select>
                     <span asp-validation-for="Phone" class="text-danger"></span>
                 </div>
             </div>
