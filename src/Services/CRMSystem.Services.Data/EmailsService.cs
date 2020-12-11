@@ -1,4 +1,5 @@
 ﻿using CRMSystem.Web.ViewModels.Emails;
+using Microsoft.EntityFrameworkCore;
 
 namespace CRMSystem.Services.Data
 {
@@ -27,6 +28,22 @@ namespace CRMSystem.Services.Data
                 .Where(x => x.CustomerId == customerId);
 
             return query.To<T>().ToList();
+        }
+
+        public async Task DeleteAllAsync(int customerId)
+        {
+          var emails = await  this.emailRepository
+              .All()
+              .Where(x => x.CustomerId == customerId)
+              .ToListAsync();
+
+          foreach (var email in emails)
+          {
+              this.emailRepository.Delete(email);
+          }
+
+          await this.emailRepository.SaveChangesAsync();
+
         }
 
         public async Task<EmailAddress> CreateAsync(string email, EmailType type, int customerId)

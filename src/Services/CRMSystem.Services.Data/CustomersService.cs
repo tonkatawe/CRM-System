@@ -79,7 +79,14 @@ namespace CRMSystem.Services.Data
             var customer = await this.customersRepository
                 .GetByIdWithDeletedAsync(id);
 
-            this.customersRepository.Delete(customer);
+            await this.emailsService.DeleteAllAsync(id);
+
+            await this.phonesServices.DeleteAllAsync(id);
+
+
+            this.customersRepository.HardDelete(customer);
+
+            await this.addressesService.DeleteAsync(customer.AddressId);
 
             return await this.customersRepository.SaveChangesAsync();
         }

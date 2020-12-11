@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CRMSystem.Web.ViewModels.Phones;
+using Microsoft.EntityFrameworkCore;
 
 namespace CRMSystem.Services.Data
 {
@@ -44,9 +45,9 @@ namespace CRMSystem.Services.Data
 
         public async Task<int> UpdateAsync(PhoneCreateInputModel input)
         {
-            var phone =  this.phonesRepository.All().FirstOrDefault(x=>x.Id == input.Id);
+            var phone = this.phonesRepository.All().FirstOrDefault(x => x.Id == input.Id);
 
-          //  var phoneOriginal = await this.phonesRepository.GetByIdWithDeletedAsync(input.Id);
+            //  var phoneOriginal = await this.phonesRepository.GetByIdWithDeletedAsync(input.Id);
 
             phone.Phone = input.Phone;
             phone.PhoneType = input.PhoneType;
@@ -57,11 +58,25 @@ namespace CRMSystem.Services.Data
 
         public async Task<int> DeleteAsync(int id)
         {
-            var phone =  this.phonesRepository.All().FirstOrDefault(x => x.Id == id);
-            //  var phone = await this.phonesRepository.GetByIdWithDeletedAsync(id);
+            var phone = this.phonesRepository.All().FirstOrDefault(x => x.Id == id);
             this.phonesRepository.Delete(phone);
 
             return await this.phonesRepository.SaveChangesAsync();
+        }
+
+        public async Task DeleteAllAsync(int customerId)
+        {
+            var phones = await this.phonesRepository
+                .All()
+                .Where(x => x.CustomerId == customerId)
+                .ToListAsync();
+
+            foreach (var phone in phones)
+            {
+                this.phonesRepository.Delete(phone);
+            }
+
+            await this.phonesRepository.SaveChangesAsync();
         }
     }
 }

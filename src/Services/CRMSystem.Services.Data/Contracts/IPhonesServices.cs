@@ -17,5 +17,7 @@ namespace CRMSystem.Services.Data.Contracts
         Task<int> UpdateAsync(PhoneCreateInputModel input);
 
         Task<int> DeleteAsync(int id);
+
+        Task DeleteAllAsync(int customerId);
     }
 }

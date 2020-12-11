@@ -12,6 +12,8 @@ namespace CRMSystem.Services.Data.Contracts
     {
         IEnumerable<T> GetAll<T>(int customerId);
 
+        Task DeleteAllAsync(int customerId);
+
         Task<EmailAddress> CreateAsync(string email, EmailType type, int customerId);
 
         Task<int> DeleteAsync(int customerId);

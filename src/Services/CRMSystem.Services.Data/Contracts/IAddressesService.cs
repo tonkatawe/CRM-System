@@ -11,5 +11,7 @@ namespace CRMSystem.Services.Data.Contracts
         Task<Address> CreateAsync(string country, string city, string street = null, int? zipCode = null);
 
         Task<int> UpdateAsync(AddressCreateInputModel input);
+
+        Task DeleteAsync(int id);
     }
 }

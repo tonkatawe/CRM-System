@@ -46,5 +46,13 @@ namespace CRMSystem.Services.Data
 
             return await this.addressRepository.SaveChangesAsync();
         }
+
+        public async Task DeleteAsync(int id)
+        {
+            var address = await this.addressRepository.All().FirstOrDefaultAsync(x => x.Id == id);
+            this.addressRepository.Delete(address);
+
+            await this.addressRepository.SaveChangesAsync();
+        }
     }
 }
