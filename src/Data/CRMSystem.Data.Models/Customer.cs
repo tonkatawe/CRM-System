@@ -42,7 +42,9 @@
 
 
         public bool IsTemporary { get; set; }
-        
+
+        public bool HasAccount { get; set; }
+
         [MaxLength(1000)]
         public string AdditionalInfo { get; set; }
 

@@ -18,7 +18,8 @@ namespace CRMSystem.Web.Controllers
     {
 
         private readonly ICustomersService customersService;
-        private readonly IOrganizationsService organizationsService;
+        private readonly IAccountsService accountsService;
+
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IEmailSender emailSender;
@@ -26,13 +27,14 @@ namespace CRMSystem.Web.Controllers
 
         public AccountsController(
             ICustomersService customersService,
-            IOrganizationsService organizationsService,
+            IAccountsService accountsService,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender)
         {
             this.customersService = customersService;
-            this.organizationsService = organizationsService;
+            this.accountsService = accountsService;
+
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.emailSender = emailSender;
@@ -70,8 +72,13 @@ namespace CRMSystem.Web.Controllers
                 return NotFound();
             }
 
+            if (customer.HasAccount)
+            {
+                //todo : make error page
+                return NotFound();
+            }
 
-
+            await this.accountsService.CreateAsync(customer);
             //todo correct input
             //if (!ModelState.IsValid)
             //{

@@ -26,6 +26,8 @@ namespace CRMSystem.Web.ViewModels.Customers
 
         public bool IsTemporary { get; set; }
 
+        public bool HasAccount { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
 

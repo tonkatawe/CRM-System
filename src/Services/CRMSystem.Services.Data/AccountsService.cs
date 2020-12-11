@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CRMSystem.Data.Common.Repositories;
 using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
+using CRMSystem.Web.ViewModels.Accounts;
 
 namespace CRMSystem.Services.Data
 {
@@ -16,7 +17,7 @@ namespace CRMSystem.Services.Data
             this.customersRepository = customersRepository;
         }
 
-        public Task CreateAsync(int id)
+        public Task CreateAsync(CreateAccountInputModel input)
         {
             throw new System.NotImplementedException();
         }
