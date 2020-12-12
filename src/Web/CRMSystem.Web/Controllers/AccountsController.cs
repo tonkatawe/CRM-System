@@ -17,7 +17,6 @@ namespace CRMSystem.Web.Controllers
     [Authorize(Roles = "Admin, Owner")]
     public class AccountsController : Controller
     {
-
         private readonly ICustomersService customersService;
         private readonly IAccountsService accountsService;
 
@@ -80,65 +79,34 @@ namespace CRMSystem.Web.Controllers
             }
 
             //todo routing data
-            //ViewData["ReturnUrl"] = returnUrl;
-            var result = new KeyValuePair<string,string>();
+
+            var result = new KeyValuePair<string, string>();
             try
             {
-                 result = await this.accountsService.CreateAsync(customer, owner);
+                result = await this.accountsService.CreateAsync(customer, owner);
             }
             catch (Exception e)
             {
-                //todo private method
-                TempData["Errors"] = e.Message;
-              //  return this.Redirect(returnUrl);
+                TempData["Error"] = "Account doesn't create - " + e.Message;
+
+                return this.RedirectToAction("Index", "Customers");
 
             }
-           
-            //todo correct input
+            
+            var confirmationLink = Url.Action("ConfirmEmail", "Accounts",
+                    new { result.Key, email = customer.Email },
+                       Request.Scheme);
 
-            //var user = new ApplicationUser
-            //{
-            //    UserName = input.Username,
-            //    Email = input.Email,
-            //    PhoneNumber = input.Phone,
-            //    OrganizationId = input.OrganizationId,
-            //    Parent = owner,
+            var msg = String.Format(OutputMessages.EmailConformation, customer.FullName, customer.OrganizationName,
+                customer.UserName, result.Value, confirmationLink);
 
-            //};
+            await this.emailSender.SendEmailAsync(owner.Email, owner.UserName,
+                customer.Email, "Email confirm link", msg);
 
-            //var userPassword = Guid.NewGuid().ToString().Substring(0, 8);
-
-
-            //var result = await this.userManager.CreateAsync(user, userPassword);
-
-            //var organizationName = this.organizationsService.GetName(owner.Id);
-
-            //if (result.Succeeded)
-            //{
-            //    await this.userManager.AddToRoleAsync(user, "Customer");
-
-            //    var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
-
-            //    var confirmationLink = Url.Action("ConfirmEmail", "Accounts",
-            //        new { token, email = user.Email },
-            //           Request.Scheme);
-
-            //    var msg = String.Format(OutputMessages.EmailConformation, input.FullName, organizationName,
-            //        user.UserName, userPassword, confirmationLink);
-
-            //    await this.emailSender.SendEmailAsync(owner.Email, owner.UserName,
-            //        user.Email, "Email confirm link", msg);
-
-
-            //    return this.RedirectToAction("Index", "Customers");
-
-            //}
-
-
-
-
+            TempData["Successful"] = "Account created successful.";
             return this.RedirectToAction("Index", "Customers");
         }
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string token, string email)

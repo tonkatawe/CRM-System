@@ -14,7 +14,7 @@ namespace CRMSystem.Web.ViewModels.Accounts
     {
         public int Id { get; set; }
 
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         public string FullName { get; set; }
 
@@ -25,13 +25,14 @@ namespace CRMSystem.Web.ViewModels.Accounts
 
         public string UserId { get; set; }
 
+        public string OrganizationName { get; set; }
         public string OrganizationId { get; set; }
 
         public bool HasAccount { get; set; }
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Customer, CreateAccountInputModel>()
-                .ForMember(u => u.Username, options =>
+                .ForMember(u => u.UserName, options =>
                     options.MapFrom(u => u.FirstName[0] + "." + u.LastName))
                 .ForMember(e => e.Email, options =>
                      options.MapFrom(e => e.Emails.FirstOrDefault().Email))

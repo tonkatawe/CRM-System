@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CRMSystem.Data.Common.Repositories;
 using CRMSystem.Data.Models;
@@ -27,10 +28,10 @@ namespace CRMSystem.Services.Data
         {
             var user = new ApplicationUser
             {
-                UserName = input.Username,
+                UserName = input.UserName,
                 Email = input.Email,
                 PhoneNumber = input.Phone,
-            //    OrganizationId = input.OrganizationId,
+                //    OrganizationId = input.OrganizationId,
                 Parent = owner,
             };
 
@@ -55,10 +56,8 @@ namespace CRMSystem.Services.Data
             else
             {
                 //todo check it
-                throw new Exception(result.Errors.ToString());
+                throw new Exception(result.ToString());
             }
-
-            throw new System.NotImplementedException();
         }
     }
 }

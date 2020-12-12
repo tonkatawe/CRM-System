@@ -48,7 +48,7 @@ namespace CRMSystem.Web.Controllers
             return View(viewModel);
         }
 
-
+        [Authorize(Roles = ("Owner"))]
         public async Task<IActionResult> Create()
         {
             return View();
@@ -56,6 +56,7 @@ namespace CRMSystem.Web.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = ("Owner"))]
         public async Task<IActionResult> Create(ProductCreateInputModel input)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -80,7 +81,7 @@ namespace CRMSystem.Web.Controllers
 
         }
 
-
+        [Authorize(Roles = ("Owner"))]
         public IActionResult Edit(int id)
         {
             var viewModel = this.productsService.GetById<EditProductInputModel>(id);
@@ -90,6 +91,7 @@ namespace CRMSystem.Web.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = ("Owner"))]
         public async Task<IActionResult> Edit(EditProductInputModel input)
         {
             if (!ModelState.IsValid)
@@ -102,9 +104,10 @@ namespace CRMSystem.Web.Controllers
             return this.RedirectToAction("Index");
         }
 
-
+        [Authorize(Roles = ("Owner"))]
         public async Task<IActionResult> Delete(int id)
         {
+            //todo make post method
             //todo check for security delete by other users!!! its so import
 
             await this.productsService.DeleteAsync(id);

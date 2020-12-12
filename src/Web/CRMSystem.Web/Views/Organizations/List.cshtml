@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<CRMSystem.Web.ViewModels.Organizations.ListOrganizationViewModel>
-@{ this.ViewData["Title"] = "All companies"; }
+@{
+    this.ViewData["Title"] = "All companies";
+}
+
+
 
 <div class="row ">
     <label></label>
@@ -27,7 +31,7 @@
     </div>
     <hr />
     <div>
-        <a href="#">view all poroducts</a>
+        <a href="#">view all products</a>
     </div>
     <div>
         <a asp-controller="TemporaryCustomers" asp-action="Create" asp-route-id="@company.Id">Make business with this company</a>
