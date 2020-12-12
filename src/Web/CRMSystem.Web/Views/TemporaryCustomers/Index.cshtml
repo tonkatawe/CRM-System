@@ -70,7 +70,7 @@
                                     </span>
                                     <span class="text">Reject</span>
                                 </button>
-                                <form class="form-inline" asp-action="Reject" asp-route-id="@customer.Id" asp-route-organizationId="@customer.OrganizationId" method="post">
+                                <form class="form-inline" asp-action="Reject" asp-route-id="@customer.Id" asp-route-organizationId="@customer.OrganizationId" asp-route-email="@customer." method="post">
                                     <div class="modal fade" id="@mid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">

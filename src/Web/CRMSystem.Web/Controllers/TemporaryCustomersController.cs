@@ -11,6 +11,7 @@ using CRMSystem.Services.Messaging;
 using CRMSystem.Web.Infrastructure;
 using CRMSystem.Web.ViewModels.Accounts;
 using CRMSystem.Web.ViewModels.Customers;
+using CRMSystem.Web.ViewModels.TemporaryCustomers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
@@ -168,17 +169,24 @@ namespace CRMSystem.Web.Controllers
 
         public async Task<IActionResult> Reject(int id, string organizationId)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+            var owner = await this.userManager.GetUserAsync(this.User);
 
-            if (user.OrganizationId != organizationId)
+            if (owner.OrganizationId != organizationId)
             {
                 return NotFound();
             }
 
+            var customer = this.customersService.GetById<RejectCustomerViewModel>(id);
+
             await this.customersService.DeleteAsync(id);
 
+            var msg = String.Format(OutputMessages.RejectCustomer, customer.FullName, customer.OrganizationName);
 
-            //TODO : SEND EMAIL ABOUT INFORM REJECTION
+            //todo change output message
+
+            await this.emailSender.SendEmailAsync(owner.Email, owner.UserName,
+                customer.Email, "Email confirm link", msg);
+          
 
             return this.RedirectToAction("Index");
         }
