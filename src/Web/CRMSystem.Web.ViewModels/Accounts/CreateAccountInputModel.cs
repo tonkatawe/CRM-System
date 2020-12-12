@@ -37,11 +37,6 @@ namespace CRMSystem.Web.ViewModels.Accounts
                      options.MapFrom(e => e.Emails.FirstOrDefault().Email))
                 .ForMember(p => p.Phone, options =>
                 options.MapFrom(p => p.Phones.FirstOrDefault().Phone));
-
-
-
-
-
         }
     }
 }

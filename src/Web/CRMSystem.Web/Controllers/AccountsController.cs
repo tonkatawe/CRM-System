@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CRMSystem.Common;
@@ -78,59 +79,71 @@ namespace CRMSystem.Web.Controllers
                 return NotFound();
             }
 
-            await this.accountsService.CreateAsync(customer);
+            //todo routing data
+            //ViewData["ReturnUrl"] = returnUrl;
+            var result = new KeyValuePair<string,string>();
+            try
+            {
+                 result = await this.accountsService.CreateAsync(customer, owner);
+            }
+            catch (Exception e)
+            {
+                //todo private method
+                TempData["Errors"] = e.Message;
+              //  return this.Redirect(returnUrl);
+
+            }
+           
             //todo correct input
-            //if (!ModelState.IsValid)
+
+            //var user = new ApplicationUser
             //{
-            //    var user = new ApplicationUser
-            //    {
-            //        UserName = input.Username,
-            //        Email = input.Email,
-            //        PhoneNumber = input.Phone,
-            //        OrganizationId = input.OrganizationId,
-            //        Parent = owner,
+            //    UserName = input.Username,
+            //    Email = input.Email,
+            //    PhoneNumber = input.Phone,
+            //    OrganizationId = input.OrganizationId,
+            //    Parent = owner,
 
-            //    };
+            //};
 
-            //    var userPassword = Guid.NewGuid().ToString().Substring(0, 8);
+            //var userPassword = Guid.NewGuid().ToString().Substring(0, 8);
 
 
-            //    var result = await this.userManager.CreateAsync(user, userPassword);
+            //var result = await this.userManager.CreateAsync(user, userPassword);
 
-            //    var organizationName = this.organizationsService.GetName(owner.Id);
+            //var organizationName = this.organizationsService.GetName(owner.Id);
 
-            //    if (result.Succeeded)
-            //    {
-            //        await this.userManager.AddToRoleAsync(user, "Customer");
+            //if (result.Succeeded)
+            //{
+            //    await this.userManager.AddToRoleAsync(user, "Customer");
 
-            //        var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
+            //    var token = await this.userManager.GenerateEmailConfirmationTokenAsync(user);
 
-            //        var confirmationLink = Url.Action("ConfirmEmail", "Accounts",
-            //            new { token, email = user.Email },
-            //               Request.Scheme);
+            //    var confirmationLink = Url.Action("ConfirmEmail", "Accounts",
+            //        new { token, email = user.Email },
+            //           Request.Scheme);
 
-            //        var msg = String.Format(OutputMessages.EmailConformation, input.FullName, organizationName,
-            //            user.UserName, userPassword, confirmationLink);
+            //    var msg = String.Format(OutputMessages.EmailConformation, input.FullName, organizationName,
+            //        user.UserName, userPassword, confirmationLink);
 
-            //        await this.emailSender.SendEmailAsync(owner.Email, owner.UserName,
-            //            user.Email, "Email confirm link", msg);
-
-
-            //        return this.RedirectToAction("Index", "Customers");
+            //    await this.emailSender.SendEmailAsync(owner.Email, owner.UserName,
+            //        user.Email, "Email confirm link", msg);
 
 
-            //    }
-
-
-
+            //    return this.RedirectToAction("Index", "Customers");
 
             //}
+
+
+
 
             return this.RedirectToAction("Index", "Customers");
         }
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string token, string email)
         {
+            //todo make tempdata to confirm email
             var user = await this.userManager.FindByEmailAsync(email);
 
             if (user == null)
