@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CRMSystem.Common;
 using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
+using CRMSystem.Services.Messaging;
 using CRMSystem.Web.Infrastructure;
+using CRMSystem.Web.ViewModels.Accounts;
 using CRMSystem.Web.ViewModels.Customers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -21,6 +24,8 @@ namespace CRMSystem.Web.Controllers
         private readonly ITemporaryCustomersService temporaryCustomersService;
         private readonly ICustomersService customersService;
         private readonly IUsersService usersService;
+        private readonly IAccountsService accountsService;
+        private readonly IEmailSender emailSender;
         private readonly UserManager<ApplicationUser> userManager;
 
 
@@ -28,11 +33,15 @@ namespace CRMSystem.Web.Controllers
             ITemporaryCustomersService temporaryCustomersService,
             ICustomersService customersService,
             IUsersService usersService,
+            IAccountsService accountsService,
+            IEmailSender emailSender,
             UserManager<ApplicationUser> userManager)
         {
             this.temporaryCustomersService = temporaryCustomersService;
             this.customersService = customersService;
             this.usersService = usersService;
+            this.accountsService = accountsService;
+            this.emailSender = emailSender;
             this.userManager = userManager;
         }
 
@@ -103,19 +112,55 @@ namespace CRMSystem.Web.Controllers
         [Authorize(Roles = ("Owner, Admin"))]
         public async Task<IActionResult> Approve(int id, string organizationId)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
-
-            if (user.OrganizationId != organizationId)
+            var owner = await this.userManager.GetUserAsync(this.User);
+            if (owner.OrganizationId != organizationId)
             {
+                return NotFound();
+            }
+
+            var customer = this.customersService.GetById<CreateAccountInputModel>(id);
+
+            if (owner.Id != customer.UserId)
+            {
+                return NotFound();
+            }
+
+            if (customer.HasAccount)
+            {
+                //todo : make error page
                 return NotFound();
             }
 
             await this.temporaryCustomersService.ApproveAsync(id);
 
-            //TODO : MAKE ACCOUNT AND SEND EMAIL
+            var result = new KeyValuePair<string, string>();
+            try
+            {
+                result = await this.accountsService.CreateAsync(customer, owner);
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = "Account doesn't create - " + e.Message;
 
+                return this.RedirectToAction("Index", "TemporaryCustomers");
 
-            return this.RedirectToAction("Index");
+            }
+
+            var confirmationLink = Url.Action("ConfirmEmail", "Accounts",
+                new { result.Key, email = customer.Email },
+                Request.Scheme);
+
+            //todo change output message
+
+            var msg = String.Format(OutputMessages.EmailConformation, customer.FullName, customer.OrganizationName,
+                customer.UserName, result.Value, confirmationLink);
+
+            await this.emailSender.SendEmailAsync(owner.Email, owner.UserName,
+                customer.Email, "Email confirm link", msg);
+
+            TempData["Successful"] = "User approved successful and created an account.";
+            return this.RedirectToAction("Index", "Customers");
+
         }
 
         [HttpPost]

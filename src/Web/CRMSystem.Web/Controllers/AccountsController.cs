@@ -78,7 +78,6 @@ namespace CRMSystem.Web.Controllers
                 return NotFound();
             }
 
-            //todo routing data
 
             var result = new KeyValuePair<string, string>();
             try
@@ -92,7 +91,7 @@ namespace CRMSystem.Web.Controllers
                 return this.RedirectToAction("Index", "Customers");
 
             }
-            
+
             var confirmationLink = Url.Action("ConfirmEmail", "Accounts",
                     new { result.Key, email = customer.Email },
                        Request.Scheme);
@@ -119,9 +118,7 @@ namespace CRMSystem.Web.Controllers
                 return View("Error");
             }
 
-
             var result = await this.userManager.ConfirmEmailAsync(user, token);
-
 
             if (result.Succeeded)
             {
@@ -134,7 +131,6 @@ namespace CRMSystem.Web.Controllers
             {
                 return View("Error");
             }
-
 
         }
 
