@@ -17,16 +17,19 @@ namespace CRMSystem.Web.Controllers
 
 
         private readonly IProductsService productsService;
+        private readonly IOrganizationsService organizationsService;
         private readonly IWebHostEnvironment environment;
         private readonly UserManager<ApplicationUser> userManager;
 
 
         public ProductsController(
             IProductsService productsService,
+            IOrganizationsService organizationsService,
             IWebHostEnvironment environment,
             UserManager<ApplicationUser> userManager)
         {
             this.productsService = productsService;
+            this.organizationsService = organizationsService;
             this.environment = environment;
             this.userManager = userManager;
         }
@@ -41,7 +44,7 @@ namespace CRMSystem.Web.Controllers
 
             var userId = user.ParentId ?? user.Id;
 
-
+        //  var test = this.organizationsService.GetById<IndexProductsViewModel>(userId);
 
             var viewModel = this.productsService.GetAll<ProductViewModel>(userId).ToList();
 

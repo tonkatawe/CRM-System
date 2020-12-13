@@ -5,7 +5,7 @@
 <div class="card">
     <img class="card-img justify-content-center" src="@Model.ImageUrl" alt="Vans">
     <div class="card-img-overlay d-flex justify-content-end">
-        @if (this.User.IsInRole("Owner"))
+    @if (this.User.IsInRole("Owner"))
         {
             <a asp-action="Edit" asp-controller="Products" asp-route-id="@Model.Id" class="card-link text-danger">
                 <i class="fas fa-pen" style="color: red" title="Edit this product"></i>
@@ -21,7 +21,10 @@
         <p class="card-text">
             @Model.Description
         </p>
-        <h6 class="card-subtitle mb-2 text-muted">Quantity in storage: <b>@Model.Quantity</b></h6>
+        @if (this.User.IsInRole("Owner"))
+        {
+            <h6 class="card-subtitle mb-2 text-muted">Quantity in storage: <b>@Model.Quantity</b></h6>
+        }
         <div class="buy d-flex justify-content-between align-items-center">
             <div class="text-success"><h5 class="mt-4">@Model.Price</h5></div>
         </div>

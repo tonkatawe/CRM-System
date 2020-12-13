@@ -93,7 +93,7 @@ namespace CRMSystem.Web.Controllers
             }
 
             var confirmationLink = Url.Action("ConfirmEmail", "Accounts",
-                    new { result.Key, email = customer.Email },
+                    new { token = result.Key, email = customer.Email },
                        Request.Scheme);
 
             var msg = String.Format(OutputMessages.EmailConformation, customer.FullName, customer.OrganizationName,

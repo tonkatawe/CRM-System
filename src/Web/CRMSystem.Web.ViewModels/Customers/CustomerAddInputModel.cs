@@ -22,13 +22,16 @@ namespace CRMSystem.Web.ViewModels.Customers
 
         [Required]
         [MaxLength(20)]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use latin letters only please")]
         public string FirstName { get; set; }
 
         [MaxLength(20)]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use latin letters only please")]
         public string MiddleName { get; set; }
 
         [Required]
         [MaxLength(20)]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Use latin letters only please")]
         public string LastName { get; set; }
 
         [MaxLength(30)]

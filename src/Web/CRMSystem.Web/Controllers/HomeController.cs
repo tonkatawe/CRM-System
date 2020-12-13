@@ -47,6 +47,11 @@ namespace CRMSystem.Web.Controllers
                 return this.View(viewModel);
             }
 
+            if (this.User.IsInRole("Customer"))
+            {
+                return this.RedirectToAction("Index", "Products");
+            }
+
             if (user.OrganizationId == null)
             {
                 return this.RedirectToAction("Create", "Organizations");

@@ -7,9 +7,17 @@
 {
     <div class="alert alert-success">@this.TempData["ConfirmationEmail"]</div>
 }
+@if (this.User.IsInRole("Owner"))
+{
 <h1>
     <p style="text-align: center;">Your company have @Model.Count() products</p>
 </h1>
+
+}
+else
+{
+    <p>If you want to order some product just write email to @Model.</p>
+}
 <div class="container">
     <div class="row">
         @foreach (var product in Model)
