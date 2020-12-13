@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CRMSystem.Web.ViewModels.Products.ProductViewModel>
+﻿@model CRMSystem.Web.ViewModels.Products.IndexProductsViewModel
 @if (this.TempData.ContainsKey("Message"))
 {
     <div class="alert alert-success">@this.TempData["Message"]</div>
@@ -10,17 +10,17 @@
 @if (this.User.IsInRole("Owner"))
 {
 <h1>
-    <p style="text-align: center;">Your company have @Model.Count() products</p>
+    <p style="text-align: center;">Your company have @Model.Products.Count() products</p>
 </h1>
 
 }
 else
 {
-    <p>If you want to order some product just write email to @Model.</p>
+    <p>If you want to order some product from @Model.Name just write email to @Model.UserEmail</p>
 }
 <div class="container">
     <div class="row">
-        @foreach (var product in Model)
+        @foreach (var product in Model.Products)
         {
             <div class="col-12 col-sm-8 col-md-6 col-lg-4">
                 <partial name="_ProductPartial" model="@product" />

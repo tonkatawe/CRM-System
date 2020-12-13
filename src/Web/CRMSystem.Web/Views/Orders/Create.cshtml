@@ -17,7 +17,7 @@
             </div>
 
             <div>
-                <label asp-for="ProductId"></label>
+                <label asp-for="ProductId">Product name</label>
                 <select asp-for="ProductId" asp-items="products" id="ProductId" class="form-control"><option disabled selected>--Select Product--</option></select>
                 <span asp-validation-for="ProductId" class="text-danger"></span>
             </div>

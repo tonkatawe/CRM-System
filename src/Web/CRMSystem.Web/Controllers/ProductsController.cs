@@ -44,9 +44,9 @@ namespace CRMSystem.Web.Controllers
 
             var userId = user.ParentId ?? user.Id;
 
-        //  var test = this.organizationsService.GetById<IndexProductsViewModel>(userId);
+            var viewModel = this.organizationsService.GetById<IndexProductsViewModel>(userId);
 
-            var viewModel = this.productsService.GetAll<ProductViewModel>(userId).ToList();
+           // var viewModel = this.productsService.GetAll<ProductViewModel>(userId).ToList();
 
             return View(viewModel);
         }

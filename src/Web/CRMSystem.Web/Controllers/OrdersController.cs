@@ -35,14 +35,7 @@ namespace CRMSystem.Web.Controllers
             var user = await this.userManager.GetUserAsync(this.User);
             var products = this.productsService.GetAll<ProductDropDownViewModel>(user.Id).ToList();
 
-            //todo make constrain about min 3 products and refactoring :)
-
-            if (products.Count < 3)
-            {
-                return this.RedirectToAction("Create", "Products");
-            }
-
-
+         
             var viewModel = new OrderCreateInputModel
             {
                 CustomerId = id,
