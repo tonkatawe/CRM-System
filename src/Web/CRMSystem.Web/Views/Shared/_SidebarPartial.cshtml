@@ -3,36 +3,39 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-
+<a class="sidebar-brand  d-flex align-items-center justify-content-center" asp-area="" asp-controller="Home" asp-action="Index">
+    <div class="sidebar-brand-icon">
+        <i class="fas fa-tasks"></i>
+    </div>
+    <div class="sidebar-brand-text mx-3">@GlobalConstants.SystemName</div>
+</a>
+<hr class="sidebar-divider my-0">
 
 @if (this.SignInManager.IsSignedIn(this.User))
 {
     if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Administration" asp-controller="Dashboard" asp-action="Index" title="Admin">Admin</a>
+            <a class="nav-link" asp-area="Administration" asp-controller="Dashboard" asp-action="Index">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Administration</span>
+            </a>
         </li>
+        <hr class="sidebar-divider">
     }
-    <li class="nav-item active">
-        <a class="nav-link" asp-action="Index" asp-controller="Home">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
-        </a>
-    </li>
-    <hr class="sidebar-divider">
-  <li class="nav-item">
+    <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-server"></i>
             <span>Your data</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-               <a class="collapse-item"  asp-controller="Customers" asp-action="Index">Customers</a>
-               <a class="collapse-item" asp-controller="Organizations" asp-action="Create">Organization</a>
-               <a class="collapse-item" asp-controller="Products" asp-action="Index">Products</a>
-               <a class="collapse-item" asp-controller="Statistics" asp-action="Index">Statistics</a>
-               <a class="collapse-item" href="cards.html">Earnings</a>
-               <a class="collapse-item" asp-controller="UserTasks" asp-action="Index">Tasks</a>
+                <a class="collapse-item" asp-controller="Customers" asp-action="Index">Customers</a>
+                <a class="collapse-item" asp-controller="Organizations" asp-action="Create">Organization</a>
+                <a class="collapse-item" asp-controller="Products" asp-action="Index">Products</a>
+                <a class="collapse-item" asp-controller="Statistics" asp-action="Index">Statistics</a>
+                <a class="collapse-item" href="cards.html">Earnings</a>
+                <a class="collapse-item" asp-controller="UserTasks" asp-action="Index">Tasks</a>
             </div>
         </div>
     </li>
@@ -59,3 +62,4 @@ else
 {
     <p>To be make login input fields</p>
 }
+
