@@ -8,12 +8,8 @@
 
 @if (this.SignInManager.IsSignedIn(this.User))
 {
-
-
     <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img class="rounded-circle avatar" alt="avatar" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(30).jpg"
-                 data-holder-rendered="true">
             <span class="mr-2 d-none d-lg-inline text-gray-600 small">@(this.User.Identity.Name)</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -36,16 +32,21 @@
     </li>
 
 
+   
+
+
 
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-page-handler="Register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page-handler="Login" asp-page="/Account/Login">Login</a>
-    </li>
+    <ul class="list-inline">
+        <li class="list-inline-item">
+            <a class="btn btn-danger rounded-pill" asp-page-handler="Register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </li>
+        <li class="list-inline-item">
+            <a class="btn btn-primary rounded-pill" asp-area="Identity" asp-page-handler="Login" asp-page="/Account/Login">Login</a>
+        </li>
+    </ul>
 }
 
 

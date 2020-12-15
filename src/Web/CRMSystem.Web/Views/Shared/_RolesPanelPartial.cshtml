@@ -21,9 +21,6 @@
                 <a class="dropdown-item" asp-controller="Customers" asp-area="" asp-action="Index"><i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>Customers</a>
                 <a class="dropdown-item" asp-controller="Organizations" asp-area="" asp-action="Index"><i class="fas fa-sitemap fa-sm fa-fw mr-2 text-gray-400"></i>Organization</a>
                 <a class="dropdown-item" asp-controller="Products" asp-area="" asp-action="Index"><i class="fas fa-shopping-cart fa-sm fa-fw mr-2 text-gray-400"></i>Products</a>
-                <a class="dropdown-item" asp-controller="Statistics" asp-area="" asp-action="Index"><i class="fas fa-chart-line fa-sm fa-fw mr-2 text-gray-400"></i>Statistics</a>
-                <a class="dropdown-item" href="cards.html">Earnings</a>
-                <a class="dropdown-item" asp-controller="UserTasks" asp-area="" asp-action="Index">Tasks</a>
             </div>
         </li>
         <li class="nav-item dropdown no-arrow mx-1 sidebar-brand d-flex align-items-center justify-content-center">
@@ -33,8 +30,7 @@
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item" asp-controller="Customers" asp-area="" asp-action="Create"><i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>New Customer</a>
                 <a class="dropdown-item" asp-controller="Products" asp-area="" asp-action="Create"><i class="fas fa-shopping-cart fa-sm fa-fw mr-2 text-gray-400"></i>Product</a>
-                <a class="dropdown-item" asp-controller="UserTasks" asp-area="" asp-action="Create">Task</a>
-            </div>
+               </div>
         </li>
     }
     if (this.User.IsInRole(GlobalConstants.CustomerUserRoleName))

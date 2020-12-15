@@ -35,32 +35,25 @@
                 <a class="collapse-item" asp-controller="Customers" asp-action="Index">Customers</a>
                 <a class="collapse-item" asp-controller="Organizations" asp-action="Create">Organization</a>
                 <a class="collapse-item" asp-controller="Products" asp-action="Index">Products</a>
-                <a class="collapse-item" asp-controller="Statistics" asp-action="Index">Statistics</a>
-                <a class="collapse-item" href="cards.html">Earnings</a>
-                <a class="collapse-item" asp-controller="UserTasks" asp-action="Index">Tasks</a>
             </div>
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-wrench"></i>
-            <span>Utilities</span>
+        <a class="nav-link" asp-controller="Statistics" asp-action="Index">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Statistic</span>
         </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Utilities:</h6>
-                <a class="collapse-item" href="utilities-color.html">Colors</a>
-                <a class="collapse-item" href="utilities-border.html">Borders</a>
-            </div>
-        </div>
     </li>
-
-  
-
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Emails" asp-action="Send">
+            <i class="fas fa-mail-bulk"></i>
+            <span>Sending email</span>
+        </a>
+    </li>
 }
 else
 {
-    <partial name="_SideBarLoginPartial"/>
+    <partial name="_SideBarLoginPartial" />
 }
 <hr class="sidebar-divider">
 <div class="text-center d-none d-md-inline">

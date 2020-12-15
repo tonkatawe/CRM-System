@@ -1,18 +1,14 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Data.Contracts;
-using CRMSystem.Web.ViewModels.Accounts;
-using Microsoft.AspNetCore.Identity;
-using CRMSystem.Web.ViewModels.Home;
-
+﻿
 namespace CRMSystem.Web.Controllers
 {
-    using System.Diagnostics;
-
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Data.Contracts;
     using CRMSystem.Web.ViewModels;
-
+    using CRMSystem.Web.ViewModels.Home;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using System.Diagnostics;
+    using System.Threading.Tasks;
 
     public class HomeController : BaseController
     {
@@ -60,12 +56,7 @@ namespace CRMSystem.Web.Controllers
             {
                 return this.RedirectToAction("Index", "Organizations");
             }
-
-
-
-
-
-
+            
             return this.View(viewModel);
         }
 

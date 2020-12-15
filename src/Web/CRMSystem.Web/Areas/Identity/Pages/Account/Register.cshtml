@@ -28,6 +28,15 @@
                                         <input asp-for="Input.Email" class="form-control form-control-user" placeholder="Email Address" />
                                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                                     </div>
+                                    <div class="form-group">
+                                     <label  id="inputGroupFileAddon01">Profile Picture(optional):</label>
+                                        <div class="custom-file form-group rounded-pill">
+                                            <input type="file" accept="image/*" asp-for="Input.PictureFile" class="custom-file-input rounded-pill" id="inputGroupFile01"
+                                                   aria-describedby="inputGroupFileAddon01">
+                                            <label class="custom-file-label rounded-pill" for="inputGroupFile01">Choose image</label>
+                                            <span asp-validation-for="Input.PictureFile" class="text-danger"></span>
+                                        </div>
+                                    </div>
                                     <div class="form-group row">
                                         <div class="col-sm-6 mb-3 mb-sm-0">
                                             <label asp-for="Input.Password"></label>
@@ -40,7 +49,7 @@
                                             <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                              <button type="submit" class="btn btn-primary btn-user btn-block">
                                         Register Account
                                     </button>
                                     <hr>

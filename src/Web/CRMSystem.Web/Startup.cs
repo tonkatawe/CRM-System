@@ -1,4 +1,5 @@
 ﻿using System;
+using CloudinaryDotNet;
 using CRMSystem.Services.Data.Contracts;
 
 namespace CRMSystem.Web
@@ -79,6 +80,14 @@ namespace CRMSystem.Web
             });
 
             services.AddSingleton(this.configuration);
+
+            //Add Cloudinary
+            var cloudinary = new Cloudinary(new Account()
+            {
+                Cloud = this.configuration["Cloudinary:CloudName"],
+                ApiKey = this.configuration["Cloudinary:ApiKey"],
+                ApiSecret = this.configuration["Cloudinary:ApiSecret"],
+            });
 
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
