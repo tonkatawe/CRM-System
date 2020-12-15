@@ -1,6 +1,7 @@
 ﻿@using CRMSystem.Common
 @using CRMSystem.Data.Models
 @using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -10,6 +11,7 @@
 {
     <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img class="rounded-circle avatar" alt="avatar" src=""/>
             <span class="mr-2 d-none d-lg-inline text-gray-600 small">@(this.User.Identity.Name)</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

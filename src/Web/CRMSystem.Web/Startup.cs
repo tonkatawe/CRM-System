@@ -1,5 +1,7 @@
 ﻿using System;
 using CloudinaryDotNet;
+using CRMSystem.Services;
+using CRMSystem.Services.Contracts;
 using CRMSystem.Services.Data.Contracts;
 
 namespace CRMSystem.Web
@@ -88,7 +90,9 @@ namespace CRMSystem.Web
                 ApiKey = this.configuration["Cloudinary:ApiKey"],
                 ApiSecret = this.configuration["Cloudinary:ApiSecret"],
             });
-
+            
+            services.AddSingleton(cloudinary);
+            
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -111,6 +115,7 @@ namespace CRMSystem.Web
             services.AddTransient<ITemporaryCustomersService, TemporaryCustomersService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IAccountsService, AccountsService>();
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

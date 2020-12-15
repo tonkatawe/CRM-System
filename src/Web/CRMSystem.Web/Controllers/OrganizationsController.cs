@@ -29,6 +29,7 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await this.userManager.GetUserAsync(this.User);
+            
             if (user.OrganizationId == null)
             {
                 return this.RedirectToAction("Create");

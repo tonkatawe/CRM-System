@@ -33,7 +33,7 @@ namespace CRMSystem.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
-   
+
         public bool IsPremium { get; set; }
 
         public string OrganizationId { get; set; }
@@ -42,6 +42,8 @@ namespace CRMSystem.Data.Models
         public string ParentId { get; set; }
 
         public virtual ApplicationUser Parent { get; set; }
+
+        public string ProfilePictureUrl { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

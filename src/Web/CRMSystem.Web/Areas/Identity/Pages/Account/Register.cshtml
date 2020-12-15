@@ -16,7 +16,7 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                                 </div>
-                                <form class="user" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                <form class="user" asp-route-returnUrl="@Model.ReturnUrl" method="post" enctype="multipart/form-data">
                                     <div asp-validation-summary="All" class="text-danger"></div>
                                     <div class="form-group">
                                         <label asp-for="Input.UserName"></label>
@@ -31,10 +31,10 @@
                                     <div class="form-group">
                                      <label  id="inputGroupFileAddon01">Profile Picture(optional):</label>
                                         <div class="custom-file form-group rounded-pill">
-                                            <input type="file" accept="image/*" asp-for="Input.PictureFile" class="custom-file-input rounded-pill" id="inputGroupFile01"
+                                            <input type="file" accept="image/*" asp-for="Input.ImageFile" class="custom-file-input rounded-pill" id="inputGroupFile01"
                                                    aria-describedby="inputGroupFileAddon01">
                                             <label class="custom-file-label rounded-pill" for="inputGroupFile01">Choose image</label>
-                                            <span asp-validation-for="Input.PictureFile" class="text-danger"></span>
+                                            <span asp-validation-for="Input.ImageFile" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="form-group row">

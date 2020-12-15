@@ -10,6 +10,7 @@ using CRMSystem.Common;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using CRMSystem.Data.Models;
+using CRMSystem.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -27,17 +28,20 @@ namespace CRMSystem.Web.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ICloudinaryService cloudinaryService;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ICloudinaryService cloudinaryService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            this.cloudinaryService = cloudinaryService;
         }
 
         [BindProperty]
@@ -70,7 +74,7 @@ namespace CRMSystem.Web.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            public IFormFile PictureFile { get; set; }
+            public IFormFile ImageFile { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -82,10 +86,19 @@ namespace CRMSystem.Web.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
+            
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            var profilePicture = await this.cloudinaryService.UploadAsync(this.Input.ImageFile);
+            
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = Input.UserName, 
+                    Email = Input.Email,
+                    ProfilePictureUrl = profilePicture,
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
