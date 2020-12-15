@@ -2,14 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using CRMSystem.Data.Common.Repositories;
 using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Web.ViewModels.Accounts;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CRMSystem.Services.Data
 {
@@ -17,8 +15,11 @@ namespace CRMSystem.Services.Data
     {
         private readonly IDeletableEntityRepository<Customer> customersRepository;
         private readonly UserManager<ApplicationUser> userManager;
+      
 
-        public AccountsService(IDeletableEntityRepository<Customer> customersRepository, UserManager<ApplicationUser> userManager)
+        public AccountsService(
+            IDeletableEntityRepository<Customer> customersRepository, 
+            UserManager<ApplicationUser> userManager)
         {
             this.customersRepository = customersRepository;
             this.userManager = userManager;

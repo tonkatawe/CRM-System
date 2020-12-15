@@ -7,10 +7,13 @@ using CRMSystem.Web.ViewModels.Customers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
 
 namespace CRMSystem.Web.Controllers
 {
@@ -132,6 +135,33 @@ namespace CRMSystem.Web.Controllers
                 return View("Error");
             }
 
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [IgnoreAntiforgeryToken]
+        public async Task<IActionResult> Login(string userNameOrEmail, string password)
+        {
+            if (this.User.Identity.IsAuthenticated)
+            {
+                return NotFound();
+            }
+
+            this.TempData["Error"] = "Invalid login attempt.";
+            var user = await this.userManager.Users.FirstOrDefaultAsync(u =>
+                 u.UserName == userNameOrEmail || u.Email == userNameOrEmail);
+
+            if (user != null)
+            {
+                var result = await this.signInManager.PasswordSignInAsync(user.UserName, password, true, lockoutOnFailure: false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                return this.RedirectToAction("Index", "Home", TempData["Error"]);
+
+            }
+
+            return this.RedirectToAction("Index", "Home", TempData["Error"]);
         }
 
     }

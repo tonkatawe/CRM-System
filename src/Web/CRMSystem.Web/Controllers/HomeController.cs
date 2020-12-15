@@ -2,8 +2,9 @@
 using System.Threading.Tasks;
 using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
+using CRMSystem.Web.ViewModels.Accounts;
 using Microsoft.AspNetCore.Identity;
-using IndexViewModel = CRMSystem.Web.ViewModels.Home.IndexViewModel;
+using CRMSystem.Web.ViewModels.Home;
 
 namespace CRMSystem.Web.Controllers
 {
@@ -29,22 +30,20 @@ namespace CRMSystem.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-         
             var organizationsCount = await this.organizationsService.GetCountAsync();
             var customersCount = await this.customersService.GetCountAsync();
-            
+
             var viewModel = new IndexViewModel
             {
                 OrganizationsCount = organizationsCount,
                 CustomersCount = customersCount,
-
             };
 
             var user = await this.userManager.GetUserAsync(this.User);
 
             if (user == null)
             {
-                return this.View(viewModel);
+                return this.View();
             }
 
             if (this.User.IsInRole("Customer"))
@@ -62,7 +61,7 @@ namespace CRMSystem.Web.Controllers
                 return this.RedirectToAction("Index", "Organizations");
             }
 
-         
+
 
 
 

@@ -61,12 +61,8 @@ namespace CRMSystem.Web
 
 
             //todo it would be unnecessary
-            services.AddAntiforgery(options =>
-            {
-                options.HeaderName = "X-CSRF-TOKEN";
-            });
+            services.AddAntiforgery(options => options.HeaderName = "XSRF-TOKEN");
 
-            services.AddMvc();
             services.AddMvc().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ContractResolver =

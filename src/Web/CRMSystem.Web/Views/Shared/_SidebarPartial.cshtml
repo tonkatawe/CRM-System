@@ -3,13 +3,15 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+
 <a class="sidebar-brand  d-flex align-items-center justify-content-center" asp-area="" asp-controller="Home" asp-action="Index">
     <div class="sidebar-brand-icon">
         <i class="fas fa-tasks"></i>
     </div>
     <div class="sidebar-brand-text mx-3">@GlobalConstants.SystemName</div>
 </a>
-<hr class="sidebar-divider my-0">
+
+<hr class="sidebar-divider">
 
 @if (this.SignInManager.IsSignedIn(this.User))
 {
@@ -52,14 +54,17 @@
             </div>
         </div>
     </li>
-    <hr class="sidebar-divider">
-    <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
-    </div>
+
+  
 
 }
 else
 {
-    <p>To be make login input fields</p>
+    <partial name="_SideBarLoginPartial"/>
 }
+<hr class="sidebar-divider">
+<div class="text-center d-none d-md-inline">
+    <button class="rounded-circle border-0" id="sidebarToggle"></button>
+</div>
+
 

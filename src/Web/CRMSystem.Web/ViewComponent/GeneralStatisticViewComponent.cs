@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CRMSystem.Services.Data.Contracts;
+using CRMSystem.Web.ViewModels.Accounts;
 using CRMSystem.Web.ViewModels.Customers;
 using CRMSystem.Web.ViewModels.Products;
 using CRMSystem.Web.ViewModels.Statistics;

@@ -1,0 +1,39 @@
+﻿
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-xl-8 col-lg-8 col-md-9">
+            <div class="card-body p-0 ">
+                <div class="row">
+                    <form class="user" id="account" asp-controller="Accounts" asp-action="Login" method="post">
+                        <div class="form-group">
+                            <label class="text-white small">Username or email</label>
+                            <input name="UserNameOrEmail" class="form-control form-control-user" aria-describedby="emailHelp" placeholder="Enter your username or email address..." />
+                        </div>
+                        <div class="form-group">
+                            <label class="text-white small">Password</label>
+                            <input name="Password" type="password" class="form-control form-control-user" placeholder="Password" />
+                        </div>
+                     <button type="submit" class="btn btn-primary btn-user btn-block">
+                            Login
+                        </button>
+                        <hr>
+                        <a href="index.html" class="btn btn-google btn-user btn-block">
+                            <i class="fab fa-google fa-fw"></i> Login with Google
+                        </a>
+                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
+                        </a>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                        <a asp-area="Identity" asp-page="/Account/ForgotPassword" class="small text-white" id="forgot-password">Forgot Password?</a>
+                    </div>
+                    <div class="text-center">
+                        <a class="small text-white" asp-area="Identity" asp-page="/Account/Register">Create an Account!</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

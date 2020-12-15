@@ -10,5 +10,6 @@ namespace CRMSystem.Services.Data.Contracts
     public interface IAccountsService
     {
         Task<KeyValuePair<string, string>> CreateAsync(CreateAccountInputModel input, ApplicationUser owner);
+
     }
 }

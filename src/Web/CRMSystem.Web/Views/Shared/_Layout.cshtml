@@ -1,4 +1,10 @@
 ﻿@using CRMSystem.Common
+@using CRMSystem.Data.Models
+@using CRMSystem.Web.Areas.Identity.Pages.Account
+@using CRMSystem.Web.ViewModels.Accounts
+@using CRMSystem.Web.ViewModels.Administration.Dashboard
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,8 +30,9 @@
 <body id="page-top">
     <div id="wrapper">
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-            <partial name="_SidebarPartial" />
+          
+                <partial name="_SidebarPartial" />
+            
         </ul>
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
@@ -70,11 +77,9 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
+    <script src="~/js/sb-admin-2.min.js" asp-append-version="true"></script>
     <script src="~/js/site.min.js" asp-append-version="true"></script>
-
-
-
-
+    
 
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>
