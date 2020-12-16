@@ -115,20 +115,19 @@
                                 </span>
                                 <span class="text">Delete</span>
                             </button>
-                            <form asp-action="Delete" asp-route-id="@customer.Id" method="post">
+                            <form asp-action="Delete" asp-route-id="@customer.Id" method="post" class="user">
                                 <div class="modal fade" id="@mid" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
+                                            <div class="modal-header d-flex justify-content-lg-start">
+                                                <h4 class="modal-title " id="myModalLabel">Delete Confirmation</h4>
                                             </div>
-                                            <div class="modal-body">
+                                            <div class="modal-body font-weight-bold">
                                                 Are you sure want to delete @customer.FullName?
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="submit" id="deleteBtn" class="btn bg-danger mr-1">Delete</button>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="submit" id="deleteBtn" class="btn bg-danger mr-1 btn-user text-white">Delete</button>
+                                                <button type="button" class="btn btn-dark btn-user" data-dismiss="modal">Close</button>
                                             </div>
                                         </div>
                                     </div>

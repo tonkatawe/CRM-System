@@ -83,12 +83,18 @@ namespace CRMSystem.Services.Data
 
             await this.phonesServices.DeleteAllAsync(id);
 
+            if (customer.IsTemporary)
+            {
+                this.customersRepository.HardDelete(customer);
 
-            this.customersRepository.HardDelete(customer);
-
-            await this.addressesService.DeleteAsync(customer.AddressId);
-
+            }
+            else
+            {
+                this.customersRepository.Delete(customer);
+            }
+            
             return await this.customersRepository.SaveChangesAsync();
+            
         }
 
         public async Task<int> CreateAsync(CustomerAddInputModel input, string userId, string organizationId, bool isTemporary)

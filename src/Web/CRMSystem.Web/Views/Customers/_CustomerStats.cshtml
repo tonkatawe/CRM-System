@@ -1,26 +1,27 @@
 ﻿@model CRMSystem.Web.ViewModels.Orders.OrderCustomerStatsViewModel
 
 
-<div class="row container-fluid">
-    <div class="col-xl-6 col-lg-7">
-        <div class="card border-left-warning shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                    <div class="col mr-2">
-                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total benefits</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.Benefits</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-wallet fa-2x text-gray-300"></i>
 
-                    </div>
-                </div>
-                <small>Orders count: <b>@Model.TotalOrders</b></small>
-                <br />
-                <small>Products count: <b>@Model.DifferentProducts</b></small>
-            </div>
-        </div>
+<div class="form-group row">
+    <div class="col-sm-8 mb-1 mb-sm-0 font-weight-bold">
+        <label>Total benefits:</label>
+    </div>
+    <div class="col-sm-4 font-italic">
+        <p> @Model.Benefits</p>
+    </div>
+    <div class="col-sm-8 mb-1 mb-sm-0 font-weight-bold">
+        <label>Orders:</label>
+    </div>
+    <div class="col-sm-4 font-italic">
+        <p> @Model.TotalOrders</p>
+    </div>
+    <div class="col-sm-8 mb-1 mb-sm-0 font-weight-bold">
+        <label>Products type ordered:</label>
+    </div>
+    <div class="col-sm-4 font-italic">
+        <p> @Model.DifferentProducts</p>
     </div>
 </div>
+
 
 

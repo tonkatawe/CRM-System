@@ -2,211 +2,199 @@
 @using CRMSystem.Web.ViewModels.Customers
 @model CRMSystem.Web.ViewModels.Customers.GetDetailsViewModel
 @{
-    this.ViewData["Title"] = "Get details";
+    this.ViewData["Title"] = $"Get details {@Model.FullName}";
 
 }
 
-<body id="page-top">
-    <div id="content-wrapper" class="d-flex flex-column">
-        @if (!Model.IsTemporary)
-        {
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            @if (!Model.IsTemporary)
+            {
 
-            <partial name="_CustomerStats" model="Model.CustomerStats" />
-        }
-        <div id="content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-xl-6 col-lg-7">
-                        <div class="card shadow mb-4" id="CurrentContact">
-                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                <h6 class="m-0 font-weight-bold text-primary"> <b>@Model.TitleAsString.</b> <i>@Model.FullName</i></h6>
-                                @if (!Model.IsTemporary)
+                <div class="d-flex justify-content-end user">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary btn-circle btn-sm">
+                                <i class="fas fa-edit" title="Edit customer"></i>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <form method="post" asp-action="Delete" id="deleteForm" asp-route-id="@Model.Id">
+                            </form>
+                            <button class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#deleteModal">  <i class="fas fa-trash" title="Delete customer"></i></button>
+                        </li>
+                    </ul>
+                </div>
+
+            }
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="font-italic font-weight-bold">
+                            <h1 class="h4 text-gray-900 mb-4"><i class="fas fa-user"></i> @Model.Title. @Model.FullName</h1>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-4 mb-1 mb-sm-0 font-weight-bold">
+                                <label>First Name:</label>
+                            </div>
+                            <div class="col-sm-8 font-italic">
+                                <p> @Model.FirstName</p>
+                            </div>
+                            <div class="col-sm-4 mb-1 mb-sm-0 font-weight-bold">
+                                <label>Middle Name:</label>
+                            </div>
+                            <div class="col-sm-8 font-italic">
+                                <p> @Model.MiddleName</p>
+                            </div>
+                            <div class="col-sm-4 mb-1 mb-sm-0 font-weight-bold">
+                                <label>Last Name:</label>
+                            </div>
+                            <div class="col-sm-8 font-italic">
+                                <p> @Model.LastName</p>
+                            </div>
+                            <div class="col-sm-4 mb-1 mb-sm-0 font-weight-bold">
+                                <label>
+                                    @if (Model.Emails.Count > 1)
+                                    {
+                                        <p>Emails</p>
+                                    }
+                                    else
+                                    {
+                                        <p>Email</p>
+                                    }
+                                </label>
+                            </div>
+                            <div class="col-sm-8 font-italic">
+                                @foreach (var email in this.Model.Emails)
                                 {
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                    @if (email.EmailType.ToString() == "Private")
+                                    {
 
-                                            <a asp-action="Edit" asp-route-id="@Model.Id" class="dropdown-item">Edit</a>
+                                        @email.Email
+                                        <i class="fas fa-user-shield" title="Private"></i>
 
-                                            <a class="dropdown-item" href="#">Delete</a>
-                                            <div class="dropdown-divider"></div>
-                                        </div>
-                                    </div>
+                                    }
+                                    else if (email.EmailType.ToString() == "Work")
+                                    {
+
+                                        @email.Email
+                                        <i class="fas fa-building" title="Home"></i>
+
+                                    }
+                                    <br />
                                 }
                             </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label><b>First Name:</b></label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p> @Model.FirstName</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label><b>Middle Name:</b></label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p> @Model.MiddleName</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label><b>Last Name:</b></label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p> @Model.LastName</p>
-                                    </div>
-                                </div>
+                            <div class="col-sm-4 mb-1 mb-sm-0 font-weight-bold">
+                                <label>
+                                    @if (Model.Phones.Count > 1)
+                                    {
+                                        <p>Phones</p>
+                                    }
+                                    else
+                                    {
+                                        <p>Phone</p>
+                                    }
+                                </label>
+                            </div>
+                            <div class="col-sm-8 font-italic">
+                                @foreach (var phone in this.Model.Phones)
+                                {
+                                    @if (phone.PhoneType.ToString() == "Private")
+                                    {
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>
-                                            @if (Model.Emails.Count > 1)
-                                            {
-                                                <b>Emails</b>
-                                            }
-                                            else
-                                            {
-                                                <b>Email</b>
-                                            }
-                                        </label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        @foreach (var email in this.Model.Emails)
-                                        {
-                                            @if (email.EmailType.ToString() == "Home")
-                                            {
-                                                <p>
-                                                    @email.Email
-                                                    <i class="fas fa-home" title="Home"></i>
-                                                </p>
-                                            }
-                                            else if (email.EmailType.ToString() == "Work")
-                                            {
-                                                <p>
-                                                    @email.Email
-                                                    <i class="fas fa-building"></i>
-                                                </p>
-                                            }
-                                        }
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>
-                                            @if (Model.Phones.Count > 1)
-                                            {
-                                                <b>Phones</b>
-                                            }
-                                            else
-                                            {
-                                                <b>Phone</b>
-                                            }
-                                        </label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        @foreach (var phone in this.Model.Phones)
-                                        {
+                                        @phone.Phone
+                                        <i class="fas fa-user-shield" title="Private"></i>
 
-                                            @if (phone.PhoneType.ToString() == "Home")
-                                            {
+                                    }
+                                    else if (phone.PhoneType.ToString() == "Work")
+                                    {
 
-                                                <p>
-                                                    @phone.Phone
-                                                    <i class="fas fa-home" title="Home"></i>
-                                                </p>
+                                        @phone.Phone
+                                        <i class="fas fa-building" title="Home"></i>
 
-                                            }
-                                            else if (phone.PhoneType.ToString() == "Work")
-                                            {
-                                                <p>
-                                                    @phone.Phone
-                                                    <i class="fas fa-building"></i>
-                                                </p>
-                                            }
-                                            else if (phone.PhoneType.ToString() == "Mobile")
-                                            {
-                                                <p>
-                                                    @phone.Phone
-                                                    <i class="fas fa-mobile-alt"></i>
-                                                </p>
-                                            }
-                                            else if (phone.PhoneType.ToString() == "Fax")
-                                            {
-                                                <p>
-                                                    @phone.Phone
-                                                    <i class="fas fa-fax"></i>
-                                                </p>
-                                            }
-
-                                        }
-
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label><b>Profession</b></label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>@Model.JobTitle</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label><b>Address:</b></label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>@Model.Address.Country, @Model.Address.City, @Model.Address.Street, @Model.Address.ZipCode</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label><b>Additional info:</b></label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p> @Model.AdditionalInfo</p>
-                                    </div>
-                                </div>
+                                    }
+                                    <br />
+                                }
+                            </div>
+                            <div class="col-sm-4 mb-1 mb-sm-0 font-weight-bold">
+                                <label>Profession:</label>
+                            </div>
+                            <div class="col-sm-8 font-italic">
+                                <p> @Model.JobTitle</p>
+                            </div>
+                            <div class="col-sm-4 mb-1 mb-sm-0 font-weight-bold">
+                                <label>Address:</label>
+                            </div>
+                            <div class="col-sm-8 font-italic">
+                                <p> @Model.Address.Country, @Model.Address.City, @Model.Address.Street, @Model.Address.ZipCode </p>
                             </div>
                         </div>
+
                     </div>
-
-
-
-
+                </div>
+                <div class="col-lg-5">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4"><i class="fas fa-fw fa-chart-area"></i>Statistic</h1>
+                        </div>
+                        @if (!Model.IsTemporary)
+                        {
+                            <partial name="_CustomerStats" model="Model.CustomerStats" />
+                        }
+                    </div>
                 </div>
             </div>
         </div>
-
-        <p>
-            @if (!Model.IsTemporary)
-            {
-                <a asp-action="Index">Back to contacts</a>
-
-            }
-            else
-            {
-                <a asp-action="Index" asp-controller="TemporaryCustomers">Back to waiting contacts</a>
-            }
-        </p>
-
-
-
     </div>
-</body>
-@section Scripts
-{
-    <script>
-        function showAddPhoneForm() {
-            $("#AddPhoneForm").show();
-            $([document.documentElement, document.body]).animate({
-                scrollTop: $("#AddPhoneForm").offset().top
-            }, 1500);
-        }
-    </script>
-}
+</div>
+
+<div class="d-flex justify-content-center user">
+    @if (!Model.IsTemporary)
+    {
+        <a asp-action="Index" class="btn btn-primary btn-icon-split rounded-pill btn-sm">
+            <span class="icon text-white-50">
+                <i class="far fa-arrow-alt-circle-left"></i>
+            </span>
+            <span class="text">Back to contacts</span>
+        </a>
+    
+
+    }
+    else
+    {
+        <a asp-action="Index" asp-controller="Customers" class="btn btn-primary btn-icon-split rounded-pill btn-sm">
+            <span class="icon text-white-50">
+                <i class="far fa-arrow-alt-circle-left"></i>
+            </span>
+            <span class="text">Back to your contacts</span>
+        </a>
+        <p>OR</p>
+        <a asp-action="Index" asp-controller="TemporaryCustomers">
+            <span class="icon text-white-50">
+                <i class="far fa-arrow-alt-circle-left"></i>
+            </span>
+            <span class="text">Back to waiting contacts</span>
+        </a>
+    }
+</div>
+
+<div class="modal user" tabindex="-1" role="dialog" id="deleteModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex justify-content-lg-start">
+                <h4 class="modal-title " id="myModalLabel">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body font-weight-bold">
+                <p>Do you want to delete "@Model.FullName"?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn bg-danger mr-1 btn-user text-white" onclick="deleteForm.submit()">Delete</button>
+                <button type="button" class="btn btn-dark btn-user" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
