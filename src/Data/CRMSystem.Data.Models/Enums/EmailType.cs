@@ -2,7 +2,7 @@
 {
     public enum EmailType
     {
-        Home = 1,
+        Private = 1,
         Work = 2,
     }
 }
