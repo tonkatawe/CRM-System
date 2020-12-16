@@ -7,34 +7,36 @@
 
 
 
-<form method="post">
+<form method="post" class="user">
     <div asp-validation-summary="All" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="Name"></label>
-        <input asp-for="Name" class="form-control" />
+        <input asp-for="Name" class="form-control form-control-user" />
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Email"></label>
-        <input asp-for="Email" class="form-control" />
+        <input asp-for="Email" class="form-control form-control-user" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Title"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
+        <input asp-for="Title" class="form-control form-control-user" />
+        <span asp-validation-for="Title" class="text-danger "></span>
     </div>
     <div class="form-group">
         <label asp-for="Content"></label>
-        <textarea asp-for="Content" class="form-control" rows="5"></textarea>
+        <textarea asp-for="Content" class="form-control form-control-user" rows="3"></textarea>
         <span asp-validation-for="Content" class="text-danger"></span>
     </div>
     <p>
         When you click on "Send" button, you agree to
-            <a asp-area="" asp-controller="Home" asp-action="Privacy">our privacy policy</a>
+        <a asp-area="" asp-controller="Home" asp-action="Privacy">our privacy policy</a>
     </p>
     <input type="hidden" id="RecaptchaValue" name="RecaptchaValue" />
-    <button type="submit" class="btn btn-primary">Send</button>
+   
+        <button type="submit" class="btn btn-primary btn-user col-12">Send email</button>
+    
 </form>
 
 @section Scripts
