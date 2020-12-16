@@ -23,7 +23,7 @@ namespace CRMSystem.Web.Controllers
             await this.phonesServices.CreateAsync(input.Phone, input.PhoneType, input.CustomerId);
             return this.RedirectToAction("Details", "Customers", new { id = input.CustomerId });
         }
-
+        [HttpPost]
         public async Task<IActionResult> Delete(int id, int customerId)
         {
             await this.phonesServices.DeleteAsync(id);

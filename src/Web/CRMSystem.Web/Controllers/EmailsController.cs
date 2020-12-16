@@ -32,6 +32,7 @@ namespace CRMSystem.Web.Controllers
         }
 
 
+        [HttpPost]
         public async Task<IActionResult> Delete(int id, int customerId)
         {
             await this.emailsService.DeleteAsync(id);
