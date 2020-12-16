@@ -9,7 +9,7 @@ using CRMSystem.Web.ViewModels.Phones;
 
 namespace CRMSystem.Web.ViewModels.Customers
 {
-    public class CustomerAddInputModel : IMapFrom<Customer>
+    public class CustomerAddInputModel 
     {
         public CustomerAddInputModel()
         {

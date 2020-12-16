@@ -1,226 +1,367 @@
-﻿
-@model CRMSystem.Web.ViewModels.Customers.EditCustomerInputModel
+﻿@model CRMSystem.Web.ViewModels.Customers.EditCustomerInputModel
 @using CRMSystem.Data.Models.Enums
 @using CRMSystem.Data.Models
 @{
     this.ViewData["Title"] = "Edit Customer";
 
 }
-<body id="page-top">
-    <form style="padding-bottom: 7rem" method="post" asp-action="Edit" asp-controller="Customers">
+
+<div class="container">
+    <form class="user" asp-action="Edit" asp-controller="Customers" method="post">
         <div asp-validation-summary="All" class="text-danger"></div>
-        <div id="content-wrapper" class="d-flex flex-column">
-            <div id="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary"> <b>Update customer info</b> </h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                            <a asp-action="Details" method="get" asp-route-id="@Model.Id" class="dropdown-item">Back to details</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
-                                            <div class="dropdown-divider"></div>
-                                        </div>
-                                    </div>
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">@Model.FullName</h1>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12 mb-3 mb-sm-0 ">
+                                    <select asp-for="Title" asp-items="Html.GetEnumSelectList<Title>()" class="form-control"></select>
+                                    <span asp-validation-for="Title" class="text-danger"></span>
                                 </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label><b>Title:</b></label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>
-                                                <select asp-for="Title" asp-items="Html.GetEnumSelectList<Title>()" class="form-control" value="@Model.Title"></select>
-                                                <span asp-validation-for="Title" class="text-danger"></span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label><b>First Name:</b></label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>
-                                                <input asp-for="FirstName" value="@Model.FirstName" class="form-control" />
-                                                <span asp-validation-for="FirstName" class="text-danger"></span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label><b>Middle Name:</b></label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>
-                                                <input asp-for="MiddleName" value="@Model.MiddleName" class="form-control" />
-                                                <span asp-validation-for="MiddleName" class="text-danger"></span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label><b>Last Name:</b></label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>
-                                                <input asp-for="LastName" value="@Model.LastName" class="form-control" />
-                                                <span asp-validation-for="LastName" class="text-danger"></span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>
-                                                @if (Model.Emails.Count > 1)
-                                                {
-                                                    <b>Emails</b>
-                                                }
-                                                else
-                                                {
-                                                    <b>Email</b>
-                                                }
-                                            </label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            @for (int i = 0; i < @Model.Emails.Count; i++)
-                                            {
-                                                <p>
-                                                    <div class="form-row email_input" id="emailsDiv">
-                                                        <div class="col-md-6">
-
-                                                            <input asp-for="Emails[i].Email" value="@Model.Emails[i].Email" class="form-control" asp-route="Emails[i].Email" />
-                                                            <input asp-for="Emails[i].Id" type="hidden" />
-                                                            <input asp-for="Emails[i].CustomerId" type="hidden" />
-                                                            <input asp-for="Emails[i].Email" type="hidden" />
-                                                            <span asp-validation-for="Emails[i].Email" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <select asp-for="Emails[i].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
-                                                        </div>
-                                                        @if (Model.Emails.Count > 1)
-                                                        {
-                                                            <a asp-action="Delete" asp-controller="Emails" asp-route-id="@Model.Emails[i].Id" asp-route-customerId="@Model.Emails[i].CustomerId">
-
-                                                                <i class="fas fa-minus-circle" style="color: red"></i>
-                                                            </a>
-                                                        }
-                                                    </div>
-                                                </p>
-                                            }
-                                            @if (Model.Emails.Count < 2)
-                                            {
-                                                <div id="EmailContainer"></div>
-                                                <a class="add_Email">Add more emails</a>
-
-                                            }
-                                        </div>
-
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>
-                                                @if (Model.Phones.Count > 1)
-                                                {
-                                                    <b>Phones</b>
-                                                }
-                                                else
-                                                {
-                                                    <b>Phone</b>
-                                                }
-                                            </label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            @for (int i = 0; i < @Model.Phones.Count; i++)
-                                            {
-
-                                                <p>
-                                                    <div class="form-row phone_input" id="phonesDiv">
-                                                        <div class="col-md-6">
-
-                                                            <input asp-for="Phones[i].Phone" asp-route="Phones[i].CustomerId" value="@Model.Phones[i].Phone" class="form-control" />
-                                                            <input asp-for="Phones[i].Id" type="hidden" />
-                                                            <input asp-for="Phones[i].CustomerId" type="hidden" />
-                                                            <input asp-for="Phones[i].Phone" type="hidden" />
-                                                            <span asp-validation-for="Phones[i].Phone" class="text-danger"></span>
-
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <select asp-for="Phones[i].PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control"></select>
-                                                        </div>
-                                                        @if (Model.Phones.Count > 1)
-                                                        {
-                                                            <a asp-action="Delete" asp-controller="Phones" asp-route-id="@Model.Phones[i].Id" asp-route-customerId="@Model.Phones[i].CustomerId">
-                                                                <i class="fas fa-minus-circle" style="color: red"></i>
-                                                            </a>
-                                                        }
-                                                    </div>
-                                                </p>
-                                            }
-                                            @if (Model.Emails.Count < 3)
-                                            {
-                                                <div id="PhoneContainer"></div>
-                                                <a class="add_Phone">Add more phones</a>
-                                            }
-
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label><b>Profession</b></label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>
-                                                <input asp-for="JobTitle" value="@Model.JobTitle" class="form-control" />
-                                                <span asp-validation-for="JobTitle" class="text-danger"></span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label><b>Address:</b></label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>
-                                                Country <br />
-                                                <input asp-for="Address.Country" value="@Model.Address.Country" class="form-control" /><br />
-                                                City<br />
-                                                <input asp-for="Address.City" value="@Model.Address.City" class="form-control" /><br />
-                                                Street<br />
-                                                <input asp-for="Address.Street" value="@Model.Address.Street" class="form-control" /><br />
-                                                Zip Code<br /><input asp-for="Address.ZipCode" value="@Model.Address.ZipCode" class="form-control" />
-                                                <input asp-for="Address.Id" type="hidden" />
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label><b>Additional info:</b></label>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <p>
-                                                <textarea asp-for="AdditionalInfo" value="@Model.AdditionalInfo" class="form-control" rows="3"></textarea>
-                                            </p>
-                                        </div>
-                                    </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                    <input asp-for="FirstName" value="@Model.FirstName" class="form-control form-control-user" />
+                                    <span asp-validation-for="FirstName" class="text-danger"></span>
                                 </div>
-                                <input asp-for="@Model.Id" type="hidden" />
+                                <div class="col-sm-4">
+                                    <input asp-for="MiddleName" class="form-control form-control-user" />
+                                    <span asp-validation-for="MiddleName" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input asp-for="LastName" class="form-control form-control-user" />
+                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            @for (int i = 0; i < @Model.Phones.Count; i++)
+                            {
+                                <div class="form-group row phone_input" id="phonesDiv">
+                                    <div class="col-sm-5 mb-3 mb-sm-0">
+                                        <input asp-for="Phones[i].Phone" type="text" class="form-control form-control-user" placeholder="Phone number">
+                                        <input asp-for="Phones[i].Id" type="hidden" />
+                                        <input asp-for="Phones[i].CustomerId" type="hidden" />
+                                        <input asp-for="Phones[i].Phone" type="hidden" />
+                                        <span asp-validation-for="Phones[i].Phone" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-5 mb-3 mb-sm-0">
+                                        <select asp-for="Phones[i].PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control form-control-user"></select>
+                                        <span asp-validation-for="Phones[i].PhoneType" class="text-danger"></span>
+                                    </div>
+                                    @if (Model.Phones.Count < 2)
+                                    {
+                                        <div class="col-sm-1 mb-3 mb-sm-0 form-inline">
+                                            <a class="add_Phone btn btn-primary btn-circle btn-sm" id="addPhoneButton" href="#"><i class="fas fa-plus-square fa-lg"></i></a>
+                                        </div>
+                                    }
+                                    @if (Model.Phones.Count > 1)
+                                    {
+                                        <div class="col-sm-1 mb-3 mb-sm-0 form-inline">
+                                            <a class="add_Phone btn btn-danger btn-circle btn-sm" href="#"><i class="fas fa-trash fa-lg"></i></a>
+                                        </div>
+                                    }
+                                </div>
+                                <div id="PhoneContainer"></div>
+                            }
+                            @for (int i = 0; i < @Model.Emails.Count; i++)
+                            {
+                                <div class="form-group row email_input" id="emailsDiv">
+                                    <div class="col-sm-5 mb-3 mb-sm-0">
+                                        <input asp-for="Emails[i].Email" class="form-control form-control-user" placeholder="Email address">
+                                        <input asp-for="Emails[i].Id" type="hidden" />
+                                        <input asp-for="Emails[i].CustomerId" type="hidden" />
+                                        <input asp-for="Emails[i].Email" type="hidden" />
+                                        <span asp-validation-for="Emails[i].Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="col-sm-5 mb-3 mb-sm-0">
+                                        <select asp-for="Emails[0].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control form-control-user"></select>
+                                        <span asp-validation-for="Emails[0].EmailType" class="text-danger"></span>
+                                    </div>
+                                    @if (Model.Emails.Count < 2)
+                                    {
+                                        <div class="col-sm-1 mb-3 mb-sm-0 form-inline">
+                                            <a class="add_Email btn btn-primary btn-circle btn-sm" id="addEmailButton" href="#"><i class="fas fa-plus-square fa-lg"></i></a>
+                                        </div>
+                                      
+                                    }
+                                    @if (Model.Emails.Count > 1)
+                                    {
+                                        <div class="col-sm-1 mb-3 mb-sm-0 form-inline">
+                                            <a class="add_Email btn btn-danger btn-circle btn-sm" id="addEmailButton" href="#"><i class="fas fa-trash fa-lg"></i></a>
+                                        </div>
+                                    }
+                                </div>
+                                <div id="EmailContainer"></div>
+                            }
+                            <div class="form-group row">
+                                <div class="col-sm-12 mb-3 mb-sm-0">
+                                    <input asp-for="JobTitle" class="form-control form-control-user" placeholder="Job Title">
+                                    <span asp-validation-for="JobTitle" class="text-danger"></span>
+                                </div>
+                            </div>
 
-                                <button type="submit" class="btn btn-primary rounded-bottom">Save Changes</button>
-                                <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-danger rounded-bottom">Cancel</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Address data</h1>
+                            </div>
+                            <div class="form-group row">
+                                <input asp-for="Address.Country" class="form-control form-control-user" placeholder="Country">
+                                <span asp-validation-for="Address.Country" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <input asp-for="Address.City" class="form-control form-control-user" placeholder="City">
+                                <span asp-validation-for="Address.City" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <input asp-for="Address.Street" class="form-control form-control-user" placeholder="Street">
+                                <span asp-validation-for="Address.Street" class="text-danger"></span>
+                            </div>
+                            <div class="form-group row">
+                                <input asp-for="Address.ZipCode" class="form-control form-control-user" placeholder="Zip Code">
+                                <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
+                            </div>
+                            <input asp-for="Address.Id" type="hidden" />
+                        </div>
+                    </div>
+                </div>
+                <div class="justify-content-lg-center">
+                    <div class="col-lg-12 align-content-center">
+                        <textarea asp-for="AdditionalInfo" class="form-control form-control-user" placeholder="Additional information" rows="3"></textarea>
+                        <span asp-validation-for="AdditionalInfo" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+            <br />
+
+            <button type="submit" class="btn btn-primary btn-user">Save Changes</button>
+            <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-danger btn-user">Cancel</a>
+        </div>
+    </form>
+</div>
+
+@*<body id="page-top">
+        <form style="padding-bottom: 7rem" method="post" asp-action="Edit" asp-controller="Customers">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-7">
+                                <div class="card shadow mb-4">
+                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                        <h6 class="m-0 font-weight-bold text-primary"> <b>Update customer info</b> </h6>
+                                        <div class="dropdown no-arrow">
+                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                                <a asp-action="Details" method="get" asp-route-id="@Model.Id" class="dropdown-item">Back to details</a>
+                                                <a class="dropdown-item" href="#">Delete</a>
+                                                <div class="dropdown-divider"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label><b>Title:</b></label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>
+                                                    <select asp-for="Title" asp-items="Html.GetEnumSelectList<Title>()" class="form-control"></select>
+                                                    <span asp-validation-for="Title" class="text-danger"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label><b>First Name:</b></label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>
+                                                    <input asp-for="FirstName" class="form-control" />
+                                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label><b>Middle Name:</b></label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>
+                                                    <input asp-for="MiddleName" class="form-control" />
+                                                    <span asp-validation-for="MiddleName" class="text-danger"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label><b>Last Name:</b></label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>
+                                                    <input asp-for="LastName" class="form-control" />
+                                                    <span asp-validation-for="LastName" class="text-danger"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>
+                                                    @if (Model.Emails.Count > 1)
+                                                    {
+                                                        <b>Emails</b>
+                                                    }
+                                                    else
+                                                    {
+                                                        <b>Email</b>
+                                                    }
+                                                </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                @for (int i = 0; i < @Model.Emails.Count; i++)
+                                                {
+                                                    <p>
+                                                        <div class="form-row email_input" id="emailsDiv">
+                                                            <div class="col-md-6">
+
+                                                                <input asp-for="Emails[i].Email" value="@Model.Emails[i].Email" class="form-control" asp-route="Emails[i].Email" />
+                                                                <input asp-for="Emails[i].Id" type="hidden" />
+                                                                <input asp-for="Emails[i].CustomerId" type="hidden" />
+                                                                <input asp-for="Emails[i].Email" type="hidden" />
+                                                                <span asp-validation-for="Emails[i].Email" class="text-danger"></span>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <select asp-for="Emails[i].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control"></select>
+                                                            </div>
+                                                            @if (Model.Emails.Count > 1)
+                                                            {
+                                                                <a asp-action="Delete" asp-controller="Emails" asp-route-id="@Model.Emails[i].Id" asp-route-customerId="@Model.Emails[i].CustomerId">
+
+                                                                    <i class="fas fa-minus-circle" style="color: red"></i>
+                                                                </a>
+                                                            }
+                                                        </div>
+                                                    </p>
+                                                }
+                                                @if (Model.Emails.Count < 2)
+                                                {
+                                                    <div id="EmailContainer"></div>
+                                                    <a class="add_Email">Add more emails</a>
+
+                                                }
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>
+                                                    @if (Model.Phones.Count > 1)
+                                                    {
+                                                        <b>Phones</b>
+                                                    }
+                                                    else
+                                                    {
+                                                        <b>Phone</b>
+                                                    }
+                                                </label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                @for (int i = 0; i < @Model.Phones.Count; i++)
+                                                {
+
+                                                    <p>
+                                                        <div class="form-row phone_input" id="phonesDiv">
+                                                            <div class="col-md-6">
+
+                                                                <input asp-for="Phones[i].Phone" asp-route="Phones[i].CustomerId" value="@Model.Phones[i].Phone" class="form-control" />
+                                                                <input asp-for="Phones[i].Id" type="hidden" />
+                                                                <input asp-for="Phones[i].CustomerId" type="hidden" />
+                                                                <input asp-for="Phones[i].Phone" type="hidden" />
+                                                                <span asp-validation-for="Phones[i].Phone" class="text-danger"></span>
+
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <select asp-for="Phones[i].PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control"></select>
+                                                            </div>
+                                                            @if (Model.Phones.Count > 1)
+                                                            {
+                                                                <a asp-action="Delete" asp-controller="Phones" asp-route-id="@Model.Phones[i].Id" asp-route-customerId="@Model.Phones[i].CustomerId">
+                                                                    <i class="fas fa-minus-circle" style="color: red"></i>
+                                                                </a>
+                                                            }
+                                                        </div>
+                                                    </p>
+                                                }
+                                                @if (Model.Emails.Count < 3)
+                                                {
+                                                    <div id="PhoneContainer"></div>
+                                                    <a class="add_Phone">Add more phones</a>
+                                                }
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label><b>Profession</b></label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>
+                                                    <input asp-for="JobTitle" value="@Model.JobTitle" class="form-control" />
+                                                    <span asp-validation-for="JobTitle" class="text-danger"></span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label><b>Address:</b></label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>
+                                                    Country <br />
+                                                    <input asp-for="Address.Country" value="@Model.Address.Country" class="form-control" /><br />
+                                                    City<br />
+                                                    <input asp-for="Address.City" value="@Model.Address.City" class="form-control" /><br />
+                                                    Street<br />
+                                                    <input asp-for="Address.Street" value="@Model.Address.Street" class="form-control" /><br />
+                                                    Zip Code<br /><input asp-for="Address.ZipCode" value="@Model.Address.ZipCode" class="form-control" />
+                                                    <input asp-for="Address.Id" type="hidden" />
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label><b>Additional info:</b></label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>
+                                                    <textarea asp-for="AdditionalInfo" value="@Model.AdditionalInfo" class="form-control" rows="3"></textarea>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input asp-for="@Model.Id" type="hidden" />
+
+                                    <button type="submit" class="btn btn-primary rounded-bottom">Save Changes</button>
+                                    <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-danger rounded-bottom">Cancel</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-    </form>
-</body>
+        </form>
+    </body>*@
 
 
 @section Scripts
