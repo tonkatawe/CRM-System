@@ -9,9 +9,12 @@
 
 @if (this.SignInManager.IsSignedIn(this.User))
 {
+
+    var profileImageUrl = this.UserManager.Users.FirstOrDefault(x => x.Id == this.User.FindFirstValue(ClaimTypes.NameIdentifier))?.ProfilePictureUrl;
+
     <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img class="rounded-circle avatar" alt="avatar" src=""/>
+            <img class="rounded-circle avatar" alt="avatar" src="@profileImageUrl" />
             <span class="mr-2 d-none d-lg-inline text-gray-600 small">@(this.User.Identity.Name)</span>
         </a>
         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -34,7 +37,7 @@
     </li>
 
 
-   
+
 
 
 
