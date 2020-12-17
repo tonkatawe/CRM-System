@@ -89,31 +89,11 @@ namespace CRMSystem.Services.Data
                 .FirstOrDefaultAsync();
         }
 
-        public bool ValidationDate(DateTime startDate, DateTime endDate, DateTime userStartDate)
-        {
-            var cuurentDate = DateTime.UtcNow;
-            if (startDate > endDate)
-            {
-                throw new Exception($"Star date ({startDate:d}) cannot be greater than end date ({endDate:d}).");
-            }
-
-            if (endDate > cuurentDate)
-            {
-                throw new Exception($"End date cannot be greater than {cuurentDate:d}");
-            }
-
-            if (startDate < userStartDate)
-            {
-                throw new Exception($"Start date cannot be before {userStartDate:d}");
-            }
-            return true;
-        }
-
         public Task<int> OrdersCount(string id)
         {
             return this.ordersRepository
                 .All()
-                .Where(x=>x.OrganizationId == id)
+                .Where(x => x.OrganizationId == id)
                 .CountAsync();
         }
     }

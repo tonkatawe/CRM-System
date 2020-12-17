@@ -15,8 +15,6 @@ namespace CRMSystem.Services.Data.Contracts
         Task<T> GetMostOrderProductAsync<T>(string id);
         Task<T> GetMostBenefitProductAsync<T>(string id);
 
-        bool ValidationDate(DateTime startDate, DateTime endDate, DateTime userStartDate);
-
         Task<int> OrdersCount(string id);
 
     }

@@ -1,27 +1,29 @@
 ﻿@model CRMSystem.Web.ViewModels.Statistics.IndexViewModel
 
 <form asp-action="Index" method="post" class="user" asp-route-input="">
-    <div asp-validation-summary="All" class="text-danger"></div>
     <div class="text-center">
         <h1 class="h4 text-gray-900 mb-4 font-italic">General statistic for period</h1>
+
     </div>
     <div class="form-row d-flex justify-content-lg-center">
         <div class="input-group date col-md-3" data-provide="datepicker">
-            <input asp-for="StartDate" type="text" value="@DateTime.UtcNow" class="form-control datepicker-orient-bottom" placeholder="From date">
+            <input asp-for="StartDate" type="text" value="Enter start date" class="form-control datepicker-orient-bottom" placeholder="From date">
             <div class="input-group-addon">
                 <span><i class="far fa-calendar-alt"></i></span>
             </div>
+            <span asp-validation-for="StartDate" class="text-danger"></span>
         </div>
         <div class="input-group date col-md-3" data-provide="datepicker">
-            <input asp-for="EndDate" type="text" value="@DateTime.UtcNow" class="form-control" placeholder="To date">
+            <input asp-for="EndDate" type="text" value="Enter end date" class="form-control" placeholder="To date">
             <div class="input-group-addon">
                 <span><i class="far fa-calendar-alt"></i></span>
             </div>
+            <span asp-validation-for="EndDate" class="text-danger"></span>
         </div>
     </div>
-    <br/>
+    <br />
     <div class="d-flex justify-content-lg-center ">
-        <button type="submit" class="btn btn-success  btn-user btn-block font-weight-bold" >
+        <button type="submit" class="btn btn-success  btn-user btn-block font-weight-bold">
             Get Statistic
         </button>
     </div>
