@@ -79,7 +79,13 @@
     <Content Update="wwwroot\lib\bootstrap-datepicker\css\bootstrap-datepicker.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\lib\bootstrap-datepicker\css\bootstrap-datepicker.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="wwwroot\lib\bootstrap-datepicker\css\bootstrap-datepicker3.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap-datepicker\js\bootstrap-datepicker.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap.css">

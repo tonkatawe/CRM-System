@@ -24,15 +24,15 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/site.min.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet" asp-append-version="true" />
-
+    <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" asp-append-version="true"/>
 </head>
 
 <body id="page-top">
     <div id="wrapper">
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-          
-                <partial name="_SidebarPartial" />
-            
+
+            <partial name="_SidebarPartial" />
+
         </ul>
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
@@ -79,7 +79,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
     <script src="~/js/sb-admin-2.min.js" asp-append-version="true"></script>
     <script src="~/js/site.min.js" asp-append-version="true"></script>
-    
+    <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js" asp-append-version="true"></script>
 
     @await this.RenderSectionAsync("Scripts", required: false)
 </body>

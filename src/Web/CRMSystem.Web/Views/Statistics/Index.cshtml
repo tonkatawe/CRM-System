@@ -1,13 +1,11 @@
 ﻿@model CRMSystem.Web.ViewModels.Statistics.IndexViewModel
 
-
-
-<vc:general-statistic></vc:general-statistic>
-
-
-<form asp-action="Index" method="post" asp-route-input="">
+<form asp-action="Index" method="post" class="user" asp-route-input="">
     <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-row">
+    <div class="text-center">
+        <h1 class="h4 text-gray-900 mb-4 font-italic">General statistic for period</h1>
+    </div>
+    <div class="form-row d-flex justify-content-lg-center">
         <div class="input-group date col-md-3" data-provide="datepicker">
             <input asp-for="StartDate" type="text" class="form-control datepicker-orient-bottom" placeholder="From date">
             <div class="input-group-addon">
@@ -20,10 +18,15 @@
                 <span><i class="far fa-calendar-alt"></i></span>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Get Statistic</button>
+    </div>
+    <br/>
+    <div class="d-flex justify-content-lg-center ">
+        <button type="submit" class="btn btn-success  btn-user btn-block font-weight-bold" >
+            Get Statistic
+        </button>
     </div>
 </form>
-
+<vc:general-statistic></vc:general-statistic>
 
 @section Scripts
 {
