@@ -109,5 +109,13 @@ namespace CRMSystem.Services.Data
 
             return await this.organizationRepository.SaveChangesAsync();
         }
+
+        public async Task<int> ChangeStatusAsync(string id, bool isPublic)
+        {
+            var organization = await this.organizationRepository.GetByIdWithDeletedAsync(id);
+            organization.IsPublic = isPublic;
+
+            return await this.organizationRepository.SaveChangesAsync();
+        }
     }
 }

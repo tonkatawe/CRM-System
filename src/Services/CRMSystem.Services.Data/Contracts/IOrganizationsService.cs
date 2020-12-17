@@ -19,6 +19,8 @@
 
         Task<int> UpdateAsync(EditOrganizationInputModel input);
 
+        Task<int> ChangeStatusAsync(string id, bool isPublic);
+
 
 
     }

@@ -29,7 +29,7 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            
+
             if (user.OrganizationId == null)
             {
                 return this.RedirectToAction("Create");
@@ -63,7 +63,7 @@ namespace CRMSystem.Web.Controllers
 
             await this.organizationsService.CreateAsync(input, user.Id);
 
-            
+
             return RedirectToAction("Index");
         }
 
@@ -89,6 +89,21 @@ namespace CRMSystem.Web.Controllers
             await this.organizationsService.UpdateAsync(input);
 
             return this.RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeStatus(string id, bool isPublic)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            if (user.OrganizationId != id)
+            {
+                return this.NotFound();
+            }
+
+            await this.organizationsService.ChangeStatusAsync(id, isPublic);
+
+            return this.RedirectToAction("Edit");
         }
 
         [AllowAnonymous]
