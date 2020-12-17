@@ -26,8 +26,10 @@ namespace CRMSystem.Web.Controllers
         }
 
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
+            
             var user = await this.userManager.GetUserAsync(this.User);
 
             if (user.OrganizationId == null)
@@ -92,9 +94,10 @@ namespace CRMSystem.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ChangeStatus(string id, bool isPublic)
+        public async Task<IActionResult> ChangeStatus(string id, bool isPublic, string returnUrl)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
+
+         var user = await this.userManager.GetUserAsync(this.User);
 
             if (user.OrganizationId != id)
             {
@@ -103,7 +106,7 @@ namespace CRMSystem.Web.Controllers
 
             await this.organizationsService.ChangeStatusAsync(id, isPublic);
 
-            return this.RedirectToAction("Edit");
+            return this.Redirect(returnUrl);
         }
 
         [AllowAnonymous]

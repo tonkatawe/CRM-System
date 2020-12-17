@@ -1,6 +1,6 @@
 ﻿namespace CRMSystem.Web.ViewModels.Organizations
 {
-  public  class StatusOrganizationViewModel
+    public class StatusOrganizationViewModel
     {
         public string Id { get; set; }
 

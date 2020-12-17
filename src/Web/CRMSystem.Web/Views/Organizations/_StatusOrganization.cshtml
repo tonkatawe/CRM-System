@@ -1,5 +1,8 @@
 ﻿@model CRMSystem.Web.ViewModels.Organizations.StatusOrganizationViewModel
+@{
 
+
+}
 
 @if (Model.IsPublic)
 {
@@ -9,7 +12,7 @@
             <p class="card-text">Your company is public. It's a good idea because every anonymous user could see you and could be your potential partner.</p>
         </div>
     </div>
-    <button type="submit" asp-action="ChangeStatus" asp-route-id="@Model.Id" asp-route-isPublic="false" class="btn btn-danger btn-user btn-block">
+    <button type="submit" asp-action="ChangeStatus" asp-route-id="@Model.Id" asp-route-returnUrl="@Context.Request.Path" asp-route-isPublic="false" class="btn btn-danger btn-user btn-block">
         Make it non public
     </button>
 }
@@ -22,7 +25,7 @@ else
             <p class="card-text">We recommend your company to be public because it's a big opportunity to reach more users and rise your profit.</p>
         </div>
     </div>
-    <button type="submit" asp-action="ChangeStatus" asp-route-id="@Model.Id" asp-route-isPublic="true" class="btn btn-primary  btn-user btn-block">
+    <button type="submit" asp-action="ChangeStatus" asp-route-id="@Model.Id" asp-route-returnUrl="@Context.Request.Path"  asp-route-isPublic="true" class="btn btn-primary  btn-user btn-block">
         List your company
     </button>
 }

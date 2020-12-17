@@ -1,52 +1,66 @@
-﻿@model CRMSystem.Web.ViewModels.Organizations.OrganizationViewModel
+﻿@using CRMSystem.Web.ViewModels.Organizations
+@model CRMSystem.Web.ViewModels.Organizations.OrganizationViewModel
 @{
     this.ViewData["Title"] = $"{@Model.Name}";
 }
 
-<div class="container-fluid">
-    <div class="align-content-center">
-        <center>  <h2 class="justify-content-center">@Model.Name</h2></center>
-    </div>
-    <hr />
-    @if (Model.Customers.Any(x => x.IsTemporary))
-    {
-        <p>You have @Model.Customers.Count(x => x.IsTemporary) who waiting for your approval</p>
-        <a asp-controller="TemporaryCustomers" asp-action="Index">click here to see them</a>
-    }
-    <hr />
-   <div class="card">
-        <div class="card-body">
-            <i class="fas fa-industry"></i>
-            @Model.Industry
+<div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">@Model.Name</h1>
+            </div>
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="form-group">
+                            <i class="fas fa-industry fa-lg text-black-50">@Model.Industry</i>
+
+                        </div>
+                        <div class="form-group">
+                            <i class="fas fa-info fa-lg text-black-50">   @Model.Description</i>
+
+                        </div>
+                        <div class="form-group">
+                            <i class="fas fa-map-marked fa-lg text-black-50"> @Model.Address.Country, @Model.Address.City, @Model.Address.Street, @Model.Address.ZipCode</i>
+
+                        </div>
+                        <div class="form-group">
+                            <i class="fas fa-users fa-lg text-black-50">You have @Model.Customers.Count(x => !x.IsTemporary) customers</i>You have @Model.Customers.Count(x => !x.IsTemporary) customers
+                        </div>
+                        <div class="form-group">
+                            <i class="fas fa-dolly fa-lg text-black-50">You have @Model.Products.Count() products</i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Status</h1>
+                        </div>
+                        <form method="post" class="user">
+                            <partial name="_StatusOrganization" model="new StatusOrganizationViewModel {IsPublic = Model.IsPublic, Id = Model.Id}" />
+                        </form>
+                        <br />
+                        @if (Model.Customers.Any(x => x.IsTemporary))
+                        {
+
+                            <div class="card text-white bg-warning mb-3 shadow" style="width: 20rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Waiting to approve</h5>
+                                    <p>You have @Model.Customers.Count(x => x.IsTemporary) who waiting for your approval</p>
+                                    <a asp-controller="TemporaryCustomers" asp-action="Index">click here to see them</a>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <i class="fas fa-info"></i>
-            @Model.Description
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <i class="fas fa-map-marked"></i>
-            @Model.Address.Country, @Model.Address.City, @Model.Address.Street, @Model.Address.ZipCode
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <i class="fas fa-users"></i>You have @Model.Customers.Count(x => !x.IsTemporary) customers
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-body">
-            <i class="fas fa-dolly"></i>You have @Model.Products.Count() products
-        </div>
-    </div>
-    <hr />
     <div class="row">
         <div class="col-md-4">
             <a asp-controller="Customers" asp-action="Index" class="btn btn-primary rounded-pill col-md-12">
-
                 <span class="text">Your customers</span>
             </a>
         </div>
@@ -58,14 +72,12 @@
         </div>
         <div class="form-group col-md-4">
             <a asp-controller="Statistics" asp-action="Index" class="btn btn-primary rounded-pill col-md-12">
-
                 <span class="text">Your statistic</span>
             </a>
         </div>
     </div>
     <div class="justify-content-center">
         <a asp-action="Edit" class="btn btn-danger rounded-pill col-md-12">
-
             <span class="text">Edit your organization</span>
         </a>
     </div>

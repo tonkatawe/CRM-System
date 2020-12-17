@@ -20,7 +20,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-12 mb-3 mb-sm-0 ">
-                                    <select asp-for="Title" asp-items="Html.GetEnumSelectList<Title>()" class="form-control"></select>
+                                    <select asp-for="Title" asp-items="Html.GetEnumSelectList<Title>()" class="selectBox"></select>
                                     <span asp-validation-for="Title" class="text-danger"></span>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                                         <span asp-validation-for="Phones[i].Phone" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-5 mb-3 mb-sm-0">
-                                        <select asp-for="Phones[i].PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control form-control-user"></select>
+                                        <select asp-for="Phones[i].PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="selectBox"></select>
                                         <span asp-validation-for="Phones[i].PhoneType" class="text-danger"></span>
                                     </div>
                                     @if (Model.Phones.Count < 2)
@@ -79,7 +79,7 @@
                                         <span asp-validation-for="Emails[i].Email" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-5 mb-3 mb-sm-0">
-                                        <select asp-for="Emails[0].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control form-control-user"></select>
+                                        <select asp-for="Emails[0].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="selectBox"></select>
                                         <span asp-validation-for="Emails[0].EmailType" class="text-danger"></span>
                                     </div>
                                     @if (Model.Emails.Count < 2)

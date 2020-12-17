@@ -21,7 +21,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-12 mb-3 mb-sm-0 ">
-                                    <select asp-for="Title" asp-items="Html.GetEnumSelectList<Title>()" aria-valuemax="---" class="form-control form-control-user"></select>
+                                    <select asp-for="Title" asp-items="Html.GetEnumSelectList<Title>()" class="selectBox"><option disabled selected>--Select customer title--</option></select>
                                     <span asp-validation-for="Title" class="text-danger"></span>
                                 </div>
                             </div>
@@ -45,7 +45,7 @@
                                     <span asp-validation-for="Phones[0].Phone" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-5 mb-3 mb-sm-0">
-                                    <select asp-for="Phones[0].PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="form-control form-control-user"></select>
+                                    <select asp-for="Phones[0].PhoneType" asp-items="Html.GetEnumSelectList<PhoneType>()" class="selectBox"><option disabled selected>--Select phone type--</option></select>
                                     <span asp-validation-for="Phones[0].PhoneType" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-1 mb-3 mb-sm-0 form-inline">
@@ -59,7 +59,7 @@
                                     <span asp-validation-for="Emails[0].Email" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-5 mb-3 mb-sm-0">
-                                    <select asp-for="Emails[0].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="form-control form-control-user"></select>
+                                    <select asp-for="Emails[0].EmailType" asp-items="Html.GetEnumSelectList<EmailType>()" class="selectBox"><option disabled selected>--Select email type--</option></select>
                                     <span asp-validation-for="Emails[0].EmailType" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-1 mb-3 mb-sm-0 form-inline">
