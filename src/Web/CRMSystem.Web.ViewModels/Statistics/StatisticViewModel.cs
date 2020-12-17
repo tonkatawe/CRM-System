@@ -11,9 +11,6 @@ namespace CRMSystem.Web.ViewModels.Statistics
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
-        
-        [DataType(DataType.Text)]
-        [Column(TypeName = "decimal(18, 2)")]
         public decimal TotalBenefits { get; set; }
         public string OrganizationName { get; set; }
         public CustomerViewModel BestCustomer { get; set; }

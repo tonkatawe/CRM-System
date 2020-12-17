@@ -7,13 +7,13 @@
     </div>
     <div class="form-row d-flex justify-content-lg-center">
         <div class="input-group date col-md-3" data-provide="datepicker">
-            <input asp-for="StartDate" type="text" class="form-control datepicker-orient-bottom" placeholder="From date">
+            <input asp-for="StartDate" type="text" value="@DateTime.UtcNow" class="form-control datepicker-orient-bottom" placeholder="From date">
             <div class="input-group-addon">
                 <span><i class="far fa-calendar-alt"></i></span>
             </div>
         </div>
         <div class="input-group date col-md-3" data-provide="datepicker">
-            <input asp-for="EndDate" type="text" class="form-control" placeholder="To date">
+            <input asp-for="EndDate" type="text" value="@DateTime.UtcNow" class="form-control" placeholder="To date">
             <div class="input-group-addon">
                 <span><i class="far fa-calendar-alt"></i></span>
             </div>
