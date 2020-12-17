@@ -1,5 +1,6 @@
 ﻿
 @using CRMSystem.Data.Models.Enums
+@using CRMSystem.Web.ViewModels.Organizations
 @model CRMSystem.Web.ViewModels.Organizations.EditOrganizationInputModel
 
 @{
@@ -58,31 +59,7 @@
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Status</h1>
                             </div>
-                            @if (Model.IsPublic)
-                            {
-                                <div class="card text-white bg-primary mb-3 shadow" style="width: 20rem;">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Public company</h5>
-                                        <p class="card-text">Your company is public. It's a good idea because every anonymous user could see you and could be your potential partner.</p>
-                                    </div>
-                                </div>
-                                <button type="submit" asp-action="ChangeStatus" asp-route-id="@Model.Id" asp-route-isPublic="false" class="btn btn-danger btn-user btn-block">
-                                    Make it non public
-                                </button>
-                            }
-                            else
-                            {
-
-                                <div class="card text-white bg-danger mb-3 shadow" style="width: 20rem;">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Non Public Company</h5>
-                                        <p class="card-text">We recommend your company to be public because it's a big opportunity to reach more users and rise your profit.</p>
-                                    </div>
-                                </div>
-                                <button type="submit" asp-action="ChangeStatus" asp-route-id="@Model.Id" asp-route-isPublic="true" class="btn btn-primary  btn-user btn-block">
-                                    List your company
-                                </button>
-                            }
+                            <partial name="_StatusOrganization" model="new StatusOrganizationViewModel {IsPublic = Model.IsPublic, Id = Model.Id}" />
                         </div>
                     </div>
                 </div>
