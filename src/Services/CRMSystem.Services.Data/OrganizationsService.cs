@@ -40,6 +40,7 @@ namespace CRMSystem.Services.Data
                 Industry = input.Industry,
                 Description = input.Description,
                 Address = address,
+                IsPublic = input.IsPublic,
             };
 
            user.Organization = organization;

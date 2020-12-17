@@ -4,7 +4,7 @@ using CRMSystem.Services.Mapping;
 
 namespace CRMSystem.Web.ViewModels.Organizations
 {
-    public class EditOrganizationInputModel : OrganizationCreateInputModel
+    public class EditOrganizationInputModel : OrganizationCreateInputModel, IMapFrom<Organization>
     {
         public string Id { get; set; }
     }

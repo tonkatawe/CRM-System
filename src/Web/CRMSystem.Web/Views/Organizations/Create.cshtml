@@ -2,45 +2,79 @@
 @model CRMSystem.Web.ViewModels.Organizations.OrganizationCreateInputModel
 
 @{
-    this.ViewData["Title"] = "Create organization";
+    this.ViewData["Title"] = "Join your company";
 }
+<div class="container">
 
-<h3>@this.ViewData["Title"]</h3>
+    <div class="row justify-content-center">
+        <div class="col-xl-8 col-lg-8 col-md-9 ">
+            <div class="card o-hidden border-0 shadow-lg my-1">
+                <div class="card-body p-0">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Join your company</h1>
+                                </div>
+                                <form class="user" asp-action="Create"  method="post">
+                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <input asp-for="Name" class="form-control form-control-user" placeholder="Name">
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <select asp-for="Industry" asp-items="Html.GetEnumSelectList<IndustryType>()" class="form-control form-control-user"></select>
+                                        <span asp-validation-for="Industry" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea asp-for="Description" class="form-control form-control-user" rows="3" placeholder="Company's description"></textarea>
+                                        <span asp-validation-for="Description" class="text-danger"></span>
+                                    </div>
+                                    <div class="row d-flex justify-content-center font-weight-bold">
+                                        <div class="form-control-user">
+                                            <input asp-for="IsPublic" type="radio" value="true" class="custom-radio">
+                                            <label class="custom-radio">Public company</label>
+                                        </div>
+                                        <div class="form-control-user">
+                                            <input asp-for="IsPublic" type="radio" value="false">
+                                            <label class="custom-radio">Non public company</label>
+                                        </div>
+                                        <span asp-validation-for="IsPublic" class="text-danger"></span>
+                                    </div>
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">Address</h1>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="Address.Country" class="form-control form-control-user" placeholder="Country">
+                                        <span asp-validation-for="Address.Country" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="Address.City" class="form-control form-control-user" placeholder="City">
+                                        <span asp-validation-for="Address.City" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="Address.Street" class="form-control form-control-user" placeholder="Street">
+                                        <span asp-validation-for="Address.Street" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input asp-for="Address.ZipCode" class="form-control form-control-user" placeholder="Zip code">
+                                        <span asp-validation-for="Address.ZipCode" class="text-danger"></span>
+                                    </div>
 
-<form method="post" asp-action="Create">
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">
+                                     Join your company
+                                    </button>
 
 
-    <div class="form-row">
-        <div class="form-group col-md-3">
-            <label asp-for="Name">Name</label>
-            <input asp-for="Name" class="form-control" placeholder="Name">
-            <span asp-validation-for="Name" class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-3">
-            <label asp-for="Address.Country">Organization Country</label>
-            <input asp-for="Address.Country" class="form-control" placeholder="Organization Country">
-            <span asp-validation-for="Address.Country" class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-3">
-            <label asp-for="Address.City">Organization City</label>
-            <input asp-for="Address.City" class="form-control" placeholder="Organization City">
-            <span asp-validation-for="Address.City" class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-3">
-            <label asp-for="Address.Street">Organization Street</label>
-            <input asp-for="Address.Street" class="form-control" placeholder="Organization Street">
-            <span asp-validation-for="Address.Street" class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-6">
-            <label asp-for="Industry"></label>
-            <select asp-for="Industry" asp-items="Html.GetEnumSelectList<IndustryType>()" class="form-control"></select>
-            <span asp-validation-for="Industry" class="text-danger"></span>
-        </div>
-        <div class="form-group col-md-12">
-            <label asp-for="Description">Description</label>
-            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
-            <span asp-validation-for="Description" class="text-danger"></span>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Add Organization</button>
-</form>
+</div>
+
+
