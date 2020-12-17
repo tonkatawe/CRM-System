@@ -31,6 +31,8 @@ namespace CRMSystem.Data.Models
 
         public virtual Address Address { get; set; }
 
+        public bool IsPublic { get; set; }
+
         [Required]
         public string UserId { get; set; }
 

@@ -36,8 +36,6 @@ namespace CRMSystem.Data
 
         public DbSet<PhoneNumber> PhoneNumbers { get; set; }
 
-        public DbSet<UserTask> UserTasks { get; set; }
-
         public DbSet<Organization> Organizations { get; set; }
 
         public DbSet<Product> Products { get; set; }

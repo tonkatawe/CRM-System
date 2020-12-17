@@ -39,7 +39,7 @@ namespace CRMSystem.Web.Controllers
 
             if (user == null)
             {
-                return this.View();
+                return this.View(viewModel);
             }
 
             if (this.User.IsInRole("Customer"))
