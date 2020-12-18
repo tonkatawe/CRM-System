@@ -5,14 +5,34 @@
 <div class="card">
     <img class="card-img justify-content-center" src="@Model.ProductPictureUrl" alt="Vans">
     <div class="card-img-overlay d-flex justify-content-end">
-    @if (this.User.IsInRole("Owner"))
+        @if (this.User.IsInRole("Owner") || this.User.IsInRole("Administrator"))
         {
-            <a asp-action="Edit" asp-controller="Products" asp-route-id="@Model.Id" class="card-link text-danger">
-                <i class="fas fa-pen" style="color: red" title="Edit this product"></i>
+
+            <div class="d-flex justify-content-end user">
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a asp-action="Edit" asp-controller="Products" asp-route-id="@Model.Id" class="card-link text-danger">
+                            <i class="fas fa-pen" title="Edit this product"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <form method="post" asp-action="Delete" asp-controller="Products" asp-route-id="@Model.Id">
+                        <button type="submit" class="btn btn-danger btn-circle btn-sm" >  <i class="fas fa-trash" title="Delete product"></i></button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+
+
+            @*<a asp-action="Edit" asp-controller="Products" asp-route-id="@Model.Id" class="card-link text-danger">
+                <i class="fas fa-pen" title="Edit this product"></i>
             </a>
-            <a asp-action="Delete" asp-controller="Products" asp-route-id="@Model.Id" class="card-link text-danger">
-                <i class="fas fa-trash-alt"></i>
-            </a>
+            <form method="post" asp-action="Delete" asp-controller="Products" asp-route-id="@Model.Id">
+                <button type="submit" class="card-link text-danger">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </form>*@
         }
     </div>
 

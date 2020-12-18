@@ -8,7 +8,7 @@
     using CRMSystem.Web.ViewModels.Products;
     using System.Linq;
     using System.Threading.Tasks;
-    
+
     public class ProductsService : IProductsService
     {
         private readonly IDeletableEntityRepository<Product> productsRepository;
@@ -53,6 +53,12 @@
             product.Description = input.Description;
             product.Price = input.Price;
             product.Quantity = input.Quantity;
+
+            if (input.ProductPicture != null)
+            {
+                var productPictureUrl = await this.cloudinaryService.UploadAsync(input.ProductPicture);
+                product.ProductPictureUrl = productPictureUrl;
+            }
 
             this.productsRepository.Update(product);
 

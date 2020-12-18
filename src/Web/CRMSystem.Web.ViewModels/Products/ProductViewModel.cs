@@ -1,12 +1,8 @@
-﻿
-
-using System.Linq;
-using AutoMapper;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Mapping;
-
-namespace CRMSystem.Web.ViewModels.Products
+﻿namespace CRMSystem.Web.ViewModels.Products
 {
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Mapping;
+    
     public class ProductViewModel : IMapFrom<Product>
     {
         public int Id { get; set; }
