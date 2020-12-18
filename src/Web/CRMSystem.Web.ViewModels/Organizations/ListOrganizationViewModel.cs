@@ -1,8 +1,10 @@
 ﻿
-using System.Runtime.CompilerServices;
 using AutoMapper;
 using CRMSystem.Data.Models;
 using CRMSystem.Services.Mapping;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Reflection;
 
 namespace CRMSystem.Web.ViewModels.Organizations
 {
@@ -24,7 +26,14 @@ namespace CRMSystem.Web.ViewModels.Organizations
         {
             configuration.CreateMap<Organization, ListOrganizationViewModel>()
                 .ForMember(x => x.Industry, options =>
-                    options.MapFrom(x => x.Industry.ToString()));
+                {
+                    options.MapFrom(c => c.Industry
+                        .GetType()
+                        .GetMember(c.Industry.ToString())
+                        .FirstOrDefault()
+                        .GetCustomAttribute<DisplayAttribute>(false).Name);
+
+                });
         }
     }
 }

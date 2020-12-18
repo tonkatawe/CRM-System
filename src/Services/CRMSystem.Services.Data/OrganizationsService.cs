@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Runtime.Serialization;
+using CRMSystem.Data.Models.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace CRMSystem.Services.Data
 {
@@ -32,7 +35,7 @@ namespace CRMSystem.Services.Data
         {
             var address = await this.addressesService.CreateAsync(input.Address.Country, input.Address.City,
                 input.Address.Street, input.Address.ZipCode);
-             var user = await this.userRepository.GetByIdWithDeletedAsync(userId);
+            var user = await this.userRepository.GetByIdWithDeletedAsync(userId);
             var organization = new Organization
             {
                 UserId = userId,
@@ -43,25 +46,24 @@ namespace CRMSystem.Services.Data
                 IsPublic = input.IsPublic,
             };
 
-           user.Organization = organization;
-          
+            user.Organization = organization;
+
             this.userRepository.Update(user);
 
             return await this.userRepository.SaveChangesAsync();
 
         }
 
-        public IEnumerable<T> GetAll<T>()
+        public IQueryable<T> GetAll<T>(bool isPublic)
         {
             var query = this.organizationRepository
                 .All()
+                .Where(x => x.IsPublic == isPublic)
                 .To<T>()
-                .ToList();
+                .AsQueryable();
 
             return query;
         }
-
-
         public string GetId(string userId)
         {
             var query = this.organizationRepository

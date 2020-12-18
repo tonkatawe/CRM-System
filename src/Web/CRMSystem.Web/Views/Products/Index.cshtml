@@ -10,14 +10,14 @@
 @if (this.User.IsInRole("Owner"))
 {
     <h1 class="d-flex justify-content-lg-center">
-       Your company have @Model.Count() products
+        Your company have @Model.Count() products
     </h1>
 
 }
 else
 {
     <div class="d-flex justify-content-center font-weight-bold font-italic">
-        <p>If you want to order some product just write email to <a href="mailto:"type="email">@ViewData["Email"]</a></p>
+        <p>If you want to order some product just write email to <a href="mailto:" type="email">@ViewData["Email"]</a></p>
     </div>
 }
 <div class="container">
@@ -39,11 +39,10 @@ else
 
 <ul class="pagination">
 
-    
-    <li><a asp-action="Index"
-           asp-route-sortOrder="@ViewData["CurrentSort"]"
+
+    <li>
+        <a asp-action="Index"
            asp-route-pageNumber="@(Model.PageIndex - 1)"
-           asp-route-currentFilter="@ViewData["CurrentFilter"]"
            class="btn btn-default @prevDisabled">
             Previous
         </a>
@@ -54,11 +53,10 @@ else
             <a class="page-link rounded-pill" asp-route-pageNumber="@i">@i</a>
         </li>
     }
-    
-    <li><a asp-action="Index"
-           asp-route-sortOrder="@ViewData["CurrentSort"]"
+
+    <li>
+        <a asp-action="Index"
            asp-route-pageNumber="@(Model.PageIndex + 1)"
-           asp-route-currentFilter="@ViewData["CurrentFilter"]"
            class="btn btn-default @nextDisabled">
             Next
         </a>

@@ -1,15 +1,16 @@
-﻿using System.Security.Claims;
+﻿using System.Linq;
+using CRMSystem.Web.Infrastructure;
+using CRMSystem.Web.ViewModels.Products;
 
 namespace CRMSystem.Web.Controllers
 {
-    using System.Threading.Tasks;
-
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Data.Contracts;
     using CRMSystem.Web.ViewModels.Organizations;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
 
     [Authorize(Roles = ("Administrator, Owner"))]
     public class OrganizationsController : Controller
@@ -17,7 +18,6 @@ namespace CRMSystem.Web.Controllers
 
         private readonly IOrganizationsService organizationsService;
         private readonly UserManager<ApplicationUser> userManager;
-
 
         public OrganizationsController(IOrganizationsService organizationsService, UserManager<ApplicationUser> userManager)
         {
@@ -29,7 +29,7 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Index(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-            
+
             var user = await this.userManager.GetUserAsync(this.User);
 
             if (user.OrganizationId == null)
@@ -97,7 +97,7 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> ChangeStatus(string id, bool isPublic, string returnUrl)
         {
 
-         var user = await this.userManager.GetUserAsync(this.User);
+            var user = await this.userManager.GetUserAsync(this.User);
 
             if (user.OrganizationId != id)
             {
@@ -110,10 +110,16 @@ namespace CRMSystem.Web.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult List()
+        public async Task<IActionResult> List(int? pageNumber)
         {
-            var viewModel = this.organizationsService.GetAll<ListOrganizationViewModel>();
-            return this.View(viewModel);
+
+            var allOrganization = this.organizationsService.GetAll<ListOrganizationViewModel>(true);
+
+            var organization = from c in allOrganization
+                               select c;
+            var pageSize = 3;
+
+            return View(await PaginatedList<ListOrganizationViewModel>.CreateAsync(organization, pageNumber ?? 1, pageSize));
         }
 
     }

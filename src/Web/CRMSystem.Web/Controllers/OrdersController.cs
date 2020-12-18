@@ -29,13 +29,13 @@ namespace CRMSystem.Web.Controllers
             this.productsService = productsService;
         }
 
-        
+
         public async Task<IActionResult> Create(int id)
         {
             var user = await this.userManager.GetUserAsync(this.User);
             var products = this.productsService.GetAll<ProductDropDownViewModel>(user.Id).ToList();
 
-         
+
             var viewModel = new OrderCreateInputModel
             {
                 CustomerId = id,
@@ -99,18 +99,9 @@ namespace CRMSystem.Web.Controllers
 
             }
 
-
-
             return View(await PaginatedList<OrderViewModel>.CreateAsync(orders, pageNumber ?? 1, pageSize));
         }
 
-        public IActionResult OrderTypes(int id)
-        {
-            var viewModel = this.ordersService.GetOrdersType<OrderTypeViewModel>(id);
-          
-
-            return this.View(viewModel);
-        }
         public PartialViewResult ProductPartial(int productId)
         {
             var viewModel = this.productsService.GetById<ProductViewModel>(productId);

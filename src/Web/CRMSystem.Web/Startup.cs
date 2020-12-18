@@ -3,6 +3,8 @@ using CloudinaryDotNet;
 using CRMSystem.Services;
 using CRMSystem.Services.Contracts;
 using CRMSystem.Services.Data.Contracts;
+using Hangfire;
+using Hangfire.SqlServer;
 
 namespace CRMSystem.Web
 {
@@ -45,6 +47,23 @@ namespace CRMSystem.Web
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //Add HangFire
+            services.AddHangfire(config =>
+            {
+                config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                    .UseSqlServerStorage(
+                        this.configuration.GetConnectionString("DefaultConnection"),
+                        new SqlServerStorageOptions
+                        {
+                            PrepareSchemaIfNecessary = true,
+                            QueuePollInterval = TimeSpan.Zero,
+                            UseRecommendedIsolationLevel = true,
+                            UsePageLocksOnDequeue = true,
+                            DisableGlobalLocks = true,
+                        });
+            });
+            
 
             services.Configure<CookiePolicyOptions>(
                 options =>
@@ -90,9 +109,9 @@ namespace CRMSystem.Web
                 ApiKey = this.configuration["Cloudinary:ApiKey"],
                 ApiSecret = this.configuration["Cloudinary:ApiSecret"],
             });
-            
+
             services.AddSingleton(cloudinary);
-            
+
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -151,12 +170,18 @@ namespace CRMSystem.Web
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseHangfireServer();
+            app.UseHangfireDashboard();
+
+
             app.UseEndpoints(
                 endpoints =>
                     {
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();
+                        endpoints.MapControllers();
+                        endpoints.MapHangfireDashboard();
                     });
         }
     }

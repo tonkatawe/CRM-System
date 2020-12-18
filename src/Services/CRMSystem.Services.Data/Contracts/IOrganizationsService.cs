@@ -1,16 +1,15 @@
 ﻿namespace CRMSystem.Services.Data.Contracts
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
     using CRMSystem.Web.ViewModels.Organizations;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public interface IOrganizationsService
     {
         Task<int> CreateAsync(OrganizationCreateInputModel input, string userId);
 
-        IEnumerable<T> GetAll<T>();
-        string GetId(string userId);
+        IQueryable<T> GetAll<T>(bool isPublic);
+     string GetId(string userId);
         T GetById<T>(string userId);
 
         string GetName(string userId);

@@ -1,15 +1,10 @@
-﻿@model IEnumerable<CRMSystem.Web.ViewModels.Organizations.ListOrganizationViewModel>
-@{
-    this.ViewData["Title"] = "All companies";
-}
+﻿@model CRMSystem.Web.Infrastructure.PaginatedList<CRMSystem.Web.ViewModels.Organizations.ListOrganizationViewModel>
+@{ this.ViewData["Title"] = "All companies"; }
 
 
 
-<div class="row ">
-    <label></label>
-
-    @foreach (var company in this.Model)
-    {
+@foreach (var company in this.Model)
+{
 
 <div class="card col-lg-4 col-md-4 col-sm-4 shadow">
     <div class="card-body text-center">
@@ -30,15 +25,43 @@
                     <a href="#" onclick=showShortDescription() id="seeLess" style="display: none">See Less</a>}
     </div>
     <hr />
+
     <div>
-        <a href="#">view all products</a>
+        <a asp-controller="TemporaryCustomers" asp-action="Create" asp-route-id="@company.Id" class="btn btn-primary rounded-pill btn-block">Make business with this company</a>
     </div>
-    <div>
-        <a asp-controller="TemporaryCustomers" asp-action="Create" asp-route-id="@company.Id">Make business with this company</a>
-    </div>
+    <br />
 
 </div>}
-</div>
+
+
+
+@{ var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : ""; }
+
+
+<ul class="pagination">
+    <li>
+        <a asp-action="Index"
+           asp-route-pageNumber="@(Model.PageIndex - 1)"
+           class="btn btn-default @prevDisabled">
+            Previous
+        </a>
+    </li>
+    @for (var i = 1; i <= Model.TotalPages; i++)
+    {
+<li class="page-item  @(Model.PageIndex == i ? "active" : string.Empty)">
+    <a class="page-link rounded-pill" asp-route-pageNumber="@i">@i</a>
+</li>}
+
+    <li>
+        <a asp-action="Index"
+           asp-route-pageNumber="@(Model.PageIndex + 1)"
+           class="btn btn-default @nextDisabled">
+            Next
+        </a>
+
+    </li>
+</ul>
 
 @section Scripts
 {
@@ -58,7 +81,5 @@
             $("#seeLess").show();
 
         }
-
-
     </script>
 }
