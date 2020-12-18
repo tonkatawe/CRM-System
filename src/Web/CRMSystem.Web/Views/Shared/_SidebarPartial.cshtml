@@ -32,20 +32,20 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" asp-controller="Customers" asp-action="Index">Customers</a>
-                <a class="collapse-item" asp-controller="Organizations" asp-action="Create">Organization</a>
-                <a class="collapse-item" asp-controller="Products" asp-action="Index">Products</a>
+                <a class="collapse-item" asp-area="" asp-controller="Customers" asp-action="Index">Customers</a>
+                <a class="collapse-item" asp-area="" asp-controller="Organizations" asp-action="Create">Organization</a>
+                <a class="collapse-item" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
             </div>
         </div>
     </li>
     <li class="nav-item">
-        <a class="nav-link" asp-controller="Statistics" asp-action="Index">
+        <a class="nav-link" asp-area="" asp-controller="Statistics" asp-action="Index">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Statistic</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" asp-controller="Emails" asp-action="Send">
+        <a class="nav-link" asp-area="" asp-controller="Emails" asp-action="Send">
             <i class="fas fa-mail-bulk"></i>
             <span>Sending email</span>
         </a>

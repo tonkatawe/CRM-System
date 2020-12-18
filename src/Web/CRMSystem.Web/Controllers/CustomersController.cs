@@ -80,10 +80,7 @@ namespace CRMSystem.Web.Controllers
             }
             switch (sortOrder)
             {
-                case "organ_desc":
-                    //todo: make it work correctly
-                    //  contacts = contacts.OrderBy(x=>x.Organization.Name);
-                    break;
+            
                 case "name_desc":
                     customers = customers
                         .OrderByDescending(c => c.FirstName)

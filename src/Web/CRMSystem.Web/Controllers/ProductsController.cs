@@ -1,11 +1,11 @@
 ﻿using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
+using CRMSystem.Web.Infrastructure;
 using CRMSystem.Web.ViewModels.Products;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CRMSystem.Web.Controllers
@@ -28,18 +28,30 @@ namespace CRMSystem.Web.Controllers
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? pageNumber)
         {
             var user = await this.userManager.GetUserAsync(this.User);
 
             var userId = user.ParentId ?? user.Id;
 
-            var viewModel = this.organizationsService.GetById<IndexProductsViewModel>(userId);
+            if (user.ParentId != null)
+            {
+                var owner = await this.userManager.FindByIdAsync(user.ParentId);
 
-            return View(viewModel);
+                ViewData["Email"] = owner.Email;
+            }
+
+            var allProducts = this.productsService.GetAll<ProductViewModel>(userId);
+
+
+            var products = from c in allProducts
+                           select c;
+            var pageSize = 3;
+            return View(await PaginatedList<ProductViewModel>.CreateAsync(products, pageNumber ?? 1, pageSize));
+
         }
 
-        [Authorize(Roles = ("Owner"))]
+        [Authorize(Roles = ("Owner, Administrator"))]
         public async Task<IActionResult> Create()
         {
             return View();

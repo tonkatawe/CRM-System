@@ -1,4 +1,4 @@
-﻿@model CRMSystem.Web.ViewModels.Products.IndexProductsViewModel
+﻿@model CRMSystem.Web.Infrastructure.PaginatedList<CRMSystem.Web.ViewModels.Products.ProductViewModel>
 @if (this.TempData.ContainsKey("Message"))
 {
     <div class="alert alert-success">@this.TempData["Message"]</div>
@@ -9,18 +9,20 @@
 }
 @if (this.User.IsInRole("Owner"))
 {
-<h1>
-    <p style="text-align: center;">Your company have @Model.Products.Count() products</p>
-</h1>
+    <h1>
+        <p style="text-align: center;">Your company have @Model.Count() products</p>
+    </h1>
 
 }
 else
 {
-    <p>If you want to order some product from @Model.Name just write email to @Model.UserEmail</p>
+    <div class="d-flex justify-content-center font-weight-bold font-italic">
+        <p>If you want to order some product just write email to <a href="mailto:"type="email">@ViewData["Email"]</a></p>
+    </div>
 }
 <div class="container">
     <div class="row">
-        @foreach (var product in Model.Products)
+        @foreach (var product in Model)
         {
             <div class="col-12 col-sm-8 col-md-6 col-lg-4">
                 <partial name="_ProductPartial" model="@product" />
@@ -28,3 +30,34 @@ else
         }
     </div>
 </div>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+
+<ul class="pagination">
+
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @prevDisabled">
+        Previous
+    </a>
+    @for (var i = 1; i <= Model.TotalPages; i++)
+    {
+        <li class="page-item  @(Model.PageIndex == i ? "active" : string.Empty)">
+            <a class="page-link rounded-pill" asp-route-pageNumber="@i">@i</a>
+        </li>
+    }
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @nextDisabled">
+        Next
+    </a>
+
+</ul>
