@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using CRMSystem.Data.Common.Repositories;
+﻿using CRMSystem.Data.Common.Repositories;
 using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
+using System.Linq;
 
 namespace CRMSystem.Services.Data
 {
@@ -27,7 +24,6 @@ namespace CRMSystem.Services.Data
                 .FirstOrDefault(x => x.Email == email && x.Id != id && x.CustomerId != customerId);
 
             return result == null;
-
         }
 
         public bool IsAvailablePhone(string userId, string phone, int? id = null, int? customerId = null)

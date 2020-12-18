@@ -1,52 +1,40 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using CRMSystem.Data.Models;
+﻿using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Web.ViewModels.Products;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace CRMSystem.Web.Controllers
 {
     [Authorize]
     public class ProductsController : Controller
     {
-
-
         private readonly IProductsService productsService;
         private readonly IOrganizationsService organizationsService;
-        private readonly IWebHostEnvironment environment;
         private readonly UserManager<ApplicationUser> userManager;
 
 
         public ProductsController(
             IProductsService productsService,
             IOrganizationsService organizationsService,
-            IWebHostEnvironment environment,
-            UserManager<ApplicationUser> userManager)
+        UserManager<ApplicationUser> userManager)
         {
             this.productsService = productsService;
             this.organizationsService = organizationsService;
-            this.environment = environment;
             this.userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
         {
-
-
             var user = await this.userManager.GetUserAsync(this.User);
-
-
 
             var userId = user.ParentId ?? user.Id;
 
             var viewModel = this.organizationsService.GetById<IndexProductsViewModel>(userId);
-
-           // var viewModel = this.productsService.GetAll<ProductViewModel>(userId).ToList();
 
             return View(viewModel);
         }
@@ -59,29 +47,20 @@ namespace CRMSystem.Web.Controllers
 
 
         [HttpPost]
-        [Authorize(Roles = ("Owner"))]
+        [Authorize(Roles = ("Owner, Administrator"))]
         public async Task<IActionResult> Create(ProductCreateInputModel input)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-
-            try
-            {
-                await this.productsService.CreateAsync(input, user.Id, $"{this.environment.WebRootPath}/images");
-            }
-            catch (Exception ex)
-            {
-                this.ModelState.AddModelError("", ex.Message);
-                return this.View(input);
-            }
 
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
 
+            await this.productsService.CreateAsync(input, user.Id);
+
             this.TempData["Message"] = "Product added successfully";
             return this.RedirectToAction("Index");
-
         }
 
         [Authorize(Roles = ("Owner"))]

@@ -1,30 +1,35 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using CRMSystem.Data.Common.Repositories;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Data.Contracts;
-using CRMSystem.Services.Mapping;
-using CRMSystem.Web.ViewModels.Products;
-
-namespace CRMSystem.Services.Data
+﻿namespace CRMSystem.Services.Data
 {
+    using CRMSystem.Data.Common.Repositories;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Contracts;
+    using CRMSystem.Services.Data.Contracts;
+    using CRMSystem.Services.Mapping;
+    using CRMSystem.Web.ViewModels.Products;
+    using System.Linq;
+    using System.Threading.Tasks;
+    
     public class ProductsService : IProductsService
     {
-        private readonly string[] allowedExtensions = new[] { "jpg", "jpeg", "png", "gif" };
         private readonly IDeletableEntityRepository<Product> productsRepository;
         private readonly IOrganizationsService organizationsService;
+        private readonly ICloudinaryService cloudinaryService;
 
-        public ProductsService(IDeletableEntityRepository<Product> productsRepository, IOrganizationsService organizationsService)
+        public ProductsService(
+            IDeletableEntityRepository<Product> productsRepository,
+            IOrganizationsService organizationsService,
+            ICloudinaryService cloudinaryService)
         {
             this.productsRepository = productsRepository;
             this.organizationsService = organizationsService;
+            this.cloudinaryService = cloudinaryService;
         }
 
-        public async Task<int> CreateAsync(ProductCreateInputModel input, string userId, string imagePath)
+        public async Task<int> CreateAsync(ProductCreateInputModel input, string userId)
         {
             var organizationId = this.organizationsService.GetId(userId);
+            var productPictureUrl = await this.cloudinaryService.UploadAsync(input.ProductPicture);
+
 
             var product = new Product
             {
@@ -33,31 +38,8 @@ namespace CRMSystem.Services.Data
                 Price = input.Price,
                 Description = input.Description,
                 Quantity = input.Quantity,
+                ProductPictureUrl = productPictureUrl,
             };
-
-
-            if (input.Images != null)
-            {
-                Directory.CreateDirectory($"{imagePath}/products");
-                foreach (var image in input.Images)
-                {
-                    var extension = Path.GetExtension(image.FileName).TrimStart('.');
-                    if (!this.allowedExtensions.Any(x => extension.EndsWith(x)))
-                    {
-                        throw new Exception($"Invalid image extension {extension}");
-                    }
-
-                    var dbImage = new Image
-                    {
-                        Extension = extension,
-                    };
-                    product.Images.Add(dbImage);
-
-                    var physicalPath = $"{imagePath}/products/{dbImage.Id}.{extension}";
-                    await using Stream fileStream = new FileStream(physicalPath, FileMode.Create);
-                    await image.CopyToAsync(fileStream);
-                }
-            }
 
             await this.productsRepository.AddAsync(product);
 

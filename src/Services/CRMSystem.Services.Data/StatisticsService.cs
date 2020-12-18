@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using CRMSystem.Data.Common.Repositories;
@@ -26,9 +24,6 @@ namespace CRMSystem.Services.Data
             this.customerRepository = customerRepository;
             this.productsRepository = productsRepository;
         }
-
-
-
         public async Task<decimal> GetTotalBenefitsAsync(string id, DateTime startDate, DateTime endDate)
         {
             return await this.ordersRepository

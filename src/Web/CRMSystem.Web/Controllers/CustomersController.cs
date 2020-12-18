@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CRMSystem.Web.Infrastructure;
 using CRMSystem.Web.ViewModels.Customers;
 using CRMSystem.Web.ViewModels.Emails;
@@ -49,16 +50,15 @@ namespace CRMSystem.Web.Controllers
             {
                 return RedirectToPage("~/Account/Login");
             }
+
             if (user.OrganizationId == null)
             {
                 return this.RedirectToAction("Create", "Organizations");
             }
+
             var allUserCustomers = this.customersService.GetAll<CustomerViewModel>(user.Id, false);
             ViewData["CurrentSort"] = sortOrder;
             ViewData["SortByName"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["SortByOrganization"] = String.IsNullOrEmpty(sortOrder) ? "organ_desc" : "";
-            ViewData["SortByIndustry"] = String.IsNullOrEmpty(sortOrder) ? "industry_desc" : "";
-            ViewData["SortByDate"] = sortOrder == "Date" ? "date_desc" : "Date";
 
             if (searchString != null)
             {
@@ -107,8 +107,6 @@ namespace CRMSystem.Web.Controllers
             return View(await PaginatedList<CustomerViewModel>.CreateAsync(customers, pageNumber ?? 1, pageSize));
         }
 
-
-
         public async Task<IActionResult> Create()
         {
 
@@ -147,18 +145,15 @@ namespace CRMSystem.Web.Controllers
                 }
             }
 
-
             if (!this.ModelState.IsValid)
             {
                 return this.View("_CreateCustomer", input);
             }
 
-
             await this.customersService.CreateAsync(input, user.Id, user.OrganizationId, false);
 
             return this.RedirectToAction("Index");
         }
-
 
         public async Task<IActionResult> Edit(int id)
         {
@@ -221,7 +216,6 @@ namespace CRMSystem.Web.Controllers
             return this.RedirectToAction("Details", new { id = input.Id });
         }
 
-
         public async Task<IActionResult> Details(int id)
         {
             //todo check for security
@@ -238,8 +232,8 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            
             var customerUserId = await this.customersService.CustomerUserIdAsync(id);
+
             if (user.Id != customerUserId)
             {
                 return NotFound();
@@ -247,12 +241,7 @@ namespace CRMSystem.Web.Controllers
 
             await this.customersService.DeleteAsync(id);
 
-
             return this.RedirectToAction("Index");
         }
-
-
-
-
     }
 }

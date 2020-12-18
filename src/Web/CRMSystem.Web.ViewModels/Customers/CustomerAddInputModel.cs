@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using CRMSystem.Data.Models;
-using CRMSystem.Data.Models.Enums;
-using CRMSystem.Services.Mapping;
+﻿using CRMSystem.Data.Models;
 using CRMSystem.Web.ViewModels.Addresses;
 using CRMSystem.Web.ViewModels.Emails;
 using CRMSystem.Web.ViewModels.Phones;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CRMSystem.Web.ViewModels.Customers
 {
-    public class CustomerAddInputModel 
+    public class CustomerAddInputModel
     {
         public CustomerAddInputModel()
         {

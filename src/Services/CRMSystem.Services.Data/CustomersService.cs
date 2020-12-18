@@ -1,27 +1,15 @@
-﻿using System;
-using System.Collections;
-using System.Data;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
-using AutoMapper.Internal;
-using CRMSystem.Data.Models.Enums;
-using CRMSystem.Web.ViewModels.Customers;
-using CRMSystem.Web.ViewModels.Emails;
-using CRMSystem.Web.ViewModels.Phones;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-
-namespace CRMSystem.Services.Data
+﻿namespace CRMSystem.Services.Data
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-
     using CRMSystem.Data.Common.Repositories;
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Data.Contracts;
     using CRMSystem.Services.Mapping;
-    using CRMSystem.Web.ViewModels.Contacts;
+    using CRMSystem.Web.ViewModels.Customers;
+    using CRMSystem.Web.ViewModels.Emails;
+    using CRMSystem.Web.ViewModels.Phones;
+    using Microsoft.EntityFrameworkCore;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public class CustomersService : ICustomersService
     {
@@ -92,9 +80,9 @@ namespace CRMSystem.Services.Data
             {
                 this.customersRepository.Delete(customer);
             }
-            
+
             return await this.customersRepository.SaveChangesAsync();
-            
+
         }
 
         public async Task<int> CreateAsync(CustomerAddInputModel input, string userId, string organizationId, bool isTemporary)

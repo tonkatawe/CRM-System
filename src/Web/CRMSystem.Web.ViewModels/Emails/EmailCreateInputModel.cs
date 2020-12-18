@@ -1,15 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using CRMSystem.Data.Common.Repositories;
-using Microsoft.AspNetCore.Mvc;
-
-namespace CRMSystem.Web.ViewModels.Emails
+﻿namespace CRMSystem.Web.ViewModels.Emails
 {
-    using System.ComponentModel.DataAnnotations;
-
     using CRMSystem.Data.Models;
     using CRMSystem.Data.Models.Enums;
     using CRMSystem.Services.Mapping;
+    using System.ComponentModel.DataAnnotations;
 
 
     public class EmailCreateInputModel : IMapFrom<EmailAddress>

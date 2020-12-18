@@ -1,26 +1,24 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using CRMSystem.Data.Models;
+﻿using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Web.ViewModels.Customers;
 using CRMSystem.Web.ViewModels.Products;
 using CRMSystem.Web.ViewModels.Statistics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace CRMSystem.Web.Controllers
 {
     [Authorize(Roles = "Owner, Administrator")]
     public class StatisticsController : Controller
     {
-
         private readonly IStatisticsService statisticsService;
         private readonly IOrganizationsService organizationsService;
         private readonly UserManager<ApplicationUser> userManager;
-
-
+        
         public StatisticsController(
             IStatisticsService statisticsService,
             IOrganizationsService organizationsService,
@@ -46,7 +44,6 @@ namespace CRMSystem.Web.Controllers
                     return NotFound();
                 }
             
-           
             return this.RedirectToAction("RangeStatistic", new { startDate = input.StartDate, endDate = input.EndDate });
         }
 

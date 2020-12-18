@@ -514,6 +514,9 @@ namespace CRMSystem.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("ProductPictureUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
@@ -688,7 +691,7 @@ namespace CRMSystem.Data.Migrations
             modelBuilder.Entity("CRMSystem.Data.Models.Image", b =>
                 {
                     b.HasOne("CRMSystem.Data.Models.Product", "Product")
-                        .WithMany("Images")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -837,8 +840,6 @@ namespace CRMSystem.Data.Migrations
             modelBuilder.Entity("CRMSystem.Data.Models.Product", b =>
                 {
                     b.Navigation("Customers");
-
-                    b.Navigation("Images");
 
                     b.Navigation("Orders");
                 });

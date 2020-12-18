@@ -1,14 +1,11 @@
-﻿
+﻿using CRMSystem.Data.Models;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Mapping;
 using Microsoft.AspNetCore.Http;
 
 namespace CRMSystem.Web.ViewModels.Products
 {
-    public class ProductCreateInputModel : IMapFrom<Product>
+    public class ProductCreateInputModel
     {
         [Required]
         [MaxLength(50)]
@@ -31,7 +28,6 @@ namespace CRMSystem.Web.ViewModels.Products
         public string OrganizationId { get; set; }
 
         public virtual Organization Organization { get; set; }
-
-        public IEnumerable<IFormFile> Images { get; set; }
+        public IFormFile ProductPicture { get; set; }
     }
 }

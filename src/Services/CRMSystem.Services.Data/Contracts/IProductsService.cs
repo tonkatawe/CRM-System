@@ -1,14 +1,12 @@
-﻿
-
-using System.Linq;
-using System.Threading.Tasks;
-using CRMSystem.Web.ViewModels.Products;
-
-namespace CRMSystem.Services.Data.Contracts
+﻿namespace CRMSystem.Services.Data.Contracts
 {
+    using CRMSystem.Web.ViewModels.Products;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public interface IProductsService
     {
-        Task<int> CreateAsync(ProductCreateInputModel input, string userId, string imagePath);
+        Task<int> CreateAsync(ProductCreateInputModel input, string userId);
 
         Task<int> UpdateAsync(EditProductInputModel input);
 

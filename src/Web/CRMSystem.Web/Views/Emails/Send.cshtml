@@ -13,15 +13,15 @@
     </div>
     <div class="form-group">
         <label asp-for="Subject"></label>
-        <input asp-for="Subject" asp-items="emails" class="form-control"/>
+        <input asp-for="Subject" asp-items="emails" class="form-control" />
         <span asp-validation-for="Subject" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Content">Message</label>
-     
-            <textarea class="form-control" rows="4" asp-for="Content"></textarea>
-            <span asp-validation-for="Content" class="text-danger"></span>
-      
+
+        <textarea class="form-control" rows="4" asp-for="Content"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+
     </div>
 
     <div class="form-group">
@@ -31,3 +31,7 @@
     </div>
 
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

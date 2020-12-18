@@ -13,7 +13,7 @@
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
-       <div class="row">
+                <div class="row">
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
@@ -117,7 +117,7 @@
             }
             else
             {
-                <input type="hidden" name="organizationId" value="@TempData["OrganizationId"]"/>
+                <input type="hidden" name="organizationId" value="@TempData["OrganizationId"]" />
 
                 <button type="submit" class="btn btn-primary btn-user" asp-controller="TemporaryCustomers" asp-action="Create" method="post">Send your data</button>
             }
@@ -127,11 +127,11 @@
 
 
 @section Scripts {
-    
+
     <script src="~/js/CreateEditCustomer.js"></script>
+    <partial name="_ValidationScriptsPartial" />
 
 }
-
 
 
 

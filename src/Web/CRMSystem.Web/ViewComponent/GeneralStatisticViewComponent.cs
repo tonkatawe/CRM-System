@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using CRMSystem.Services.Data.Contracts;
-using CRMSystem.Web.ViewModels.Accounts;
+﻿using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Web.ViewModels.Customers;
 using CRMSystem.Web.ViewModels.Products;
 using CRMSystem.Web.ViewModels.Statistics;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace CRMSystem.Web.ViewComponent
 {
