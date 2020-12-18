@@ -1,35 +1,39 @@
-﻿@model CRMSystem.Web.ViewModels.Emails.SendEmailViewModel
+﻿@using System.Linq
+@model CRMSystem.Web.ViewModels.Emails.SendEmailViewModel
 
 @{
     var emails = Model.Emails.Select(x => new SelectListItem(x.Email, x.Email));
 }
 
-<form method="post" asp-action="Send">
+<form method="post" asp-action="Send" class="user">
 
     <div class="form-group">
-        <label asp-for="Email"></label>
-        <select asp-for="Email" asp-items="emails" class="form-control"></select>
-        <span asp-validation-for="Email" class="text-danger"></span>
+        @if (emails.Count() > 1)
+        {
+            <select asp-for="Email" asp-items="emails" class="selectBox"><option class="text-center" disabled selected>Select email</option></select>
+            <span asp-validation-for="Email" class="text-danger"></span>
+
+        }
+        else
+        {
+            <input value="@emails.First().Value" class="form-control form-control-user" disabled />
+            <input type="hidden" asp-for="Email" value="@emails.First().Value"/>
+        }
     </div>
     <div class="form-group">
-        <label asp-for="Subject"></label>
-        <input asp-for="Subject" asp-items="emails" class="form-control" />
+        <input asp-for="Subject" asp-items="emails" class="form-control form-control-user" placeholder="Subject" />
         <span asp-validation-for="Subject" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Content">Message</label>
 
-        <textarea class="form-control" rows="4" asp-for="Content"></textarea>
+        <textarea class="form-control form-control-user" rows="4" asp-for="Content"></textarea>
         <span asp-validation-for="Content" class="text-danger"></span>
 
     </div>
+    <button type="submit" class="btn btn-primary btn-user col-12">Send email</button>
 
-    <div class="form-group">
-        <div class="col-sm-10">
-            <input id="submit" name="submit" type="submit" value="Send" class="btn btn-primary">
-        </div>
-    </div>
-
+   
 </form>
 
 @section Scripts {

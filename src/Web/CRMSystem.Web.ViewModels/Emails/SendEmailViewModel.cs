@@ -1,8 +1,5 @@
-﻿
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using CRMSystem.Web.ViewModels.Customers;
 
 namespace CRMSystem.Web.ViewModels.Emails
 {

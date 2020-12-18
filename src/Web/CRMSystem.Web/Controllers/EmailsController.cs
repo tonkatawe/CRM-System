@@ -1,13 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using CRMSystem.Common;
+﻿using CRMSystem.Common;
+using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Services.Messaging;
 using CRMSystem.Web.ViewModels.Emails;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace CRMSystem.Web.Controllers
 {
@@ -16,11 +18,16 @@ namespace CRMSystem.Web.Controllers
     {
         private readonly IEmailsService emailsService;
         private readonly IEmailSender emailSender;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public EmailsController(IEmailsService emailsService, IEmailSender emailSender)
+        public EmailsController(
+            IEmailsService emailsService,
+            IEmailSender emailSender,
+            UserManager<ApplicationUser> userManager)
         {
             this.emailsService = emailsService;
             this.emailSender = emailSender;
+            this.userManager = userManager;
         }
 
 
@@ -44,10 +51,11 @@ namespace CRMSystem.Web.Controllers
 
         }
 
-        public async Task<IActionResult> Send(int id)
+        public IActionResult Send(int id)
         {
             var emails = this.emailsService.GetAll<EmailDropDownViewModel>(id).ToList();
 
+          
             var viewModel = new SendEmailViewModel
             {
                 Id = id,
@@ -61,29 +69,31 @@ namespace CRMSystem.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Send(SendEmailViewModel input)
         {
-            //todo make save all sent messages
+
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
-            //todo make get user or organization name
-            var from = this.User.FindFirst(ClaimTypes.Email).Value;
+
+            var user = await this.userManager.GetUserAsync(this.User);
+
             await this.emailSender.SendEmailAsync(
-                GlobalConstants.SystemEmail,
-                "User - Name",
-                GlobalConstants.SystemEmail,
+                user.Email,
+                user.UserName,
+                input.Email,
                 input.Subject,
                 input.Content);
 
-          //todo make success view with temp data :) cool redirection :)
 
-          return this.RedirectToAction("Index", "Statistics");
+            this.TempData["Message"] = "Your email was sent";
+
+            return this.RedirectToAction("Index", "Statistics");
         }
 
-        public async Task<IActionResult> Update(EmailCreateInputModel input)
+        public  IActionResult CustomSend()
         {
-            throw new NotImplementedException();
-
+            return this.View();
         }
+
     }
 }

@@ -1,5 +1,8 @@
 ﻿@model CRMSystem.Web.ViewModels.Statistics.IndexViewModel
-
+@if (this.TempData.ContainsKey("Message"))
+{
+    <div class="alert alert-success">@this.TempData["Message"]</div>
+}
 <form asp-action="Index" method="post" class="user" asp-route-input="">
     <div class="text-center">
         <h1 class="h4 text-gray-900 mb-4 font-italic">General statistic for period</h1>

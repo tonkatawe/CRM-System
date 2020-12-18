@@ -52,7 +52,7 @@ namespace CRMSystem.Web.Controllers
         }
 
         [Authorize(Roles = ("Owner, Administrator"))]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }
