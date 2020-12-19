@@ -17,7 +17,7 @@ It is for every guest at app, every geuest can:
 - Find appropriate company between all public owner's companies
 - Request them to be their partner as a customer
 ##
-#
+
 
 #Built With
 - ASP.NET 5
