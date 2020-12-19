@@ -12,7 +12,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Threading.Tasks;
-    
+
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
@@ -52,8 +52,6 @@
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
 
-       
-
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -69,7 +67,7 @@
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
+        
             ReturnUrl = returnUrl;
         }
 

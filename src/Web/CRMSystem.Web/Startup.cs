@@ -5,6 +5,7 @@ using CRMSystem.Services.Contracts;
 using CRMSystem.Services.Data.Contracts;
 using Hangfire;
 using Hangfire.SqlServer;
+using Microsoft.AspNetCore.Identity;
 
 namespace CRMSystem.Web
 {
@@ -63,7 +64,28 @@ namespace CRMSystem.Web
                             DisableGlobalLocks = true,
                         });
             });
-            
+
+            //Add Facebook authentication
+            services.AddAuthentication()
+                .AddFacebook(facebookOptions =>
+                {
+                    facebookOptions.AppId = this.configuration["Facebook:AppId"];
+                    facebookOptions.AppSecret = this.configuration["Facebook:AppSecret"];
+                    facebookOptions.Scope.Add("public_profile");
+                    facebookOptions.Fields.Add("picture");
+
+                });
+
+            //add Google authentication
+            services.AddAuthentication()
+                .AddGoogle(googleOptions =>
+                {
+
+                    googleOptions.ClientId = this.configuration["Google:ClientId"];
+                    googleOptions.ClientSecret = this.configuration["Google:ClientSecret"];
+                    googleOptions.SignInScheme = IdentityConstants.ExternalScheme;
+                });
+
 
             services.Configure<CookiePolicyOptions>(
                 options =>
