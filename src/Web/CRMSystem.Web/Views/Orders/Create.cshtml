@@ -72,47 +72,5 @@
 
         });
     </script>
-
-    <script type="text/javascript">
-        $(function () {
-            $(document).ready(function () {
-                $("#ProductId").change(function () {
-                    if ($(this).val() != "Ghana") { // It doesn't work over here.
-                        $("#showStateLga").show();
-                    } else {
-                        $("#showStateLga").hide();
-                    }
-                });
-            });
-        });
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            $("select").change(function () {
-                $(this).find("option:selected").each(function () {
-                    var optionValue = $(this).attr("value");
-                    if (optionValue) {
-                        $(".box").not("." + optionValue).hide();
-                        $("." + optionValue).show();
-                    } else {
-                        $(".box").hide();
-                    }
-                });
-            }).change();
-        });
-        function ProductInfo() {
-            $("#test").show();
-            $([document.documentElement, document.body]).animate({
-                scrollTop: $("#AddPhoneForm").offset().top
-            }, 1500);
-
-
-
-            function cancel() {
-                $("#DetailsContent").hide();
-                $("#FirstName").show();
-
-            }
-    </script>
+    
 }
