@@ -28,13 +28,26 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Best customer</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.BestCustomer.FullName</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            @if (Model.BestCustomer != null)
+                                            {
+                                                @Model.BestCustomer.FullName
+                                            }
+                                            else
+                                            {
+                                                <p class="font-italic">Empty</p>
+                                            }
+
+                                        </div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
-                                <small><a asp-controller="Emails" asp-action="Send" asp-route-id="@Model.BestCustomer.Id">Send thankful email</a></small>
+                                @if (Model.BestCustomer != null)
+                                {
+                                    <small><a asp-controller="Emails" asp-action="Send" asp-route-id="@Model.BestCustomer.Id">Send thankful email</a></small>
+                                }
                             </div>
                         </div>
                         <div class="card shadow h-auto py-2 col-lg-4 mb-4">
@@ -44,7 +57,18 @@
                                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Most ordered customer</div>
                                         <div class="row no-gutters align-items-center">
                                             <div class="col-auto">
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.CustomerWithMostOrders.FullName</div>
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                    @if (Model.CustomerWithMostOrders != null)
+                                                    {
+                                                        @Model.CustomerWithMostOrders.FullName
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="font-italic">Empty</p>
+                                                    }
+
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -52,7 +76,11 @@
                                         <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
+                                @if (Model.CustomerWithMostOrders != null)
+                                {
                                     <small><a asp-controller="Emails" asp-action="Send" asp-route-id="@Model.CustomerWithMostOrders.Id">Send thankful email</a></small>
+                                }
+
                             </div>
                         </div>
                     </div>
@@ -64,7 +92,17 @@
                                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Most ordered product</div>
                                         <div class="row no-gutters align-items-center">
                                             <div class="col-auto">
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.MostOrderedProduct.Name</div>
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                    @if (Model.MostOrderedProduct != null)
+                                                    {
+                                                        @Model.MostOrderedProduct.Name
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="font-italic">Empty</p>
+                                                    }
+
+                                                </div>
                                             </div>
 
                                         </div>
@@ -82,7 +120,18 @@
                                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Most benefit product</div>
                                         <div class="row no-gutters align-items-center">
                                             <div class="col-auto">
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@Model.MostBenefitProduct.Name</div>
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                                    @if (Model.MostBenefitProduct != null)
+                                                    {
+                                                        @Model.MostBenefitProduct.Name
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="font-italic">Empty</p>
+                                                    }
+
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
