@@ -2,7 +2,7 @@
 {
     using CRMSystem.Web.Infrastructure;
     using System.ComponentModel.DataAnnotations;
-    
+
     public class ContactFormViewModel
     {
         [Required]
@@ -18,8 +18,5 @@
         [Required]
         [StringLength(15000, MinimumLength = 50)]
         public string Content { get; set; }
-
-        [GoogleReCaptchaValidation]
-        public string RecaptchaValue { get; set; }
     }
 }
