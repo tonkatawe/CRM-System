@@ -27,7 +27,7 @@
         {
             return await this.ordersRepository
                     .All()
-                    .Where(x => x.OrganizationId == id && x.CreatedOn >= startDate && x.CreatedOn <= endDate)
+                    .Where(x => x.OrganizationId == id && x.CreatedOn.Date >= startDate.Date && x.CreatedOn.Date <= endDate.Date)
                     .SumAsync(x => x.Product.Price * x.Quantity);
         }
 

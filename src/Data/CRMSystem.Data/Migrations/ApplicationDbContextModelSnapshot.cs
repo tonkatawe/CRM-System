@@ -333,30 +333,6 @@ namespace CRMSystem.Data.Migrations
                     b.ToTable("EmailAddresses");
                 });
 
-            modelBuilder.Entity("CRMSystem.Data.Models.Image", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Extension")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Images");
-                });
-
             modelBuilder.Entity("CRMSystem.Data.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -686,17 +662,6 @@ namespace CRMSystem.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("CRMSystem.Data.Models.Image", b =>
-                {
-                    b.HasOne("CRMSystem.Data.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("CRMSystem.Data.Models.Order", b =>

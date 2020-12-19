@@ -38,7 +38,7 @@
             this.signInManager = signInManager;
             this.emailSender = emailSender;
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> Create(int id, string organizationId)
         {
@@ -90,9 +90,8 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> ConfirmEmail(string token, string email)
+        public async Task<IActionResult> ConfirmEmail(string key, string email)
         {
-            //todo make tempdata to confirm email
             var user = await this.userManager.FindByEmailAsync(email);
 
             if (user == null)
@@ -100,7 +99,7 @@
                 return View("Error");
             }
 
-            var result = await this.userManager.ConfirmEmailAsync(user, token);
+            var result = await this.userManager.ConfirmEmailAsync(user, key);
 
             if (result.Succeeded)
             {
@@ -115,10 +114,10 @@
             }
 
         }
-        
+
         [HttpPost]
         [AllowAnonymous]
-       public async Task<IActionResult> Login(string userNameOrEmail, string password)
+        public async Task<IActionResult> Login(string userNameOrEmail, string password)
         {
             if (this.User.Identity.IsAuthenticated)
             {
