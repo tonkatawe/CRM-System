@@ -1,14 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
-using Microsoft.AspNetCore.Http;
-
-namespace CRMSystem.Services
+﻿namespace CRMSystem.Services
 {
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
     using CRMSystem.Services.Contracts;
+    using Microsoft.AspNetCore.Http;
+    using System.IO;
+    using System.Linq;
+    using System.Threading.Tasks;
+    
     public class CloudinaryService : ICloudinaryService
     {
         private readonly Cloudinary cloudinary;
@@ -36,7 +35,7 @@ namespace CRMSystem.Services
             {
                 File = new FileDescription(file.FileName, uploadStream),
             };
-            
+
             var result = await this.cloudinary.UploadAsync(uploadParams);
 
             imageUrl = result.Url.AbsoluteUri;

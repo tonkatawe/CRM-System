@@ -1,17 +1,17 @@
-﻿using CRMSystem.Data.Models;
-using CRMSystem.Services.Data.Contracts;
-using CRMSystem.Web.ViewModels.Customers;
-using CRMSystem.Web.ViewModels.Products;
-using CRMSystem.Web.ViewModels.Statistics;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
-
-namespace CRMSystem.Web.Controllers
+﻿namespace CRMSystem.Web.Controllers
 {
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Data.Contracts;
+    using CRMSystem.Web.ViewModels.Customers;
+    using CRMSystem.Web.ViewModels.Products;
+    using CRMSystem.Web.ViewModels.Statistics;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+
     [Authorize(Roles = "Owner, Administrator")]
     public class StatisticsController : Controller
     {

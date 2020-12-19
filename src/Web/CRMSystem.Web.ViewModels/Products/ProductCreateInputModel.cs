@@ -1,10 +1,9 @@
-﻿using CRMSystem.Data.Models;
-using System;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
-
-namespace CRMSystem.Web.ViewModels.Products
+﻿namespace CRMSystem.Web.ViewModels.Products
 {
+    using CRMSystem.Data.Models;
+    using Microsoft.AspNetCore.Http;
+    using System;
+    using System.ComponentModel.DataAnnotations;
     public class ProductCreateInputModel
     {
         [Required]
@@ -18,16 +17,17 @@ namespace CRMSystem.Web.ViewModels.Products
         public string Description { get; set; }
 
         [Required]
-        [Range(typeof(decimal), "0", "79228162514264337593543950335")]
+        [Range(typeof(decimal), "0", "79228162514264337593543950335", ErrorMessage = "The price is out of range")]
         public decimal Price { get; set; }
 
         [Required]
-        [Range(1, Int32.MaxValue)]
+        [Range(1, Int32.MaxValue, ErrorMessage = "The quantity is out of range")]
         public int Quantity { get; set; }
 
         public string OrganizationId { get; set; }
 
         public virtual Organization Organization { get; set; }
+        
         public IFormFile ProductPicture { get; set; }
     }
 }

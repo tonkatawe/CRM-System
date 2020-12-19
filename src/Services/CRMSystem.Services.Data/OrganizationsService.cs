@@ -1,19 +1,13 @@
-﻿using System;
-using System.Runtime.Serialization;
-using CRMSystem.Data.Models.Enums;
-using Microsoft.EntityFrameworkCore;
-
-namespace CRMSystem.Services.Data
+﻿namespace CRMSystem.Services.Data
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-
     using CRMSystem.Data.Common.Repositories;
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Data.Contracts;
     using CRMSystem.Services.Mapping;
     using CRMSystem.Web.ViewModels.Organizations;
+    using Microsoft.EntityFrameworkCore;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public class OrganizationsService : IOrganizationsService
     {
@@ -51,7 +45,6 @@ namespace CRMSystem.Services.Data
             this.userRepository.Update(user);
 
             return await this.userRepository.SaveChangesAsync();
-
         }
 
         public IQueryable<T> GetAll<T>(bool isPublic)

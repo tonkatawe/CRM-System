@@ -1,20 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using CRMSystem.Data.Common.Repositories;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Data.Contracts;
-using CRMSystem.Web.ViewModels.Sales;
-using System.Threading.Tasks;
-using CRMSystem.Services.Mapping;
-using CRMSystem.Web.ViewModels.Orders;
-using CRMSystem.Web.ViewModels.Products;
-using Microsoft.EntityFrameworkCore;
-
-namespace CRMSystem.Services.Data
+﻿namespace CRMSystem.Services.Data
 {
+    using CRMSystem.Data.Common.Repositories;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Data.Contracts;
+    using CRMSystem.Services.Mapping;
+    using CRMSystem.Web.ViewModels.Orders;
+    using Microsoft.EntityFrameworkCore;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class OrdersService : IOrdersService
     {
         private readonly IDeletableEntityRepository<Product> productsRepository;

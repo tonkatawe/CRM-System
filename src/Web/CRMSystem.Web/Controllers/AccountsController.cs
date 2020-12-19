@@ -1,28 +1,25 @@
-﻿using CRMSystem.Common;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Data.Contracts;
-using CRMSystem.Services.Messaging;
-using CRMSystem.Web.ViewModels.Accounts;
-using CRMSystem.Web.ViewModels.Customers;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
-
-namespace CRMSystem.Web.Controllers
+﻿namespace CRMSystem.Web.Controllers
 {
-    [Authorize(Roles = "Admin, Owner")]
+    using CRMSystem.Common;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Data.Contracts;
+    using CRMSystem.Services.Messaging;
+    using CRMSystem.Web.ViewModels.Accounts;
+    using CRMSystem.Web.ViewModels.Customers;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    [Authorize(Roles = "Administrator, Owner")]
     public class AccountsController : Controller
     {
         private readonly ICustomersService customersService;
         private readonly IAccountsService accountsService;
-
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IEmailSender emailSender;
@@ -37,28 +34,11 @@ namespace CRMSystem.Web.Controllers
         {
             this.customersService = customersService;
             this.accountsService = accountsService;
-
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.emailSender = emailSender;
         }
-
-        public async Task<IActionResult> Index(string organizationId, int id)
-        {
-            var user = await this.userManager.GetUserAsync(this.User);
-
-            if (user.OrganizationId != organizationId)
-            {
-                return NotFound();
-            }
-
-            var test = this.customersService.GetById<GetDetailsViewModel>(id);
-            var viewModel = this.customersService.GetById<CreateAccountInputModel>(id);
-            viewModel.Email = test.Emails.FirstOrDefault()?.Email;
-
-            return View(viewModel);
-        }
-
+        
         [HttpPost]
         public async Task<IActionResult> Create(int id, string organizationId)
         {
@@ -77,7 +57,6 @@ namespace CRMSystem.Web.Controllers
 
             if (customer.HasAccount)
             {
-                //todo : make error page
                 return NotFound();
             }
 
@@ -136,10 +115,10 @@ namespace CRMSystem.Web.Controllers
             }
 
         }
+        
         [HttpPost]
         [AllowAnonymous]
-        [IgnoreAntiforgeryToken]
-        public async Task<IActionResult> Login(string userNameOrEmail, string password)
+       public async Task<IActionResult> Login(string userNameOrEmail, string password)
         {
             if (this.User.Identity.IsAuthenticated)
             {
@@ -163,6 +142,6 @@ namespace CRMSystem.Web.Controllers
 
             return this.RedirectToAction("Index", "Home", TempData["Error"]);
         }
-        
+
     }
 }

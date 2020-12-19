@@ -1,10 +1,7 @@
 ﻿namespace CRMSystem.Data.Models
 {
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-
     using CRMSystem.Data.Common.Models;
+    using System.ComponentModel.DataAnnotations;
 
     public class Order : BaseDeletableModel<int>
     {

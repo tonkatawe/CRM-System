@@ -1,25 +1,21 @@
 ﻿namespace Sandbox
 {
-    using System;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Threading.Tasks;
-
+    using CommandLine;
     using CRMSystem.Data;
     using CRMSystem.Data.Common;
     using CRMSystem.Data.Common.Repositories;
     using CRMSystem.Data.Models;
     using CRMSystem.Data.Repositories;
     using CRMSystem.Data.Seeding;
-    using CRMSystem.Services.Data;
     using CRMSystem.Services.Messaging;
-
-    using CommandLine;
-
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Threading.Tasks;
 
     public static class Program
     {

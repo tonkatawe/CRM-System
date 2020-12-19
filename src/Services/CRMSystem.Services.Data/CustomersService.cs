@@ -38,7 +38,6 @@
         {
             var query = this.customersRepository.All()
                 .Where(x => x.UserId == userId && x.IsTemporary == isTemporary)
-                //.OrderByDescending(x => x.CreatedOn)
                 .To<T>()
                 .AsQueryable();
 
@@ -126,12 +125,8 @@
 
         public async Task<int> UpdateAsync(EditCustomerInputModel input)
         {
-
-            //todo try use reflection about properties 
             var customer = await customersRepository.GetByIdWithDeletedAsync(input.Id);
-
-
-            //todo check is it necessary
+            
             var customerEmails = this.emailsService.GetAll<EmailCreateInputModel>(input.Id);
             var customerPhones = this.phonesServices.GetAll<PhoneCreateInputModel>(input.Id);
 

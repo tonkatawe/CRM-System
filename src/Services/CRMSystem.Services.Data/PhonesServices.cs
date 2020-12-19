@@ -1,16 +1,16 @@
-﻿using CRMSystem.Data.Common.Repositories;
-using CRMSystem.Data.Models;
-using CRMSystem.Data.Models.Enums;
-using CRMSystem.Services.Data.Contracts;
-using CRMSystem.Services.Mapping;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CRMSystem.Web.ViewModels.Phones;
-using Microsoft.EntityFrameworkCore;
-
-namespace CRMSystem.Services.Data
+﻿namespace CRMSystem.Services.Data
 {
+    using CRMSystem.Data.Common.Repositories;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Data.Models.Enums;
+    using CRMSystem.Services.Data.Contracts;
+    using CRMSystem.Services.Mapping;
+    using CRMSystem.Web.ViewModels.Phones;
+    using Microsoft.EntityFrameworkCore;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     public class PhonesServices : IPhonesServices
     {
         private readonly IRepository<PhoneNumber> phonesRepository;
@@ -46,9 +46,7 @@ namespace CRMSystem.Services.Data
         public async Task<int> UpdateAsync(PhoneCreateInputModel input)
         {
             var phone = this.phonesRepository.All().FirstOrDefault(x => x.Id == input.Id);
-
-            //  var phoneOriginal = await this.phonesRepository.GetByIdWithDeletedAsync(input.Id);
-
+            
             phone.Phone = input.Phone;
             phone.PhoneType = input.PhoneType;
             this.phonesRepository.Update(phone);

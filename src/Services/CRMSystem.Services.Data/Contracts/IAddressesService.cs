@@ -1,9 +1,7 @@
-﻿using CRMSystem.Data.Models;
-using CRMSystem.Web.ViewModels.Addresses;
-
-namespace CRMSystem.Services.Data.Contracts
+﻿namespace CRMSystem.Services.Data.Contracts
 {
-    using System;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Web.ViewModels.Addresses;
     using System.Threading.Tasks;
 
     public interface IAddressesService

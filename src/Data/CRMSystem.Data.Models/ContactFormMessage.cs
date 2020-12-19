@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CRMSystem.Data.Common.Models;
-
-namespace CRMSystem.Data.Models
+﻿namespace CRMSystem.Data.Models
 {
+    using CRMSystem.Data.Common.Models;
     public class ContactFormMessage : BaseModel<int>
     {
         public string Name { get; set; }

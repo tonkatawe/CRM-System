@@ -1,10 +1,10 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
-
-namespace CRMSystem.Web.ViewModels.Statistics
+﻿namespace CRMSystem.Web.ViewModels.Statistics
 {
-   public class IndexViewModel
+    using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.ComponentModel.DataAnnotations;
+
+    public class IndexViewModel
     {
         [Remote("ValidateDate", "Statistics", AdditionalFields = nameof(EndDate))]
         [Display(Name = "Start date")]

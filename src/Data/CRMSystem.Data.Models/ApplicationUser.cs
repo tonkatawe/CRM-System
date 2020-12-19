@@ -1,15 +1,11 @@
 ﻿// ReSharper disable VirtualMemberCallInConstructor
 
-using System.ComponentModel.DataAnnotations;
-
 namespace CRMSystem.Data.Models
 {
+    using CRMSystem.Data.Common.Models;
+    using Microsoft.AspNetCore.Identity;
     using System;
     using System.Collections.Generic;
-
-    using CRMSystem.Data.Common.Models;
-
-    using Microsoft.AspNetCore.Identity;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {

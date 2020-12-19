@@ -1,8 +1,7 @@
-﻿using CRMSystem.Data.Models;
-using CRMSystem.Services.Mapping;
-
-namespace CRMSystem.Web.ViewModels.Phones
+﻿namespace CRMSystem.Web.ViewModels.Phones
 {
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Mapping;
     public class PhoneDropDownViewModel : IMapFrom<PhoneNumber>
     {
         public int Id { get; set; }

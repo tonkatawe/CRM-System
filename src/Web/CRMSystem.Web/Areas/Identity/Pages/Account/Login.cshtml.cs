@@ -16,17 +16,17 @@
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly ILogger<LoginModel> _logger;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly ILogger<LoginModel> logger;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager,
             ILogger<LoginModel> logger,
             UserManager<ApplicationUser> userManager)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.logger = logger;
         }
 
         [BindProperty]
@@ -66,7 +66,7 @@
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         
             ReturnUrl = returnUrl;
         }
@@ -79,15 +79,15 @@
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var user = await _userManager.Users.FirstOrDefaultAsync(u =>
+                var user = await this.userManager.Users.FirstOrDefaultAsync(u =>
                     u.UserName == Input.UserNameOrEmail || u.Email == Input.UserNameOrEmail);
 
                 if (user != null)
                 {
-                    var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                    var result = await this.signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                     if (result.Succeeded)
                     {
-                        _logger.LogInformation("User logged in.");
+                        this.logger.LogInformation("User logged in.");
                         return LocalRedirect(returnUrl);
                     }
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");

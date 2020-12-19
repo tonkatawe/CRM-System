@@ -1,19 +1,16 @@
-﻿using CRMSystem.Common;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Data.Contracts;
-using CRMSystem.Services.Messaging;
-using CRMSystem.Web.ViewModels.Emails;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-
-namespace CRMSystem.Web.Controllers
+﻿namespace CRMSystem.Web.Controllers
 {
-    [Authorize(Roles = "Admin, Owner")]
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Data.Contracts;
+    using CRMSystem.Services.Messaging;
+    using CRMSystem.Web.ViewModels.Emails;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    [Authorize(Roles = "Administrator, Owner")]
     public class EmailsController : Controller
     {
         private readonly IEmailsService emailsService;
@@ -43,19 +40,16 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Delete(int id, int customerId)
         {
             await this.emailsService.DeleteAsync(id);
-
-            //todo for this user check..
-
+            
             return this.RedirectToAction("Edit", "Customers", new { id = customerId });
-
-
+            
         }
 
         public IActionResult Send(int id)
         {
             var emails = this.emailsService.GetAll<EmailDropDownViewModel>(id).ToList();
 
-          
+
             var viewModel = new SendEmailViewModel
             {
                 Id = id,
@@ -90,7 +84,7 @@ namespace CRMSystem.Web.Controllers
             return this.RedirectToAction("Index", "Statistics");
         }
 
-        public  IActionResult CustomSend()
+        public IActionResult CustomSend()
         {
             return this.View();
         }

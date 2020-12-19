@@ -1,11 +1,11 @@
-﻿using System.Threading.Tasks;
-using CRMSystem.Data.Common.Repositories;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Data.Contracts;
-using CRMSystem.Web.ViewModels.Contacts;
-
-namespace CRMSystem.Services.Data
+﻿namespace CRMSystem.Services.Data
 {
+    using CRMSystem.Data.Common.Repositories;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Data.Contracts;
+    using CRMSystem.Web.ViewModels.Contacts;
+    using System.Threading.Tasks;
+    
     public class ContactsService : IContactsService
     {
         private readonly IRepository<ContactFormMessage> contactsRepository;

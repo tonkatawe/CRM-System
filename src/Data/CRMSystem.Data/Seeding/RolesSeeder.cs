@@ -1,14 +1,12 @@
 ﻿namespace CRMSystem.Data.Seeding
 {
+    using CRMSystem.Common;
+    using CRMSystem.Data.Models;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-
-    using CRMSystem.Common;
-    using CRMSystem.Data.Models;
-
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.Extensions.DependencyInjection;
 
     internal class RolesSeeder : ISeeder
     {

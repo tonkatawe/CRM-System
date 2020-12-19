@@ -1,10 +1,9 @@
-﻿using CRMSystem.Data.Common.Repositories;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Data.Contracts;
-using System.Linq;
-
-namespace CRMSystem.Services.Data
+﻿namespace CRMSystem.Services.Data
 {
+    using CRMSystem.Data.Common.Repositories;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Data.Contracts;
+    using System.Linq;
     public class ValidationService : IValidationService
     {
         private readonly IDeletableEntityRepository<Customer> customersRepository;

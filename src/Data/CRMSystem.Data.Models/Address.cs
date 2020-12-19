@@ -1,8 +1,7 @@
 ﻿namespace CRMSystem.Data.Models
 {
-    using System.ComponentModel.DataAnnotations;
-
     using CRMSystem.Data.Common.Models;
+    using System.ComponentModel.DataAnnotations;
 
     public class Address : BaseModel<int>
     {

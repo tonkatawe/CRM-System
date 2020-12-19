@@ -1,13 +1,9 @@
-﻿
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Mapping;
-using CRMSystem.Web.ViewModels.Products;
-
-namespace CRMSystem.Web.ViewModels.Orders
+﻿namespace CRMSystem.Web.ViewModels.Orders
 {
+    using AutoMapper;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Mapping;
+    
     public class OrderTypeViewModel : IMapFrom<Order>, IHaveCustomMappings
     {
         public int ProductId { get; set; }

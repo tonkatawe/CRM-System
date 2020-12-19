@@ -1,14 +1,12 @@
-﻿using System.Collections.Generic;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Mapping;
-using CRMSystem.Web.ViewModels.Contacts;
-using CRMSystem.Web.ViewModels.Emails;
-using CRMSystem.Web.ViewModels.Orders;
-using CRMSystem.Web.ViewModels.Phones;
-using CRMSystem.Web.ViewModels.Sales;
-
-namespace CRMSystem.Web.ViewModels.Customers
+﻿namespace CRMSystem.Web.ViewModels.Customers
 {
+    using CRMSystem.Data.Models;
+    using CRMSystem.Data.Models.Enums;
+    using CRMSystem.Web.ViewModels.Emails;
+    using CRMSystem.Web.ViewModels.Orders;
+    using CRMSystem.Web.ViewModels.Phones;
+    using System.Collections.Generic;
+
     public class GetDetailsViewModel : CustomerViewModel
     {
         public GetDetailsViewModel()
@@ -26,6 +24,7 @@ namespace CRMSystem.Web.ViewModels.Customers
         public string AdditionalInfo { get; set; }
 
         public Address Address { get; set; }
+        
         public OrderCustomerStatsViewModel CustomerStats { get; set; }
 
         public IList<PhoneCreateInputModel> Phones { get; set; }

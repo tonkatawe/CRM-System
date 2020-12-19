@@ -1,5 +1,4 @@
-﻿
-namespace CRMSystem.Web.Controllers
+﻿namespace CRMSystem.Web.Controllers
 {
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Data.Contracts;

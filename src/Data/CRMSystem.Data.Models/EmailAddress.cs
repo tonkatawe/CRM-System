@@ -1,9 +1,8 @@
 ﻿namespace CRMSystem.Data.Models
 {
-    using System.ComponentModel.DataAnnotations;
-
     using CRMSystem.Data.Common.Models;
     using CRMSystem.Data.Models.Enums;
+    using System.ComponentModel.DataAnnotations;
 
     public class EmailAddress : BaseModel<int>
     {

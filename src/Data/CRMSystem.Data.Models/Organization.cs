@@ -1,12 +1,10 @@
-﻿using System;
-using CRMSystem.Data.Models.Enums;
-
-namespace CRMSystem.Data.Models
+﻿namespace CRMSystem.Data.Models
 {
+    using CRMSystem.Data.Common.Models;
+    using CRMSystem.Data.Models.Enums;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
-    using CRMSystem.Data.Common.Models;
 
     public class Organization : BaseDeletableModel<string>, IAuditInfo
     {

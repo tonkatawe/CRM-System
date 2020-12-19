@@ -1,11 +1,10 @@
-﻿using System;
-using System.Globalization;
-using AutoMapper;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Mapping;
-
-namespace CRMSystem.Web.ViewModels.Orders
+﻿namespace CRMSystem.Web.ViewModels.Orders
 {
+    using AutoMapper;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Mapping;
+    using System;
+    using System.Globalization;
     public class OrderViewModel : IMapFrom<Order>, IHaveCustomMappings
     {
         public DateTime CreatedOn { get; set; }

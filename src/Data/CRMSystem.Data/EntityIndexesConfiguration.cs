@@ -1,10 +1,8 @@
 ﻿namespace CRMSystem.Data
 {
-    using System.Linq;
-
     using CRMSystem.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
+    using System.Linq;
 
     internal static class EntityIndexesConfiguration
     {

@@ -1,15 +1,9 @@
-﻿
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using AutoMapper;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Mapping;
-using CRMSystem.Web.ViewModels.Emails;
-using CRMSystem.Web.ViewModels.Phones;
-
-namespace CRMSystem.Web.ViewModels.Accounts
+﻿namespace CRMSystem.Web.ViewModels.Accounts
 {
+    using AutoMapper;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Mapping;
+    using System.Linq;
     public class CreateAccountInputModel : IMapFrom<Customer>, IHaveCustomMappings
     {
         public int Id { get; set; }
@@ -26,6 +20,7 @@ namespace CRMSystem.Web.ViewModels.Accounts
         public string UserId { get; set; }
 
         public string OrganizationName { get; set; }
+        
         public string OrganizationId { get; set; }
 
         public bool HasAccount { get; set; }

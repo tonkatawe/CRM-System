@@ -1,12 +1,10 @@
-﻿using CRMSystem.Web.ViewModels.Emails;
-
-namespace CRMSystem.Services.Data.Contracts
+﻿namespace CRMSystem.Services.Data.Contracts
 {
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-
     using CRMSystem.Data.Models;
     using CRMSystem.Data.Models.Enums;
+    using CRMSystem.Web.ViewModels.Emails;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public interface IEmailsService
     {

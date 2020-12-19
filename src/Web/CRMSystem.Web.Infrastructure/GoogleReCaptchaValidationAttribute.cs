@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Net;
-using System.Net.Http;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Microsoft.Extensions.Configuration;
-
-namespace CRMSystem.Web.Infrastructure
+﻿namespace CRMSystem.Web.Infrastructure
 {
+    using Microsoft.Extensions.Configuration;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Net;
+    using System.Net.Http;
+    using System.Text.Json;
+    using System.Text.Json.Serialization;
     public class GoogleReCaptchaValidationAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)

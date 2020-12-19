@@ -2,7 +2,7 @@
 {
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Mapping;
-    
+
     public class ProductViewModel : IMapFrom<Product>
     {
         public int Id { get; set; }

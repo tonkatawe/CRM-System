@@ -1,9 +1,9 @@
 ﻿namespace CRMSystem.Data.Models
 {
+    using CRMSystem.Data.Common.Models;
+    using CRMSystem.Data.Models.Enums;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
-    using CRMSystem.Data.Common.Models;
 
     public class Customer : BaseDeletableModel<int>
     {

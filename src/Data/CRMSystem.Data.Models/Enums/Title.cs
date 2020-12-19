@@ -1,4 +1,4 @@
-﻿namespace CRMSystem.Data.Models
+﻿namespace CRMSystem.Data.Models.Enums
 {
     public enum Title
     {

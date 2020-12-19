@@ -1,9 +1,8 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-using CRMSystem.Web.Infrastructure;
-
-namespace CRMSystem.Web.ViewModels.Contacts
+﻿namespace CRMSystem.Web.ViewModels.Contacts
 {
+    using CRMSystem.Web.Infrastructure;
+    using System.ComponentModel.DataAnnotations;
+    
     public class ContactFormViewModel
     {
         [Required]

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-
-namespace CRMSystem.Web.Infrastructure
+﻿namespace CRMSystem.Web.Infrastructure
 {
+    using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     public class PaginatedList<T> : List<T>
     {
         public int PageIndex { get; private set; }

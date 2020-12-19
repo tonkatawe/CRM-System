@@ -1,4 +1,4 @@
-﻿@model CRMSystem.Web.ViewModels.Sales.OrderCreateInputModel
+﻿@model CRMSystem.Web.ViewModels.Orders.OrderCreateInputModel
 @{
     this.ViewData["Title"] = "Add order to customer";
     var products = Model.Products.Select(x => new SelectListItem(x.Name, x.Id.ToString()));

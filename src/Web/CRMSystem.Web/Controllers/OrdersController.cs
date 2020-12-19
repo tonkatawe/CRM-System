@@ -1,19 +1,19 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using CRMSystem.Data.Models;
+﻿using CRMSystem.Data.Models;
 using CRMSystem.Services.Data.Contracts;
 using CRMSystem.Web.Infrastructure;
 using CRMSystem.Web.ViewModels.Orders;
 using CRMSystem.Web.ViewModels.Products;
-using CRMSystem.Web.ViewModels.Sales;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CRMSystem.Web.Controllers
 {
-    [Authorize(Roles = "Admin, Owner")]
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    [Authorize(Roles = "Administrator, Owner")]
     public class OrdersController : Controller
     {
         private readonly IOrdersService ordersService;

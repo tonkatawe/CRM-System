@@ -1,14 +1,9 @@
-﻿using System.Net.Security;
-using AutoMapper.Configuration.Annotations;
-using Microsoft.AspNetCore.Mvc;
-
-namespace CRMSystem.Web.ViewModels.Phones
+﻿namespace CRMSystem.Web.ViewModels.Phones
 {
-    using System.ComponentModel.DataAnnotations;
-
     using CRMSystem.Data.Models;
     using CRMSystem.Data.Models.Enums;
     using CRMSystem.Services.Mapping;
+    using System.ComponentModel.DataAnnotations;
 
     public class PhoneCreateInputModel : IMapFrom<PhoneNumber>
     {
@@ -18,7 +13,7 @@ namespace CRMSystem.Web.ViewModels.Phones
         public int CustomerId { get; set; }
 
         [Required]
-        [Phone(ErrorMessage = "It is not valid phone number")]
+        [Phone(ErrorMessage = "It isn't valid phone number")]
         public string Phone { get; set; }
 
         [Required]

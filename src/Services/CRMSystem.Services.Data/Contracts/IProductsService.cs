@@ -13,7 +13,9 @@
         Task<int> DeleteAsync(int productId);
 
         T GetById<T>(int productId);
+        
         IQueryable<T> GetAll<T>(string userId);
+        
         int ProductsCount(string userId);
     }
 }

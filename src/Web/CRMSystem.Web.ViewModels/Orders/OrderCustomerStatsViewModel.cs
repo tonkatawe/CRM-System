@@ -8,8 +8,7 @@
         public decimal Benefits { get; set; }
 
         public int DifferentProducts { get; set; }
-
-       
+        
     }
 
     

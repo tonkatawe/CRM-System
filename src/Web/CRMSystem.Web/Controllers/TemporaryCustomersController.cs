@@ -1,22 +1,20 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using CRMSystem.Common;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Data.Contracts;
-using CRMSystem.Services.Messaging;
-using CRMSystem.Web.Infrastructure;
-using CRMSystem.Web.ViewModels.Accounts;
-using CRMSystem.Web.ViewModels.Customers;
-using CRMSystem.Web.ViewModels.TemporaryCustomers;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-
-namespace CRMSystem.Web.Controllers
+﻿namespace CRMSystem.Web.Controllers
 {
+    using CRMSystem.Common;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Data.Contracts;
+    using CRMSystem.Services.Messaging;
+    using CRMSystem.Web.Infrastructure;
+    using CRMSystem.Web.ViewModels.Accounts;
+    using CRMSystem.Web.ViewModels.Customers;
+    using CRMSystem.Web.ViewModels.TemporaryCustomers;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
     public class TemporaryCustomersController : Controller
     {
         private const string SentData = "SentData";
@@ -87,7 +85,7 @@ namespace CRMSystem.Web.Controllers
             return this.View();
         }
 
-        [Authorize(Roles = ("Owner, Admin"))]
+        [Authorize(Roles = ("Owner, Administrator"))]
         public async Task<IActionResult> Index(int? pageNumber)
         {
 
@@ -110,7 +108,7 @@ namespace CRMSystem.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = ("Owner, Admin"))]
+        [Authorize(Roles = ("Owner, Administrator"))]
         public async Task<IActionResult> Approve(int id, string organizationId)
         {
             var owner = await this.userManager.GetUserAsync(this.User);
@@ -128,7 +126,6 @@ namespace CRMSystem.Web.Controllers
 
             if (customer.HasAccount)
             {
-                //todo : make error page
                 return NotFound();
             }
 
@@ -151,7 +148,6 @@ namespace CRMSystem.Web.Controllers
                 new { result.Key, email = customer.Email },
                 Request.Scheme);
 
-            //todo change output message
 
             var msg = String.Format(OutputMessages.EmailConformation, customer.FullName, customer.OrganizationName,
                 customer.UserName, result.Value, confirmationLink);
@@ -165,8 +161,7 @@ namespace CRMSystem.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = ("Owner, Admin"))]
-
+        [Authorize(Roles = ("Owner, Administrator"))]
         public async Task<IActionResult> Reject(int id, string organizationId)
         {
             var owner = await this.userManager.GetUserAsync(this.User);
@@ -182,11 +177,10 @@ namespace CRMSystem.Web.Controllers
 
             var msg = String.Format(OutputMessages.RejectCustomer, customer.FullName, customer.OrganizationName);
 
-            //todo change output message
-
+          
             await this.emailSender.SendEmailAsync(owner.Email, owner.UserName,
                 customer.Email, "Email confirm link", msg);
-          
+
 
             return this.RedirectToAction("Index");
         }

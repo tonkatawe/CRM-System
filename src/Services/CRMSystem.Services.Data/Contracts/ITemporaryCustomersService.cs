@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-namespace CRMSystem.Services.Data.Contracts
+﻿namespace CRMSystem.Services.Data.Contracts
 {
+    using System.Threading.Tasks;
     public interface ITemporaryCustomersService
     {
         Task ApproveAsync(int id);
-
- 
+        
     }
 }

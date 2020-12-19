@@ -1,9 +1,8 @@
 ﻿namespace CRMSystem.Data.Common.Repositories
 {
+    using CRMSystem.Data.Common.Models;
     using System.Linq;
     using System.Threading.Tasks;
-
-    using CRMSystem.Data.Common.Models;
 
     public interface IDeletableEntityRepository<TEntity> : IRepository<TEntity>
         where TEntity : class, IDeletableEntity

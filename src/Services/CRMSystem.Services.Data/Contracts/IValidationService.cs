@@ -1,5 +1,4 @@
-﻿
-namespace CRMSystem.Services.Data.Contracts
+﻿namespace CRMSystem.Services.Data.Contracts
 {
     public interface IValidationService
     {

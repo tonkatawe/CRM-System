@@ -1,13 +1,11 @@
-﻿using CRMSystem.Web.ViewModels.Addresses;
-using Microsoft.EntityFrameworkCore;
-
-namespace CRMSystem.Services.Data
+﻿namespace CRMSystem.Services.Data
 {
-    using System.Threading.Tasks;
-
     using CRMSystem.Data.Common.Repositories;
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Data.Contracts;
+    using CRMSystem.Web.ViewModels.Addresses;
+    using Microsoft.EntityFrameworkCore;
+    using System.Threading.Tasks;
 
     public class AddressesService : IAddressesService
     {

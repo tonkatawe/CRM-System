@@ -15,8 +15,7 @@
         public int CustomerId { get; set; }
 
         [Required]
-        [EmailAddress(ErrorMessage = "The Emails is not valid")]
-
+        [EmailAddress(ErrorMessage = "The email is not valid")]
         public string Email { get; set; }
 
         public EmailType EmailType { get; set; }

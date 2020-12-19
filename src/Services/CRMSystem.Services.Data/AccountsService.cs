@@ -1,24 +1,21 @@
-﻿
-
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using CRMSystem.Data.Common.Repositories;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Data.Contracts;
-using CRMSystem.Web.ViewModels.Accounts;
-using Microsoft.AspNetCore.Identity;
-
-namespace CRMSystem.Services.Data
+﻿namespace CRMSystem.Services.Data
 {
+    using CRMSystem.Data.Common.Repositories;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Data.Contracts;
+    using CRMSystem.Web.ViewModels.Accounts;
+    using Microsoft.AspNetCore.Identity;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     public class AccountsService : IAccountsService
     {
         private readonly IDeletableEntityRepository<Customer> customersRepository;
         private readonly UserManager<ApplicationUser> userManager;
-      
+
 
         public AccountsService(
-            IDeletableEntityRepository<Customer> customersRepository, 
+            IDeletableEntityRepository<Customer> customersRepository,
             UserManager<ApplicationUser> userManager)
         {
             this.customersRepository = customersRepository;
@@ -32,7 +29,6 @@ namespace CRMSystem.Services.Data
                 UserName = input.UserName,
                 Email = input.Email,
                 PhoneNumber = input.Phone,
-                //    OrganizationId = input.OrganizationId,
                 Parent = owner,
             };
 
@@ -56,8 +52,9 @@ namespace CRMSystem.Services.Data
             }
             else
             {
-                //todo check it
+
                 throw new Exception(result.ToString());
+
             }
         }
     }

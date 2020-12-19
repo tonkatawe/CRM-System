@@ -1,17 +1,15 @@
-﻿using CRMSystem.Web.ViewModels.Emails;
-using Microsoft.EntityFrameworkCore;
-
-namespace CRMSystem.Services.Data
+﻿namespace CRMSystem.Services.Data
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-
     using CRMSystem.Data.Common.Repositories;
     using CRMSystem.Data.Models;
     using CRMSystem.Data.Models.Enums;
     using CRMSystem.Services.Data.Contracts;
     using CRMSystem.Services.Mapping;
+    using CRMSystem.Web.ViewModels.Emails;
+    using Microsoft.EntityFrameworkCore;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public class EmailsService : IEmailsService
     {
@@ -32,17 +30,17 @@ namespace CRMSystem.Services.Data
 
         public async Task DeleteAllAsync(int customerId)
         {
-          var emails = await  this.emailRepository
-              .All()
-              .Where(x => x.CustomerId == customerId)
-              .ToListAsync();
+            var emails = await this.emailRepository
+                .All()
+                .Where(x => x.CustomerId == customerId)
+                .ToListAsync();
 
-          foreach (var email in emails)
-          {
-              this.emailRepository.Delete(email);
-          }
+            foreach (var email in emails)
+            {
+                this.emailRepository.Delete(email);
+            }
 
-          await this.emailRepository.SaveChangesAsync();
+            await this.emailRepository.SaveChangesAsync();
 
         }
 
@@ -60,11 +58,9 @@ namespace CRMSystem.Services.Data
             return emailAddress;
         }
 
-
-
         public async Task<int> DeleteAsync(int customerId)
         {
-            var email =  this.emailRepository.All().FirstOrDefault(x=>x.Id == customerId);
+            var email = this.emailRepository.All().FirstOrDefault(x => x.Id == customerId);
             this.emailRepository.Delete(email);
 
             return await this.emailRepository.SaveChangesAsync();
@@ -72,7 +68,7 @@ namespace CRMSystem.Services.Data
 
         public async Task<int> UpdateAsync(EmailCreateInputModel input)
         {
-            var email =  this.emailRepository.All().FirstOrDefault(x=>x.Id == input.Id);
+            var email = this.emailRepository.All().FirstOrDefault(x => x.Id == input.Id);
             email.Email = input.Email;
             email.EmailType = input.EmailType;
             this.emailRepository.Update(email);

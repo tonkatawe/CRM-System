@@ -1,12 +1,8 @@
-﻿using System;
-using System.Globalization;
-using AutoMapper;
-using CRMSystem.Data.Models;
-using CRMSystem.Data.Models.Enums;
-using CRMSystem.Services.Mapping;
-
-namespace CRMSystem.Web.ViewModels.Customers
+﻿namespace CRMSystem.Web.ViewModels.Customers
 {
+    using AutoMapper;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Mapping;
     public class CustomerViewModel : IMapFrom<Customer>, IHaveCustomMappings
     {
 

@@ -1,14 +1,14 @@
-﻿using CRMSystem.Services.Data.Contracts;
-using CRMSystem.Web.ViewModels.Customers;
-using CRMSystem.Web.ViewModels.Products;
-using CRMSystem.Web.ViewModels.Statistics;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
-
-namespace CRMSystem.Web.ViewComponent
+﻿namespace CRMSystem.Web.ViewComponent
 {
+    using CRMSystem.Services.Data.Contracts;
+    using CRMSystem.Web.ViewModels.Customers;
+    using CRMSystem.Web.ViewModels.Products;
+    using CRMSystem.Web.ViewModels.Statistics;
+    using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+
     [ViewComponent(Name = "GeneralStatistic")]
     public class GeneralStatisticViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
     {
@@ -29,8 +29,6 @@ namespace CRMSystem.Web.ViewComponent
             var startDate = await this.statisticsService.GetStartDateAsync(organizationId);
             var endDate = DateTime.UtcNow;
 
-            //todo refactor models and const :)
-
             var benefits = await this.statisticsService.GetTotalBenefitsAsync(organizationId, startDate, endDate);
             var bestCustomer = await this.statisticsService.GetBestCustomersAsync<CustomerViewModel>(organizationId);
             var customerWithMostOrders = await this.statisticsService.GetCustomerByOrdersAsync<CustomerViewModel>(organizationId);
@@ -50,7 +48,6 @@ namespace CRMSystem.Web.ViewComponent
             };
 
             return View(viewModel);
-
         }
     }
 }

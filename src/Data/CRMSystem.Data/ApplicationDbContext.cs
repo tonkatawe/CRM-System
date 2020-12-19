@@ -1,19 +1,14 @@
-﻿using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-
-namespace CRMSystem.Data
+﻿namespace CRMSystem.Data
 {
+    using CRMSystem.Data.Common.Models;
+    using CRMSystem.Data.Models;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Linq;
     using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
-
-    using CRMSystem.Data.Common.Models;
-    using CRMSystem.Data.Models;
-
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
@@ -42,7 +37,6 @@ namespace CRMSystem.Data
 
         public DbSet<Order> Orders { get; set; }
 
-        public DbSet<Image> Images { get; set; }
         public DbSet<ContactFormMessage> ContactFormMessages { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);

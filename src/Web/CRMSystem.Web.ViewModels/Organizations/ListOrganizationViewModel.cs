@@ -1,13 +1,12 @@
-﻿
-using AutoMapper;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Mapping;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Reflection;
-
-namespace CRMSystem.Web.ViewModels.Organizations
+﻿namespace CRMSystem.Web.ViewModels.Organizations
 {
+    using AutoMapper;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Mapping;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Reflection;
+
     public class ListOrganizationViewModel : IMapFrom<Organization>, IHaveCustomMappings
     {
         public string Id { get; set; }

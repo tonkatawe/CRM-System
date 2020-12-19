@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using AutoMapper;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Mapping;
-
-namespace CRMSystem.Web.ViewModels.TemporaryCustomers
+﻿namespace CRMSystem.Web.ViewModels.TemporaryCustomers
 {
+    using AutoMapper;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Mapping;
+    using System.Linq;
     public class RejectCustomerViewModel : IMapFrom<Customer>, IHaveCustomMappings
     {
         public string FullName { get; set; }

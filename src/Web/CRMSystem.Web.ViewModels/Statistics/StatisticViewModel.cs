@@ -1,8 +1,6 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using CRMSystem.Web.ViewModels.Customers;
+﻿using CRMSystem.Web.ViewModels.Customers;
 using CRMSystem.Web.ViewModels.Products;
+using System;
 
 namespace CRMSystem.Web.ViewModels.Statistics
 {

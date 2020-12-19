@@ -1,27 +1,21 @@
-﻿using System;
-using CloudinaryDotNet;
-using CRMSystem.Services;
-using CRMSystem.Services.Contracts;
-using CRMSystem.Services.Data.Contracts;
-using Hangfire;
-using Hangfire.SqlServer;
-using Microsoft.AspNetCore.Identity;
-
-namespace CRMSystem.Web
+﻿namespace CRMSystem.Web
 {
-    using System.Reflection;
-
+    using CloudinaryDotNet;
     using CRMSystem.Data;
     using CRMSystem.Data.Common;
     using CRMSystem.Data.Common.Repositories;
     using CRMSystem.Data.Models;
     using CRMSystem.Data.Repositories;
     using CRMSystem.Data.Seeding;
+    using CRMSystem.Services;
+    using CRMSystem.Services.Contracts;
     using CRMSystem.Services.Data;
+    using CRMSystem.Services.Data.Contracts;
     using CRMSystem.Services.Mapping;
     using CRMSystem.Services.Messaging;
     using CRMSystem.Web.ViewModels;
-
+    using Hangfire;
+    using Hangfire.SqlServer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -30,6 +24,8 @@ namespace CRMSystem.Web
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using System;
+    using System.Reflection;
 
     public class Startup
     {
@@ -76,23 +72,12 @@ namespace CRMSystem.Web
 
                 });
 
-            //add Google authentication
-            services.AddAuthentication()
-                .AddGoogle(googleOptions =>
-                {
-
-                    googleOptions.ClientId = this.configuration["Google:ClientId"];
-                    googleOptions.ClientSecret = this.configuration["Google:ClientSecret"];
-                    googleOptions.SignInScheme = IdentityConstants.ExternalScheme;
-                });
-
-
             services.Configure<CookiePolicyOptions>(
-                options =>
-                    {
-                        options.CheckConsentNeeded = context => true;
-                        options.MinimumSameSitePolicy = SameSiteMode.None;
-                    });
+                         options =>
+                             {
+                                 options.CheckConsentNeeded = context => true;
+                                 options.MinimumSameSitePolicy = SameSiteMode.None;
+                             });
 
             services.AddControllersWithViews(
                 options =>

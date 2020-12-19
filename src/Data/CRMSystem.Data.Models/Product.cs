@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace CRMSystem.Data.Models
+﻿namespace CRMSystem.Data.Models
 {
-    using System.ComponentModel.DataAnnotations;
-
     using CRMSystem.Data.Common.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class Product : BaseDeletableModel<int>
     {

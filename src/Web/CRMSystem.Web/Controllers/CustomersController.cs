@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using CRMSystem.Web.Infrastructure;
-using CRMSystem.Web.ViewModels.Customers;
-using CRMSystem.Web.ViewModels.Emails;
-using CRMSystem.Web.ViewModels.Phones;
-
-namespace CRMSystem.Web.Controllers
+﻿namespace CRMSystem.Web.Controllers
 {
-    using System.Linq;
-    using System.Threading.Tasks;
-
     using CRMSystem.Data.Models;
     using CRMSystem.Services.Data.Contracts;
+    using CRMSystem.Web.Infrastructure;
+    using CRMSystem.Web.ViewModels.Customers;
+    using CRMSystem.Web.ViewModels.Emails;
+    using CRMSystem.Web.ViewModels.Phones;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     [Authorize(Roles = "Administrator, Owner")]
     public class CustomersController : Controller
     {
@@ -44,7 +42,6 @@ namespace CRMSystem.Web.Controllers
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            //todo must refactoring this!
 
             if (user == null)
             {
@@ -80,7 +77,7 @@ namespace CRMSystem.Web.Controllers
             }
             switch (sortOrder)
             {
-            
+
                 case "name_desc":
                     customers = customers
                         .OrderByDescending(c => c.FirstName)
@@ -215,14 +212,11 @@ namespace CRMSystem.Web.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            //todo check for security
 
             var viewModel = this.customersService.GetById<GetDetailsViewModel>(id);
             viewModel.CustomerStats = await this.salesService.GetStatsAsync(id);
 
-
             return this.View(viewModel);
-
         }
 
         [HttpPost]

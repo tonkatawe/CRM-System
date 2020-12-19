@@ -1,18 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-using System.Threading.Tasks;
-using CRMSystem.Common;
-using CRMSystem.Data.Models;
-using CRMSystem.Services.Data.Contracts;
-using CRMSystem.Services.Messaging;
-using CRMSystem.Web.ViewModels.Contacts;
-using Microsoft.AspNetCore.Identity;
-
-namespace CRMSystem.Web.Controllers
+﻿namespace CRMSystem.Web.Controllers
 {
+    using CRMSystem.Common;
+    using CRMSystem.Data.Models;
+    using CRMSystem.Services.Data.Contracts;
+    using CRMSystem.Services.Messaging;
+    using CRMSystem.Web.ViewModels.Contacts;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
+
     public class ContactsController : Controller
     {
         private const string Successful = "Successful";
